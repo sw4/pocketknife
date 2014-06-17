@@ -36,7 +36,7 @@ input[type=text] {
     transition:all 200ms ease-in;
     margin:0 2px;
 }
-input[type=text]:hover{
+input[type=text]:hover {
     border-color:#8E8E8E;
 }
 input[type=text]:focus {
@@ -98,7 +98,7 @@ input[type=text]:focus {
 }
 .grid-filter input[type=text] {
     padding-left:20px;
-    margin-bottom:6px;
+    margin-bottom:5px;
 }
 .grid-footer {
     overflow:hidden;
@@ -119,14 +119,13 @@ input[type=text]:focus {
     max-height:0;
     opacity:0;
 }
-
 .table-data, .table-header {
     width:100%;
     table-layout:fixed;
     color:#fff;
     border-collapse:collapse;
 }
-.table-header{
+.table-header {
     width:calc(100% - 16px);
 }
 .table-row {
@@ -163,25 +162,27 @@ input[type=text]:focus {
     text-overflow:ellipsis;
     white-space:nowrap;
 }
-.table-head:first-child{
+.table-head:first-child {
     text-align:left;
 }
-.table-head{
+.table-head {
     font-weight:normal;
     text-align:left;
     transition:background 100ms ease-in;
 }
-.table-head:after{
+.table-head:after {
     font-family:FontAwesome;
     margin-left:4px;
+    display:inline;
+    line-height:10px;
 }
-.table-head:hover{
+.table-head:hover {
     background:#6F8085;
 }
-.table-head.sort-asc:after{
+.table-head.sort-asc:after {
     content:'\f0d8';
 }
-.table-head.sort-desc:after{
+.table-head.sort-desc:after {
     content:'\f0d7';
 }
 button:focus, button:active {

@@ -2,7 +2,9 @@
     <section class='fnx-component' ng-controller="myController">
         <div class='cmp-titleBar'>
              <h3 class='cmp-title'>Grid</h3>
+
              <h6 class='cmp-subtitle'>All Records</h6>
+
             <menu class='cmp-tools'>
                 <button class='btn-minmax {{cmpMinimized && "cmp-minimized" || "cmp-maximized"}}' ng-click="cmpMinimized = !cmpMinimized"></button>
             </menu>
@@ -10,7 +12,7 @@
         <section class='fnx-grid cmp-body {{cmp-cmpMinimized && "cmp-minimized" || "cmp-maximized"}}'>
             <header class='grid-header'> <span class='grid-filter'><input type='text' class='inpt-autogrow' data-ng-model="gridFilter"/></span>
 
-<table class='table-header'>
+                <table class='table-header'>
                     <tr class='table-row'>
                         <th class="table-head {{(predicate=='c1' && reverse && 'sort-asc') || (predicate=='c1' && !reverse && 'sort-desc')  || ''}}" ng-click="predicate = 'c1'; reverse=!reverse">Column 1</th>
                         <th class="table-head {{(predicate=='c2' && reverse && 'sort-asc') || (predicate=='c2' && !reverse && 'sort-desc')  || ''}}" ng-click="predicate = 'c2'; reverse=!reverse">Column 2</th>
@@ -18,9 +20,8 @@
                         <th class="table-head {{(predicate=='c4' && reverse && 'sort-asc') || (predicate=='c4' && !reverse && 'sort-desc')  || ''}}" ng-click="predicate = 'c4'; reverse=!reverse">Column 4</th>
                     </tr>
                 </table>
-
             </header>
-            <div class='grid-body'> <span class='grid-nodata' ng-show="gridViewTo == 0">No results found...</span>                 
+            <div class='grid-body'> <span class='grid-nodata' ng-show="gridViewTo == 0">No results found...</span> 
                 <table class='table-data'>
                     <tr class='table-row {{selections[record.id] && "row-selected" || ""}}' ng-repeat="record in gridData | gridPaging:(currentPage-1)*pageSize | limitTo:pageSize | orderBy:predicate:reverse" ng-click="select(record)">
                         <td class='table-cell'>{{record.c1}}</td>
@@ -32,7 +33,7 @@
             </div>
             <footer class='grid-footer'>
                 <div ng-show="gridViewTo > 0" class='grid-paging'>Showing {{1+(currentPage-1)*pageSize}} to {{gridViewTo}} of {{gridData.length}}, page
-                    <input grid-paging type="text" min="1" max="{{pageCount}}" maxlength="3" ng-model="currentPage" style='width:{{(pageCount/10)+1*10 | number:0}}px;' />of {{pageCount}}
+                    <input grid-paging type="text" min="1" max="{{pageCount}}" maxlength="3" ng-model="currentPage" style='width:{{(pageCount/10)+2*10 | number:0}}px;' />of {{pageCount}}
                     <menu class='cmp-tools'>
                         <button class='btn-prevPage' ng-disabled="currentPage == 1" ng-click="currentPage=currentPage-1"></button>
                         <button class='btn-nextPage' ng-disabled="currentPage >= gridData.length/pageSize" ng-click="currentPage=currentPage+1"></button>

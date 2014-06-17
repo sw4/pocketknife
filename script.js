@@ -74,15 +74,15 @@ myApp.controller("myController", ['$scope', 'myFactory', '$timeout',
 function ($scope, myFactory, $timeout) {
 
 
-    function getGridViewTo(){
-        $scope.gridViewTo = $scope.pageSize*$scope.currentPage > $scope.gridData.length ? $scope.gridData.length : $scope.pageSize*$scope.currentPage ;
+    function getGridViewTo() {
+        $scope.gridViewTo = $scope.pageSize * $scope.currentPage > $scope.gridData.length ? $scope.gridData.length : $scope.pageSize * $scope.currentPage;
     }
     $scope.gridData = null;
     $scope.$watch('gridData', function (v) {
         $scope.pageCount = Math.ceil($scope.gridData.length / $scope.pageSize);
         $scope.pageCount = $scope.pageCount == 0 ? 1 : $scope.pageCount;
         $scope.currentPage = $scope.currentPage > $scope.pageCount ? $scope.pageCount : $scope.currentPage;
-         getGridViewTo();
+        getGridViewTo();
     });
     $scope.$watch('currentPage', function (v) {
         getGridViewTo();
@@ -110,7 +110,7 @@ function ($scope, myFactory, $timeout) {
         //        var filteredData = $filter('filter')($scope.persons, $scope.query);
     });
 
-    $scope.gridViewTo=$scope.pageSize = 25;
+    $scope.gridViewTo = $scope.pageSize = 25;
     $scope.currentPage = 1;
     $scope.selections = {};
     $scope.select = function (r) {

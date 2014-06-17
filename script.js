@@ -73,7 +73,16 @@ myApp.controller("myController", ['$scope', 'myFactory', '$timeout',
 
 function ($scope, myFactory, $timeout) {
 
-
+    $scope.dataSort=function (key, dir){
+        dir = dir || "asc";
+        // console.log(key);
+        var data = $scope.gridData.slice();
+        data.sort(function (a, b) {            
+            return dir == "asc" ? a[key] - b[key] : b[key] - a[key];
+        });
+        console.log(data);
+        $scope.gridData=data;
+    }
     function getGridViewTo() {
         $scope.gridViewTo = $scope.pageSize * $scope.currentPage > $scope.gridData.length ? $scope.gridData.length : $scope.pageSize * $scope.currentPage;
     }

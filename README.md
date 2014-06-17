@@ -8,4 +8,4 @@ ngLiveGrid
 **Work in progress - very rough code**
 
 
-Requires better abstraction / MVC split, code improvement
+Requires better abstraction / MVC split, use of key angular.js tenets, code revision etc.

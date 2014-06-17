@@ -99,6 +99,7 @@ input[type=text]:focus {
 .grid-filter input[type=text] {
     padding-left:20px;
     margin-bottom:5px;
+    margin-left:0;
 }
 .grid-footer {
     overflow:hidden;

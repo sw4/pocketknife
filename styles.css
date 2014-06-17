@@ -46,6 +46,26 @@ input[type=text]:focus {
 .inpt-autogrow:hover, .inpt-autogrow:focus {
     width:250px;
 }
+.cmp-mask{
+   color: transparent;
+   text-shadow: 0 0 5px rgba(255,255,255,0.8);
+}
+.cmp-mask > section {
+    overflow:hidden;
+    width:calc(100% - 16px);
+}
+.mask-overlay{
+    display:none;
+}
+.cmp-mask > .mask-overlay{    display:table;position:absolute;height:100%;width:100%;background:rgba(106,112,112,.5);z-index:1;
+}
+.mask-msg{
+    display:table-cell;
+    text-align:center;
+    vertical-align:middle;
+    color: #fff;
+   text-shadow: none;
+}
 .fnx-component {
     margin:20px;
     background:rgba(51, 51, 51, 0.4);
@@ -123,7 +143,6 @@ input[type=text]:focus {
 .table-data, .table-header {
     width:100%;
     table-layout:fixed;
-    color:#fff;
     border-collapse:collapse;
 }
 .table-header {

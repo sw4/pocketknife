@@ -10,8 +10,10 @@
             </menu>
         </div>
         <section class='fnx-grid cmp-body {{cmp-cmpMinimized && "cmp-minimized" || "cmp-maximized"}}'>
+            <div class='mask-overlay'>
+                <div class='mask-msg'>Loading...</div>                
+            </div>
             <header class='grid-header'> <span class='grid-filter'><input type='text' class='inpt-autogrow' data-ng-model="gridFilter"/></span>
-
                 <table class='table-header'>
                     <tr class='table-row'>
                         <th class="table-head {{(predicate=='c1' && reverse && 'sort-asc') || (predicate=='c1' && !reverse && 'sort-desc')  || ''}}" ng-click="predicate = 'c1'; reverse=!reverse">Column 1</th>
@@ -21,7 +23,7 @@
                     </tr>
                 </table>
             </header>
-            <div class='grid-body'> <span class='grid-nodata' ng-show="gridViewTo == 0">No results found...</span> 
+            <section class='grid-body'> <span class='grid-nodata' ng-show="gridViewTo == 0">No results found...</span> 
                 <table class='table-data'>
                     <tr class='table-row {{selections[record.id] && "row-selected" || ""}}' ng-repeat="record in gridData | gridPaging:(currentPage-1)*pageSize | limitTo:pageSize | orderBy:predicate:reverse" ng-click="select(record)">
                         <td class='table-cell'>{{record.c1}}</td>
@@ -30,7 +32,7 @@
                         <td class='table-cell'>{{record.c4}}</td>
                     </tr>
                 </table>
-            </div>
+            </section>
             <footer class='grid-footer'>
                 <div ng-show="gridViewTo > 0" class='grid-paging'>Showing {{1+(currentPage-1)*pageSize}} to {{gridViewTo}} of {{gridData.length}}, page
                     <input grid-paging type="text" min="1" max="{{pageCount}}" maxlength="3" ng-model="currentPage" style='width:{{(pageCount/10)+2*10 | number:0}}px;' />of {{pageCount}}

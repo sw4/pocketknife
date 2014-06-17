@@ -1,7 +1,7 @@
 ngLiveGrid
 ==========
 
-[Angular Grid Implementation](http://jsfiddle.net/swfour/Mj6uY/27/)
+[Angular Grid Implementation](http://jsfiddle.net/swfour/Mj6uY/30/)
 
 **Licensed under [cc by-sa 3.0](http://creativecommons.org/licenses/by-sa/3.0/) with attribution required**
 

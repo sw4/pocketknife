@@ -1,18 +1,11 @@
 var myApp = angular.module('myApp', []);
 
 myApp.controller('pageController', ['$scope', function ($scope) {
-
     $scope.ctrlPressed = false;
     $scope.keydown = function (event) {
-        if (event.keyCode == 27 || event.key == "Esc") {
-            // escape
-        } else if (event.keyCode == 32 || event.key == "Spacebar") {
-            // space
-        } else if (event.keyCode == 17 || event.key == "Control") {
+        if (event.keyCode == 17 || event.key == "Control") {
             // ctrl
             $scope.ctrlPressed = true;
-        } else if (event.keyCode == 13 || event.key == "Enter") {
-            // enter
         }
     }
     $scope.keyup = function (event) {
@@ -23,24 +16,6 @@ myApp.controller('pageController', ['$scope', function ($scope) {
     }
 }]);
 
-myApp.directive('keydown', function () {
-    return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
-            scope.$apply(function () {
-                scope.$eval(attrs.ngEnter);
-            });
-        });
-    };
-});
-myApp.directive('keyup', function () {
-    return function (scope, element, attrs) {
-        element.bind("keyup", function (event) {
-            scope.$apply(function () {
-                scope.$eval(attrs.ngEnter);
-            });
-        });
-    };
-});
 
 myApp.filter('gridPaging', function () {
     return function (input, start) {
@@ -73,16 +48,17 @@ myApp.controller("myController", ['$scope', 'myFactory', '$timeout',
 
 function ($scope, myFactory, $timeout) {
 
-    $scope.dataSort=function (key, dir){
+    $scope.dataSort = function (key, dir) {
         dir = dir || "asc";
         // console.log(key);
         var data = $scope.gridData.slice();
-        data.sort(function (a, b) {            
+        data.sort(function (a, b) {
             return dir == "asc" ? a[key] - b[key] : b[key] - a[key];
         });
         console.log(data);
-        $scope.gridData=data;
+        $scope.gridData = data;
     }
+
     function getGridViewTo() {
         $scope.gridViewTo = $scope.pageSize * $scope.currentPage > $scope.gridData.length ? $scope.gridData.length : $scope.pageSize * $scope.currentPage;
     }

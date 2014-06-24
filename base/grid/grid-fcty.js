@@ -1,0 +1,3 @@
+portal.factory("gridFcty", [function () {
+   
+}]);

@@ -3,6 +3,8 @@ pocketknife
 
 Angular Dashboard UI Implementation
 
+Not production-ready.
+
 **Licensed under [cc by-sa 3.0](http://creativecommons.org/licenses/by-sa/3.0/) with attribution required**
 
 **Work in progress - very rough code**

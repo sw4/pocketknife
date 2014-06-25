@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Portal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <!-- CSS -->
+        <link href="../../css/pk.css" rel="stylesheet">
+        <!-- FontAwesome CSS -->  
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> 
+        <!-- cd3 css -->
+        <link href="file:///C:/Users/samw/Documents/GitHub/cd3/cd3.css" rel="stylesheet"> 
+    </head>
+    <body data-ng-app="pk" ng-controller="pkCtrl" ng-keydown ="keydown($event)" ng-keyup ="keyup($event)">    
+
+                <pk-container>
+                    <pk-grid ng-controller='exampleGridctrl'></pk-grid>
+                    <pk-chart ng-controller='exampleChartctrl'></pk-chart>
+                </pk-container>
+        <!-- Angular.js -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <!-- jQuery.js -->
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+        <!-- d3.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js"></script>       
+        <!-- cd3.js -->
+        <script src="file:///C:/Users/samw/Documents/GitHub/cd3/cd3.js"></script>
+        <script src="../../lib/pk.js"></script>
+        <script src="../../lib/pk-ctrl.js"></script>
+        <script src="../../lib/common/clickToggle-dir.js"></script>
+        <script src="../../lib/container/container-dir.js"></script>
+        <script src="../../lib/grid/grid-dir.js"></script>
+        <script src="../../lib/grid/grid-ctrl.js"></script>
+        <script src="../../lib/grid/cols-dir.js"></script>
+        <script src="../../lib/grid/headers-dir.js"></script>
+        <script src="../../lib/grid/paging-dir.js"></script>
+        <script src="../../lib/grid/paging-fltr.js"></script>
+        <script src="../../lib/chart/chart-dir.js"></script>
+        <script src="../grid/exampleGrid-ctrl.js"></script>
+        <script src="../grid/exampleGrid-fcty.js"></script>
+        <script src="exampleChart-ctrl.js"></script>
+        <script src="exampleChart-fcty.js"></script>
+</html>
+

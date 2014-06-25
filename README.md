@@ -20,3 +20,10 @@ Minimisable wrapper for components
 
 ###Grid###
 Fully fledged grid component with pagination, multiple selection, sorting, column selection and filtering
+
+
+Under development:
+-------------
+
+###Charting###
+Line, pie, bar, column, stacked bar, stacked column and area chart components

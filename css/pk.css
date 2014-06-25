@@ -16,6 +16,10 @@ GENERIC STYLING
     line-height:20px;
     color:#fff;
     font-weight:300;
+    overflow:hidden;
+}
+#viewport{
+    overflow:auto;
 }
 h1, h2, h3, h4, h5, h6 {
     font-weight:normal;

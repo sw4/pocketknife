@@ -1,5 +1,5 @@
-portal.controller("clientSummaryCtrl", ['$scope', 'clientSummaryFactory', '$timeout',
-function ($scope, clientSummaryFactory , $timeout) {
+pk.controller("exampleGridctrl", ['$scope', 'exampleGridfcty', '$timeout',
+function ($scope, exampleGridfcty , $timeout) {
     $scope.columns=[
         {
             binding:"c1",
@@ -18,10 +18,7 @@ function ($scope, clientSummaryFactory , $timeout) {
             header:"Column4"
         }
     ];
-    // $scope.rowClick=function(){
-      //  console.log(arguments);
-    // };
     (function () {
-        $scope.data = $scope.rawdata = clientSummaryFactory.fetch();
+        $scope.data = $scope.rawdata = exampleGridfcty.fetch();
     })();
 }]);

@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,600);
 
 /*
 GENERIC STYLING
@@ -24,8 +24,14 @@ GENERIC STYLING
     overflow:auto;
 }
 h1, h2, h3, h4, h5, h6 {
-    font-weight:normal;
+    font-weight:300;
     margin:.7em 0;
+}
+h1.pk-title{
+    font-size:29.5px;
+}
+h1 .pk-tagline{
+    font-size:16.5px;
 }
 body {
     background: radial-gradient(ellipse farthest-side at 10% 0, rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9)) repeat scroll 0 0%, url("http://www.samwheeler.info/samwheeler/bgnoise_lg_dark.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
@@ -133,15 +139,19 @@ HELPER STYLING
 }
 
 .pk-title{
-    font-weight:bold;
-    clear:both;
+    font-size:14px;
+    line-height:20px;
+    margin:0;
+}
+.pk-ctHeader > .pk-title{
+    font-weight:600;
+    display:inline-block;
 }
 .pk-title, .pk-tagline {
-    display:inline-block;
     margin:.25em 0;
 }
 .pk-tagline, .pk-subtle {
-    font-weight:normal;
+    font-weight:300;
     padding-left:5px;
     font-size:.9em;
     color:#BFBFBF;

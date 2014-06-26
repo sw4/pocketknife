@@ -5,8 +5,9 @@ pk.directive("pkContainer", [function () {
         transclude: true,
         template:"<section class='pk-ct'>\
             <header class='pk-ctHeader'>\
-                <h3 class='pk-title'>{{title}}</h3>\
-                <h6 class='pk-tagline'>{{tagline}}</h6>\
+                <h3 class='pk-title'>{{title}}\
+                    <span class='pk-tagline'>{{tagline}}</span>\
+                </h3>\
                 <button ng-if='minimizable' class='pk-toRight pk-btn {{$parent.minimized && \"pk-ctMin\" || \"pk-ctMax\"}}' ng-click='$parent.minimized = !$parent.minimized'></button>\
             </header>\
             <section class='pk-ctBody  {{minimized && \"pk-ctMin\" || \"pk-ctMax\"}}'>\

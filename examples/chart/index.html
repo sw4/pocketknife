@@ -12,7 +12,9 @@
         <link href="../../lib/cd3-0.4.0/cd3.min.css" rel="stylesheet"> 
     </head>
     <body data-ng-app="pk" ng-controller="pkCtrl" ng-keydown ="keydown($event)" ng-keyup ="keyup($event)">  
-        
+        <h1 class='pk-title'>Dashboard
+            <span class='pk-tagline'>Tagline</span>
+        </h1>
         <pk-container title='Example Grid' tagline='built using pk-grid' minimizable="true" style='float:left;width:50%;'>
             <pk-grid ng-controller='exampleGridctrl'></pk-grid>
         </pk-container>

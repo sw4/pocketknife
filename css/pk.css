@@ -17,6 +17,8 @@ GENERIC STYLING
     color:#fff;
     font-weight:300;
     overflow:hidden;
+    position:relative;
+    z-index:0;
 }
 #viewport{
     overflow:auto;
@@ -201,8 +203,10 @@ COMPONENT STYLING
 .pk-cmpList{
     display:table-row;
 }
-.pk-cmp{
+.pk-cmpList .pk-cmp{
     display:table-cell;
+}
+.pk-cmp{
     position:relative;
     overflow:hidden;
     height:100%;
@@ -332,25 +336,43 @@ FILTER INPUT STYLING
 CHART STYLING
 */
 .pk-chart .cd3 text{
-    fill:#fff;
+    fill:#BFBFBF;
     font-size:10px;
 }
 
 .pk-chart .cd3 .axis line,.pk-chart  .cd3 .axis path{
-    stroke:black;
+    stroke:#BFBFBF;
 }
 
 .pk-chart .cd3 g.series rect{
     fill-opacity:.5;
-    stroke:white;
 }
 
 
 
+/*
+MODAL STYLING
+*/
+.pk-modal{
+    position:absolute;
+    height:100%;
+    width:100%;
+    top:0px;
+    background:rgba(255,255,255,.5);
+    z-index:9999;
+    display:table
+}
 
+.pk-modalWrapper{
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+}
 
-
-
+.pk-modalBody{
+    display:inline-block;
+    text-align:left;
+}
 
 
 

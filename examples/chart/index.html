@@ -12,14 +12,14 @@
         <link href="../../lib/cd3-0.4.0/cd3.min.css" rel="stylesheet"> 
     </head>
     <body data-ng-app="pk" ng-controller="pkCtrl" ng-keydown ="keydown($event)" ng-keyup ="keyup($event)">  
-        <pk-container title='Example Grid' tagline='using pk-grid' style='float:left;width:50%;'>
+        
+        <pk-container title='Example Grid' tagline='built using pk-grid' minimizable="true" style='float:left;width:50%;'>
             <pk-grid ng-controller='exampleGridctrl'></pk-grid>
         </pk-container>
-        <pk-container title='Example Chart' tagline='using pk-chart' style='float:left;width:30%;'>
-            <pk-chart ng-controller='exampleChartctrl'></pk-chart>
+        <pk-container title='Example Chart' tagline='built using pk-chart' minimizable="true"  style='float:left;width:30%;'>
+            <pk-chart ng-controller='exampleChartctrl' type="column"></pk-chart>
         </pk-container>
-        
-            
+           
         <!-- Angular.js -->
         <script src="../../lib/angularjs-1.2.18/angular.min.js"></script>
         <!-- jQuery.js -->
@@ -32,6 +32,7 @@
         <script src="../../src/pk-ctrl.js"></script>
         <script src="../../src/common/clickToggle-dir.js"></script>
         <script src="../../src/container/container-dir.js"></script>
+        <script src="../../src/modal/modal-dir.js"></script>
         <script src="../../src/grid/grid-dir.js"></script>
         <script src="../../src/grid/grid-ctrl.js"></script>
         <script src="../../src/grid/cols-dir.js"></script>

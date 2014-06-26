@@ -174,15 +174,13 @@ CONTAINER STYLING
     overflow:hidden;
     max-height:400px;
     height:400px;
-    transition:all 300ms ease-in;
-    opacity:1;
+    transition:all 180ms ease-in;
     position:relative;
     width:100%;
     position:relative;
 }
 .pk-ctBody.pk-ctMin {
     max-height:0;
-    opacity:0;
 }
 .pk-btn.pk-ctMin:before {
     content:'\f067';
@@ -330,9 +328,22 @@ FILTER INPUT STYLING
 }
 
 
+/*
+CHART STYLING
+*/
+.pk-chart .cd3 text{
+    fill:#fff;
+    font-size:10px;
+}
 
+.pk-chart .cd3 .axis line,.pk-chart  .cd3 .axis path{
+    stroke:black;
+}
 
-
+.pk-chart .cd3 g.series rect{
+    fill-opacity:.5;
+    stroke:white;
+}
 
 
 

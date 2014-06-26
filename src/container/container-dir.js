@@ -5,7 +5,7 @@ pk.directive("pkContainer", [function () {
         transclude: true,
         template:"<section class='pk-ct'>\
             <header class='pk-ctHeader'>{{gridData}}\
-                <h3 class='pk-title'>{{$parent.title}}</h3>\
+                <h3 class='pk-title'>{{title}}</h3>\
                 <h6 class='pk-tagline'>{{tagline}}</h6>\
                 <button  class='pk-toRight pk-btn {{ctMinimized && \"pk-ctMin\" || \"pk-ctMax\"}}' ng-click='ctMinimized = !ctMinimized'></button>\
             </header>\
@@ -15,7 +15,10 @@ pk.directive("pkContainer", [function () {
                 </div>\
             </section>\
         </section>",
-        scope:false
+        scope:{
+            title:"@",
+            tagline:"@"
+        }
     }
 }]);
 

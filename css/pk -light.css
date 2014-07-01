@@ -14,7 +14,7 @@ GENERIC STYLING
     font-family:Open Sans;
     font-size:13px;
     line-height:20px;
-    color:#fff;
+    color:#000;
     font-weight:300;
     overflow:hidden;
     position:relative;
@@ -34,7 +34,7 @@ h1 .pk-tagline{
     font-size:16.5px;
 }
 body {
-    background: radial-gradient(ellipse farthest-side at 10% 0, rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9)) repeat scroll 0 0%, url("http://www.samwheeler.info/samwheeler/bgnoise_lg_dark.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background-color: #f7f7f7;
 }
 /*
 GENERIC INPUT STYLING
@@ -43,9 +43,9 @@ input[type=text] {
     background:none;
     border:1px solid transparent;
     padding:4px 5px;
-    color:#BFBFBF;
+    color:#000;
     width:175px;
-    background:rgba(51, 51, 51, 0.25);
+    background:#EAEAEA;
     transition:all 200ms ease-in;
     margin:0 2px;
 }
@@ -53,7 +53,7 @@ input[type=text]:hover {
     border-color:#8E8E8E;
 }
 input[type=text]:focus {
-    border-color:#fff;
+    border-color:#000;
     outline:none;
 }
 
@@ -154,7 +154,7 @@ HELPER STYLING
     font-weight:300;
     padding-left:5px;
     font-size:.9em;
-    color:#BFBFBF;
+    color:#808080;
 }
 .pk-toRight {
     float:right;
@@ -175,12 +175,13 @@ GRID STYLING
 CONTAINER STYLING
 */
 .pk-ct {
-    background:rgba(51, 51, 51, 0.4);
+    background:#fff;
     padding:10px;
     margin:20px;
     position:relative;
     min-width:370px;
     box-sizing:border-box;
+    border:1px solid #c0c0c0;
 }
 .pk-ctBody {
     overflow:hidden;
@@ -346,22 +347,19 @@ FILTER INPUT STYLING
 CHART STYLING
 */
 .pk-chart .cd3 text{
-    fill:#BFBFBF;
+    fill:#808080;
     font-size:10px;
 }
 
 .pk-chart .cd3 .axis line,.pk-chart  .cd3 .axis path{
-    stroke:#BFBFBF;
+    stroke:#808080;
 }
 
 .pk-chart .cd3 g.series rect{
     fill-opacity:.5;
 }
 
-.pk-chart .cd3 .legend{
-    background:rgba(0,0,0,.3);
-    padding:5px;
-}
+
 
 /*
 MODAL STYLING
@@ -418,6 +416,7 @@ TABLE STYLING
 
 .pk-gridTable, .pk-gridHeader {
     width:100%;
+    font-size:.9em;
     table-layout:fixed;
     border-collapse:collapse;
 }
@@ -430,19 +429,19 @@ TABLE STYLING
     cursor:default;
 }
 .pk-gridTable .pk-gridRow:nth-child(even) {
-    background:rgba(51, 51, 51, 0.25);
+    background:#F7F7F7;
 }
 .pk-gridTable .pk-gridRow:hover {
-    background:rgba(51, 51, 51, 0.7);
+    background:#E0E0E0;
 }
 .pk-gridTable .pk-gridRow.pk-selected {
-    background:rgba(51, 51, 51, 1);
+    background:#DAE0EA;
 }
 .pk-gridTable .pk-gridRow.pk-selected:nth-child(even) {
-    background:rgba(51, 51, 51, 0.9);
+    background:#CED6E5;
 }
 .pk-gridTable .pk-gridRow.pk-selected:hover {
-    background:rgba(61, 61, 61, 1);
+    background:#B9C9E5;
 }
 .pk-gridCell, .pk-gridHead {
     box-sizing:border-box;
@@ -467,7 +466,7 @@ TABLE STYLING
     line-height:10px;
 }
 .pk-gridHead:hover {
-    background:#6F8085;
+    background:#c0c0c0;
 }
 .pk-gridHead.pk-sort-asc:after {
     content:'\f0d8';

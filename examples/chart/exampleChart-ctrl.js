@@ -3,9 +3,9 @@ function ($scope, exampleChartfcty , $timeout) {
     $scope.chart={
         margin: {
             top: 5,
-            right: 40,
+            right: 0,
             bottom: 60,
-            left: 40
+            left: 20
         },
         xAxis: {
             scale: "ordinal",

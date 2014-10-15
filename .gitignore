@@ -36,3 +36,12 @@ Icon
 .Trashes
 
 *.bak
+node_modules/grunt-contrib-concat/LICENSE-MIT
+
+Gruntfile.js
+
+node_modules/grunt-contrib-concat/node_modules/chalk/index.js
+
+node_modules/grunt-contrib-concat/node_modules/chalk/node_modules/.bin/has-ansi
+
+node_modules/grunt-contrib-concat/node_modules/chalk/node_modules/.bin/strip-ansi

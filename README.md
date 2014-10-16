@@ -13,6 +13,8 @@ Lightweight UI library written in vanilla JS.
 Components
 ----
 
+###Functionality
+
 ######Core
 - pk-core.js
 - pk-core.css
@@ -22,7 +24,14 @@ Components
 - pk-draggable.js
 - pk-draggable.css
 
+
+###User Interface
+
 ######Modal
 <sup>Requires core, draggable (optional)</sup>
 - pk-modal.js
 - pk-modal.css
+- 
+####Inputs
+
+#######Toggleswitch

@@ -9,6 +9,10 @@ Lightweight UI library written in vanilla JS.
 
 <sup>* Unless otherwise stated for a specific component</sup>
 
+In development
+----
+- Grids
+- Charting
 
 Components
 ----

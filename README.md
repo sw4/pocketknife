@@ -33,8 +33,8 @@ Components
 <sup>Requires core, draggable (optional)</sup>
 - pk-modal.js
 - pk-modal.css
-- 
-#####Inputs Types
+
+#####Input Types
 
 ######Toggleswitch
 <sup>Requires core</sup>

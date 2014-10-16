@@ -7,7 +7,7 @@ Lightweight UI library written in vanilla JS.
 - Feature detection enables helper wrappers for jQuery and Angular where available
 - Built for IE8+, FF and Chrome
 
-<sup>*</sup> Unless otherwise stated
+<sup>* Unless otherwise stated for a specific component</sup>
 
 
 Components

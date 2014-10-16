@@ -34,9 +34,22 @@ Components
 - pk-modal.js
 - pk-modal.css
 
-#####Input Types
+######Input Types
 
-######Toggleswitch
+#####Toggleswitch
+
 <sup>Requires core</sup>
 - pk-toggleswitch.js
 - pk-toggleswitch.css
+
+#####Slider
+
+<sup>Requires core</sup>
+- pk-slider.js
+- pk-slider.css
+
+#####Rating
+
+<sup>Requires core</sup>
+- pk-rating.js
+- pk-rating.css

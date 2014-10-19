@@ -3,6 +3,9 @@ pocketknife
 
 [![Build Status](https://travis-ci.org/sw4/pocketknife.svg)](https://travis-ci.org/sw4/pocketknife)
 
+[![Dev Dependancies](https://david-dm.org/sw4/pocketknife.png)](https://david-dm.org/sw4/pocketknife)
+
+
 Lightweight UI library written in vanilla JS.
 
 - No external dependancies<sup>*</sup>

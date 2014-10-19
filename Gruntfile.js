@@ -180,8 +180,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
+
     grunt.registerTask('default', ['watch', 'browserSync']);
 
     // Travis CI task.
-    // grunt.registerTask('travis', 'lint concat min');
+    grunt.registerTask('travis', ['concat', 'less', 'csslint', 'cssbeautifier', 'autoprefixer', 'cssmin', 'jshint', 'jsbeautifier', 'uglify', 'clean']);
 };

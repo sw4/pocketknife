@@ -26,12 +26,6 @@ module.exports = function(grunt) {
                 dest: 'dist/<%= pkg.name %>.less'
             }
         },
-        min: {
-            js: {
-                src: ['dist/<%= pkg.name %>.js'],
-                dest: 'dist/<%= pkg.name %>.min.js'
-            }
-        },
         // Minify CSS Files
         cssmin: {
             options: {
@@ -48,20 +42,16 @@ module.exports = function(grunt) {
                 src: "src/**/*.css",
                 rules: {
                     "import": false,
-                    //   'regex-selectors':false, // remove
                     'adjoining-classes': false,
-                    //   'unqualified-attributes':false, // remove
                     'outline-none': false,
                     'box-sizing': false,
                     'fallback-colors': false,
                     'box-model': false
-                        //   "overqualified-elements": 2
                 }
             }
         },
         // LINT JS files
         jshint: {
-            // define the files to lint
             files: ['gruntfile.js', 'src/**/*.js'],
             // configure JSHint (documented at http://www.jshint.com/docs/)
 
@@ -190,14 +180,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    // Default task.
-    // grunt.registerTask('default', ['watch', 'browserSync', 'csslint', 'jshint','concat', 'uglify','autoprefixer','cssmin']);
     grunt.registerTask('default', ['watch', 'browserSync']);
-    /**
-     * @license pocketknife v1.2.20
-     * (c) 2014-2014 Pocketknife, Ltd. http://angularjs.org
-     * License: MIT
-     */
+
     // Travis CI task.
     // grunt.registerTask('travis', 'lint concat min');
 };

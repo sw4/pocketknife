@@ -2,7 +2,6 @@ pocketknife
 ===========
 
 [![Build Status](https://travis-ci.org/sw4/pocketknife.svg)](https://travis-ci.org/sw4/pocketknife)
-
 [![Dev Dependancies](https://david-dm.org/sw4/pocketknife.png)](https://david-dm.org/sw4/pocketknife)
 
 

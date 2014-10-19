@@ -40,7 +40,7 @@ Icon
 
 node_modules/
 
-Gruntfile.js
-package.json
+# Gruntfile.js
+# package.json
 npm-debug.log
 .gitattributes

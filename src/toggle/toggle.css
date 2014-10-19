@@ -9,7 +9,7 @@
     box-sizing:border-box;
     display:inline-block;
     position:relative;
-    overflow:hidden;
+    overflow:hidden;  
 }
 .pk-toggle input{
     display:none;

@@ -40,7 +40,7 @@ module.exports = function(grunt) {
         csslint: {
             css: {
                 src: "src/**/*.css",
-                rules: {
+                options: {
                     "import": false,
                     'adjoining-classes': false,
                     'outline-none': false,

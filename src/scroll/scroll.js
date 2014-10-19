@@ -1,10 +1,10 @@
 var pk = pk || {};
-(function (pk) {
+(function(pk) {
     // HELPERS FOR jQUERY+ANGULAR
     if (typeof jQuery === 'object') {
         // jquery available
         jQuery.fn.extend({
-            pkScroll: function (axis) {
+            pkScroll: function(axis) {
                 pk.scroll({
                     element: this[0],
                     axis: axis
@@ -16,30 +16,30 @@ var pk = pk || {};
         // angular available
         (
 
-        function () {
-            angular.module('pk-scroll', ['ng'])
-                .directive('pkScroll', function () {
-                return {
-                    restrict: 'A',
-                    link: function (scope, el) {
-                        pk.scroll({
-                            element: el[0],
-                            axis: el[0].getAttribute('pk-scroll')
-                        });
-                    }
-                };
-            });
-        })();
+            function() {
+                angular.module('pk-scroll', ['ng'])
+                    .directive('pkScroll', function() {
+                        return {
+                            restrict: 'A',
+                            link: function(scope, el) {
+                                pk.scroll({
+                                    element: el[0],
+                                    axis: el[0].getAttribute('pk-scroll')
+                                });
+                            }
+                        };
+                    });
+            })();
     }
-    pk.scroll = function (opt) {
-        
+    pk.scroll = function(opt) {
+
         var el = opt.element;
         // INIT SCROLL STRUCTURE
-        
-        var tpl="<div class='pk-scroll-container'>\
-            <"+el.nodeName+" class='pk-scroll-content'>\
-                "+el.innerHTML+"\
-            </"+el.nodeName+">\
+
+        var tpl = "<div class='pk-scroll-container'>\
+            <" + el.nodeName + " class='pk-scroll-content'>\
+                " + el.innerHTML + "\
+            </" + el.nodeName + ">\
             <div class='pk-scroll-trackY'>\
                 <div class='pk-scroll-floatY'></div>\
             </div>\
@@ -47,16 +47,16 @@ var pk = pk || {};
                 <div class='pk-scroll-floatX'></div>\
             </div>\
         </div>";
-        el.innerHTML='';
+        el.innerHTML = '';
         el = pk.replaceEl(el, tpl);
         var container = el.children[0],
             trackY = el.children[1],
             floatY = trackY.children[0],
             trackX = el.children[2],
-            floatX = trackX.children[0];        
+            floatX = trackX.children[0];
         // INIT VARIABLES
         var
-        floatYh = 0,
+            floatYh = 0,
             floatXw = 0,
             allowY = false,
             allowX = false,
@@ -70,10 +70,12 @@ var pk = pk || {};
             contentHeight = 0,
             containerWidth = 0,
             containerHeight = 0,
-            scrollDir = opt.axis ? opt.axis.toLowerCase() : (pk.attribute(el, 'pk-scroll') ?  pk.attribute(el, 'pk-scroll') : "y");
-        if (pk.getStyle(el, 'position') === "static") {el.style.position = "relative";}
-       
-        pk.bindEvent("scroll", container, function () {
+            scrollDir = opt.axis ? opt.axis.toLowerCase() : (pk.attribute(el, 'pk-scroll') ? pk.attribute(el, 'pk-scroll') : "y");
+        if (pk.getStyle(el, 'position') === "static") {
+            el.style.position = "relative";
+        }
+
+        pk.bindEvent("scroll", container, function() {
             percY = container.scrollTop / (contentH - containerH);
             percX = container.scrollLeft / (contentW - containerW);
             percY = percY < 0 ? 0 : percY > 1 ? 1 : percY;
@@ -110,7 +112,7 @@ var pk = pk || {};
         }
         resolveDimensions();
 
-        setInterval(function () {
+        setInterval(function() {
             var widthContainer = el.offsetWidth,
                 heightContainer = el.offsetHeight,
                 widthContent = container.scrollWidth,
@@ -126,7 +128,7 @@ var pk = pk || {};
 
         // DRAG HANDLERS
 
-        if(allowY){
+        if (allowY) {
             pk.drag({
                 element: floatY,
                 move: {
@@ -136,13 +138,13 @@ var pk = pk || {};
                     element: trackY
                 },
                 listeners: {
-                    dragging: function () {
+                    dragging: function() {
                         container.scrollTop = (contentH - containerH) * (floatY.offsetTop / (trackY.offsetHeight - floatY.offsetHeight));
                     }
                 }
             });
         }
-        if(allowX){
+        if (allowX) {
             pk.drag({
                 element: floatX,
                 move: {
@@ -152,25 +154,25 @@ var pk = pk || {};
                     element: trackX
                 },
                 listeners: {
-                    dragging: function () {
-    
+                    dragging: function() {
+
                         container.scrollLeft = (contentW - containerW) * (floatX.offsetLeft / (trackX.offsetWidth - floatX.offsetWidth));
                     }
                 }
             });
         }
-        pk.bindEvent("click", floatY, function (e) {
+        pk.bindEvent("click", floatY, function(e) {
             pk.preventBubble(e);
         });
-        pk.bindEvent("click", floatX, function (e) {
+        pk.bindEvent("click", floatX, function(e) {
             pk.preventBubble(e);
         });
 
         // TRACK CLICKING HANDLERS
-        pk.bindEvent("click", trackY, function (e) {
+        pk.bindEvent("click", trackY, function(e) {
             container.scrollTop = ((e.pageY - el.getBoundingClientRect().top) / containerH * (contentH - containerH));
         });
-        pk.bindEvent("click", trackX, function (e) {
+        pk.bindEvent("click", trackX, function(e) {
             container.scrollLeft = ((e.pageX - el.getBoundingClientRect().left) / containerW * (contentW - containerW));
         });
 
@@ -254,8 +256,8 @@ var pk = pk || {};
 
         // KEYBOARD HANDLERS    
         container.setAttribute("tabindex", 0);
-        pk.bindEvent('keydown', container, function (e) {
-            if(allowY){                
+        pk.bindEvent('keydown', container, function(e) {
+            if (allowY) {
                 switch (e.keyCode) {
                     case 38: //up cursor
                         container.scrollTop -= containerH * 0.1;
@@ -276,9 +278,9 @@ var pk = pk || {};
                     case 35: //end
                         container.scrollTop = contentH;
                         break;
-                }                
+                }
             }
-            if(allowX){                
+            if (allowX) {
                 switch (e.keyCode) {
                     case 37: //left cursor
                         container.scrollLeft -= containerW * 0.1;
@@ -286,7 +288,7 @@ var pk = pk || {};
                     case 39: //right cursor
                         container.scrollLeft += containerW * 0.1;
                         break;
-                }                
+                }
             }
             pk.preventBubble(e);
         });

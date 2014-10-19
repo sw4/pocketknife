@@ -5,85 +5,93 @@
 // indexOf method
 
 if (!Array.prototype.indexOf) {
-  Array.prototype.indexOf = function(searchElement, fromIndex) {
+    Array.prototype.indexOf = function(searchElement, fromIndex) {
 
-    var k;
+        var k;
 
-    if (this == null) {
-      throw new TypeError('"this" is null or not defined');
-    }
+        if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+        }
 
-    var O = Object(this);
-    var len = O.length >>> 0;
+        var O = Object(this);
+        var len = O.length >>> 0;
 
-    if (len === 0) {
-      return -1;
-    }
-    var n = +fromIndex || 0;
+        if (len === 0) {
+            return -1;
+        }
+        var n = +fromIndex || 0;
 
-    if (Math.abs(n) === Infinity) {
-      n = 0;
-    }
-    if (n >= len) {
-      return -1;
-    }
-    k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-    while (k < len) {
-      if (k in O && O[k] === searchElement) {
-        return k;
-      }
-      k++;
-    }
-    return -1;
-  };
+        if (Math.abs(n) === Infinity) {
+            n = 0;
+        }
+        if (n >= len) {
+            return -1;
+        }
+        k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+        while (k < len) {
+            if (k in O && O[k] === searchElement) {
+                return k;
+            }
+            k++;
+        }
+        return -1;
+    };
 }
 
 // Pocketknife Core
 
 var pk = pk || {};
-(function (pk) {
-    pk.preventBubble = function (e) {
-        if (e.preventDefault) {e.preventDefault();}
-        if (e.stopPropagation) {e.stopPropagation();}
+(function(pk) {
+    pk.preventBubble = function(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
         e.cancelBubble = true;
         e.returnValue = false;
         return false;
     };
-    pk.toggleClass = function(el, c, t){
-        if(t === true){
-            pk.addClass(el,c);
+    pk.toggleClass = function(el, c, t) {
+        if (t === true) {
+            pk.addClass(el, c);
             return;
-        }else if(t===false){
-            pk.removeClass(el,c);
+        } else if (t === false) {
+            pk.removeClass(el, c);
             return;
         }
-        pk.toggleClass(el, c, !pk.hasClass(el,c));
+        pk.toggleClass(el, c, !pk.hasClass(el, c));
     };
-    pk.hasClass=function(el, c){
+    pk.hasClass = function(el, c) {
         var ca = el.getAttribute('class') || '';
         return (ca && ca.indexOf(c) > -1) ? true : false;
     };
-    pk.center = function (el) {
+    pk.center = function(el) {
         el.style.top = el.parentNode.clientHeight / 2 - (el.offsetHeight / 2) + 'px';
         el.style.left = el.parentNode.clientWidth / 2 - (el.offsetWidth / 2) + 'px';
     };
-    pk.getStyle = function (el, p) {
+    pk.getStyle = function(el, p) {
         return window.getComputedStyle(el).getPropertyValue(p);
     };
-    pk.addClass = function (el, c) {
-        if (pk.hasClass(el,c)){ return;}
+    pk.addClass = function(el, c) {
+        if (pk.hasClass(el, c)) {
+            return;
+        }
         var ca = el.getAttribute('class') || '';
         el.setAttribute('class', (ca ? ca + ' ' : '') + c);
         return el;
     };
-    pk.removeClass = function (el, c) {
+    pk.removeClass = function(el, c) {
         var ca = el.getAttribute('class');
-        if (!ca){return;}
+        if (!ca) {
+            return;
+        }
         el.setAttribute('class', ca.replace(c, ''));
         return el;
     };
-    pk.bindEvent = function (e, el, fn) {
-        if(e==="mousewheel"){
+    pk.bindEvent = function(e, el, fn) {
+        if (e === "mousewheel") {
             e = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel"; //FF doesn't recognize mousewheel as of FF3.x  
         }
         if (el.addEventListener) {
@@ -92,7 +100,7 @@ var pk = pk || {};
             el.attachEvent("on" + e, fn);
         }
     };
-    pk.layout = function (el, offset) {
+    pk.layout = function(el, offset) {
         var t = offset ? el.offsetTop : el.getBoundingClientRect().top,
             l = offset ? el.offsetLeft : el.getBoundingClientRect().left,
             h = el.offsetHeight,
@@ -106,36 +114,40 @@ var pk = pk || {};
             width: w
         };
     };
-    pk.bindListeners=function(l, el){
-        for(var e in l){
-            pk.bindEvent(e, el, l[e]);                
+    pk.bindListeners = function(l, el) {
+        for (var e in l) {
+            pk.bindEvent(e, el, l[e]);
         }
     };
-    pk.getRand = function (min, max) {
-      return Math.floor(Math.random() * (max - min)) + min;
+    pk.getRand = function(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
     };
 
-    pk.wrapEl = function(el, str){
-        var helperEl = pk.createEl(str);    
+    pk.wrapEl = function(el, str) {
+        var helperEl = pk.createEl(str);
         el.parentNode.insertBefore(helperEl, el);
         helperEl.appendChild(el);
         return helperEl;
     };
-    pk.createEl=function(str){
-        var el = document.createElement('div');        
-        el.innerHTML=str;        
+    pk.createEl = function(str) {
+        var el = document.createElement('div');
+        el.innerHTML = str;
         return el.children[0];
     };
-    pk.getIndex=function(el){
-        if(!el){return null;}
+    pk.getIndex = function(el) {
+        if (!el) {
+            return null;
+        }
         var prop = document.body.previousElementSibling ? 'previousElementSibling' : 'previousSibling';
         var i = 1;
-        while (el = el[prop]) { ++i; }
-        return i-1;        
-    }; 
-    pk.replaceEl = function(el,str) {
-        var newEl = pk.createEl(str);         
-        for(var i = 0; i < el.attributes.length; i++) {
+        while (el = el[prop]) {
+            ++i;
+        }
+        return i - 1;
+    };
+    pk.replaceEl = function(el, str) {
+        var newEl = pk.createEl(str);
+        for (var i = 0; i < el.attributes.length; i++) {
             newEl.setAttribute(el.attributes[i].nodeName, el.attributes[i].nodeValue);
         }
         while (el.firstChild) {
@@ -145,22 +157,22 @@ var pk = pk || {};
         return newEl;
     };
     pk.toArr = function(v) {
-        var a=[];
+        var a = [];
         if (v && typeof v !== "object") {
-            if(v.indexOf(',') !== -1){
+            if (v.indexOf(',') !== -1) {
                 a = v.split(',');
-            }else{
+            } else {
                 a.push(v);
             }
-        }else{
-             a=v;   
+        } else {
+            a = v;
         }
         return a;
-    };    
-    pk.collide = function(a1, a2, s){
+    };
+    pk.collide = function(a1, a2, s) {
         s = s || 0;
-        a1=pk.toArr(a1);
-        a2=pk.toArr(a2);
+        a1 = pk.toArr(a1);
+        a2 = pk.toArr(a2);
         /* 
             s = switch
             0 (default) = replace a1 with a2
@@ -168,28 +180,30 @@ var pk = pk || {};
             2 = remove a2 from a1
             3 = toggle a2 in a1 and add/remove items if not/found                
         */
-        if(s===0){return a2;}
-        for(var i in a2){
-            var f = a1.indexOf(a2[i]) !== -1 ? true : false;                
-            if(!f && (s ===1 || s === 3)){
+        if (s === 0) {
+            return a2;
+        }
+        for (var i in a2) {
+            var f = a1.indexOf(a2[i]) !== -1 ? true : false;
+            if (!f && (s === 1 || s === 3)) {
                 a1.push(a2[i]);
-            }else if(f && (s ===2 || s === 3)){
+            } else if (f && (s === 2 || s === 3)) {
                 a1.splice(parseInt(a1.indexOf(a2[i]), 0), 1);
-            }                
+            }
         }
         return a1;
-    }; 
-    pk.attribute = function (el, attr, val){
-        
-        attr = el.hasAttribute(attr) ? attr : el.hasAttribute('data-'+attr) ? 'data-'+attr : attr;        
-        if(val===undefined){
-            return (attr==='selected' || attr==='disabled' || attr==='checked') ? (el.hasAttribute(attr) ? true : false) : el.getAttribute(attr);
+    };
+    pk.attribute = function(el, attr, val) {
+
+        attr = el.hasAttribute(attr) ? attr : el.hasAttribute('data-' + attr) ? 'data-' + attr : attr;
+        if (val === undefined) {
+            return (attr === 'selected' || attr === 'disabled' || attr === 'checked') ? (el.hasAttribute(attr) ? true : false) : el.getAttribute(attr);
         }
-        if(val===false && (attr==='selected' || attr==='disabled' || attr==='checked')){
-            el.removeAttribute(attr); 
-        }else{
-            el.setAttribute(attr,val);
-        }               
+        if (val === false && (attr === 'selected' || attr === 'disabled' || attr === 'checked')) {
+            el.removeAttribute(attr);
+        } else {
+            el.setAttribute(attr, val);
+        }
     };
     pk.addClass(document.body, 'pk-ui');
 })(pk);

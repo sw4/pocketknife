@@ -11,14 +11,12 @@
     left: 0;
     z-index: 998;
     transition: opacity 300ms ease-in;
-}
-
-.pk-modal-mask.pk-show {
-    opacity: 1;
-}
-
-.pk-modal-mask.pk-hide {
-    opacity: 0;
+	&.pk-show {
+	    opacity: 1;
+	}
+	&.pk-hide {
+	    opacity: 0;
+	}
 }
 
 .pk-modal-box {
@@ -60,10 +58,9 @@
     text-align: center;
     overflow: hidden;
     vertical-align: middle;
-}
-
-.pk-modal-close:after {
-    content: '\00d7';
+	&:after {
+	    content: '\00d7';
+	}
 }
 
 .pk-modal-content {

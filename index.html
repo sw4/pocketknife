@@ -1,20 +1,23 @@
+<!DOCTYPE html>
 
-<!doctype html>
 <html lang="en">
-    <head>
-        <title>Pocketknife UI</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <meta charset="utf-8"> 
-        <link href="https://rawgit.com/sw4/pocketknife/master/dist/pocketknife.min.css" rel="stylesheet">    
-        <link href="dist/pocketknife.min.css" rel="stylesheet">      
-        <style>
-            html, body {
+<head>
+    <title>Pocketknife UI</title>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=no"
+    name="viewport">
+    <meta charset="utf-8">
+    <link href=
+    "https://rawgit.com/sw4/pocketknife/master/dist/pocketknife.min.css" rel=
+    "stylesheet">
+    <link href="dist/pocketknife.min.css" rel="stylesheet">
+    <style>
+        html, body {
                 height: 100%;
                 width: 100%;
                 margin: 0;
                 padding: 0;
             }
-            #scroll1{
+        #scroll1{
             border:1px solid grey;
             position:relative;
             height: 50%;/* <---dimensions required */
@@ -25,174 +28,227 @@
             position: relative;
             text-align: left;
         }
-        </style>
-    </head>
-    <body >
+    </style>
+</head>
 
-              <h1>Rating Input</h1>        
-        <div id='rating1' ></div>
-<br /><br />
-              <h1>Slider Input</h1>
+<body>
+    <h1>Rating Input</h1>
 
-        <span id='slider1'></span>
-        <br/><br />
-        <span id='slider2'></span>
-<br/><br /> 
+    <div id='rating1'></div><br>
+    <br>
 
-              <h1>Toggle Input</h1>
+    <h1>Slider Input</h1><span id='slider1'></span><br>
+    <br>
+    <span id='slider2'></span><br>
+    <br>
 
+    <h1>Toggle Input</h1>
 
-        <input id='toggle1' type='checkbox' />
-<br/><br />
+    <form>
+        <input id='toggle1' type='checkbox'><br>
+        <br>
+    </form>
 
+    <h1>Modal Dialog</h1><a href='#' onclick=
+    "pk.modal({header:'Modal Header',content:'Content...&lt;br/&gt;..goes...&lt;br/&gt;..here&lt;br/&gt;', draggable:true});">Click
+    me!</a><br>
+    <br>
 
-              <h1>Modal Dialog</h1>
-        <a href='#' onclick="pk.modal({header:'Modal Header',content:'Content...<br/>..goes...<br/>..here<br/>', draggable:true});">Click me!</a>
+    <h1>Custom scrollbars</h1>
 
-<br/><br />
+    <div id='scroll1'>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        verylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshere
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        verylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshere
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content goes here<br>
+        very long content
+    </div>
 
+    <h1>Multiple select, with initial selections</h1><select id='example1'>
+        <option value='val1'>
+            option 1
+        </option>
 
-              <h1>Custom scrollbars</h1>
+        <option value='val2'>
+            option 2
+        </option>
 
-<div id='scroll1' pk-scroll="xy">
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      verylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshere
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      verylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshereverylongcontentgoeshere
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content goes here<br>
-      very long content </div>
+        <option value='val3'>
+            option 3
+        </option>
 
+        <option selected value='val4'>
+            option 4
+        </option>
 
-              <h1>Multiple select, with initial selections</h1>
-        <select id='example1'>
-            <option value='val1'>option 1</option>
-            <option value='val2'>option 2</option>
-            <option value='val3'>option 3</option>
-            <option value='val4' selected>option 4</option>
-            <option value='val5'>option 5</option>
-        </select>
-        <br/>
-        <h1>Multiple select with dropdown and no initial selections</h1>
-        <select id='example2'>
-            <option value='val1'>option 1</option>
-            <option value='val2'>option 2</option>
-            <option value='val3'>option 3</option>
-            <option value='val4'>option 4</option>
-            <option value='val5'>option 5</option>
-        </select>
-        <br/>
-        <h1>Single select with dropdown and initial selection</h1>
-        <select id='example3'>
-            <option value='val1'>option 1</option>
-            <option value='val2'>option 2</option>
-            <option value='val3'>option 3</option>
-            <option value='val4'>option 4</option>
-            <option value='val5'>option 5</option>
-        </select>
-        <br/>
-        <h1>Single select with no initial selection</h1>
-        <select id='example4'>
-            <option value='val1'>option 1</option>
-            <option value='val2'>option 2</option>
-            <option value='val3'>option 3</option>
-            <option value='val4'>option 4</option>
-            <option value='val5'>option 5</option>
-        </select>
+        <option value='val5'>
+            option 5
+        </option>
+    </select><br>
 
-<br/><br />
+    <h1>Multiple select with dropdown and no initial selections</h1><select id=
+    'example2'>
+        <option value='val1'>
+            option 1
+        </option>
 
-              <h1>Modal Dialog</h1>
-        <a href='#' onclick="pk.modal({header:'Modal Header',content:'Content...<br/>..goes...<br/>..here<br/>', draggable:true});">Click me!</a>
-        <script src="https://rawgit.com/sw4/pocketknife/master/dist/pocketknife.min.js"></script>
+        <option value='val2'>
+            option 2
+        </option>
 
+        <option value='val3'>
+            option 3
+        </option>
 
-        <script src="dist/pocketknife.min.js"></script>  
-        <script>
-            pk.rating({element:document.getElementById('rating1')});
+        <option value='val4'>
+            option 4
+        </option>
 
-            pk.slider({element:document.getElementById('slider1'), units:'%', axis:'y'});
-            pk.slider({element:document.getElementById('slider2'), units:'%'});
+        <option value='val5'>
+            option 5
+        </option>
+    </select><br>
 
-           pk.toggle({element:document.getElementById('toggle1'), label:{on:'CLICKED'}});
+    <h1>Single select with dropdown and initial selection</h1><select id=
+    'example3'>
+        <option value='val1'>
+            option 1
+        </option>
 
- pk.select({
-                element: document.getElementById('example1'),
-                value:'val2',
-                multiple:true
-            });
-            
-            pk.select({
-                element: document.getElementById('example2'),
-                value:'val1',
-                multiple:true,
-                dropdown:true
-            });  
-            
-            pk.select({
-                element: document.getElementById('example3'),
-                value:'val3',
-                dropdown:true
-            });          
-            
-            pk.select({
-                element: document.getElementById('example4')
-            });     
+        <option value='val2'>
+            option 2
+        </option>
 
-            pk.scroll({element:document.getElementById('scroll1')});
+        <option value='val3'>
+            option 3
+        </option>
 
-        </script>
-    </body>
+        <option value='val4'>
+            option 4
+        </option>
+
+        <option value='val5'>
+            option 5
+        </option>
+    </select><br>
+
+    <h1>Single select with no initial selection</h1><select id='example4'>
+        <option value='val1'>
+            option 1
+        </option>
+
+        <option value='val2'>
+            option 2
+        </option>
+
+        <option value='val3'>
+            option 3
+        </option>
+
+        <option value='val4'>
+            option 4
+        </option>
+
+        <option value='val5'>
+            option 5
+        </option>
+    </select><br>
+    <br>
+
+    <h1>Modal Dialog</h1>
+    
+    <a href='#' onclick=
+    "pk.modal({header:'Modal Header',content:'Content...&lt;br/&gt;..goes...&lt;br/&gt;..here&lt;br/&gt;', draggable:true});">Click
+    me!</a> 
+    
+    <script src=
+    "https://rawgit.com/sw4/pocketknife/master/dist/pocketknife.min.js"></script> <script src="dist/pocketknife.min.js"></script> <script>
+        pk.rating({element:document.getElementById('rating1')});
+
+        pk.slider({element:document.getElementById('slider1'), units:'%', axis:'y'});
+        pk.slider({element:document.getElementById('slider2'), units:'%'});
+
+        pk.toggle({element:document.getElementById('toggle1'), label:{on:'CLICKED'}});
+
+        pk.select({
+            element: document.getElementById('example1'),
+            value:'val2',
+            multiple:true
+        });
+        
+        pk.select({
+            element: document.getElementById('example2'),
+            value:'val1',
+            multiple:true,
+            dropdown:true
+        });  
+        
+        pk.select({
+            element: document.getElementById('example3'),
+            value:'val3',
+            dropdown:true
+        });          
+        
+        pk.select({
+            element: document.getElementById('example4')
+        });     
+
+        pk.scroll({element:document.getElementById('scroll1')});
+
+    </script>
+</body>
 </html>

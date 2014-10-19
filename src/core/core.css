@@ -1,6 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
-[class*=pk-]:not(.pk-noselect){
+.pk-ui{
     font-family:'PT Sans Narrow';
+    font-size:14px;
 }
 .pk-overlay{
     position:fixed;

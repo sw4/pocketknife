@@ -19,25 +19,25 @@ module.exports = function(grunt) {
         src: [
                 'src/**/*.js'
               ],
-        dest: 'dist/<%= pkg.name %>.min.js'
+        dest: 'dist/<%= pkg.name %>.js'
       },
       css: {
         src: [
                 'src/**/*.css'
               ],
-        dest: 'dist/<%= pkg.name %>.min.css'
+        dest: 'dist/<%= pkg.name %>.css'
       }
     },
     min: {
       js: {
-        src: ['dist/<%= pkg.name %>.min.js'],
+        src: ['dist/<%= pkg.name %>.js'],
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
     // Minify CSS Files
     cssmin: {
         css: {
-            src: ['dist/<%= pkg.name %>.min.css'],
+            src: ['dist/<%= pkg.name %>.css'],
             dest: 'dist/<%= pkg.name %>.min.css'
         }
     },
@@ -123,7 +123,7 @@ watch: {
     },
         css: {
         files: ['Gruntfile.js','src/**/*.css'],
-        tasks: ['csslint','concat','autoprefixer', 'cssmin'],
+        tasks: ['csslint','concat','autoprefixer', 'cssmin'], 
         options: {
             spawn: false,
         },

@@ -191,4 +191,5 @@ var pk = pk || {};
             el.setAttribute(attr,val);
         }               
     };
+    pk.addClass(document.body, 'pk-ui');
 })(pk);

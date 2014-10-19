@@ -16,7 +16,7 @@
     cursor: pointer;
     font-size: 200%;
     line-height: 1.2;
-    color: #f5f5f5;
+    color: @color-unselected;
     transition: color 100ms ease-in;
 }
 
@@ -25,23 +25,23 @@
 }
 
 .pk-rating > fieldset > input:checked ~ label {
-    color: #0CC09F;
+    color: @color-selected;
 }
 
 .pk-rating > fieldset:not(:checked) > label:hover, .pk-rating > fieldset:not(:checked) > label:hover ~ label {
-    color: #cbefe9;
+    color: @color-unselected-hover;
 }
 
 .pk-rating > fieldset > input:checked + label:hover, .pk-rating > fieldset > input:checked + label:hover ~ label, .pk-rating > fieldset > input:checked ~ label:hover, .pk-rating > fieldset > input:checked ~ label:hover ~ label, .pk-rating > fieldset > label:hover ~ input:checked ~ label {
-    color: #47e5c8;
+    color: @color-selected-hover;
 }
 
 .pk-rating.pk-disabled > fieldset:not(:checked) > label:hover, .pk-rating.pk-disabled > fieldset:not(:checked) > label:hover ~ label {
-    color: #f5f5f5;
+    color: @color-unselected;
 }
 
 .pk-rating.pk-disabled > fieldset > input:checked + label:hover, .pk-rating.pk-disabled > fieldset > input:checked + label:hover ~ label, .pk-rating.pk-disabled > fieldset > input:checked ~ label:hover, .pk-rating.pk-disabled > fieldset > input:checked ~ label:hover ~ label, .pk-rating.pk-disabled > fieldset > label:hover ~ input:checked ~ label {
-    color: #0CC09F;
+    color: @color-selected;
 }
 
 .pk-rating > fieldset > label:active {

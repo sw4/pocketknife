@@ -111,6 +111,14 @@ module.exports = function(grunt) {
                     spawn: false,
                 },
             },
+            html: {
+                files: ['index.html'],
+                tasks: ['prettify'],
+                options: {
+                    spawn: false,
+                },
+            },
+
             js: {
                 files: ['src/**/*.js'],
                 tasks: ['jshint', 'jsbeautifier', 'concat', 'uglify', 'clean'],
@@ -133,6 +141,16 @@ module.exports = function(grunt) {
                 },
             }
         },
+        // Make HTML look nice
+        prettify: {
+            options: {
+                // Task-specific options go here.
+            },
+            files: {
+                'index.html': ['index.html']
+            }
+        },
+
         // Make CSS look nice
         cssbeautifier: {
             files: ["src/**/*.css"]
@@ -182,6 +200,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-prettify');
 
     grunt.registerTask('default', ['watch', 'browserSync']);
 

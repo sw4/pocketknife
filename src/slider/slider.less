@@ -1,12 +1,12 @@
 .pk-slider {
     display: inline-block;
-    height: 30px;
-    line-height: 30px;
+    height: @item-height-slim;
+    line-height: @item-height-slim;
     position: relative;
-    border: 1px solid #e5e5e5;
-    width: 200px;
+    border: 1px solid @color-border;
+    width: @item-width-inline;
     box-sizing: border-box;
-    background: #f5f5f5;
+    background: @color-unselected;
 }
 
 .pk-slider:focus, .pk-slider:active {
@@ -14,8 +14,8 @@
 }
 
 .pk-slider-y {
-    width: 30px;
-    height: 200px;
+    width: @item-height-slim;
+    height: @item-width-inline;
 }
 
 .pk-slider input {
@@ -33,12 +33,12 @@
 
 .pk-slider-bar {
     width: 0;
-    background: #0CC09F;
+    background: @color-selected;
     white-space: nowrap;
 }
 
 .pk-disabled .pk-slider-bar {
-    background: #c4c4c4;
+    background: @color-disabled;
 }
 
 .pk-slider-y .pk-slider-mask, .pk-slider-y .pk-slider-bar {

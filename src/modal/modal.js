@@ -22,7 +22,7 @@ var pk = pk || {};
         box.appendChild(header);
         box.appendChild(content);
         pk.addClass(mask, 'pk-modal-mask').appendChild(box);
-        e.parentNode.appendChild(mask);
+        document.body.appendChild(mask);
 
         function closeModal() {
             pk.addClass(pk.removeClass(mask, 'pk-show'), 'pk-hide');
@@ -50,7 +50,8 @@ var pk = pk || {};
             }
         }, 500);
         pk.center(box);
-        if (opt.drag && pk.drag) {
+
+        if (opt.drag !== false && pk.drag) {
             pk.drag({
                 element: box,
                 handle: header,

@@ -1,6 +1,7 @@
 .pk-select {
-    line-height: 30px;
+    line-height: @item-height-normal;
     position: relative;
+    width:@item-width-inline;
 }
 
 .pk-select:focus, .pk-select:active {
@@ -10,13 +11,13 @@
 .pk-select ul {
     display: none;
     position: absolute;
-    border: 1px solid #e5e5e5;
+    border: 1px solid @color-border;
     width: 100%;
     box-sizing: border-box;
     list-style: none;
     margin: 0;
     padding: 0;
-    background: #fff;
+    background: @color-empty;
 }
 
 .pk-select-single ul {
@@ -24,19 +25,19 @@
 }
 
 .pk-select-value {
-    border: 1px solid #e5e5e5;
+    border: 1px solid @color-border;
     display: none;
-    padding: 0 30px 0 6px;
+    padding: 0 @item-height-normal 0 6px;
 }
 
 .pk-select-dropdown .pk-select-value:after {
     content: '\25BC';
     position: absolute;
-    color: #c4c4c4;
+    color: @color-disabled;
     right: 0;
     top: 0;
     height: 100%;
-    width: 30px;
+    width: @item-height-normal;
     text-align: center;
 }
 
@@ -49,8 +50,8 @@
 }
 
 .pk-select-value-tag {
-    border: 1px solid #c4c4c4;
-    background: #f5f5f5;
+    border: 1px solid @color-border;
+    background: @color-unselected;
     border-radius: 4px;
     display: inline-block;
     margin: 0 2px;
@@ -65,13 +66,13 @@
     top: 0;
     right: 0;
     border-bottom-left-radius: 4px;
-    background: #ff0000;
+    background: @color-warning;
     content: '\00D7';
     line-height: 12px;
     text-align: center;
     height: 12px;
     width: 12px;
-    color: #fff;
+    color: @color-empty;
     opacity: 0;
     transition: opacity 100ms ease-in;
 }
@@ -81,7 +82,7 @@
 }
 
 .pk-select .pk-select-value.pk-placeholder {
-    color: #b4b4b4;
+    color: @color-unselected;
     font-style: italic;
 }
 
@@ -108,14 +109,14 @@
 }
 
 .pk-select li:hover {
-    background: #cbefe9;
+    background: @color-unselected-hover;
 }
 
 .pk-select li.pk-selected {
-    background: #0CC09F;
-    color: #fff;
+    background: @color-selected;
+    color: @color-empty;
 }
 
 .pk-select li.pk-selected:hover {
-    background: #7cccbd;
+    background: @color-selected-hover;
 }

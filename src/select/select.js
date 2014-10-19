@@ -44,7 +44,7 @@ var pk = pk || {};
         }
         tpl += "</ul></div>";
 
-        el.innerHtml = '';
+        el.innerHTML = '';
         el = pk.replaceEl(el, tpl);
 
         var triggerEl = el.children[1],

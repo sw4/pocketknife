@@ -148,7 +148,7 @@ var pk = pk || {};
     pk.replaceEl = function(el, str) {
         var newEl = pk.createEl(str);
         for (var i = 0; i < el.attributes.length; i++) {
-            newEl.setAttribute(el.attributes[i].nodeName, el.attributes[i].nodeValue);
+            newEl.setAttribute(el.attributes[i].nodeName, el.attributes[i].value);
         }
         while (el.firstChild) {
             newEl.appendChild(el.firstChild);

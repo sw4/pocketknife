@@ -20,7 +20,7 @@
 }
 
 .pk-modal-box {
-    border: 1px solid #2faf98;
+    border: 1px solid @color-selected;
     background: white;
     display: block;
     width: 40%;
@@ -30,15 +30,15 @@
 }
 
 .pk-modal-header {
-    background: #2faf98;
+    background: @color-selected;
     color: white;
     font-weight: 100;
     text-transform: uppercase;
-    line-height: 40px;
+    line-height: @item-height-large;
 }
 
 .pk-modal-header, .pk-modal-content {
-    padding: 0 10px;
+    padding: 0 @padding-content;
     margin: 0;
     text-align: left;
     position: relative;
@@ -48,11 +48,11 @@
 .pk-modal-close {
     display: inline-block;
     position: absolute;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    font-size: 30px;
-    right: 10px;
+    width: @item-height-normal;
+    height: @item-height-normal;
+    line-height: @item-height-normal;
+    font-size: @item-height-normal;
+    right: @padding-content;
     top: 6px;
     cursor: pointer;
     text-align: center;
@@ -64,7 +64,6 @@
 }
 
 .pk-modal-content {
-    font-size: 14px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: @padding-content;
+    padding-bottom: @padding-content;
 }

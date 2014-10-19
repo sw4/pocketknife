@@ -112,7 +112,7 @@ module.exports = function(grunt) {
                 },
             },
             html: {
-                files: ['index.html'],
+                files: ['*.html'],
                 tasks: ['prettify'],
                 options: {
                     spawn: false,
@@ -175,12 +175,19 @@ module.exports = function(grunt) {
         },
         // Auto update any open browser windows
         browserSync: {
-            dev: {
+            default_options: {
                 bsFiles: {
-                    src: 'dist/**/*.css'
+                    src: [
+                        "dist/*.css",
+                        "dist/*.js",
+                        "*.html"
+                    ]
                 },
                 options: {
-                    watchTask: true // < VERY important
+                    watchTask: true,
+                    server: {
+                        baseDir: "./"
+                    }
                 }
             }
         }
@@ -202,7 +209,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-prettify');
 
-    grunt.registerTask('default', ['watch', 'browserSync']);
+    grunt.registerTask('default', ['browserSync', 'watch']);
 
     // Travis CI task.
     grunt.registerTask('travis', ['concat', 'less', 'csslint', 'cssbeautifier', 'autoprefixer', 'cssmin', 'jshint', 'jsbeautifier', 'uglify', 'clean']);

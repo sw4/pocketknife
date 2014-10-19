@@ -1,0 +1,46 @@
+{
+  "name": "pocketknife",
+  "title": "pocketknife",
+  "description": "pocketknife",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sw4/pocketknife",
+  "author": {
+    "name": "SW4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sw4/pocketknife.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sw4/pocketknife/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/sw4/pocketknife/blob/master/LICENSE-MIT"
+    },
+    {
+      "type": "GPL",
+      "url": "https://github.com/sw4/pocketknife/blob/master/LICENSE-GPL"
+    }
+  ],
+  "main": "dist/pk-modal",
+  "engines": {
+    "node": ">=0.6"
+  },
+  "scripts": {
+    "test": "grunt travis --verbose"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-autoprefixer": "^1.0.1",
+    "grunt-browser-sync": "^1.5.3",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-notify": "^0.3.1"
+  },
+  "keywords": []
+}

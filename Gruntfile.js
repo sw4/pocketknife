@@ -169,6 +169,8 @@ module.exports = function(grunt) {
 
     });
     grunt.loadNpmTasks('grunt-css');
+    // grunt.loadNpmTasks('grunt-contrib-csslint');
+    // grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');

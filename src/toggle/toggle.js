@@ -41,7 +41,7 @@ var pk = pk || {};
                 val = val.toString() || options[0].value.toString();
                 for (var o in options) {
                     if (options[o].value.toString() === val) {
-                        indicatorEl.style.left = (pk.layout(el).width / options.length * o) + 'px';
+                        indicatorEl.style.left = parseInt(o, 0) * 100 / options.length + '%';
                         inputEl.value = val;
                         pk.addClass(optionEl[o], 'pk-selected');
                     } else {

@@ -1,12 +1,15 @@
 .pk-slider {
     display: inline-block;
-    height: @item-height-slim;
-    line-height: @item-height-slim;
+    height: @item-height*0.85;
+    line-height: @item-height*0.85;
     position: relative;
-    border: 1px solid @color-border;
-    width: @item-width-inline;
+    border: 1px solid darken(@color-background, 10%);
+    width: @item-width;
     box-sizing: border-box;
-    background: @color-unselected;
+    background: darken(@color-background, 2%);
+	border-radius:@item-rounding;
+	color:@color-background;
+	
 }
 
 .pk-slider:focus, .pk-slider:active {
@@ -14,8 +17,8 @@
 }
 
 .pk-slider-y {
-    width: @item-height-slim;
-    height: @item-width-inline;
+    width: @item-height*0.85;
+    height: @item-width;
 }
 
 .pk-slider-mask, .pk-slider-bar {
@@ -29,12 +32,13 @@
 
 .pk-slider-bar {
     width: 0;
-    background: @color-selected;
+    background: @color-highlight;
     white-space: nowrap;
+	border-radius:@item-rounding;	
 }
 
 .pk-disabled .pk-slider-bar {
-    background: @color-disabled;
+    background: darken(@color-background, 30%);
 }
 
 .pk-slider-y .pk-slider-mask, .pk-slider-y .pk-slider-bar {
@@ -45,15 +49,17 @@
 .pk-slider-y .pk-slider-bar {
     height: 0;
     width: 100%;
+	text-align: center;
 }
 
 .pk-slider-value {
     display: inline;
 }
-
+.pk-slider-x .pk-slider-bar .pk-slider-units{
+	padding-right:2px;
+}
 .pk-slider-units {
-    display: inline-block;
-    padding: 0 2px;
-    font-size: 0.5em;
+    display: inline-block;   
+    font-size: 0.8em;
     text-transform: uppercase;
 }

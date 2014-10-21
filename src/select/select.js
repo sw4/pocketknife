@@ -51,10 +51,10 @@ var pk = pk || {};
             inputEl = el.children[0],
             optionsEl = el.children[2];
 
-        if (dropdown) {
-            var overlayEl = document.body.insertBefore(pk.createEl("<div class='pk-overlay pk-hide'></div>"), document.body.children[0]);
+        if (dropdown && !inputDisabled) {
+            var overlayEl = document.body.insertBefore(pk.createEl("<div class='pk-overlay'></div>"), document.body.children[0]);
             pk.bindEvent('click', overlayEl, function() {
-                pk.addClass(overlayEl, 'pk-hide');
+                pk.removeClass(overlayEl, 'pk-show');
                 pk.toggleClass(el, 'pk-show');
             });
             pk.bindEvent('click', el, function(e) {
@@ -66,10 +66,10 @@ var pk = pk || {};
 
 
                 if (pk.hasClass(e.target, 'pk-select-value-tag') || (inputMultiple && pk.hasClass(e.target, 'pk-option')) || !pk.hasClass(el, 'pk-show')) {
-                    pk.removeClass(overlayEl, 'pk-hide');
+                    pk.addClass(overlayEl, 'pk-show');
                     pk.addClass(el, 'pk-show');
                 } else {
-                    pk.addClass(overlayEl, 'pk-hide');
+                    pk.removeClass(overlayEl, 'pk-show');
                     pk.removeClass(el, 'pk-show');
                 }
 
@@ -98,12 +98,14 @@ var pk = pk || {};
             // update underlying input element
             inputEl.value = inputMultiple ? inputValue : inputValue.join('');
         }
-        pk.bindEvent('click', optionsEl, function(e) {
-            if (e.target.nodeName === "LI") {
-                inputValue = inputMultiple ? pk.collide(inputValue, options[pk.getIndex(e.target)].value, 3) : pk.collide(inputValue, options[pk.getIndex(e.target)].value);
-                updateValue();
-            }
-        });
+        if (!inputDisabled) {
+            pk.bindEvent('click', optionsEl, function(e) {
+                if (e.target.nodeName === "LI") {
+                    inputValue = inputMultiple ? pk.collide(inputValue, options[pk.getIndex(e.target)].value, 3) : pk.collide(inputValue, options[pk.getIndex(e.target)].value);
+                    updateValue();
+                }
+            });
+        }
         updateValue();
     };
     return pk;

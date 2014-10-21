@@ -87,7 +87,7 @@ var pk = pk || {};
         if (!ca) {
             return;
         }
-        el.setAttribute('class', ca.replace(c, ''));
+        el.setAttribute('class', ca.replace(c, '').trim());
         return el;
     };
     pk.bindEvent = function(e, el, fn) {

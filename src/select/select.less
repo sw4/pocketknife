@@ -1,7 +1,7 @@
-.pk-select {
-    line-height: @item-height-normal;
+select.pk-select {
+    line-height: @item-height;
     position: relative;
-    width:@item-width-inline;
+    width:@item-width;
 }
 
 .pk-select:focus, .pk-select:active {
@@ -11,33 +11,33 @@
 .pk-select ul {
     display: block;
     position: relative;
-    border: 1px solid @color-border;
+    border: 1px solid darken(@color-background, 10%);
     width: 100%;
     box-sizing: border-box;
     list-style: none;
     margin: 0;
     padding: 0;
-    background: @color-empty;
+    background: @color-background;
 }
 
-.pk-select-single ul {
-    border-top: none;
-}
 
 .pk-select-value {
-    border: 1px solid @color-border;
+    border: 1px solid darken(@color-background, 10%);
     display: none;
-    padding: 0 @item-height-normal 0 6px;
+    padding: 0 @item-height 0 6px;
+}
+.pk-select.pk-disabled .pk-select-value{
+	background:darken(@color-background, 2%);
 }
 
 .pk-select-dropdown .pk-select-value:after {
     content: '\25BC';
     position: absolute;
-    color: @color-disabled;
+    color: darken(@color-background, 30%);
     right: 0;
     top: 0;
     height: 100%;
-    width: @item-height-normal;
+    width: @item-height;
 	font-style:normal;
     text-align: center;
 }
@@ -51,8 +51,8 @@
 }
 
 .pk-select-value-tag {
-    border: 1px solid @color-border;
-    background: @color-unselected;
+    border: 1px solid darken(@color-background, 10%);
+    background: darken(@color-background, 2%);
     border-radius: 4px;
     display: inline-block;
     margin: 0 2px;
@@ -62,31 +62,34 @@
     cursor: default;
 	transition:all 200ms ease-in;
 }
-
+.pk-select.pk-disabled .pk-select-value-tag{
+	background:  darken(@color-background, 10%);
+	border-color:  darken(@color-background, 15%);
+}
 .pk-select-value-tag:after{
 	position:absolute;
 	content:'';
 	left:50%;
 	top:50%;
 	width:0;
-	border-top:1px solid @color-disabled;
+	border-top:1px solid @color-foreground;
 	transition:all 200ms ease-in;
 }
-.pk-select-value-tag:hover:after{
+.pk-select:not(.pk-disabled) .pk-select-value-tag:hover:after{
 	left:5px;
 	width:calc(~"100% - 10px");
 	
 }
 
 
-.pk-select-value-tag:hover {
-	color:@color-disabled;
-	border-color:@color-empty;
+.pk-select:not(.pk-disabled) .pk-select-value-tag:hover {
+	color:darken(@color-background, 30%);
+	border-color:@color-background;
 	background:none;
 }
 
 .pk-select .pk-select-value.pk-placeholder {
-    color: @color-border;
+    color: darken(@color-background, 30%);
     font-style: italic;
 }
 
@@ -94,6 +97,8 @@
     display: none;
     position: absolute;
     border-top: none;
+	box-shadow: 0px 0px 5px -1px darken(@color-background, 30%);
+	-webkit-box-shadow: 0px 0px 5px -1px darken(@color-background, 30%);
 }
 .pk-select.pk-show{
     z-index: 999;
@@ -108,15 +113,20 @@
     padding: 0 6px;
 }
 
-.pk-select li:hover {
-    background: @color-unselected-hover;
+.pk-select:not(.pk-disabled) li:hover {
+    background: darken(@color-background, 5%);
 }
 
 .pk-select li.pk-selected {
-    background: @color-selected;
-    color: @color-empty;
+    background: @color-highlight;
+    color: @color-background;
+}
+.pk-select.pk-disabled li.pk-selected {
+    background:  darken(@color-background, 30%);
 }
 
-.pk-select li.pk-selected:hover {
-    background: @color-selected-hover;
+
+
+.pk-select:not(.pk-disabled) li.pk-selected:hover {
+    background: lighten(@color-highlight, 5%);
 }

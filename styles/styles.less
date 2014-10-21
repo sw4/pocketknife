@@ -1,0 +1,38 @@
+.pk-ui{
+	a{
+		color:darken(@color-highlight, 5%);
+		text-decoration:none;
+		display:inline-block;
+		position:relative;
+	}
+	a:after{
+		position:absolute;
+		content:'';
+		border-top:1px solid darken(@color-highlight, 5%);
+		width:0;
+		left:50%;
+		top:100%;
+		transition:all 100ms ease-in;
+	}
+	a:hover:after{
+		width:100%;
+		left:0;
+	}
+
+	button{
+		background:@color-highlight;
+		color:@color-background;
+		display:inline-block;
+		padding:0 @item-height/3;
+		cursor:pointer;
+		transition:all 100ms ease-in;
+		height:@item-height;
+		border:none;
+		border-radius:@item-rounding;
+		line-height:@item-height;
+		position:relative;
+		&:hover{
+			background:darken(@color-highlight, 10%);
+		}	
+	}
+}

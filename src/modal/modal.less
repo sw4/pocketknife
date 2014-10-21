@@ -10,12 +10,9 @@
     top: 0;
     left: 0;
     z-index: 998;
-    transition: opacity 300ms ease-in;
+    transition: opacity 100ms ease-in;
 	&.pk-show {
 	    opacity: 1;
-	}
-	&.pk-hide {
-	    opacity: 0;
 	}
 }
 
@@ -27,6 +24,13 @@
     max-width: 600px;
     position: relative;
     min-width: 400px;
+	margin-top: -20%;
+	opacity:0;
+	transition: all 200ms ease-in;
+}
+.pk-modal-mask.pk-show .pk-modal-box{
+	opacity:1;
+	margin-top: 0;
 }
 
 .pk-modal-header {

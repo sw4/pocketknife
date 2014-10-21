@@ -22,10 +22,15 @@ var pk = pk || {};
         box.appendChild(header);
         box.appendChild(content);
         pk.addClass(mask, 'pk-modal-mask').appendChild(box);
-        document.body.appendChild(mask);
+
+        if (document.body.children.length > 0) {
+            document.body.insertBefore(mask, document.body.children[0]);
+        } else {
+            document.body.appendChild(mask);
+        }
 
         function closeModal() {
-            pk.addClass(pk.removeClass(mask, 'pk-show'), 'pk-hide');
+            pk.removeClass(mask, 'pk-show');
             setTimeout(function() {
                 mask.parentNode.removeChild(mask);
             }, 500);
@@ -40,7 +45,10 @@ var pk = pk || {};
         pk.bindEvent("resize", window, function() {
             pk.center(box);
         });
-        pk.addClass(mask, 'pk-show');
+        setTimeout(function() {
+            pk.addClass(mask, 'pk-show');
+        }, 10);
+
         boxH = box.offsetHeight;
         setInterval(function() {
             var boxHN = box.offsetHeight;

@@ -10,27 +10,28 @@
     display: inline-block;
     position: relative;
     overflow: hidden;
+	padding: 0;
 }
-
+.pk-toggle:focus, .pk-toggle:active{
+	outline:none;
+}
 .pk-toggle input {
     display: none;
 }
-
-.pk-toggle input:checked + .pk-toggle-indicator {
-    left: 50%;
+.pk-toggle .pk-option{
+    text-transform: uppercase;
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    text-align: center;
+    transition: color 100ms ease-in;
 }
 
-.pk-toggle input:checked ~ .pk-toggle-off {
-    color: @color-disabled;
-}
 
-.pk-toggle input ~ .pk-toggle-on {
-    color: @color-disabled;
-}
-
-.pk-toggle input:checked ~ .pk-toggle-on {
+.pk-toggle .pk-option.pk-selected {
     color: @color-empty;
 }
+
 
 .pk-toggle .pk-toggle-indicator {
     position: absolute;
@@ -38,23 +39,11 @@
     left: 2px;
     top: 2px;
     background: @color-selected;
-    width: 50%;
+    width: 0;
     height: 20px;
     transition: left 200ms ease-in;
 }
 
 .pk-toggle.pk-disabled .pk-toggle-indicator {
     background: @color-disabled;
-}
-
-.pk-toggle span {
-    width: 50%;
-    text-transform: uppercase;
-    display: block;
-    box-sizing: border-box;
-    float: left;
-    color: @color-empty;
-    position: relative;
-    text-align: center;
-    transition: color 100ms ease-in;
 }

@@ -2,13 +2,10 @@
 
 <html lang="en">
 <head>
-    <title>Pocketknife UI</title>
+    <title>Examples</title>
     <meta content="width=device-width, initial-scale=1.0, user-scalable=no"
     name="viewport">
     <meta charset="utf-8">
-    <link href=
-    "https://rawgit.com/sw4/pocketknife/master/dist/pocketknife.min.css" rel=
-    "stylesheet">
     <link href="dist/pocketknife.min.css" rel="stylesheet">
     <style>
         html, body {
@@ -18,13 +15,11 @@
                 padding: 0;
             }
         #scroll1{
-            border:1px solid grey;
             position:relative;
             height: 50%;/* <---dimensions required */
             width: 50%;/* <---dimensions required */
             box-sizing: border-box;
             display: inline-block;
-            border: 1px solid grey;
             position: relative;
             text-align: left;
         }
@@ -50,14 +45,18 @@
     <h1>Toggle Input</h1>
 
     <form>
-        <input id='toggle1' type='checkbox'><br>
+        <fieldset id='toggle1'>
+		<input type='radio' value='test1'/>
+		<input type='radio' value='test2'/>
+		<input type='radio' value='test3'/>
+		</fieldset>
         <br>
     </form>
 
     <h1>Modal Dialog</h1>
     
     <a href='#' onclick=
-    "pk.modal({header:'Modal Header',content:'Content...&lt;br/&gt;..goes...&lt;br/&gt;..here&lt;br/&gt;', draggable:true});">Click
+    "event.preventDefault();pk.modal({header:'Modal Header',content:'Content...&lt;br/&gt;..goes...&lt;br/&gt;..here&lt;br/&gt;', draggable:true});">Click
     me!</a>
     <br>
     <br>
@@ -220,20 +219,17 @@
     </select><br>
     <br>
 
-    <h1>Modal Dialog</h1>
-    
-    <a href='#' onclick=
-    "pk.modal({header:'Modal Header',content:'Content...&lt;br/&gt;..goes...&lt;br/&gt;..here&lt;br/&gt;', draggable:true});">Click
-    me!</a> 
-    
-    <script src=
-    "https://rawgit.com/sw4/pocketknife/master/dist/pocketknife.min.js"></script> <script src="dist/pocketknife.min.js"></script> <script>
+     <script src="dist/pocketknife.min.js"></script> <script>
         pk.rating({element:document.getElementById('rating1')});
 
         pk.slider({element:document.getElementById('slider1'), units:'%', axis:'y'});
         pk.slider({element:document.getElementById('slider2'), units:'%'});
 
-        pk.toggle({element:document.getElementById('toggle1'), label:{on:'CLICKED'}});
+        pk.toggle({element:document.getElementById('toggle1'), options:[
+			{value:true, name:'yes'},
+			{value:false, name:'no'},
+			{value:'other', name:'other'}
+		], value:false});
 
         pk.select({
             element: document.getElementById('example1'),

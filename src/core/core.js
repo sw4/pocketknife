@@ -100,9 +100,9 @@ var pk = pk || {};
             el.attachEvent("on" + e, fn);
         }
     };
-    pk.layout = function(el, offset) {
-        var t = offset ? el.offsetTop : el.getBoundingClientRect().top,
-            l = offset ? el.offsetLeft : el.getBoundingClientRect().left,
+    pk.layout = function(el, offsetEl) {
+        var t = offsetEl ? el.getBoundingClientRect().top - offsetEl.getBoundingClientRect().top : el.offsetTop,
+            l = offsetEl ? el.getBoundingClientRect().left : el.offsetLeft,
             h = el.offsetHeight,
             w = el.offsetWidth;
         return {

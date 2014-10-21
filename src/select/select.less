@@ -9,8 +9,8 @@
 }
 
 .pk-select ul {
-    display: none;
-    position: absolute;
+    display: block;
+    position: relative;
     border: 1px solid @color-border;
     width: 100%;
     box-sizing: border-box;
@@ -38,6 +38,7 @@
     top: 0;
     height: 100%;
     width: @item-height-normal;
+	font-style:normal;
     text-align: center;
 }
 
@@ -59,36 +60,34 @@
     position: relative;
     line-height: 20px;
     cursor: default;
+	transition:all 200ms ease-in;
 }
 
-.pk-select-value-tag:after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-bottom-left-radius: 4px;
-    background: @color-warning;
-    content: '\00D7';
-    line-height: 12px;
-    text-align: center;
-    height: 12px;
-    width: 12px;
-    color: @color-empty;
-    opacity: 0;
-    transition: opacity 100ms ease-in;
+.pk-select-value-tag:after{
+	position:absolute;
+	content:'';
+	left:50%;
+	top:50%;
+	width:0;
+	border-top:1px solid @color-disabled;
+	transition:all 200ms ease-in;
+}
+.pk-select-value-tag:hover:after{
+	left:5px;
+	width:calc(~"100% - 10px");
+	
 }
 
-.pk-select-value-tag:hover:after {
-    opacity: 1;
+
+.pk-select-value-tag:hover {
+	color:@color-disabled;
+	border-color:@color-empty;
+	background:none;
 }
 
 .pk-select .pk-select-value.pk-placeholder {
-    color: @color-unselected;
+    color: @color-border;
     font-style: italic;
-}
-
-.pk-select ul {
-    display: block;
-    position: relative;
 }
 
 .pk-select.pk-select-dropdown ul {
@@ -96,10 +95,11 @@
     position: absolute;
     border-top: none;
 }
-
+.pk-select.pk-show{
+    z-index: 999;
+}
 .pk-select.pk-show ul {
     display: block;
-    z-index: 999;
 }
 
 .pk-select li {

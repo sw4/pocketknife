@@ -170,10 +170,10 @@ var pk = pk || {};
 
         // TRACK CLICKING HANDLERS
         pk.bindEvent("click", trackY, function(e) {
-            container.scrollTop = ((e.pageY - el.getBoundingClientRect().top) / containerH * (contentH - containerH));
+            container.scrollTop = (e.offsetY / containerH * (contentH - containerH));
         });
         pk.bindEvent("click", trackX, function(e) {
-            container.scrollLeft = ((e.pageX - el.getBoundingClientRect().left) / containerW * (contentW - containerW));
+            container.scrollLeft = (e.offsetX / containerW * (contentW - containerW));
         });
 
         // MOUSE WHEEL HANDLERS

@@ -39,7 +39,7 @@ module.exports = function(grunt) {
         // LINT CSS Files
         csslint: {
             css: {
-                src: "src/**/*.css",
+                src: "dist/**/*.css",
                 options: {
                     "import": false,
                     'adjoining-classes': false,

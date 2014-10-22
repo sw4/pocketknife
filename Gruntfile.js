@@ -194,6 +194,7 @@ module.exports = function(grunt) {
         }
 
     });
+<<<<<<< HEAD
     //grunt.loadNpmTasks('grunt-css');
     /*
     grunt.loadNpmTasks('grunt-contrib-csslint');
@@ -211,6 +212,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-prettify');
     */
+=======
+
+>>>>>>> FETCH_HEAD
     require('load-grunt-tasks')(grunt);
     grunt.registerTask('default', ['browserSync', 'watch']);
 

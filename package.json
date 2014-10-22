@@ -42,7 +42,8 @@
     "grunt-cssbeautifier": "^0.1.2",
     "grunt-jsbeautifier": "^0.2.7",
     "grunt-notify": "^0.3.1",
-    "grunt-prettify": "^0.4.0"
+    "grunt-prettify": "^0.4.0",
+    "load-grunt-tasks": "^0.6.0"
   },
   "keywords": []
 }

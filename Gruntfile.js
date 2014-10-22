@@ -71,6 +71,7 @@ module.exports = function(grunt) {
                 multistr: true,
                 globals: {
                     jQuery: true,
+                    require: true,
                     console: true,
                     module: true,
                     angular: true
@@ -194,6 +195,7 @@ module.exports = function(grunt) {
 
     });
     //grunt.loadNpmTasks('grunt-css');
+    /*
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-notify');
@@ -208,7 +210,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-prettify');
-
+    */
+    require('load-grunt-tasks')(grunt);
     grunt.registerTask('default', ['browserSync', 'watch']);
 
     // Travis CI task.

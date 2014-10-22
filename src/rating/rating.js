@@ -38,6 +38,7 @@ var pk = pk || {};
         pk.bindListeners(listeners, rEl[4]);
 
         pk.bindEvent("mousewheel", el, function(e) {
+            pk.preventBubble(e);
             var offset = 1;
             if (e.wheelDelta > 0 || e.detail < 0) {
                 offset = -1;

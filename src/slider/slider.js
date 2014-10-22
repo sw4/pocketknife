@@ -78,6 +78,7 @@ var pk = pk || {};
             obj.val(min + Math.round(perc * range));
         });
         pk.bindEvent("mousewheel", el, function(e) {
+            pk.preventBubble(e);
             if (obj.disabled()) {
                 return false;
             }

@@ -37,7 +37,7 @@
 		color:white;
 		transition: all 100ms ease-in;
 		cursor:pointer;    
-		-webkit-transform: scale(0.6);
+		transform: scale(0.6);
 		&:after{
 			content:'<';
 			position:absolute;    
@@ -46,7 +46,7 @@
 			font-size:5em;
 		}
 		&:hover{    
-			-webkit-transform: scale(0.8);
+			transform: scale(0.8);
 		}
 	}
 	 .pk-nav-next{
@@ -67,7 +67,7 @@
 		width:30px;
 		text-align:center;
 		&.pk-selected:after{
-			-webkit-transform: scale(1);
+			transform: scale(1);
 			opacity:1;
 		}
 		&:after{
@@ -79,11 +79,11 @@
 			height: 15px;
 			opacity:0.65;
 			background:white;    
-			-webkit-transform: scale(0.6);
+			transform: scale(0.6);
 			transition:all 100ms ease-in;
 		}
 		&:not(.pk-selected):hover:after{
-			-webkit-transform: scale(0.8);
+			transform: scale(0.8);
 			opacity:1;
 		}
 	}

@@ -6,6 +6,7 @@
 		&:checked+.pk-label:before{
 			-webkit-transform: rotateX(180deg);
 			background:@color-highlight;
+			border-color:@color-highlight;
 		}
 		&:checked+.pk-label:after{
 			-webkit-transform: rotateX(0deg);	
@@ -13,6 +14,7 @@
 		}
 	}
 	.pk-label{
+		cursor:pointer;
 		&:before{
 			display:inline-block;
 			content:'';
@@ -22,7 +24,8 @@
 			vertical-align:middle;
 			-webkit-transform: rotateX(0deg);		
 			transition:all 150ms ease-in;			
-			border:1px solid @color-highlight;
+			border: 1px solid darken(@color-background, 20%);
+			background:darken(@color-background, 5%);
 		}	
 		&:after{
 			content:'\2713';
@@ -35,13 +38,10 @@
 		}		
 	}
 	&:hover{
-		input:checked+.pk-label{
+		.pk-label{
 			&:before{
-			//	background:lighten(@color-foreground, 70%);
+				border-color:@color-highlight;
 			}	
-			&:after{
-			//	color:lighten(@color-foreground, 70%);
-			}		
 		}
 	}
 }

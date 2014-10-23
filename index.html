@@ -14,6 +14,20 @@
                 margin: 0;
                 padding: 0;
             }
+		#carousel1{
+            position:relative;
+            height: 200px;
+            width: 50%;			
+        }
+		#carousel1 li:nth-child(1){
+			background:#0CC09F;
+		}
+		#carousel1 li:nth-child(2){
+			background:#0dcecb;
+		}
+		#carousel1 li:nth-child(3){
+			background:#2980B9;
+		}		
         #scroll1{
             position:relative;
             height: 50%;/* <---dimensions required */
@@ -27,6 +41,15 @@
 </head>
 
 <body>
+<h1>Carousel</h1>
+<ul id='carousel1'>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+</ul>
+
+<br>
+    <br>
     <h1>Rating Input</h1>
 
     <div id='rating1'></div>
@@ -220,6 +243,9 @@
     <br>
 
      <script src="dist/pocketknife.min.js"></script> <script>
+	 
+		pk.carousel({element:document.getElementById('carousel1')});
+	 
         pk.rating({element:document.getElementById('rating1')});
 
         pk.slider({element:document.getElementById('slider1'), units:'%', axis:'y'});
@@ -254,7 +280,7 @@
             element: document.getElementById('example4')
         });     
 
-        pk.scroll({element:document.getElementById('scroll1')});
+        pk.scroll({element:document.getElementById('scroll1'), axis:'xy'});
 
     </script>
 </body>

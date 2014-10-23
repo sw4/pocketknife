@@ -1,0 +1,90 @@
+.pk-carousel {
+  position: relative;
+  height: 400px;
+  text-align: center;
+}
+.pk-carousel ul,
+.pk-carousel li {
+  list-style: none;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+}
+.pk-carousel ul {
+  white-space: nowrap;
+  text-align: left;
+  overflow: hidden;
+}
+.pk-carousel li {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  transition: all 300ms ease-in;
+  text-align: center;
+}
+.pk-carousel li.pk-selected {
+  opacity: 1;
+}
+.pk-carousel .pk-nav-prev,
+.pk-carousel .pk-nav-next {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  color: white;
+  transition: all 100ms ease-in;
+  cursor: pointer;
+  -webkit-transform: scale(0.6);
+}
+.pk-carousel .pk-nav-prev:after,
+.pk-carousel .pk-nav-next:after {
+  content: '<';
+  position: absolute;
+  font-weight: bold;
+  top: calc(-0.7em);
+  font-size: 5em;
+}
+.pk-carousel .pk-nav-prev:hover,
+.pk-carousel .pk-nav-next:hover {
+  -webkit-transform: scale(0.8);
+}
+.pk-carousel .pk-nav-next {
+  left: auto;
+  right: 0;
+}
+.pk-carousel .pk-nav-next:after {
+  content: '>';
+  right: 0;
+}
+.pk-carousel .pk-nav-item {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  top: -30px;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+}
+.pk-carousel .pk-nav-item.pk-selected:after {
+  -webkit-transform: scale(1);
+  opacity: 1;
+}
+.pk-carousel .pk-nav-item:after {
+  content: '';
+  margin-top: 5px;
+  display: inline-block;
+  border-radius: 100%;
+  width: 15px;
+  height: 15px;
+  opacity: 0.65;
+  background: white;
+  -webkit-transform: scale(0.6);
+  transition: all 100ms ease-in;
+}
+.pk-carousel .pk-nav-item:hover:after {
+  -webkit-transform: scale(0.8);
+  opacity: 1;
+}

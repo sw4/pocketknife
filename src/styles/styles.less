@@ -31,6 +31,9 @@
 		border-radius:@item-rounding;
 		line-height:@item-height;
 		position:relative;
+		&:focus, &:active{
+			outline:none;
+		}	
 		&:hover{
 			background:darken(@color-highlight, 10%);
 		}	

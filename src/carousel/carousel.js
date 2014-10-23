@@ -26,14 +26,15 @@ var pk = pk || {};
             el.children[0].appendChild(optionEl[o]);
           	el.appendChild(navEl[o]);
         }
+        
+        function clickHandler(e){
+            obj.value(pk.attribute(e.target, 'data-nav'));         
+        }
         for(var c in el.children){
             if(pk.attribute(el.children[c], 'data-nav')){
                   pk.bindEvent('click', el.children[c], clickHandler);
             }            
         } 
-        function clickHandler(e){
-            obj.value(pk.attribute(e.target, 'data-nav'));         
-        }
         var obj={
             value:function(val){                
                 val = val.toString();

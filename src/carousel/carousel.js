@@ -44,6 +44,7 @@ var pk = pk || {};
                     value = value+parseInt(val.replace('+', ''),0) > options.length-1 ? 0 : ++value;                
                 }else{
                     value = parseInt(val.replace('=', ''),0);
+                    value = value < 0 ? 0 : value > options.length-1 ? options.length-1 : value;
                 }
                 for (o=0;o<options.length;o++) {
                     if(parseInt(o, 0)===value){

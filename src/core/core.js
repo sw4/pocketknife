@@ -194,7 +194,9 @@ var pk = pk || {};
         return a1;
     };
     pk.attribute = function(el, attr, val) {
-        if(typeof el !== "object"){return false;}
+        if (typeof el !== "object") {
+            return false;
+        }
         attr = el.hasAttribute(attr) ? attr : el.hasAttribute('data-' + attr) ? 'data-' + attr : attr;
         if (val === undefined) {
             return (attr === 'selected' || attr === 'disabled' || attr === 'checked') ? (el.hasAttribute(attr) ? true : false) : el.getAttribute(attr);

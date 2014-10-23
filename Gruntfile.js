@@ -47,6 +47,7 @@ module.exports = function(grunt) {
                     'box-sizing': false,
                     'fallback-colors': false,
                     'box-model': false,
+                    'vendor-prefix': false,
                     'compatible-vendor-prefixes': false // handled by autoprefixer
                 }
             }

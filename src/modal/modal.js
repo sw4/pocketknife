@@ -12,9 +12,9 @@ var pk = pk || {};
 		</div>";
 
         var el = pk.createEl(tpl),
-         box = el.children[0],
-         header = box.children[0],
-         close = header.children[0];
+            box = el.children[0],
+            header = box.children[0],
+            close = header.children[0];
 
         if (document.body.children.length > 0) {
             document.body.insertBefore(el, document.body.children[0]);

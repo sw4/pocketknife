@@ -5,7 +5,7 @@ var pk = pk || {};
         var el = opt.element,
             options = opt.options || [],
             value = opt.value || 0,
-			inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0;
+            inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0;
 
 
         if (options.length === 0 && el.nodeName === "UL") {
@@ -38,35 +38,35 @@ var pk = pk || {};
                 pk.bindEvent('click', el.children[c], clickHandler);
             }
         }
-		
-		pk.bindEvent("mousewheel", el, function(e) {
+
+        pk.bindEvent("mousewheel", el, function(e) {
             pk.preventBubble(e);
             obj.val((e.wheelDelta > 0 || e.detail < 0) ? '-1' : '+1');
         });
-		
-		pk.bindEvent('keydown', el, function(e) {
-            switch (e.keyCode) {			
-				case 34: //page down
-				case 40: //down cursor
-				case 37: //left cursor
-					obj.val('-1');
-					break;					
-				case 33: //page up
-				case 32: //spacebar				
-				case 38: //up cursor
-				case 39: //right cursor
-					obj.val('+1');
-					break;
-				case 36: //home
-					obj.val(0);
-					break;
-				case 35: //end
-					obj.val(options.length-1);
-					break;
-			}
+
+        pk.bindEvent('keydown', el, function(e) {
+            switch (e.keyCode) {
+                case 34: //page down
+                case 40: //down cursor
+                case 37: //left cursor
+                    obj.val('-1');
+                    break;
+                case 33: //page up
+                case 32: //spacebar				
+                case 38: //up cursor
+                case 39: //right cursor
+                    obj.val('+1');
+                    break;
+                case 36: //home
+                    obj.val(0);
+                    break;
+                case 35: //end
+                    obj.val(options.length - 1);
+                    break;
+            }
             pk.preventBubble(e);
-        });		
-		
+        });
+
         var obj = {
             val: function(val) {
                 val = val.toString();

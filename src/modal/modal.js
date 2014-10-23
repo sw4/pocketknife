@@ -1,42 +1,35 @@
 var pk = pk || {};
 (function(pk) {
     pk.modal = function(opt) {
-        var e = opt.context || document.body;
-        var h = opt.header;
-        var c = opt.content;
-        if (!e) {
-            return;
-        }
-        var content = document.createElement('div');
-        var mask = document.createElement('div');
-        var box = document.createElement('div');
-        var close = document.createElement('span');
-        var header = document.createElement('div');
-        var boxH = 0;
-        header.innerHTML = h;
-        content.innerHTML = c;
-        pk.addClass(box, 'pk-modal-box');
-        pk.addClass(close, 'pk-modal-close');
-        pk.addClass(header, 'pk-modal-header').appendChild(close);
-        pk.addClass(content, 'pk-modal-content');
-        box.appendChild(header);
-        box.appendChild(content);
-        pk.addClass(mask, 'pk-modal-mask').appendChild(box);
+        var h = opt.header,
+            c = opt.content;
+
+        var tpl = "<div class='pk-modal-mask'>\
+			<div class='pk-modal-box'>\
+				<div class='pk-modal-header'>" + h + "<span class='pk-modal-close'></span></div>\
+				<div class='pk-modal-content'>" + c + "</div>\
+			</div>\
+		</div>";
+
+        var el = pk.createEl(tpl),
+         box = el.children[0],
+         header = box.children[0],
+         close = header.children[0];
 
         if (document.body.children.length > 0) {
-            document.body.insertBefore(mask, document.body.children[0]);
+            document.body.insertBefore(el, document.body.children[0]);
         } else {
-            document.body.appendChild(mask);
+            document.body.appendChild(el);
         }
 
         function closeModal() {
-            pk.removeClass(mask, 'pk-show');
+            pk.removeClass(el, 'pk-show');
             setTimeout(function() {
-                mask.parentNode.removeChild(mask);
+                el.parentNode.removeChild(el);
             }, 500);
         }
-        pk.bindEvent("click", mask, function(e) {
-            if (e.target !== mask) {
+        pk.bindEvent("click", el, function(e) {
+            if (e.target !== el) {
                 return;
             }
             closeModal();
@@ -46,10 +39,10 @@ var pk = pk || {};
             pk.center(box);
         });
         setTimeout(function() {
-            pk.addClass(mask, 'pk-show');
+            pk.addClass(el, 'pk-show');
         }, 10);
 
-        boxH = box.offsetHeight;
+        var boxH = box.offsetHeight || 0;
         setInterval(function() {
             var boxHN = box.offsetHeight;
             if (boxH !== boxHN) {

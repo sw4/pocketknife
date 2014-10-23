@@ -41,6 +41,13 @@
 </head>
 
 <body>
+
+<h1>Checkbox</h1>
+
+<div id='checkbox1'></div>
+
+<br>
+    <br>
 <h1>Carousel</h1>
 <ul id='carousel1'>
     <li>1</li>
@@ -81,6 +88,10 @@
     <a href='#' onclick=
     "event.preventDefault();pk.modal({header:'Modal Header',content:'Content...&lt;br/&gt;..goes...&lt;br/&gt;..here&lt;br/&gt;', draggable:true});">Click
     me!</a>
+	
+	    <button onclick=
+    "event.preventDefault();pk.modal({header:'Modal Header',content:'Content...&lt;br/&gt;..goes...&lt;br/&gt;..here&lt;br/&gt;', draggable:true});">Click
+    me!</button>
     <br>
     <br>
 
@@ -281,7 +292,11 @@
         });     
 
         pk.scroll({element:document.getElementById('scroll1'), axis:'xy'});
-
+		pk.checkbox({
+			element: document.getElementById('checkbox1'),
+			label:'check',
+			value:true
+		});
     </script>
 </body>
 </html>

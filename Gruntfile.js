@@ -46,7 +46,8 @@ module.exports = function(grunt) {
                     'outline-none': false,
                     'box-sizing': false,
                     'fallback-colors': false,
-                    'box-model': false
+                    'box-model': false,
+                    'compatible-vendor-prefixes': false // handled by autoprefixer
                 }
             }
         },
@@ -81,7 +82,9 @@ module.exports = function(grunt) {
         // Minify JS files
         uglify: {
             options: {
-                banner: '<%= meta.banner %>'
+                banner: '<%= meta.banner %>',
+                // Generate a source map to allow easier development debugging
+                sourceMap: true
             },
             dist: {
                 files: {
@@ -89,7 +92,7 @@ module.exports = function(grunt) {
                 }
             }
         },
-        // Add/remove CSS vendor profixes
+        // Add/remove CSS vendor prefixes
         autoprefixer: {
             options: {
                 browsers: ['last 2 version', 'ie 8', 'ie 9']
@@ -100,14 +103,14 @@ module.exports = function(grunt) {
                 }
             }
         },
-        // Automaticall run tasks on file changes
+        // Automatically run tasks on file changes
         watch: {
             options: {
                 livereload: true,
             },
             gruntfile: {
                 files: ['Gruntfile.js'],
-                tasks: ['concat', 'less', 'csslint', 'cssbeautifier', 'autoprefixer', 'cssmin', 'jshint', 'jsbeautifier', 'uglify', 'clean'],
+                tasks: ['concat', 'less', 'autoprefixer', 'csslint', 'cssmin', 'jshint', 'jsbeautifier', 'uglify', 'clean'],
                 options: {
                     spawn: false,
                 },
@@ -127,16 +130,9 @@ module.exports = function(grunt) {
                     spawn: false,
                 },
             },
-            css: {
-                files: ['src/**/*.css'],
-                tasks: ['csslint', 'cssbeautifier', 'concat', 'autoprefixer', 'cssmin', 'clean'],
-                options: {
-                    spawn: false,
-                },
-            },
             less: {
                 files: ['src/**/*.less'],
-                tasks: ['concat', 'less', 'csslint', 'cssbeautifier', 'autoprefixer', 'cssmin', 'clean'],
+                tasks: ['concat', 'less', 'autoprefixer', 'csslint', 'cssmin', 'clean'],
                 options: {
                     spawn: false,
                 },
@@ -152,10 +148,6 @@ module.exports = function(grunt) {
             }
         },
 
-        // Make CSS look nice
-        cssbeautifier: {
-            files: ["src/**/*.css"]
-        },
         // Make JS look nice
         jsbeautifier: {
             files: ['Gruntfile.js', 'src/**/*.js']
@@ -168,13 +160,13 @@ module.exports = function(grunt) {
                 }
             }
         },
-        // Remove dist artefacts
+        // Remove dist/ artefacts
         clean: {
             js: ["dist/**/*.js", "!dist/**/*.min.js"],
             less: ["dist/**/*.less"],
             css: ["dist/**/*.css", "!dist/**/*.min.css"]
         },
-        // Auto update any open browser windows
+        // Auto update any open browser windows when assets change
         browserSync: {
             default_options: {
                 bsFiles: {
@@ -195,7 +187,10 @@ module.exports = function(grunt) {
 
     });
 
+    // Autoload packages from package.json
     require('load-grunt-tasks')(grunt);
+
+    // Deafult Grunt task
     grunt.registerTask('default', ['browserSync', 'watch']);
 
     // Travis CI task.

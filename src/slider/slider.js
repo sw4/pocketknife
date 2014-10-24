@@ -19,7 +19,7 @@ var pk = pk || {};
 
         var tpl = "<div class='pk-slider pk-slider-" + axis + " " + (inputDisabled ? 'pk-disabled' : '') + "' tabindex='" + inputTabIndex + "'>\
             <input type='hidden' name='" + inputName + "' " + inputDisabled + " value='" + inputValue + "'/>\
-            <div class='pk-slider-bar'>\
+            <div class='pk-slider-bar pk-animated'>\
                 <span class='pk-slider-value'></span><span class='pk-slider-units'></span>\
             </div>\
             <div class='pk-slider-mask'></div>\
@@ -59,6 +59,7 @@ var pk = pk || {};
                     if (listeners & listeners.slidestart) {
                         listeners.slidestart(el, e);
                     }
+                    pk.removeClass(barEl, 'pk-animated');
                 },
                 dragend: function(el, e) {
                     if (obj.disabled()) {
@@ -67,6 +68,7 @@ var pk = pk || {};
                     if (listeners & listeners.slideend) {
                         listeners.slideend(el, e);
                     }
+                    pk.addClass(barEl, 'pk-animated');
                 }
             }
         });

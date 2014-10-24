@@ -5,7 +5,7 @@ var pk = pk || {};
             c = opt.content;
 
         var tpl = "<div class='pk-modal-mask'>\
-			<div class='pk-modal-box'>\
+			<div class='pk-modal-box pk-animated'>\
 				<div class='pk-modal-header'>" + h + "<span class='pk-modal-close'></span></div>\
 				<div class='pk-modal-content'>" + c + "</div>\
 			</div>\
@@ -56,7 +56,15 @@ var pk = pk || {};
             pk.drag({
                 element: box,
                 handle: header,
-                move: true
+                move: true,
+				listeners:{
+					dragstart:function(){
+						pk.removeClass(box, 'pk-animated');
+					},
+					dragend:function(){
+						pk.addClass(box, 'pk-animated');
+					}
+				}
             });
         }
     };

@@ -23,50 +23,95 @@
 		display:inline-block;
 		position:absolute;
 		top:0; 
-		opacity:0;
-		transition:all 300ms ease-in;
+		z-index:0;		
+		// transform:scale(0.8);
+		transition:all 500ms ease-in;
 		text-align:center;
+		opacity:0;
 		&.pk-selected{  
+			z-index:2;
+			// transform:scale(1);
 			opacity:1;
 		}
+		&.pk-carousel-in-right{
+			// left:100%;
+			animation-duration: 1s;
+			animation-delay:100ms;
+			// animation-name: carousel-in-right;
+			animation-iteration-count: 1;
+			animation-fill-mode:forwards;
+		}
+		@keyframes carousel-in-right {
+			from {left:100%;}
+			to {left:0;}
+		}
+		&.pk-carousel-in-left{
+			// right:100%;
+			animation-duration: 1s;
+			animation-delay:100ms;
+			// animation-name: carousel-in-left;
+			animation-iteration-count: 1;
+			animation-fill-mode:forwards;
+		}
+		@keyframes carousel-in-left {
+			from {right:100%;}
+			to {right:0;}
+		}
+	}
+	.pk-carousel-out{		
+		z-index:1;
 	}
 	
-	
 	.pk-nav-prev, .pk-nav-next{
+		z-index:4;
 		position:absolute;
 		left:0;
-		top:50%;   
-		color:white;
+		top:calc(~"50% - 25px");   
+		color:fade(@color-background, 50%);		
+		cursor:pointer;    		
+		width:40px;
+		height:50px;
+		line-height:50px;
+		text-align:center;
+		border-radius:100%;
+		border-top-left-radius:0;
+		border-bottom-left-radius:0;
+		background:fade(@color-foreground, 5%);
 		transition: all 100ms ease-in;
-		cursor:pointer;    
-		transform: scale(0.6);
 		&:after{
 			content:'<';
 			position:absolute;    
 			font-weight:bold;
 			top:calc(-.7em);
-			font-size:5em;
+			font-size:3em;
+			left:10px;
+			top:0;
 		}
 		&:hover{    
-			transform: scale(0.8);
+			background:fade(@color-foreground, 15%);
 		}
 	}
 	 .pk-nav-next{
 		left:auto;
 		right:0;
+		border-radius:100%;
+		border-top-right-radius:0;
+		border-bottom-right-radius:0;
 		&:after{
 			content:'>';
-			right:0;
+			right:10px;
 		}
 	 }
 	 
 	 .pk-nav-item{
+		z-index:4;
 		cursor:pointer;
 		display:inline-block;
 		position:relative;
 		top:-30px;
-		height:30px;
+		height:25px;
 		width:30px;
+		background:fade(@color-foreground, 5%);
 		text-align:center;
 		&.pk-selected:after{
 			transform: scale(1);
@@ -88,5 +133,16 @@
 			transform: scale(0.8);
 			opacity:1;
 		}
+		&:nth-of-type(1){
+			border-top-left-radius:100px;
+		}
+	}
+	span:nth-of-type(3){
+		border-top-left-radius:10px;
+		border-bottom-left-radius:10px;
+	}
+	span:last-of-type{
+		border-top-right-radius:10px;
+		border-bottom-right-radius:10px;
 	}
 }

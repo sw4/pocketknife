@@ -35,7 +35,7 @@ var pk = pk || {};
         }
 
         // build the template
-        var tpl = "<div class='pk-select " + (dropdown ? 'pk-select-dropdown' : '') + " " + (inputDisabled ? 'pk-disabled' : '') + "' tabindex='" + inputTabIndex + "'>\
+        var tpl = "<div class='pk-select " + (inputMultiple ? 'pk-select-multiple' : '') + " " + (dropdown ? 'pk-select-dropdown' : '') + " " + (inputDisabled ? 'pk-disabled' : '') + "' tabindex='" + inputTabIndex + "'>\
                 <input type='hidden' name='" + inputName + "'/>\
                 <div class='pk-select-value " + (!inputValue || inputValue.length < 1 ? 'pk-placeholder' : '') + "'>sdsd</div>\
             <ul>";

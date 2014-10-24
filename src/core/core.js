@@ -199,12 +199,14 @@ var pk = pk || {};
         }
         attr = el.hasAttribute(attr) ? attr : el.hasAttribute('data-' + attr) ? 'data-' + attr : attr;
         if (val === undefined) {
-            return (attr === 'selected' || attr === 'disabled' || attr === 'checked') ? (el.hasAttribute(attr) ? true : false) : el.getAttribute(attr);
+            return (attr === 'selected' || attr === 'disabled' || attr === 'checked') ? (el.hasAttribute(attr) ? true : el[attr]) : el.getAttribute(attr);
         }
         if (val === false && (attr === 'selected' || attr === 'disabled' || attr === 'checked')) {
             el.removeAttribute(attr);
+            el[attr] = false;
         } else {
             el.setAttribute(attr, val);
+            el[attr] = true;
         }
     };
     pk.addClass(document.body, 'pk-ui');

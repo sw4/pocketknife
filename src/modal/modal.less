@@ -38,6 +38,10 @@
    -moz-transition-timing-function: cubic-bezier(0.765, -0.450, 0.425, 1.545); 
      -o-transition-timing-function: cubic-bezier(0.765, -0.450, 0.425, 1.545); 
         transition-timing-function: cubic-bezier(0.765, -0.450, 0.425, 1.545); /* custom */
+		
+	&.pk-animated{
+		transition:all 150ms ease-in;
+	}
 }
 .pk-modal-mask.pk-show .pk-modal-box{
 	opacity:1;

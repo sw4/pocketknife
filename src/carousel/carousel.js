@@ -1,19 +1,17 @@
 var pk = pk || {};
 (function(pk) {
     pk.carousel = function(opt) {
-
         var el = opt.element,
             options = opt.options || [],
             value = opt.value || 0,
+            timer = opt.timer || 5000,
             inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0;
-
 
         if (options.length === 0 && el.nodeName === "UL") {
             for (var i = 0; i < el.children.length; i++) {
                 options.push(el.children[i].innerHTML);
             }
         }
-
         var tpl = "<div class='pk-carousel pk-noselect' tabindex='" + inputTabIndex + "'><ul>",
             navEl = [],
             optionEl = [];
@@ -66,33 +64,64 @@ var pk = pk || {};
             }
             pk.preventBubble(e);
         });
-
+        var oldVal;
         var obj = {
             val: function(val) {
                 val = val.toString();
                 if (val === undefined) {
                     return value;
                 }
+                var inClass = '',
+                    outClass = '';
                 if (val.indexOf("-") !== -1) {
                     value = value - parseInt(val.replace('-', ''), 0) < 0 ? options.length - 1 : --value;
+                    inClass = 'left';
+                    outClass = 'right';
                 } else if (val.indexOf("+") !== -1) {
                     value = value + parseInt(val.replace('+', ''), 0) > options.length - 1 ? 0 : ++value;
+                    inClass = 'right';
+                    outClass = 'left';
                 } else {
                     value = parseInt(val.replace('=', ''), 0);
                     value = value < 0 ? 0 : value > options.length - 1 ? options.length - 1 : value;
+                    if (oldVal !== undefined && value > oldVal) {
+                        inClass = 'right';
+                        outClass = 'left';
+                    } else {
+                        inClass = 'left';
+                        outClass = 'right';
+                    }
                 }
                 for (o = 0; o < options.length; o++) {
+                    if (oldVal !== undefined && oldVal === o) {
+                        pk.addClass(optionEl[o], 'pk-carousel-out-' + outClass);
+                    } else if (oldVal !== undefined) {
+                        pk.removeClass(optionEl[o], 'pk-carousel-out-left');
+                        pk.removeClass(optionEl[o], 'pk-carousel-out-right');
+                    }
                     if (parseInt(o, 0) === value) {
+                        // add the selected class to the current iteration					
                         pk.addClass(optionEl[o], 'pk-selected');
                         pk.addClass(navEl[o], 'pk-selected');
+                        if (oldVal !== undefined) {
+                            pk.addClass(optionEl[o], 'pk-carousel-in-' + inClass);
+                        }
                     } else {
                         pk.removeClass(optionEl[o], 'pk-selected');
+                        pk.removeClass(optionEl[o], 'pk-carousel-in-right');
+                        pk.removeClass(optionEl[o], 'pk-carousel-in-left');
                         pk.removeClass(navEl[o], 'pk-selected');
                     }
                 }
+                oldVal = value;
             }
         };
         obj.val(value);
+
+        if (timer) {
+            setInterval(obj.val('+1'), timer);
+        }
+
         return obj;
     };
     return pk;

@@ -12,3 +12,9 @@ Lightweight UI library written in vanilla JS.
 - Built for IE8+, FF and Chrome
 
 <sup>* Unless otherwise stated for a specific component</sup>
+
+
+License
+----
+
+By using any code contained herein relating to [pocketknife ui](https://github.com/sw4/pocketknife),  you agree to be bound to the terms of the [license](https://github.com/sw4/pocketknife/blob/master/LICENSE-MIT)

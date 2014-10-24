@@ -6,10 +6,10 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         meta: {
             banner: '/*\n' +
-                '  @license <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n' +
-                '  (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> <%= pkg.homepage %>\n' +
-                '  License: <%= _.pluck(pkg.licenses, "type").join(", ") %>\n' +
-                ' */\n'
+                '<%= pkg.title || pkg.name %> - <%= pkg.version %> (<%= pkg.repository.url %>)\n' +
+                'Copyright(c)<%= grunt.template.today("yyyy") %> <%= pkg.author.name %> (<%= pkg.homepage %>)\n' +
+                'License: <%= _.pluck(pkg.licenses, "type").join(", ") %> (<%= _.pluck(pkg.licenses, "url").join(", ") %>)\n' +
+                '*/'
         },
         // Join files
         concat: {

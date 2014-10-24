@@ -1,4 +1,41 @@
 .pk-ui{
+	::-webkit-input-placeholder { /* WebKit browsers */
+		color: darken(@color-background, 30%);
+		font-style: italic;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		color: darken(@color-background, 30%);
+		font-style: italic;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+		color: darken(@color-background, 30%);
+		font-style: italic;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10+ */
+		color: darken(@color-background, 30%);
+		font-style: italic;
+	}
+	input, textarea{
+		border:1px solid darken(@color-background, 30%);
+		height:@item-height;
+		line-height:@item-height;
+		padding:0 @item-height/3;
+		box-sizing:border-box;
+		width:@item-width;
+		font-family:'PT Sans Narrow';
+		resize:none;
+		transition:all 200ms ease-in;
+		&:focus, &:hover:focus{
+			outline:none;
+			border-color:@color-highlight;
+		}
+		&:hover{
+			border-color:@color-foreground;
+		}
+	}
+	textarea{
+		height:@item-width/2;
+	}
 	a{
 		color:darken(@color-highlight, 5%);
 		text-decoration:none;

@@ -47,7 +47,7 @@ var pk = pk || {};
             obj.val(obj.val() + offset);
         });
 
-        function clickHandler(e) {
+        function clickHandler() {
             if (lastVal === obj.val()) {
                 obj.val(obj.val() - 1);
             }

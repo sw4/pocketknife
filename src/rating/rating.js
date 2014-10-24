@@ -6,7 +6,8 @@ var pk = pk || {};
             inputValue = opt.value || el.getAttribute('value') || 0,
             inputDisabled = (opt.disabled || el.getAttribute('disabled')) ? 'disabled' : '',
             inputName = opt.name || el.getAttribute('name') || 'pk-rating-' + pk.getRand(1, 999),
-            inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0;
+            inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0,
+            lastVal = inputValue;
 
         /*jshint multistr:true */
         var str = "<div class='pk-rating'>\
@@ -46,6 +47,15 @@ var pk = pk || {};
             obj.val(obj.val() + offset);
         });
 
+        function clickHandler(e) {
+            if (lastVal === obj.val()) {
+                obj.val(obj.val() - 1);
+            }
+            lastVal = obj.val();
+        }
+        for (var i = 0; i < rEl.length; i++) {
+            pk.bindEvent('click', rEl[i], clickHandler);
+        }
         var obj = {
             0: el,
             val: function(val) {
@@ -66,6 +76,7 @@ var pk = pk || {};
                 } else {
                     rEl[val - 1].checked = true;
                 }
+                lastVal = val;
             },
             disabled: function(val) {
                 if (val !== undefined) {

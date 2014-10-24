@@ -195,5 +195,5 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['browserSync', 'watch']);
 
     // Travis CI task.
-    grunt.registerTask('travis', ['concat', 'less', 'csslint', 'cssbeautifier', 'autoprefixer', 'cssmin', 'jshint', 'jsbeautifier', 'uglify', 'clean']);
+    grunt.registerTask('travis', ['concat', 'less', 'autoprefixer', 'csslint', 'cssmin', 'jshint', 'jsbeautifier', 'uglify', 'clean']);
 };

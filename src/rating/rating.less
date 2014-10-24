@@ -46,27 +46,27 @@
 			color: darken(@color-background, 40%);
 		}
 	}
-}
-.pk-rating:not(.pk-disabled){
-	input{
-		&:checked{
-			& + label:hover,
-			& + label:hover ~ label,
-			& ~ label:hover,
-			& ~ label:hover ~ label{
-			    color: lighten(@color-highlight, 5%);
-				transform:scale(1);
+	&:not(.pk-disabled){
+		input{
+			&:checked{
+				& + label:hover,
+				& + label:hover ~ label,
+				& ~ label:hover,
+				& ~ label:hover ~ label{
+					color: lighten(@color-highlight, 5%);
+					transform:scale(1);
+				}
 			}
 		}
-	}
-	
-	label{
-		&:hover, &:hover ~ label {
-			color: darken(@color-background, 20%);
-		}
-		&:hover ~ input:checked ~ label {
-			color: lighten(@color-highlight, 5%);
-			transform:scale(1);
+		
+		label{
+			&:hover, &:hover ~ label {
+				color: darken(@color-background, 20%);
+			}
+			&:hover ~ input:checked ~ label {
+				color: lighten(@color-highlight, 5%);
+				transform:scale(1);
+			}
 		}
 	}
 }

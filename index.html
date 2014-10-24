@@ -19,8 +19,7 @@
             height: 200px;
             width: 50%;			
         }
-        		#carousel1 li{
-			padding-top:10%;
+		#carousel1 li{
 			color:white;
 			font-size:2em;
 		}
@@ -46,7 +45,10 @@
 </head>
 
 <body>
+<h1>Masked Input</h1>
+<input type='text' id='masked1'/>
 
+<br /><br />
 <h1>Checkbox</h1>
 
 <div id='checkbox1'></div>
@@ -262,10 +264,10 @@
 	 
 		pk.carousel({element:document.getElementById('carousel1')});
 	 
-        pk.rating({element:document.getElementById('rating1')});
+        pk.rating({element:document.getElementById('rating1'), value:3});
 
-        pk.slider({element:document.getElementById('slider1'), units:'%', axis:'y'});
-        pk.slider({element:document.getElementById('slider2'), units:'%'});
+        pk.slider({element:document.getElementById('slider1'), units:'%', axis:'y', value:40});
+        pk.slider({element:document.getElementById('slider2'), units:'mm', min:30, max:980, value:133});
 
         pk.toggle({element:document.getElementById('toggle1'), options:[
 			{value:true, name:'yes'},

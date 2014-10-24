@@ -2,7 +2,7 @@
   "name": "pocketknife",
   "title": "pocketknife",
   "description": "pocketknife",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/sw4/pocketknife",
   "author": {
     "name": "Pocketknife Ltd"
@@ -31,6 +31,7 @@
     "grunt": "~0.4.5",
     "grunt-autoprefixer": "^1.0.1",
     "grunt-browser-sync": "^1.5.3",
+    "grunt-bump": "0.0.16",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-csslint": "^0.3.1",

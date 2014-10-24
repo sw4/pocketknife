@@ -2,10 +2,10 @@
   "name": "pocketknife",
   "title": "pocketknife",
   "description": "pocketknife",
-  "version": "0.0.54",
+  "version": "0.0.58",
   "homepage": "https://github.com/sw4/pocketknife",
   "author": {
-    "name": "Pocketknife Ltd"
+    "name": "Pocketknife Ltd."
   },
   "repository": {
     "type": "git",

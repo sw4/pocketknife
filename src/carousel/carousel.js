@@ -5,7 +5,7 @@ var pk = pk || {};
             options = opt.options || [],
             value = opt.value || 0,
             delay = opt.delay || 4000,
-			timer=true,
+            timer = true,
             inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0;
 
         if (options.length === 0 && el.nodeName === "UL") {
@@ -115,15 +115,17 @@ var pk = pk || {};
                     }
                 }
                 oldVal = value;
-				timer=false;
+                timer = false;
             }
         };
         obj.val(value);
 
         if (delay) {
             setInterval(function() {
-                if(timer){obj.val('+1');}
-				timer=true;
+                if (timer) {
+                    obj.val('+1');
+                }
+                timer = true;
             }, delay);
         }
 

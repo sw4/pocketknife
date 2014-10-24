@@ -57,14 +57,14 @@ var pk = pk || {};
                 element: box,
                 handle: header,
                 move: true,
-				listeners:{
-					dragstart:function(){
-						pk.removeClass(box, 'pk-animated');
-					},
-					dragend:function(){
-						pk.addClass(box, 'pk-animated');
-					}
-				}
+                listeners: {
+                    dragstart: function() {
+                        pk.removeClass(box, 'pk-animated');
+                    },
+                    dragend: function() {
+                        pk.addClass(box, 'pk-animated');
+                    }
+                }
             });
         }
     };

@@ -118,7 +118,7 @@ module.exports = function(grunt) {
             },
             html: {
                 files: ['*.html'],
-                tasks: ['prettify'],
+                tasks: ['jsbeautifier'],
                 options: {
                     spawn: false,
                 },
@@ -126,32 +126,23 @@ module.exports = function(grunt) {
 
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['jshint', 'jsbeautifier', 'concat', 'uglify', 'clean'],
+                tasks: ['jshint', 'jsbeautifier', 'concat', 'uglify', 'clean', 'bump:patch'],
                 options: {
                     spawn: false,
                 },
             },
             less: {
                 files: ['src/**/*.less'],
-                tasks: ['concat', 'less', 'autoprefixer', 'csslint', 'cssmin', 'clean'],
+                tasks: ['concat', 'less', 'autoprefixer', 'csslint', 'cssmin', 'clean', 'bump:patch'],
                 options: {
                     spawn: false,
                 },
             }
         },
-        // Make HTML look nice
-        prettify: {
-            options: {
-                // Task-specific options go here.
-            },
-            files: {
-                'index.html': ['index.html']
-            }
-        },
 
         // Make JS look nice
         jsbeautifier: {
-            files: ['Gruntfile.js', 'src/**/*.js']
+            files: ['Gruntfile.js', 'src/**/*.js', '*.html']
         },
         // Generate CSS from LESS
         less: {

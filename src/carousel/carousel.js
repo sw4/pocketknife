@@ -4,7 +4,8 @@ var pk = pk || {};
         var el = opt.element,
             options = opt.options || [],
             value = opt.value || 0,
-            timer = opt.timer || 4000,
+            delay = opt.delay || 4000,
+			timer=true,
             inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0;
 
         if (options.length === 0 && el.nodeName === "UL") {
@@ -114,14 +115,16 @@ var pk = pk || {};
                     }
                 }
                 oldVal = value;
+				timer=false;
             }
         };
         obj.val(value);
 
-        if (timer) {
+        if (delay) {
             setInterval(function() {
-                obj.val('+1');
-            }, timer);
+                if(timer){obj.val('+1');}
+				timer=true;
+            }, delay);
         }
 
         return obj;

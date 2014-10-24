@@ -4,7 +4,7 @@ var pk = pk || {};
         var el = opt.element,
             options = opt.options || [],
             value = opt.value || 0,
-            timer = opt.timer || 5000,
+            timer = opt.timer || 4000,
             inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0;
 
         if (options.length === 0 && el.nodeName === "UL") {
@@ -119,7 +119,9 @@ var pk = pk || {};
         obj.val(value);
 
         if (timer) {
-            setInterval(obj.val('+1'), timer);
+            setInterval(function() {
+                obj.val('+1');
+            }, timer);
         }
 
         return obj;

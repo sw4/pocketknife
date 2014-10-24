@@ -111,7 +111,7 @@ module.exports = function(grunt) {
             },
             gruntfile: {
                 files: ['Gruntfile.js'],
-                tasks: ['concat', 'less', 'autoprefixer', 'csslint', 'cssmin', 'jshint', 'jsbeautifier', 'uglify', 'clean'],
+                tasks: ['concat', 'less', 'autoprefixer', 'csslint', 'cssmin', 'jshint', 'jsbeautifier', 'uglify', 'clean', 'bump:patch'],
                 options: {
                     spawn: false,
                 },
@@ -167,6 +167,21 @@ module.exports = function(grunt) {
             less: ["dist/**/*.less"],
             css: ["dist/**/*.css", "!dist/**/*.min.css"]
         },
+        bump: {
+            options: {
+                files: ['package.json'],
+                commit: false,
+                commitMessage: 'Release v%VERSION%',
+                commitFiles: ['package.json'],
+                createTag: false,
+                tagName: 'v%VERSION%',
+                tagMessage: 'Version %VERSION%',
+                push: false,
+                pushTo: 'upstream',
+                gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
+                globalReplace: false
+            }
+        },
         // Auto update any open browser windows when assets change
         browserSync: {
             default_options: {
@@ -195,5 +210,6 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['browserSync', 'watch']);
 
     // Travis CI task.
+
     grunt.registerTask('travis', ['concat', 'less', 'autoprefixer', 'csslint', 'cssmin', 'jshint', 'jsbeautifier', 'uglify', 'clean']);
 };

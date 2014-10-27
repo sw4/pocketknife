@@ -76,18 +76,19 @@
 		border-radius:100%;
 		border-top-left-radius:0;
 		border-bottom-left-radius:0;
-		background:fade(@color-foreground, 5%);
+		// background:fade(@color-foreground, 5%);
 		transition: all 100ms ease-in;
 		&:after{
-			content:'<';
+			content:'\2329';
 			position:absolute;    
 			font-weight:bold;
-			top:0;
-			font-size:3em;
+			font-size:5em;
+			// left:0;
 			left:@item-height /3;
 		}
 		&:hover{    
-			background:fade(@color-foreground, 15%);
+			color:fade(@color-background, 60%);		
+		//	background:fade(@color-foreground, 15%);
 		}
 	}
 	 .pk-nav-next{
@@ -97,7 +98,8 @@
 		border-top-right-radius:0;
 		border-bottom-right-radius:0;
 		&:after{
-			content:'>';
+			content:'\232A';
+			left:auto;
 			right:@item-height /3;
 		}
 	 }

@@ -23,6 +23,7 @@
 		box-sizing:border-box;
 		width:@item-width;
 		font-family:'PT Sans Narrow';
+		font-size:@font-size;
 		resize:none;
 		transition:all 200ms ease-in;
 		&:focus, &:hover:focus{
@@ -30,7 +31,7 @@
 			border-color:@color-highlight;
 		}
 		&:hover{
-			border-color:@color-foreground;
+			border-color:@color-highlight;
 		}
 	}
 	textarea{

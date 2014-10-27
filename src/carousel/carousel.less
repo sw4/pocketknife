@@ -67,7 +67,7 @@
 		position:absolute;
 		left:-1 * (@item-height + (@item-height/3));
 		top:calc(~"50% - 25px");   
-		color:fade(@color-background, 50%);		
+		color:fade(@color-background, 20%);		
 		cursor:pointer;    		
 		width:@item-height + (@item-height/3);
 		height:@item-height*1.66;
@@ -110,8 +110,9 @@
 		top:-1 * @item-height;
 		height:@item-height*.84;
 		width:@item-height;		
-		background:fade(@color-foreground, 5%);
 		text-align:center;
+		transition:all 100ms ease-in;
+		
 		&.pk-selected:after{
 			transform: scale(1);
 			opacity:1;
@@ -139,6 +140,9 @@
 		}
 		.pk-nav-next{
 			right:0;
+		}
+		.pk-nav-item{		
+		//	background:fade(@color-foreground, 5%);
 		}
 	}
 	span:nth-of-type(3){

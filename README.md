@@ -17,4 +17,4 @@ Lightweight UI library written in vanilla JS.
 License
 ----
 
-By using any code contained herein relating to [pocketknife ui](https://github.com/sw4/pocketknife), you agree to be bound to all respective terms and conditions contained within the product  [license](https://github.com/sw4/pocketknife/blob/master/LICENSE-MIT)
+Pockeknife.js is open source and available under the [MIT license](https://github.com/sw4/pocketknife/blob/master/LICENSE-MIT).

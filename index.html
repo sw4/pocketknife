@@ -46,6 +46,39 @@
 </head>
 
 <body>
+
+    <h1>Accordian</h1>
+    <ul id='accordian1' class='pk-accordian'>
+        <li>
+            <h3 class='pk-content-header'>Title Content</h3>
+            <div class='pk-content'>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
+                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet
+                risus elementum, faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis
+                massa sodales, at pulvinar sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
+            </div>
+        </li>
+        <li>
+            <h3 class='pk-content-header'>Title Content</h3>
+            <div class='pk-content'>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
+                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet
+                risus elementum, faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis
+                massa sodales, at pulvinar sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
+            </div>
+        </li>
+        <li>
+            <h3 class='pk-content-header'>Title Content</h3>
+            <div class='pk-content'>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
+                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet
+                risus elementum, faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis
+                massa sodales, at pulvinar sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
+            </div>
+        </li>
+    </ul>
+    <br />
+    <br />
     <h1>Form Elements</h1>
     <input type='text' id='masked1' />
     <br />
@@ -337,6 +370,12 @@
             element: document.getElementById('checkbox1'),
             label: 'check',
             value: true
+        });
+
+        pk.accordian({
+            element: document.getElementById('accordian1'),
+            animate: true,
+            multiple: true
         });
     </script>
 </body>

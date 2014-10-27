@@ -122,8 +122,8 @@ var pk = pk || {};
     pk.getRand = function(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     };
-    pk.getUnits = function(str){
-        return str.replace(/\d+/,'');
+    pk.getUnits = function(str) {
+        return str.replace(/\d+/, '');
     };
     pk.wrapEl = function(el, str) {
         var helperEl = pk.createEl(str);

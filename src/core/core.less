@@ -1,8 +1,9 @@
-@import url(http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
 
-@font-size:14px;
-@item-height:@font-size*2.15;
+@font-size:13px;
+@font-color:hsl(221, 16%, 40%);
+@item-height:@font-size*2.4;
 @item-width:@item-height*10;
 @color-background:hsl(0, 0%, 100%);
 @color-foreground:hsl(0, 0%, 0%);
@@ -22,7 +23,8 @@
 
 
 .pk-ui {
-    font-family: 'PT Sans Narrow';
+    font-family: 'Open Sans';
+	color:@font-color;
     font-size: @font-size;
 	position:relative;
 }
@@ -58,3 +60,4 @@
     -ms-user-select: none;
     user-select: none;
 }
+

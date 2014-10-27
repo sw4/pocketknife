@@ -1,0 +1,33 @@
+
+.pk-accordian{
+    list-style:none;
+	margin:0;
+	padding:0;
+	li{
+	    margin:0;
+		padding:0;
+		&.pk-show .pk-content-header:before{
+			content:'\25BE';
+		}
+		.pk-content-header{
+			cursor:pointer;
+			&:before{
+				content:'\25B8';
+				font-size:1.5em;
+				vertical-align:middle;
+				display:inline-block;
+				margin:-10px 5px 0 0;
+			}
+			&:hover{
+				color:@color-highlight;
+			}
+		}
+		.pk-content{
+			overflow:hidden;
+			transition:all 200ms ease-in;
+			height:0;
+			padding-left:20px;
+		}
+	}
+	
+}

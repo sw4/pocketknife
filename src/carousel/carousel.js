@@ -18,7 +18,7 @@ var pk = pk || {};
             optionEl = [];
         for (var o = 0; o < options.length; o++) {
             optionEl.push(pk.createEl("<li class='pk-option'>" + options[o] + "</li>"));
-            navEl.push(pk.createEl("<span class='pk-nav-item' data-nav='=" + o + "'></span>"));
+            navEl.push(pk.createEl("<span class='pk-nav-item' data-nav='=" + o + "'>" + o + "</span>"));
         }
         tpl += "</ul><span class='pk-nav-prev' data-nav='-1'></span><span data-nav='+1' class='pk-nav-next'></span></div>";
 

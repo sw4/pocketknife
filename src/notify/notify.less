@@ -1,0 +1,25 @@
+.pk-notify{
+	list-style:none;
+	margin:0;
+	padding:0;
+	position:fixed;
+	right:20px;
+	bottom:10px;
+	width:@item-width*.75;
+	li{	
+		padding:0;
+		background:fade(@color-foreground, 50%);
+		color:@color-background;		
+		opacity:0;
+		height:0;
+		overflow:hidden;
+		transition: all 200ms ease-in;
+		border-left:@item-height/5 solid @color-highlight;
+		&.pk-show{
+			opacity:1;
+			padding:@item-height/3;			
+			margin:0 0 10px 0;
+			height:auto;
+		}		
+	}
+}

@@ -21,7 +21,7 @@ var pk = pk || {};
         dismiss: function(dEl) {
             pk.removeClass(dEl, 'pk-show');
             setTimeout(function() {
-                nEl.removeChild(dEl);
+                if(nEl){nEl.removeChild(dEl);}
             }, 1000);
         }
     };

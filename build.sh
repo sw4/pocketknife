@@ -18,3 +18,4 @@ npm install gulp-header --save-dev
 npm install gulp-load-plugins --save-dev 
 npm install gulp-uncss --save-dev
 npm install --save-dev gulp-iconfont
+npm install --save-dev gulp-iconfont-css

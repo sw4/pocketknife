@@ -14,9 +14,10 @@
 			&:before{
 				content:'\25B8';
 				font-size:1.5em;
+				width: @item-height/2;
 				vertical-align:baseline;
 				display:inline-block;
-				margin-right:5px;
+				margin-right:@item-height/6;
 			}
 			&:hover{
 				color:@color-highlight;
@@ -26,7 +27,7 @@
 			overflow:hidden;
 			transition:all 100ms ease-in;
 			height:0;
-			padding-left:20px;
+			padding-left:@item-height*.66;
 		}
 	}
 	

@@ -11,7 +11,7 @@ var pk = pk || {};
             tEl.style.height = '0';
             setTimeout(function() {
                 tEl.style.height = h + 'px';
-            }, 10);
+            }, 10); 
         }
 
         function doLayout(tEl) {

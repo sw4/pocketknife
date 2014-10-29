@@ -65,7 +65,7 @@
 	.pk-nav-prev, .pk-nav-next{
 		z-index:4;
 		position:absolute;
-		left:-1 * (@item-height + (@item-height/3));
+		left:-1 * (@item-height * 2.2);
 		top:calc(~"50% - 25px");   
 		color:fade(@color-background, 20%);		
 		cursor:pointer;    		
@@ -93,7 +93,7 @@
 	}
 	 .pk-nav-next{
 		left:auto;
-		right:-1 * (@item-height + (@item-height/3));
+		right:-1 * (@item-height *2.2);
 		border-radius:100%;
 		border-top-right-radius:0;
 		border-bottom-right-radius:0;
@@ -138,10 +138,10 @@
 	}
 	&:hover{
 		.pk-nav-prev{
-			left:0;
+			left:-1*@item-height;
 		}
 		.pk-nav-next{
-			right:0;
+			right:-1*@item-height;
 		}
 		.pk-nav-item{		
 		//	background:fade(@color-foreground, 5%);

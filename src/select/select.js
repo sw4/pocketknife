@@ -34,12 +34,12 @@ var pk = pk || {};
             }
         }
 
-        // build the template
+		 /*jshint multistr:true */
         var tpl = "<div class='pk-select " + (inputMultiple ? 'pk-select-multiple' : '') + " " + (dropdown ? 'pk-select-dropdown' : '') + " " + (inputDisabled ? 'pk-disabled' : '') + "' tabindex='" + inputTabIndex + "'>\
                 <input type='hidden' name='" + inputName + "'/>\
                 <div class='pk-select-value " + (!inputValue || inputValue.length < 1 ? 'pk-placeholder' : '') + "'>sdsd</div>\
             <ul>";
-        for (var o in options) {
+        for (var o=0;o< options.length;o++) {
             tpl += "<li class='pk-option' data-value='" + options[o].value + "'>" + options[o].name + "</li>";
         }
         tpl += "</ul></div>";
@@ -82,7 +82,7 @@ var pk = pk || {};
             if (!inputMultiple) {
                 inputValue.splice(1, inputValue.length - 1);
             }
-            for (var o in options) {
+            for (var o =0; o < options.length; o++) {
                 options[o].selected = (inputValue.indexOf(options[o].value) !== -1) ? true : false;
                 pk.toggleClass(optionsEl.children[o], 'pk-selected', options[o].selected);
                 if (options[o].selected) {

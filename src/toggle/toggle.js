@@ -24,7 +24,7 @@ var pk = pk || {};
         el = pk.replaceEl(el, tpl);
 
         var optionEl = [];
-        for (var o in options) {
+        for (var o=0;o< options.length;o++) {
             var oEl = pk.createEl("<div class='pk-option' style='width:" + (100 / options.length) + "%' data-value='" + options[o].value + "'>" + options[o].name + "</div>");
             el.appendChild(oEl);
             optionEl.push(oEl);
@@ -39,7 +39,7 @@ var pk = pk || {};
                     return inputEl.value;
                 }
                 val = val.toString() || options[0].value.toString();
-                for (var o in options) {
+                for (var o=0;o< options.length;o++) {
                     if (options[o].value.toString() === val) {
                         indicatorEl.style.left = parseInt(o, 0) * 100 / options.length + '%';
                         inputEl.value = val;
@@ -58,11 +58,10 @@ var pk = pk || {};
             }
         };
         obj.val(inputValue);
-
         function clickOpt(e) {
             obj.val(pk.attribute(e.target, 'data-value'));
         }
-        for (o in optionEl) {
+        for (o=0;o< options.length;o++) {
             pk.bindListeners(listeners, optionEl[o]);
             if (!inputDisabled) {
                 pk.bindEvent('click', optionEl[o], clickOpt);

@@ -87,7 +87,11 @@ var pk = pk || {};
         if (!ca) {
             return;
         }
-        el.setAttribute('class', ca.replace(c, '').trim());
+        if(ca===c){
+            el.removeAttribute('class');
+        }else{
+            el.setAttribute('class', ca.replace(c, '').trim());
+        }
         return el;
     };
     pk.bindEvent = function(e, el, fn) {

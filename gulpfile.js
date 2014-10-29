@@ -102,6 +102,6 @@ gulp.task('watch', function () {
    gulp.watch('src/**/*.js', ['js']);
 });
 
-gulp.task('default', function() {
-   gulp.run('watch');
-});
+gulp.task('default', ['watch']);
+
+gulp.task('travis', ['styles', 'js']);

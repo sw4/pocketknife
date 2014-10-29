@@ -9,12 +9,12 @@ if (!Array.prototype.indexOf) {
 
         var k;
 
-        if (this == null) {
+        if (this === null) {
             throw new TypeError('"this" is null or not defined');
         }
 
         var O = Object(this);
-        var len = O.length >>> 0;
+        var len = O.length || 0;
 
         if (len === 0) {
             return -1;
@@ -100,6 +100,14 @@ var pk = pk || {};
             el.attachEvent("on" + e, fn);
         }
     };
+	pk.unbindEvent = function(e, el, fn) {
+		if (el.removeEventListener){
+			el.removeEventListener (e,fn,false);
+		}
+		if (el.detachEvent){
+			el.detachEvent ('on'+e,fn); 
+		}
+	};
     pk.layout = function(el, offsetEl) {
         var t = offsetEl ? el.getBoundingClientRect().top - offsetEl.getBoundingClientRect().top : el.offsetTop,
             l = offsetEl ? el.getBoundingClientRect().left : el.offsetLeft,
@@ -116,7 +124,9 @@ var pk = pk || {};
     };
     pk.bindListeners = function(l, el) {
         for (var e in l) {
-            pk.bindEvent(e, el, l[e]);
+			if(l.hasOwnProperty(e)){
+				pk.bindEvent(e, el, l[e]);
+			}
         }
     };
     pk.getRand = function(min, max) {
@@ -142,7 +152,7 @@ var pk = pk || {};
         }
         var prop = document.body.previousElementSibling ? 'previousElementSibling' : 'previousSibling';
         var i = 1;
-        while (el = el[prop]) {
+        while ((el = el[prop])) {
             ++i;
         }
         return i - 1;
@@ -185,7 +195,7 @@ var pk = pk || {};
         if (s === 0) {
             return a2;
         }
-        for (var i in a2) {
+        for (var i=0;i< a2.length;i++) {
             var f = a1.indexOf(a2[i]) !== -1 ? true : false;
             if (!f && (s === 1 || s === 3)) {
                 a1.push(a2[i]);

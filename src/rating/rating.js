@@ -81,7 +81,7 @@ var pk = pk || {};
             disabled: function(val) {
                 if (val !== undefined) {
                     pk.toggleClass(el, 'pk-disabled', val);
-                    for (var r in rEl) {
+                    for (var r = 0; r< rEl.length;r++) {
                         pk.attribute(rEl[r], 'disabled', val);
                     }
                 }

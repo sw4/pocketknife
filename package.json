@@ -2,7 +2,7 @@
   "name": "pocketknife",
   "title": "pocketknife",
   "description": "pocketknife",
-  "version": "0.0.153",
+  "version": "0.0.156",
   "homepage": "https://github.com/sw4/pocketknife",
   "author": {
     "name": "Pocketknife Ltd."
@@ -25,24 +25,27 @@
   },
   "scripts": {
     "test": "grunt travis --verbose"
-  },  
+  },
   "devDependencies": {
-    "browser-sync": "*",
-    "del": "*",
-    "gulp": "*",
-    "gulp-autoprefixer": "*",
-    "gulp-bump": "*",
-    "gulp-cache": "*",
-    "gulp-concat": "*",
+    "browser-sync": "^1.6.1",
+    "del": "^0.1.3",
+    "gulp": "^3.8.9",
+    "gulp-autoprefixer": "^1.0.1",
+    "gulp-bump": "^0.1.11",
+    "gulp-cache": "^0.2.4",
+    "gulp-concat": "^2.4.1",
     "gulp-csslint": "^0.1.5",
-    "gulp-jsbeautifier": "*",
-    "gulp-jshint": "*",
-    "gulp-less": "*",
-    "gulp-load-plugins": "*",
-    "gulp-minify-css": "*",
-    "gulp-notify": "*",
-    "gulp-rename": "*",
-    "gulp-uglify": "*"
+    "gulp-header": "^1.2.2",
+    "gulp-imagemin": "^1.2.1",
+    "gulp-jsbeautifier": "0.0.3",
+    "gulp-jshint": "^1.8.6",
+    "gulp-less": "^1.3.6",
+    "gulp-load-plugins": "^0.7.0",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-notify": "^2.0.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.0.1",
+    "gulp-uncss": "^0.5.1"
   },
   "keywords": []
 }

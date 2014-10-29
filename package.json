@@ -1,0 +1,49 @@
+{
+  "name": "pocketknife",
+  "title": "pocketknife",
+  "description": "pocketknife",
+  "version": "0.0.153",
+  "homepage": "https://github.com/sw4/pocketknife",
+  "author": {
+    "name": "Pocketknife Ltd."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sw4/pocketknife.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sw4/pocketknife/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/sw4/pocketknife/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">=0.6"
+  },
+  "scripts": {
+    "test": "grunt travis --verbose"
+  },  
+  "devDependencies": {
+    "browser-sync": "*",
+    "del": "*",
+    "gulp": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-bump": "*",
+    "gulp-cache": "*",
+    "gulp-concat": "*",
+    "gulp-csslint": "^0.1.5",
+    "gulp-imagemin": "*",
+    "gulp-jsbeautifier": "*",
+    "gulp-jshint": "*",
+    "gulp-less": "*",
+    "gulp-load-plugins": "*",
+    "gulp-minify-css": "*",
+    "gulp-notify": "*",
+    "gulp-rename": "*",
+    "gulp-uglify": "*"
+  },
+  "keywords": []
+}

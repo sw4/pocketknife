@@ -3,7 +3,7 @@ var pk = pk || {};
     pk.modal = function(opt) {
         var h = opt.header,
             c = opt.content;
-
+/*jshint multistr: true */
         var tpl = "<div class='pk-modal-mask'>\
 			<div class='pk-modal-box pk-animated'>\
 				<div class='pk-modal-header'>" + h + "<span class='pk-modal-close'></span></div>\

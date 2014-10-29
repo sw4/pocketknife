@@ -35,7 +35,6 @@
     "gulp-cache": "*",
     "gulp-concat": "*",
     "gulp-csslint": "^0.1.5",
-    "gulp-imagemin": "*",
     "gulp-jsbeautifier": "*",
     "gulp-jshint": "*",
     "gulp-less": "*",

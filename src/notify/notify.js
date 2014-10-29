@@ -2,7 +2,7 @@ var pk = pk || {};
 (function(pk) {
     var nEl = pk.createEl("<ul class='pk-notify'></ul>");
     document.body.appendChild(nEl);
-    return pk.notify = {
+    pk.notify = {
         push: function(opt) {
             var mEl = pk.createEl("<li tabindex='" + pk.getRand(1, 999) + "'>" + opt.content + "</li>"),
                 delay = opt.delay || 2000;
@@ -16,7 +16,7 @@ var pk = pk || {};
             }, delay);
 
             pk.bindEvent('click', mEl, function() {
-                scope.dismiss(mEl);
+                scope.dismiss(mEl); 
             });
         },
         dismiss: function(dEl) {

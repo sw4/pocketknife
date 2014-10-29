@@ -48,7 +48,7 @@ var pk = pk || {};
                     perc = perc < 0 ? 0 : perc;
                     perc = perc > 1 ? 1 : perc;
                     obj.val(min + Math.round(perc * range));
-                    if (listeners & listeners.sliding) {
+                    if (listeners && listeners.sliding) {
                         listeners.sliding(el, e);
                     }
                 },
@@ -56,7 +56,7 @@ var pk = pk || {};
                     if (obj.disabled()) {
                         return false;
                     }
-                    if (listeners & listeners.slidestart) {
+                    if (listeners && listeners.slidestart) {
                         listeners.slidestart(el, e);
                     }
                     pk.removeClass(barEl, 'pk-animated');
@@ -65,7 +65,7 @@ var pk = pk || {};
                     if (obj.disabled()) {
                         return false;
                     }
-                    if (listeners & listeners.slideend) {
+                    if (listeners && listeners.slideend) {
                         listeners.slideend(el, e);
                     }
                     pk.addClass(barEl, 'pk-animated');

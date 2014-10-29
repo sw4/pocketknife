@@ -5,7 +5,7 @@ var pk = pk || {};
     pk.notify = {
         push: function(opt) {
             var mEl = pk.createEl("<li tabindex='" + pk.getRand(1, 999) + "'>" + opt.content + "</li>"),
-                delay = opt.delay || 2000;
+                delay = opt.delay || 8000;
             nEl.appendChild(mEl);
             setTimeout(function() {
                 pk.addClass(mEl, 'pk-show');

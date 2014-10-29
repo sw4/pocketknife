@@ -66,6 +66,19 @@ gulp.task('js', ['bump'],function() {
 	// Bump patch version
 });
 
+gulp.task('iconfont', function(){
+  gulp.src(['src/icons/*.svg'])
+    .pipe(plugins.iconfontCss({
+      fontName: 'pk',
+      path: 'less',
+	  fontPath:'src/',
+      targetPath: '../fontIcons.less'
+    }))
+    .pipe(plugins.iconfont({
+      fontName: 'fontIcons'
+     }))
+    .pipe(gulp.dest('src/fonts/src/'));
+});
 
 gulp.task('browser-sync', function () {
    var files = [

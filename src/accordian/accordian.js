@@ -25,7 +25,7 @@ var pk = pk || {};
                 }
                 if (pk.hasClass(el.children[a], 'pk-show')) {
                     // show...if not already shown
-                    if (content.style.height === '0px' || !content.style.height) {
+                    if (parseInt(content.style.height,0) === 0 || !content.style.height) {
                         if (anim) {
                             animHeight(content);
                         } else {

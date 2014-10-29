@@ -10,7 +10,8 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	header = require('gulp-header'),
 	bump = require('gulp-bump'),
-	browserSync = require('browser-sync');
+	browserSync = require('browser-sync'),
+	prettify  = require('gulp-jsbeautifier');
 
 	var banner = ['/**',
 	  ' * <%= pkg.title || pkg.name %>',
@@ -32,9 +33,9 @@ var plugins = require('gulp-load-plugins')({
     lazy: true, // whether the plugins should be lazy loaded on demand
 });
 */
-
-gulp.task('styles', function() {
-  gulp.src('src/**/*.less')
+ 
+gulp.task('styles', ['bump'], function() {
+  gulp.src('src/**/*.less', {base:'./'})
 	// Concat all LESS files
     .pipe(concat(pkg.name+'.less'))
 	// Convert LESS to CSS
@@ -55,7 +56,7 @@ gulp.task('styles', function() {
 	// Save output
     .pipe(gulp.dest('dist/'));
 	// Bump patch version
-	gulp.run('bump');
+
 });
 
 gulp.task('bump', function(){
@@ -64,22 +65,23 @@ gulp.task('bump', function(){
 	.pipe(gulp.dest('./'));
 });
 
-gulp.task('js', function() {
-  gulp.src('src/**/*.js')
+gulp.task('js', ['bump'],function() {
+  gulp.src('src/**/*.js', {base: './'})
+  // .pipe(prettify())
+  // .pipe(gulp.dest('./'))
 	// Concat all JS files
     .pipe(concat(pkg.name+'.js'))
 	// HINT JS
 	.pipe(jshint())
 	// Minify JS
 	.pipe(uglify())
-	// Rename destination file
+	// Rename destination file 
 	.pipe(rename(pkg.name+'.min.js'))
 	// Add banner
 	.pipe(header(banner, { pkg : pkg } ))
-	// Save output
+	// Save output	
     .pipe(gulp.dest('dist/'));
 	// Bump patch version
-	gulp.run('bump');
 });
 
 
@@ -96,8 +98,7 @@ gulp.task('browser-sync', function () {
    });
 });
 
-gulp.task('watch', function () {
-   gulp.run('browser-sync');
+gulp.task('watch', ['browser-sync'], function () {
    gulp.watch('src/**/*.less', ['styles']);
    gulp.watch('src/**/*.js', ['js']);
 });

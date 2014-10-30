@@ -13,7 +13,7 @@ var pk = pk || {};
                 options.push(el.children[i].innerHTML);
             }
         }
-        var tpl = "<div class='pk-carousel pk-noselect' tabindex='" + inputTabIndex + "'><ul>",
+        var tpl = "<div class='pk-carousel' tabindex='" + inputTabIndex + "'><ul>",
             navEl = [],
             optionEl = [];
         for (var o = 0; o < options.length; o++) {

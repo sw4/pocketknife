@@ -10,7 +10,7 @@ var pk = pk || {};
             inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0;
 
         /*jshint multistr:true */
-        var str = "<label class='pk-checkbox pk-noselect' for='" + inputName + "'>\
+        var str = "<label class='pk-checkbox' for='" + inputName + "'>\
 		<input type = 'checkbox'  id = '" + inputName + "'  name = '" + inputName + "'  value = '" + inputValue + "'  tabindex = '" + inputTabIndex + "' / >\
             <span class = 'pk-label' > " + inputLabel + " </span>\
 		</label>";

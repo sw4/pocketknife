@@ -4,9 +4,8 @@ var gulp = require('gulp'),
 	plugins = require("gulp-load-plugins")({
 		pattern: ['gulp-*', 'gulp.*'],
 		replaceString: /\bgulp[\-.]/
-	});
-	
-	var banner = ['/**',
+	}),
+	banner = ['/**',
 	  ' * <%= pkg.title || pkg.name %>',
 	  ' * @version v<%= pkg.version %>',
 	  ' * @link <%= pkg.homepage %>',  
@@ -18,27 +17,17 @@ var gulp = require('gulp'),
  
 gulp.task('build:styles', function() {
   return gulp.src('src/**/*.less', {base:'./'})
-	// Concat all LESS files
     .pipe(plugins.concat(pkg.name+'.less'))
-	// Convert LESS to CSS
 	.pipe(plugins.less())
-	// Add vendor prefixes to CSS
 	.pipe(plugins.autoprefixer({
 		browsers:['last 2 version', 'ie 8', 'ie 9'],
 		cascade:true
 	}))
-	// LINT CSS
 	.pipe(plugins.csslint())
-	// Minify CSS
 	.pipe(plugins.minifyCss())
-	// Rename destination file
 	.pipe(plugins.rename(pkg.name+'.min.css'))
-	// Add banner
 	.pipe(plugins.header(banner, { pkg : pkg } ))
-	// Save output
     .pipe(gulp.dest('dist/'));
-	// Bump patch version
-
 });
 
 gulp.task('bump', function(){
@@ -49,21 +38,12 @@ gulp.task('bump', function(){
 
 gulp.task('build:js',function() {
   return gulp.src('src/**/*.js', {base: './'})
-	// .pipe(prettify())
-	// .pipe(gulp.dest('./'))
-	// Concat all JS files
     .pipe(plugins.concat(pkg.name+'.js'))
-	// HINT JS
 	.pipe(plugins.jshint())
-	// Minify JS
 	.pipe(plugins.uglify())
-	// Rename destination file 
 	.pipe(plugins.rename(pkg.name+'.min.js'))
-	// Add banner
 	.pipe(plugins.header(banner, { pkg : pkg } ))
-	// Save output	
     .pipe(gulp.dest('dist/'));
-	// Bump patch version
 });
 
 gulp.task('build:icons', function(){
@@ -98,6 +78,6 @@ gulp.task('watch', ['browser-sync'], function () {
    gulp.watch('src/**/*.js', ['build:js', 'bump']);
    return true;
 });
-gulp.task('default', ['watch']);
 
+gulp.task('default', ['watch']);
 gulp.task('travis', ['build:styles', 'build:js']);

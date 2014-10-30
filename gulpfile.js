@@ -16,8 +16,8 @@ var gulp = require('gulp'),
 	  ''].join('\n');
 
  
-gulp.task('styles', ['bump'], function() {
-  gulp.src('src/**/*.less', {base:'./'})
+gulp.task('build:styles', function() {
+  return gulp.src('src/**/*.less', {base:'./'})
 	// Concat all LESS files
     .pipe(plugins.concat(pkg.name+'.less'))
 	// Convert LESS to CSS
@@ -42,13 +42,13 @@ gulp.task('styles', ['bump'], function() {
 });
 
 gulp.task('bump', function(){
-  gulp.src('./package.json')
+  return gulp.src('./package.json')
 	.pipe(plugins.bump({type:'patch'}))
 	.pipe(gulp.dest('./'));
 });
 
-gulp.task('js', ['bump'],function() {
-  gulp.src('src/**/*.js', {base: './'})
+gulp.task('build:js',function() {
+  return gulp.src('src/**/*.js', {base: './'})
 	// .pipe(prettify())
 	// .pipe(gulp.dest('./'))
 	// Concat all JS files
@@ -66,8 +66,8 @@ gulp.task('js', ['bump'],function() {
 	// Bump patch version
 });
 
-gulp.task('iconfont', function(){
-  gulp.src(['src/icons/*.svg'])
+gulp.task('build:icons', function(){
+  return gulp.src(['src/icons/*.svg'])
     .pipe(plugins.iconfontCss({
       fontName: 'pk',
       path: 'less',
@@ -94,10 +94,10 @@ gulp.task('browser-sync', function () {
 });
 
 gulp.task('watch', ['browser-sync'], function () {
-   gulp.watch('src/**/*.less', ['styles']);
-   gulp.watch('src/**/*.js', ['js']);
+   gulp.watch('src/**/*.less', ['build:styles', 'bump']);
+   gulp.watch('src/**/*.js', ['build:js', 'bump']);
+   return true;
 });
-
 gulp.task('default', ['watch']);
 
-gulp.task('travis', ['styles', 'js']);
+gulp.task('travis', ['build:styles', 'build:js']);

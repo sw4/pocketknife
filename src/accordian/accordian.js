@@ -31,7 +31,7 @@ var pk = pk || {};
                         } else {
                             content.style.height = 'auto';
                         }
-                    }
+                    } 
                 } else {
                     // hide
                     content.style.height = '0';

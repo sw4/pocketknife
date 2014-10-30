@@ -14,7 +14,7 @@ var pk = pk || {};
             return;
         }
 
-        var tpl = "<div class='pk-toggle pk-noselect " + (inputDisabled ? 'pk-disabled' : '') + "' tabindex='" + inputTabIndex + "'>\
+        var tpl = "<div class='pk-toggle " + (inputDisabled ? 'pk-disabled' : '') + "' tabindex='" + inputTabIndex + "'>\
 			<input type='hidden' name = '" + inputName + "' value='" + inputValue + "'/>\
 			<div class='pk-toggle-indicator' style='width:" + (100 / options.length) + "%'></div>\
 		</div>";

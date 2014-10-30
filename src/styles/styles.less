@@ -1,11 +1,7 @@
-
-.pk-no-outline{	
-	&:focus, &:active{
+.pk-ui{
+	:focus, :active{
 		outline:none;	
 	}
-}
-
-.pk-ui{
 	::-webkit-input-placeholder { /* WebKit browsers */
 		color: darken(@color-background, 30%);
 		font-style: italic;
@@ -23,7 +19,6 @@
 		font-style: italic;
 	} 
 	input, textarea{
-		.pk-no-outline;
 		border:1px solid darken(@color-background, 30%);
 		height:@item-height;
 		line-height:@item-height;
@@ -33,7 +28,7 @@
 		font-family:@font-family;
 		font-size:@font-size;
 		resize:none;
-		transition:all 200ms ease-in;		
+		transition:all @transition-duration*2 ease-in;		
 		&:focus, &:hover:focus{
 			border-color:@color-highlight;
 		}
@@ -57,7 +52,7 @@
 		width:0;
 		left:50%;
 		top:100%;
-		transition:all 100ms ease-in;
+		transition:all @transition-duration ease-in;
 	}
 	a:hover:after{
 		width:100%;
@@ -70,16 +65,15 @@
 		display:inline-block;
 		padding:0 @item-height/3;
 		cursor:pointer;
-		transition:all 100ms ease-in;
+		transition:all @transition-duration ease-in;
 		height:@item-height;
 		border:none;
 		border-radius:@item-rounding;
 		line-height:@item-height;
 		position:relative;
-		.pk-no-outline;
 		&:active{
 			background:darken(@color-highlight, 10%);
-			box-shadow: inset 10px 10px 15px 0 #0e7260;
+			box-shadow: inset @item-height/3 @item-height/3 @item-height/2 0 #0e7260;
 		}
 		&:hover{
 			background:darken(@color-highlight, 10%);

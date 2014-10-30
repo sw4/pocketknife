@@ -41,8 +41,6 @@ var pk = pk || {};
         pk.bindEvent('click', el, function(e) {
             if (!pk.hasClass(e.target, 'pk-content-header')) {
                 return;
-            } else if (!pk.hasClass(e.target, 'pk-noselect')) {
-                pk.addClass(e.target, 'pk-noselect');
             }
             pk.toggleClass(e.target.parentNode, 'pk-show');
             doLayout(e.target.parentNode);

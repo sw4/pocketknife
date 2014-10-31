@@ -49,18 +49,22 @@ var pk = pk || {};
                 case 40: //down cursor
                 case 37: //left cursor
                     obj.val('-1');
+                    pk.preventBubble(e);
                     break;
                 case 33: //page up
                 case 32: //spacebar				
                 case 38: //up cursor
                 case 39: //right cursor
                     obj.val('+1');
+                    pk.preventBubble(e);
                     break;
                 case 36: //home
                     obj.val(0);
+                    pk.preventBubble(e);
                     break;
                 case 35: //end
                     obj.val(options.length - 1);
+                    pk.preventBubble(e);
                     break;
             }
             pk.preventBubble(e);

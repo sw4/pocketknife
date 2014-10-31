@@ -225,5 +225,13 @@ var pk = pk || {};
             el[attr] = true;
         }
     };
+	
+	pk.getEventOffset=function(e){
+		return {
+			x:e.offsetX===undefined?e.layerX:e.offsetX,
+			y:e.offsetY===undefined?e.layerY:e.offsetY
+		};
+	};
+	
     pk.addClass(document.body, 'pk-ui');
 })(pk);

@@ -36,17 +36,24 @@ var pk = pk || {};
 				h, s, v = max;
 
 			v = Math.floor(max / 255 * 100);
+			
 			if (max !== 0) {
 				s = Math.floor(delta / max * 100);
 			} else {
 				return [0, 0, 0];
 			}
-			if (r === max) {
-				h = (g - b) / delta;
-			} else if (g === max) {
-				h = 2 + (b - r) / delta;
-			} else {
-				h = 4 + (r - g) / delta;
+			
+			if(delta === 0){
+				h= 0;
+			}else{
+				if (r === max) {
+					h = delta(g - b) / delta;
+				} else if (g === max) {
+					h = 2 + (b - r) / delta;
+
+				} else {
+					h = 4 + (r - g) / delta;
+				}
 			}
 			h = Math.floor(h * 60);
 			if (h < 0) {
@@ -65,6 +72,7 @@ var pk = pk || {};
 			v = Math.max(0, Math.min(100, v));
 			s /= 100;
 			v /= 100;
+			h = h === 360 ? 0 : h;
 			if (s === 0) {
 				r = g = b = v;
 				return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];

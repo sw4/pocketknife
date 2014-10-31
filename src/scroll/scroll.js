@@ -257,26 +257,35 @@ var pk = pk || {};
         // KEYBOARD HANDLERS    
         container.setAttribute("tabindex", 0);
         pk.bindEvent('keydown', container, function(e) {
+			if(document.activeElement !== container){
+				return;
+			}
             if (allowY) {
                 switch (e.keyCode) {
-                    case 38: //up cursor
+                    case 38: //up cursor					
                         container.scrollTop -= containerH * 0.1;
+						pk.preventBubble(e);
                         break;
                     case 40: //down cursor
                     case 32: //spacebar
                         container.scrollTop += containerH * 0.1;
+						pk.preventBubble(e);
                         break;
                     case 33: //page up
                         container.scrollTop -= containerH;
+						pk.preventBubble(e);
                         break;
                     case 34: //page down
                         container.scrollTop += containerH;
+						pk.preventBubble(e);
                         break;
                     case 36: //home
                         container.scrollTop = 0;
+						pk.preventBubble(e);
                         break;
                     case 35: //end
                         container.scrollTop = contentH;
+						pk.preventBubble(e);
                         break;
                 }
             }
@@ -284,13 +293,15 @@ var pk = pk || {};
                 switch (e.keyCode) {
                     case 37: //left cursor
                         container.scrollLeft -= containerW * 0.1;
+						pk.preventBubble(e);
                         break;
                     case 39: //right cursor
                         container.scrollLeft += containerW * 0.1;
+						pk.preventBubble(e);
                         break;
                 }
             }
-            pk.preventBubble(e);
+            
         });
     };
     return pk;

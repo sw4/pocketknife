@@ -13,6 +13,14 @@ Beautiful UI Components written in lean, clean Javascript with no dependancies
 
 <sup>* Tested on IE9, may work on earlier versions of Internet Explorer</sup>
 
+Components
+---
+
+##Base library
+
+##Utility Libraries
+####Color.js
+Provides number of color conversion and palette generation functions
 
 License
 ----

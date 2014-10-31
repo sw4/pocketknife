@@ -44,6 +44,9 @@ var pk = pk || {};
         });
 
         pk.bindEvent('keydown', el, function(e) {
+			if(document.activeElement !== el){
+				return;
+			}
             switch (e.keyCode) {
                 case 34: //page down
                 case 40: //down cursor
@@ -67,7 +70,6 @@ var pk = pk || {};
                     pk.preventBubble(e);
                     break;
             }
-            pk.preventBubble(e);
         });
         var oldVal;
         var obj = {

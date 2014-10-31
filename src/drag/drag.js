@@ -113,7 +113,7 @@ var pk = pk || {};
             if (m.y) {
                 el.style.top = el.offsetTop + (e.dragEnd.y - el.getBoundingClientRect().top) - e.dragOffset.y + 'px';
             }
-            if (container.style === "restrict" || (container.style.x && container.style.y)) {
+            if (container.style === "restrict" || container.style.x || container.style.y) {
                 contain();
             }
             if (fn && fn.dragging) {

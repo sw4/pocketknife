@@ -13,14 +13,32 @@ Beautiful UI Components written in lean, clean Javascript with no dependancies
 
 <sup>* Tested on IE9, may work on earlier versions of Internet Explorer</sup>
 
-Components
----
+##Components
 
-##Base library
 
-##Utility Libraries
-####Color.js
+###Base library
+Provides number of DOM helpers and quick helper methods for styling, attribute fetching etc
+
+###Utility Libraries
+#####Color
 Provides number of color conversion and palette generation functions
+#####Drag
+Facilitates element dragging
+#####Styles
+Provides styling
+#####Scroll
+Creates custom scrollbars
+###Controls
+######Accordian
+######Checkbox
+######Modal
+######Slider
+######Toggle
+######Carousel
+######Select
+######Rating
+######Notify
+######Colorpicker
 
 License
 ----

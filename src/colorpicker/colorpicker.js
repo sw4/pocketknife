@@ -141,7 +141,7 @@ var pk = pk || {};
 			}
 		}
 		pk.bindEvent('click', lightnessEl.parentNode, function(e){
-			resolvePos(lightnessEl, {x:pk.getEventOffset(e).x / pk.layout(lightnessEl.parentNode).width, y:pk.getEventOffset(e).y / pk.layout(lightnessEl.parentNode).width});
+			resolvePos(lightnessEl, {x:(pk.getEventOffset(e).x-pk.layout(lightnessEl).width/2) / pk.layout(lightnessEl.parentNode).width, y:(pk.getEventOffset(e).y-pk.layout(lightnessEl).height/2) / pk.layout(lightnessEl.parentNode).width});
 		});
 		pk.bindEvent('click', hueEl.parentNode, function(e){
 			resolvePos(hueEl, {x:false, y:pk.getEventOffset(e).y / pk.layout(hueEl.parentNode).height});

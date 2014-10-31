@@ -88,17 +88,18 @@ var pk = pk || {};
 
 
             var h = container.element.tagName === "BODY" ? document.documentElement.clientHeight : container.element.offsetHeight,
-                w = container.element.tagName === "BODY" ? document.documentElement.clientWidth : container.element.offsetWidth;
+                w = container.element.tagName === "BODY" ? document.documentElement.clientWidth : container.element.offsetWidth,
+				oX = container.style.x || 0, oY = container.style.y || 0;
 
-            if (m.x && el.offsetLeft < 0) {
-                el.style.left = 0 + 'px';
-            } else if (m.x && el.offsetLeft > w - el.offsetWidth) {
-                el.style.left = w - el.offsetWidth + 'px';
+            if (m.x && el.offsetLeft < (0 + oX)) {
+                el.style.left = (0 + oX) + 'px';
+            } else if (m.x && el.offsetLeft > w - el.offsetWidth - oX) {
+                el.style.left = w - el.offsetWidth - oX + 'px';
             }
-            if (m.y && el.offsetTop < 0) {
-                el.style.top = 0 + 'px';
-            } else if (m.y && el.offsetTop > h - el.offsetHeight) {
-                el.style.top = h - el.offsetHeight + 'px';
+            if (m.y && el.offsetTop < (0 + oY)) {
+                el.style.top = (0 + oY) + 'px';
+            } else if (m.y && el.offsetTop > h - el.offsetHeight - oY) {
+                el.style.top = h - el.offsetHeight - oY + 'px';
             }
         }
         pk.bindEvent("mousemove", window, function(e) {
@@ -112,7 +113,7 @@ var pk = pk || {};
             if (m.y) {
                 el.style.top = el.offsetTop + (e.dragEnd.y - el.getBoundingClientRect().top) - e.dragOffset.y + 'px';
             }
-            if (container.style === "restrict") {
+            if (container.style === "restrict" || (container.style.x && container.style.y)) {
                 contain();
             }
             if (fn && fn.dragging) {

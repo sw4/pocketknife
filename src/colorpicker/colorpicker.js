@@ -6,6 +6,7 @@ var pk = pk || {};
 		var type = (window.SVGAngle || document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1") ? "SVG" : "VML"),
 			listeners = opt.listeners === undefined ? {} : opt.listeners,
 			el = opt.element,
+			value=opt.value || '#000000',
 			tpl="<div class='pk-colorpicker'>\
 				<div class='pk-colorpicker-area'>\
 					<div class='pk-colorpicker-slPicker'></div>\
@@ -185,6 +186,7 @@ var pk = pk || {};
 				resolvePos(lightnessEl, {x:hsv.s/100, y:1-(hsv.v/100)});
 			}
 		}
+		obj.val(value);
 		return obj;
 
     };

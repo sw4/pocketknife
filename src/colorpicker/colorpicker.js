@@ -84,7 +84,13 @@ var pk = pk || {};
 	
 	var lightnessEl=el.children[0].children[0];
 	var hueEl=el.children[1].children[0];
-
+	
+	var hsv={
+		h:0,
+		s:0,
+		v:0
+	};
+	var color='#ffffff';
 	resolvePos=function(rEl, c){	
 		var x=c.x,
 			y=c.y,
@@ -95,6 +101,11 @@ var pk = pk || {};
 			w = pk.layout(rEl).width;	
 			
 			if(x){
+				if(c.x<0){
+					c.x=0;
+				}else if(c.x>1){
+					c.x=1;
+				}
 				x=x * pW;
 				if(x<0-w/2){
 					x=-1*w/2;
@@ -104,6 +115,11 @@ var pk = pk || {};
 				rEl.style.left=x+'px';
 			}
 			if(y){
+				if(c.y<0){
+					c.y=0;
+				}else if(c.y>1){
+					c.y=1;
+				}
 				y=y * pH;
 				if(y<0-h/2){
 					y=-1*h/2;
@@ -111,9 +127,19 @@ var pk = pk || {};
 					y=pH-h/2;
 				}
 				rEl.style.top=y+'px';	
-			}		
+			}				
 		
-		
+		if(rEl===lightnessEl){
+			hsv.s=Math.round(c.x * 100);
+			hsv.v=Math.round((1-c.y) * 100);
+			color=pk.color.hsv2hex([hsv.h, hsv.s, hsv.v ]);
+		}
+		if(rEl===hueEl){
+			hsv.h=Math.round(c.y * 360);
+			color=pk.color.hsv2hex([hsv.h, hsv.s, hsv.v ]);
+			lightnessEl.parentNode.style.backgroundColor=pk.color.hsv2hex([hsv.h, 100, 100 ]);
+		}
+		// document.getElementById('colorpicker2').style.color=color;
 	}
 	pk.bindEvent('click', lightnessEl.parentNode, function(e){
 		resolvePos(lightnessEl, {x:pk.getEventOffset(e).x / pk.layout(lightnessEl.parentNode).width, y:pk.getEventOffset(e).y / pk.layout(lightnessEl.parentNode).width});
@@ -146,9 +172,19 @@ var pk = pk || {};
 			}		
 		}
 	});		
-		return;
-		
-		
+	
+	var setColor=function(hex){
+		hsvArr=pk.color.hex2hsv(hex);
+		hsv={
+			h:hsvArr[0],
+			s:hsvArr[1],
+			v:hsvArr[2]
+		};
+		resolvePos(hueEl, {x:false, y:hsv.h/360});
+		resolvePos(lightnessEl, {x:hsv.s/100, y:1-(hsv.v/100)});
+		return color;
+	};		
+	setColor('#808080');
     };
     return pk;
 })(pk);

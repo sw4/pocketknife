@@ -1,6 +1,6 @@
 var pk = pk || {};
 (function(pk) {    
-    pk.color = {		
+    pk.colore = {		
 		hex2rgb: function (hex) {
 			var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
 				result, r, g, b;

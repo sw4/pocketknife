@@ -170,10 +170,10 @@ var pk = pk || {};
 
         // TRACK CLICKING HANDLERS
         pk.bindEvent("click", trackY, function(e) {
-            container.scrollTop = ((e.offsetY===undefined?e.layerY:e.offsetY) / containerH * (contentH - containerH));
+            container.scrollTop = (pk.getEventOffset(e).y / containerH * (contentH - containerH));
         });
         pk.bindEvent("click", trackX, function(e) {
-            container.scrollLeft = ((e.offsetX===undefined?e.layerX:e.offsetX) / containerW * (contentW - containerW));
+            container.scrollLeft = (pk.getEventOffset(e).x / containerW * (contentW - containerW));
         });
 
         // MOUSE WHEEL HANDLERS
@@ -253,7 +253,7 @@ var pk = pk || {};
             pk.bindEvent('touchmove', container[0], drag);
             pk.bindEvent('touchend', window, release);
         }
-
+ 
         // KEYBOARD HANDLERS    
         container.setAttribute("tabindex", 0);
         pk.bindEvent('keydown', container, function(e) {

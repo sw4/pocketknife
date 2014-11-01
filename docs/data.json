@@ -1,0 +1,579 @@
+{
+    "project": {
+        "name": "Pocketknife UI",
+        "description": "Pocketknife UI Documentation",
+        "version": "0.0.1",
+        "url": "https://github.com/sw4/pocketknife"
+    },
+    "files": {
+        "src/core/core.js": {
+            "name": "src/core/core.js",
+            "modules": {
+                "pk": 1
+            },
+            "classes": {
+                "core": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "pk": {
+            "name": "pk",
+            "submodules": {},
+            "classes": {
+                "core": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/core/core.js",
+            "line": 47
+        }
+    },
+    "classes": {
+        "core": {
+            "name": "core",
+            "shortname": "core",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pk",
+            "namespace": "",
+            "file": "src/core/core.js",
+            "line": 47,
+            "static": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/core/core.js",
+            "line": 52,
+            "description": "For the passed event object prevent bubbling up the DOM tree",
+            "itemtype": "method",
+            "name": "preventBubble",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "Event Object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Returns `false`",
+                "type": "Boolean"
+            },
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 71,
+            "description": "For the passed element, toggle presence of CSS class",
+            "itemtype": "method",
+            "name": "toggleClass",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "DOM element",
+                    "type": "Object"
+                },
+                {
+                    "name": "class",
+                    "description": "CSS class",
+                    "type": "String"
+                },
+                {
+                    "name": "toggle",
+                    "description": "Optional. `true` to add class if not present, `false` to remove. If ommitted, method will detect and apply/remove as necessary.",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "`true` if class added, `false` if removed.",
+                "type": "Boolean"
+            },
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 93,
+            "description": "For the passed element, detect presence of CSS class",
+            "itemtype": "method",
+            "name": "hasClass",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "DOM element",
+                    "type": "Object"
+                },
+                {
+                    "name": "class",
+                    "description": "CSS class",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "`true` if class found, `false` if not.",
+                "type": "Boolean"
+            },
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 105,
+            "description": "For the passed element, center horizontally and vertically within the parentNode",
+            "itemtype": "method",
+            "name": "center",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "DOM element",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Returns passed DOM element",
+                "type": "Object"
+            },
+            "chainable": 1,
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 116,
+            "description": "For the passed element, get the passed style property value",
+            "itemtype": "method",
+            "name": "getStyle",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "DOM element",
+                    "type": "Object"
+                },
+                {
+                    "name": "property",
+                    "description": "Style property to fetch",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns style property value",
+                "type": "String"
+            },
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 129,
+            "description": "For the passed element, add CSS class",
+            "itemtype": "method",
+            "name": "addClass",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "DOM element",
+                    "type": "Object"
+                },
+                {
+                    "name": "class",
+                    "description": "CSS class",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns passed DOM element",
+                "type": "Object"
+            },
+            "chainable": 1,
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 145,
+            "description": "For the passed element, remove CSS class",
+            "itemtype": "method",
+            "name": "removeClass",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "DOM element",
+                    "type": "Object"
+                },
+                {
+                    "name": "class",
+                    "description": "CSS class",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns passed DOM element",
+                "type": "Object"
+            },
+            "chainable": 1,
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 165,
+            "description": "Bind an element handler to a DOM node",
+            "itemtype": "method",
+            "name": "bindEvent",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "Event type to bind",
+                    "type": "String"
+                },
+                {
+                    "name": "element",
+                    "description": "DOM element",
+                    "type": "Object"
+                },
+                {
+                    "name": "function",
+                    "description": "Event handler to bind, function is passed originating event when called",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "Returns passed DOM element",
+                "type": "Object"
+            },
+            "chainable": 1,
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 185,
+            "description": "Unbind an element handler from a DOM node",
+            "itemtype": "method",
+            "name": "unbindEvent",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "Event type to bind",
+                    "type": "String"
+                },
+                {
+                    "name": "element",
+                    "description": "DOM element",
+                    "type": "Object"
+                },
+                {
+                    "name": "function",
+                    "description": "Event handler to unbind",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "Returns passed DOM element",
+                "type": "Object"
+            },
+            "chainable": 1,
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 203,
+            "description": "Fetch layout and positioning properties of passed DOM element",
+            "itemtype": "method",
+            "name": "layout",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "DOM element",
+                    "type": "Object"
+                },
+                {
+                    "name": "offset",
+                    "description": "Calculate values relative to parent or viewport `<html />`",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "Returns object consisting of `top`, `right`, `bottom`, `left`, `height` and `width` values",
+                "type": "Object"
+            },
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 224,
+            "description": "Apply a series of event listeners to a DOM element",
+            "itemtype": "method",
+            "name": "bindListeners",
+            "params": [
+                {
+                    "name": "listeners",
+                    "description": "Consisting of event objects to pass to `bindEvent` method",
+                    "type": "Object"
+                },
+                {
+                    "name": "element",
+                    "description": "DOM element",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Returns passed DOM element",
+                "type": "Object"
+            },
+            "chainable": 1,
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 240,
+            "description": "Generate a random number between the passed `min` and `max` values",
+            "itemtype": "method",
+            "name": "getRand",
+            "params": [
+                {
+                    "name": "min",
+                    "description": "Minimum value of calculated number",
+                    "type": "Integer"
+                },
+                {
+                    "name": "max",
+                    "description": "Maximum value of calculated number",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "Returns pseudo-random number between §min§ and §max§",
+                "type": "Integer"
+            },
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 250,
+            "description": "Extract unit type from passed string",
+            "itemtype": "method",
+            "name": "getUnits",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "Alphanumeric string (e.g. style property value)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns unit type",
+                "type": "String"
+            },
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 259,
+            "description": "Wrap the passed DOM element in a new DOM node created from the `wrapper` string",
+            "itemtype": "method",
+            "name": "wrapEl",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "DOM element to wrap",
+                    "type": "Object"
+                },
+                {
+                    "name": "wrapper",
+                    "description": "HTML string representing the new DOM wrapper",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns newly created DOM wrapper element",
+                "type": "Object"
+            },
+            "chainable": 1,
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 273,
+            "description": "Create a new DOM element from the passed `HTML` string",
+            "itemtype": "method",
+            "name": "createEl",
+            "params": [
+                {
+                    "name": "HTML",
+                    "description": "HTML string representing the new DOM element",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns newly created DOM element",
+                "type": "Object"
+            },
+            "chainable": 1,
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 285,
+            "description": "Get the index of the passed DOM node within the immediate parent",
+            "itemtype": "method",
+            "name": "getIndex",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "DOM element to return index for",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Returns index of passed element",
+                "type": "Integer"
+            },
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 302,
+            "description": "Replace the passed DOM element with a new element created from the passed string, inclusive of all original attributes",
+            "itemtype": "method",
+            "name": "replaceEl",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "The DOM eleemnt to replace",
+                    "type": "Object"
+                },
+                {
+                    "name": "HTML",
+                    "description": "HTML string representing the new DOM element",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns newly created DOM element",
+                "type": "Object"
+            },
+            "chainable": 1,
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 321,
+            "description": "Forces the passed variable into an array, xploding comma seperated strings, keeping existing arrys, collapsing objects and or converting strings as necessary",
+            "itemtype": "method",
+            "name": "toArr",
+            "params": [
+                {
+                    "name": "variable",
+                    "description": "Variable to force into array",
+                    "type": "Undefined"
+                }
+            ],
+            "return": {
+                "description": "Returns array of passed variable",
+                "type": "Array"
+            },
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 340,
+            "description": "Collides two arrays, either replacing one with the other, removing one from another, adding one to another or toggling the values of one in another",
+            "itemtype": "method",
+            "name": "collide",
+            "params": [
+                {
+                    "name": "array1",
+                    "description": "Base array",
+                    "type": "Array"
+                },
+                {
+                    "name": "array2",
+                    "description": "Collider array",
+                    "type": "Array"
+                },
+                {
+                    "name": "operation",
+                    "description": "Type of operation, `0` default, replace `array1` with `array2`, `1` add `array2` to `array1`, `2` remove `array2` from `array1`, `3` toggle `array2` values in `array1` (intelligent add/replace)",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "Returns resulting `array`",
+                "type": "Array"
+            },
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 372,
+            "description": "Gets of sets attribute values, either explicely or impliitely declared",
+            "itemtype": "method",
+            "name": "attribute",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "Related DOM element",
+                    "type": "Object"
+                },
+                {
+                    "name": "attribute",
+                    "description": "Attribute name",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "Optional to get, or value of type specific to attribute",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns `element`",
+                "type": "Object"
+            },
+            "chainable": 1,
+            "class": "core",
+            "module": "pk"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 398,
+            "description": "Gets browser agnostic offset coordinates for applicable mouse events",
+            "itemtype": "method",
+            "name": "getEventOffset",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "Event to normalize",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Returns object comprising of normalized `x` and `y` offsets",
+                "type": "Object"
+            },
+            "class": "core",
+            "module": "pk"
+        }
+    ],
+    "warnings": []
+}

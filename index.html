@@ -134,7 +134,7 @@
 
     <br>
     <br>
-    <h1>Colorpicker</h1>
+    <h1 id='colorpicker2'>Colorpicker</h1>
     
     <span id='colorpicker1'></span>
     <br>
@@ -365,7 +365,13 @@
 
 
         pk.colorpicker({
-            element: document.getElementById('colorpicker1')
+            element: document.getElementById('colorpicker1'),
+            listeners:{
+change:function(old,new){
+ document.getElementById('colorpicker1').style.color=new;
+}
+
+            }
         });
     </script>
 </body>

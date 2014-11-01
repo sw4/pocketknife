@@ -1,3 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/core/core.js - Pocketknife UI</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Pocketknife UI"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/core.html">core</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/pk.html">pk</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/core/core.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
 // Javascript Polyfill
 
 // Production steps of ECMA-262, Edition 5, 15.4.4.14
@@ -10,7 +100,7 @@ if (!Array.prototype.indexOf) {
         var k;
 
         if (this === null) {
-            throw new TypeError('"this" is null or not defined');
+            throw new TypeError(&#x27;&quot;this&quot; is null or not defined&#x27;);
         }
 
         var O = Object(this);
@@ -24,12 +114,12 @@ if (!Array.prototype.indexOf) {
         if (Math.abs(n) === Infinity) {
             n = 0;
         }
-        if (n >= len) {
+        if (n &gt;= len) {
             return -1;
         }
-        k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-        while (k < len) {
-            if (k in O && O[k] === searchElement) {
+        k = Math.max(n &gt;= 0 ? n : len - Math.abs(n), 0);
+        while (k &lt; len) {
+            if (k in O &amp;&amp; O[k] === searchElement) {
                 return k;
             }
             k++;
@@ -53,7 +143,7 @@ var pk = pk || {};
 For the passed event object prevent bubbling up the DOM tree
 @method preventBubble
 @param event {Object} Event Object
-@return {Boolean} Returns `false`
+@return {Boolean} Returns &#x60;false&#x60;
 */
 
     pk.preventBubble = function(e) {
@@ -73,8 +163,8 @@ For the passed element, toggle presence of CSS class
 @method toggleClass
 @param element {Object} DOM element
 @param class {String} CSS class
-@param toggle {Boolean} Optional. `true` to add class if not present, `false` to remove. If ommitted, method will detect and apply/remove as necessary.
-@return {Boolean} `true` if class added, `false` if removed.
+@param toggle {Boolean} Optional. &#x60;true&#x60; to add class if not present, &#x60;false&#x60; to remove. If ommitted, method will detect and apply/remove as necessary.
+@return {Boolean} &#x60;true&#x60; if class added, &#x60;false&#x60; if removed.
 */
 
 
@@ -95,12 +185,12 @@ For the passed element, detect presence of CSS class
 @method hasClass
 @param element {Object} DOM element
 @param class {String} CSS class
-@return {Boolean} `true` if class found, `false` if not.
+@return {Boolean} &#x60;true&#x60; if class found, &#x60;false&#x60; if not.
 */
 
     pk.hasClass = function(el, c) {
-        var ca = el.getAttribute('class') || '';
-        return (ca && ca.indexOf(c) > -1) ? true : false;
+        var ca = el.getAttribute(&#x27;class&#x27;) || &#x27;&#x27;;
+        return (ca &amp;&amp; ca.indexOf(c) &gt; -1) ? true : false;
     };
 /**
 For the passed element, center horizontally and vertically within the parentNode
@@ -110,8 +200,8 @@ For the passed element, center horizontally and vertically within the parentNode
 @chainable
 */    
     pk.center = function(el) {
-        el.style.top = el.parentNode.clientHeight / 2 - (el.offsetHeight / 2) + 'px';
-        el.style.left = el.parentNode.clientWidth / 2 - (el.offsetWidth / 2) + 'px';
+        el.style.top = el.parentNode.clientHeight / 2 - (el.offsetHeight / 2) + &#x27;px&#x27;;
+        el.style.left = el.parentNode.clientWidth / 2 - (el.offsetWidth / 2) + &#x27;px&#x27;;
    return el;
 /**
 For the passed element, get the passed style property value
@@ -138,8 +228,8 @@ For the passed element, add CSS class
         if (pk.hasClass(el, c)) {
             return;
         }
-        var ca = el.getAttribute('class') || '';
-        el.setAttribute('class', (ca ? ca + ' ' : '') + c);
+        var ca = el.getAttribute(&#x27;class&#x27;) || &#x27;&#x27;;
+        el.setAttribute(&#x27;class&#x27;, (ca ? ca + &#x27; &#x27; : &#x27;&#x27;) + c);
         return el;
     };
 /**
@@ -151,14 +241,14 @@ For the passed element, remove CSS class
 @chainable
 */  
     pk.removeClass = function(el, c) {
-        var ca = el.getAttribute('class');
+        var ca = el.getAttribute(&#x27;class&#x27;);
         if (!ca) {
             return;
         }
         if(ca===c){
-            el.removeAttribute('class');
+            el.removeAttribute(&#x27;class&#x27;);
         }else{
-            el.setAttribute('class', ca.replace(c, '').trim());
+            el.setAttribute(&#x27;class&#x27;, ca.replace(c, &#x27;&#x27;).trim());
         }
         return el;
     };
@@ -172,13 +262,13 @@ Bind an element handler to a DOM node
 @chainable
 */      
     pk.bindEvent = function(e, el, fn) {
-        if (e === "mousewheel") {
-            e = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel"; //FF doesn't recognize mousewheel as of FF3.x  
+        if (e === &quot;mousewheel&quot;) {
+            e = (/Firefox/i.test(navigator.userAgent)) ? &quot;DOMMouseScroll&quot; : &quot;mousewheel&quot;; //FF doesn&#x27;t recognize mousewheel as of FF3.x  
         }
         if (el.addEventListener) {
             el.addEventListener(e, fn, false);
         } else {
-            el.attachEvent("on" + e, fn);
+            el.attachEvent(&quot;on&quot; + e, fn);
         }
         return el;
     };
@@ -196,7 +286,7 @@ Unbind an element handler from a DOM node
 			el.removeEventListener (e,fn,false);
 		}
 		if (el.detachEvent){
-			el.detachEvent ('on'+e,fn); 
+			el.detachEvent (&#x27;on&#x27;+e,fn); 
 		}
         return el;
 	};
@@ -204,8 +294,8 @@ Unbind an element handler from a DOM node
 Fetch layout and positioning properties of passed DOM element
 @method layout
 @param element {Object} DOM element
-@param offset {Boolean} Calculate values relative to parent or viewport `<html />`
-@return {Object} Returns object consisting of `top`, `right`, `bottom`, `left`, `height` and `width` values
+@param offset {Boolean} Calculate values relative to parent or viewport &#x60;&lt;html /&gt;&#x60;
+@return {Object} Returns object consisting of &#x60;top&#x60;, &#x60;right&#x60;, &#x60;bottom&#x60;, &#x60;left&#x60;, &#x60;height&#x60; and &#x60;width&#x60; values
 */  
     pk.layout = function(el, offsetEl) {
         var t = offsetEl ? el.getBoundingClientRect().top : el.offsetTop,
@@ -224,7 +314,7 @@ Fetch layout and positioning properties of passed DOM element
 /**
 Apply a series of event listeners to a DOM element
 @method bindListeners
-@param listeners {Object} Consisting of event objects to pass to `bindEvent` method
+@param listeners {Object} Consisting of event objects to pass to &#x60;bindEvent&#x60; method
 @param element {Object} DOM element
 @return {Object} Returns passed DOM element
 @chainable
@@ -238,7 +328,7 @@ Apply a series of event listeners to a DOM element
         return el;
     };
 /**
-Generate a random number between the passed `min` and `max` values
+Generate a random number between the passed &#x60;min&#x60; and &#x60;max&#x60; values
 @method getRand
 @param min {Integer} Minimum value of calculated number
 @param max {Integer} Maximum value of calculated number
@@ -254,10 +344,10 @@ Extract unit type from passed string
 @return {String} Returns unit type
 */         
     pk.getUnits = function(str) {
-        return str.replace(/\d+/, '');
+        return str.replace(/\d+/, &#x27;&#x27;);
     };
 /**
-Wrap the passed DOM element in a new DOM node created from the `wrapper` string
+Wrap the passed DOM element in a new DOM node created from the &#x60;wrapper&#x60; string
 @method wrapEl
 @param element {Object} DOM element to wrap
 @param wrapper {String} HTML string representing the new DOM wrapper
@@ -271,14 +361,14 @@ Wrap the passed DOM element in a new DOM node created from the `wrapper` string
         return helperEl;
     };
 /**
-Create a new DOM element from the passed `HTML` string
+Create a new DOM element from the passed &#x60;HTML&#x60; string
 @method createEl
 @param HTML {String} HTML string representing the new DOM element
 @return {Object} Returns newly created DOM element
 @chainable
 */  
     pk.createEl = function(str) {
-        var el = document.createElement('div');
+        var el = document.createElement(&#x27;div&#x27;);
         el.innerHTML = str;
         return el.children[0];
     };
@@ -292,7 +382,7 @@ Get the index of the passed DOM node within the immediate parent
         if (!el) {
             return null;
         }
-        var prop = document.body.previousElementSibling ? 'previousElementSibling' : 'previousSibling';
+        var prop = document.body.previousElementSibling ? &#x27;previousElementSibling&#x27; : &#x27;previousSibling&#x27;;
         var i = 1;
         while ((el = el[prop])) {
             ++i;
@@ -309,7 +399,7 @@ Replace the passed DOM element with a new element created from the passed string
 */  
     pk.replaceEl = function(el, str) {
         var newEl = pk.createEl(str);
-        for (var i = 0; i < el.attributes.length; i++) {
+        for (var i = 0; i &lt; el.attributes.length; i++) {
             newEl.setAttribute(el.attributes[i].nodeName, el.attributes[i].value);
         }
         while (el.firstChild) {
@@ -326,9 +416,9 @@ Forces the passed variable into an array, xploding comma seperated strings, keep
 */  
     pk.toArr = function(v) {
         var a = [];
-        if (v && typeof v !== "object") {
-            if (v.indexOf(',') !== -1) {
-                a = v.split(',');
+        if (v &amp;&amp; typeof v !== &quot;object&quot;) {
+            if (v.indexOf(&#x27;,&#x27;) !== -1) {
+                a = v.split(&#x27;,&#x27;);
             } else {
                 a.push(v);
             }
@@ -342,8 +432,8 @@ Collides two arrays, either replacing one with the other, removing one from anot
 @method collide
 @param array1 {Array} Base array
 @param array2 {Array} Collider array
-@param operation {Integer} Type of operation, `0` default, replace `array1` with `array2`, `1` add `array2` to `array1`, `2` remove `array2` from `array1`, `3` toggle `array2` values in `array1` (intelligent add/replace)
-@return {Array} Returns resulting `array`
+@param operation {Integer} Type of operation, &#x60;0&#x60; default, replace &#x60;array1&#x60; with &#x60;array2&#x60;, &#x60;1&#x60; add &#x60;array2&#x60; to &#x60;array1&#x60;, &#x60;2&#x60; remove &#x60;array2&#x60; from &#x60;array1&#x60;, &#x60;3&#x60; toggle &#x60;array2&#x60; values in &#x60;array1&#x60; (intelligent add/replace)
+@return {Array} Returns resulting &#x60;array&#x60;
 */  
     pk.collide = function(a1, a2, s) {
         s = s || 0;
@@ -359,11 +449,11 @@ Collides two arrays, either replacing one with the other, removing one from anot
         if (s === 0) {
             return a2;
         }
-        for (var i=0;i< a2.length;i++) {
+        for (var i=0;i&lt; a2.length;i++) {
             var f = a1.indexOf(a2[i]) !== -1 ? true : false;
-            if (!f && (s === 1 || s === 3)) {
+            if (!f &amp;&amp; (s === 1 || s === 3)) {
                 a1.push(a2[i]);
-            } else if (f && (s === 2 || s === 3)) {
+            } else if (f &amp;&amp; (s === 2 || s === 3)) {
                 a1.splice(parseInt(a1.indexOf(a2[i]), 0), 1);
             }
         }
@@ -375,18 +465,18 @@ Gets of sets attribute values, either explicely or impliitely declared
 @param element {Object} Related DOM element
 @param attribute {String} Attribute name
 @param value {String} Optional to get, or value of type specific to attribute 
-@return {Object} Returns `element`
+@return {Object} Returns &#x60;element&#x60;
 @chainable
 */ 
     pk.attribute = function(el, attr, val) {
-        if (typeof el !== "object") {
+        if (typeof el !== &quot;object&quot;) {
             return false;
         }
-        attr = el.hasAttribute(attr) ? attr : el.hasAttribute('data-' + attr) ? 'data-' + attr : attr;
+        attr = el.hasAttribute(attr) ? attr : el.hasAttribute(&#x27;data-&#x27; + attr) ? &#x27;data-&#x27; + attr : attr;
         if (val === undefined) {
-            return (attr === 'selected' || attr === 'disabled' || attr === 'checked') ? (el.hasAttribute(attr) ? true : el[attr]) : el.getAttribute(attr);
+            return (attr === &#x27;selected&#x27; || attr === &#x27;disabled&#x27; || attr === &#x27;checked&#x27;) ? (el.hasAttribute(attr) ? true : el[attr]) : el.getAttribute(attr);
         }
-        if (val === false && (attr === 'selected' || attr === 'disabled' || attr === 'checked')) {
+        if (val === false &amp;&amp; (attr === &#x27;selected&#x27; || attr === &#x27;disabled&#x27; || attr === &#x27;checked&#x27;)) {
             el.removeAttribute(attr);
             el[attr] = false;
         } else {
@@ -399,7 +489,7 @@ Gets of sets attribute values, either explicely or impliitely declared
 Gets browser agnostic offset coordinates for applicable mouse events
 @method getEventOffset
 @param event {Object} Event to normalize
-@return {Object} Returns object comprising of normalized `x` and `y` offsets
+@return {Object} Returns object comprising of normalized &#x60;x&#x60; and &#x60;y&#x60; offsets
 */ 
 	pk.getEventOffset=function(e){
 		return {
@@ -408,5 +498,25 @@ Gets browser agnostic offset coordinates for applicable mouse events
 		};
 	};
 	
-    pk.addClass(document.body, 'pk-ui');
+    pk.addClass(document.body, &#x27;pk-ui&#x27;);
 })(pk);
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -75,8 +75,12 @@ gulp.task('browser-sync', function () {
 
 gulp.task('watch', ['browser-sync'], function () {
    gulp.watch('src/**/*.less', ['build:styles', 'bump']);
-   gulp.watch('src/**/*.js', ['build:js', 'bump']);
+   gulp.watch('src/**/*.js', ['build:js', 'bump', 'document']);
    return true;
+});
+
+gulp.task('document', function () {
+	plugins.run('yuidoc').exec();
 });
 
 gulp.task('default', ['watch']);

@@ -1,4 +1,15 @@
 var pk = pk || {};
+/**
+Create a new carousel component
+@class carousel
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to carousel
+@param [options.value=0] {Number} Starting carousel item index
+@param [options.tabindex=attribute value, 0] {Number} Tabindex of carousel
+@param [options.delay=4000] {Number} Delay in `ms` between item changes
+@returns object {Object} Consisting of original DOM element and class methods
+*/
 (function(pk) {
     pk.carousel = function(opt) {
         var el = opt.element,
@@ -72,7 +83,14 @@ var pk = pk || {};
             }
         });
         var oldVal;
+/**
+Gets or sets current carousel item
+@method val
+@param [value] {Number} HEX color string
+@return {Number} Returns index of current carousel item
+*/          
         var obj = {
+            0:el,
             val: function(val) {
                 val = val.toString();
                 if (val === undefined) {
@@ -122,6 +140,7 @@ var pk = pk || {};
                 }
                 oldVal = value;
                 timer = false;
+                return value;
             }
         };
         obj.val(value);

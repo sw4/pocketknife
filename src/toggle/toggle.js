@@ -1,4 +1,15 @@
 var pk = pk || {};
+/**
+Create a new toggle component
+@class toggle
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to toggle
+@param [options.value=0] {Number} Starting toggle option index
+@param [options.tabindex=attribute value, 0] {Number} Tabindex of carousel
+@param [options.delay=4000] {Number} Delay in `ms` between item changes
+@returns object {Object} Consisting of original DOM element and class methods
+*/
 (function(pk) {
     pk.toggle = function(opt) {
         var el = opt.element,

@@ -1,7 +1,11 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
-        "core"
+        "accordian",
+        "carousel",
+        "color",
+        "core",
+        "toggle"
     ],
     "modules": [
         "pk"

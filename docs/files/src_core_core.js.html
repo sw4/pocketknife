@@ -41,7 +41,15 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/accordian.html">accordian</a></li>
+            
+                <li><a href="../classes/carousel.html">carousel</a></li>
+            
+                <li><a href="../classes/color.html">color</a></li>
+            
                 <li><a href="../classes/core.html">core</a></li>
+            
+                <li><a href="../classes/toggle.html">toggle</a></li>
             
             </ul>
 
@@ -330,9 +338,9 @@ Apply a series of event listeners to a DOM element
 /**
 Generate a random number between the passed &#x60;min&#x60; and &#x60;max&#x60; values
 @method getRand
-@param min {Integer} Minimum value of calculated number
-@param max {Integer} Maximum value of calculated number
-@return {Integer} Returns pseudo-random number between §min§ and §max§
+@param min {Number} Minimum value of calculated number
+@param max {Number} Maximum value of calculated number
+@return {Number} Returns pseudo-random number between §min§ and §max§
 */     
     pk.getRand = function(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
@@ -376,7 +384,7 @@ Create a new DOM element from the passed &#x60;HTML&#x60; string
 Get the index of the passed DOM node within the immediate parent
 @method getIndex
 @param element {Object} DOM element to return index for
-@return {Integer} Returns index of passed element
+@return {Number} Returns index of passed element
 */  
     pk.getIndex = function(el) {
         if (!el) {
@@ -432,7 +440,7 @@ Collides two arrays, either replacing one with the other, removing one from anot
 @method collide
 @param array1 {Array} Base array
 @param array2 {Array} Collider array
-@param operation {Integer} Type of operation, &#x60;0&#x60; default, replace &#x60;array1&#x60; with &#x60;array2&#x60;, &#x60;1&#x60; add &#x60;array2&#x60; to &#x60;array1&#x60;, &#x60;2&#x60; remove &#x60;array2&#x60; from &#x60;array1&#x60;, &#x60;3&#x60; toggle &#x60;array2&#x60; values in &#x60;array1&#x60; (intelligent add/replace)
+@param [type=0] {Number} Type of collision, &#x60;0&#x60; default, replace &#x60;array1&#x60; with &#x60;array2&#x60;, &#x60;1&#x60; add &#x60;array2&#x60; to &#x60;array1&#x60;, &#x60;2&#x60; remove &#x60;array2&#x60; from &#x60;array1&#x60;, &#x60;3&#x60; toggle &#x60;array2&#x60; values in &#x60;array1&#x60; (intelligent add/replace)
 @return {Array} Returns resulting &#x60;array&#x60;
 */  
     pk.collide = function(a1, a2, s) {

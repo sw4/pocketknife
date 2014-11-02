@@ -1,4 +1,14 @@
 var pk = pk || {};
+/**
+Create a new accordian component
+@class accordian
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to accordian
+@param [options.animate=true] {Boolean} Animate expand/collapse actions
+@param [options.multiple=true] {Boolean} Allow multiple sections to be expanded simultaenously
+*/
+
 (function(pk) {
     pk.accordian = function(opt) {
         var el = opt.element,
@@ -31,7 +41,7 @@ var pk = pk || {};
                         } else {
                             content.style.height = 'auto';
                         }
-                    } 
+                    }
                 } else {
                     // hide
                     content.style.height = '0';

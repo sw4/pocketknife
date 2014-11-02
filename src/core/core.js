@@ -240,9 +240,9 @@ Apply a series of event listeners to a DOM element
 /**
 Generate a random number between the passed `min` and `max` values
 @method getRand
-@param min {Integer} Minimum value of calculated number
-@param max {Integer} Maximum value of calculated number
-@return {Integer} Returns pseudo-random number between §min§ and §max§
+@param min {Number} Minimum value of calculated number
+@param max {Number} Maximum value of calculated number
+@return {Number} Returns pseudo-random number between §min§ and §max§
 */     
     pk.getRand = function(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
@@ -286,7 +286,7 @@ Create a new DOM element from the passed `HTML` string
 Get the index of the passed DOM node within the immediate parent
 @method getIndex
 @param element {Object} DOM element to return index for
-@return {Integer} Returns index of passed element
+@return {Number} Returns index of passed element
 */  
     pk.getIndex = function(el) {
         if (!el) {
@@ -342,7 +342,7 @@ Collides two arrays, either replacing one with the other, removing one from anot
 @method collide
 @param array1 {Array} Base array
 @param array2 {Array} Collider array
-@param operation {Integer} Type of operation, `0` default, replace `array1` with `array2`, `1` add `array2` to `array1`, `2` remove `array2` from `array1`, `3` toggle `array2` values in `array1` (intelligent add/replace)
+@param [type=0] {Number} Type of collision, `0` default, replace `array1` with `array2`, `1` add `array2` to `array1`, `2` remove `array2` from `array1`, `3` toggle `array2` values in `array1` (intelligent add/replace)
 @return {Array} Returns resulting `array`
 */  
     pk.collide = function(a1, a2, s) {

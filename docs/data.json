@@ -6,6 +6,24 @@
         "url": "https://github.com/sw4/pocketknife"
     },
     "files": {
+        "src/accordian/accordian.js": {
+            "name": "src/accordian/accordian.js",
+            "modules": {},
+            "classes": {
+                "accordian": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/carousel/carousel.js": {
+            "name": "src/carousel/carousel.js",
+            "modules": {},
+            "classes": {
+                "carousel": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/core/core.js": {
             "name": "src/core/core.js",
             "modules": {
@@ -16,6 +34,24 @@
             },
             "fors": {},
             "namespaces": {}
+        },
+        "src/toggle/toggle.js": {
+            "name": "src/toggle/toggle.js",
+            "modules": {},
+            "classes": {
+                "toggle": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/utils/color.js": {
+            "name": "src/utils/color.js",
+            "modules": {},
+            "classes": {
+                "color": 1
+            },
+            "fors": {},
+            "namespaces": {}
         }
     },
     "modules": {
@@ -23,16 +59,113 @@
             "name": "pk",
             "submodules": {},
             "classes": {
-                "core": 1
+                "accordian": 1,
+                "carousel": 1,
+                "core": 1,
+                "toggle": 1,
+                "color": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "src/core/core.js",
-            "line": 47
+            "file": "src/utils/color.js",
+            "line": 2
         }
     },
     "classes": {
+        "accordian": {
+            "name": "accordian",
+            "shortname": "accordian",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pk",
+            "file": "src/accordian/accordian.js",
+            "line": 2,
+            "description": "Create a new accordian component",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to accordian",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "animate",
+                            "description": "Animate expand/collapse actions",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "multiple",
+                            "description": "Allow multiple sections to be expanded simultaenously",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        }
+                    ]
+                }
+            ]
+        },
+        "carousel": {
+            "name": "carousel",
+            "shortname": "carousel",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pk",
+            "file": "src/carousel/carousel.js",
+            "line": 2,
+            "description": "Create a new carousel component",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to carousel",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "value",
+                            "description": "Starting carousel item index",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Delay in `ms` between item changes",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "4000"
+                        }
+                    ]
+                },
+                {
+                    "name": "[options.tabindex=attribute",
+                    "description": "value, 0]  Tabindex of carousel",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "object  Consisting of original DOM element and class methods",
+                "type": "Object"
+            }
+        },
         "core": {
             "name": "core",
             "shortname": "core",
@@ -46,9 +179,96 @@
             "file": "src/core/core.js",
             "line": 47,
             "static": 1
+        },
+        "toggle": {
+            "name": "toggle",
+            "shortname": "toggle",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pk",
+            "namespace": "",
+            "file": "src/toggle/toggle.js",
+            "line": 2,
+            "description": "Create a new toggle component",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to toggle",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "value",
+                            "description": "Starting toggle option index",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Delay in `ms` between item changes",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "4000"
+                        }
+                    ]
+                },
+                {
+                    "name": "[options.tabindex=attribute",
+                    "description": "value, 0]  Tabindex of carousel",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "object  Consisting of original DOM element and class methods",
+                "type": "Object"
+            }
+        },
+        "color": {
+            "name": "color",
+            "shortname": "color",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pk",
+            "namespace": "",
+            "file": "src/utils/color.js",
+            "line": 2,
+            "description": "Utility function for converting color types and generating color schemes",
+            "static": 1
         }
     },
     "classitems": [
+        {
+            "file": "src/carousel/carousel.js",
+            "line": 86,
+            "description": "Gets or sets current carousel item",
+            "itemtype": "method",
+            "name": "val",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "HEX color string",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns index of current carousel item",
+                "type": "Number"
+            },
+            "class": "carousel"
+        },
         {
             "file": "src/core/core.js",
             "line": 52,
@@ -345,17 +565,17 @@
                 {
                     "name": "min",
                     "description": "Minimum value of calculated number",
-                    "type": "Integer"
+                    "type": "Number"
                 },
                 {
                     "name": "max",
                     "description": "Maximum value of calculated number",
-                    "type": "Integer"
+                    "type": "Number"
                 }
             ],
             "return": {
                 "description": "Returns pseudo-random number between §min§ and §max§",
-                "type": "Integer"
+                "type": "Number"
             },
             "class": "core",
             "module": "pk"
@@ -442,7 +662,7 @@
             ],
             "return": {
                 "description": "Returns index of passed element",
-                "type": "Integer"
+                "type": "Number"
             },
             "class": "core",
             "module": "pk"
@@ -511,9 +731,11 @@
                     "type": "Array"
                 },
                 {
-                    "name": "operation",
-                    "description": "Type of operation, `0` default, replace `array1` with `array2`, `1` add `array2` to `array1`, `2` remove `array2` from `array1`, `3` toggle `array2` values in `array1` (intelligent add/replace)",
-                    "type": "Integer"
+                    "name": "type",
+                    "description": "Type of collision, `0` default, replace `array1` with `array2`, `1` add `array2` to `array1`, `2` remove `array2` from `array1`, `3` toggle `array2` values in `array1` (intelligent add/replace)",
+                    "type": "Number",
+                    "optional": true,
+                    "optdefault": "0"
                 }
             ],
             "return": {
@@ -573,7 +795,290 @@
             },
             "class": "core",
             "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 11,
+            "description": "Convert a HEX color string to an RGB",
+            "itemtype": "method",
+            "name": "hex2rgb",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns array of red, clue and green components",
+                "type": "Array"
+            },
+            "class": "color",
+            "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 29,
+            "description": "Convert an RGB array to a HEX color string",
+            "itemtype": "method",
+            "name": "rgb2hex",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "Array of red, clue and green components",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns HEX color string",
+                "type": "String"
+            },
+            "class": "color",
+            "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 46,
+            "description": "Convert an RGB array to a HSV array",
+            "itemtype": "method",
+            "name": "rgb2hsv",
+            "params": [
+                {
+                    "name": "rgb",
+                    "description": "Array of red, clue and green components",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns array of hue, saturation and value components",
+                "type": "Array"
+            },
+            "class": "color",
+            "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 88,
+            "description": "Convert an HSV array to a RGB array",
+            "itemtype": "method",
+            "name": "rgb2hsv",
+            "params": [
+                {
+                    "name": "hsv",
+                    "description": "Array of hue, saturation and value components",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns array of red, clue and green components",
+                "type": "Array"
+            },
+            "class": "color",
+            "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 153,
+            "description": "Convert a HEX color string to a HSV array",
+            "itemtype": "method",
+            "name": "hex2hsv",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns array of hue, saturation and value components",
+                "type": "Array"
+            },
+            "class": "color",
+            "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 162,
+            "description": "Convert an HSV array to a HEX color string",
+            "itemtype": "method",
+            "name": "hsv2hex",
+            "params": [
+                {
+                    "name": "hsv",
+                    "description": "Array of hue, saturation and value components",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns HEX color string",
+                "type": "String"
+            },
+            "class": "color",
+            "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 171,
+            "description": "Generate a series of randomized HEX color strings",
+            "itemtype": "method",
+            "name": "random",
+            "params": [
+                {
+                    "name": "count",
+                    "description": "Number of random colors to generate",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "Returns Array of HEX color strings",
+                "type": "Array"
+            },
+            "class": "color",
+            "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 186,
+            "description": "Generate (palette of) complementary color(s) from passed HEX color string",
+            "itemtype": "method",
+            "name": "complement",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "Type of complementary palette to create, either `split` or `double`",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns array of HEX color strings",
+                "type": "Array"
+            },
+            "class": "color",
+            "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 211,
+            "description": "Generate triadic color palette",
+            "itemtype": "method",
+            "name": "triadic",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns array of HEX color strings",
+                "type": "Array"
+            },
+            "class": "color",
+            "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 220,
+            "description": "Generate tetradic color palette",
+            "itemtype": "method",
+            "name": "tetradic",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns array of HEX color strings",
+                "type": "Array"
+            },
+            "class": "color",
+            "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 229,
+            "description": "Generate pentadic color palette",
+            "itemtype": "method",
+            "name": "pentadic",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns array of HEX color strings",
+                "type": "Array"
+            },
+            "class": "color",
+            "module": "pk"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 247,
+            "description": "Generate algorithmic color palette",
+            "itemtype": "method",
+            "name": "algorithmic",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                },
+                {
+                    "name": "count",
+                    "description": "Number of colors to produce",
+                    "type": "Number",
+                    "optional": true,
+                    "optdefault": "3"
+                },
+                {
+                    "name": "type",
+                    "description": "Component to calculate on, either `hue`, `saturation` or `value`",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "hue"
+                },
+                {
+                    "name": "scope",
+                    "description": "Number of degrees of rotation to consider",
+                    "type": "Number",
+                    "optional": true,
+                    "optdefault": "360"
+                },
+                {
+                    "name": "rotation",
+                    "description": "Number of degrees of rotation to calculate from",
+                    "type": "Number",
+                    "optional": true,
+                    "optdefault": "0"
+                }
+            ],
+            "return": {
+                "description": "Returns array of HEX color strings",
+                "type": "Array"
+            },
+            "class": "color",
+            "module": "pk"
         }
     ],
-    "warnings": []
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/carousel/carousel.js:2"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/toggle/toggle.js:2"
+        }
+    ]
 }

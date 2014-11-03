@@ -41,7 +41,7 @@ Create a new toggle control
         el = pk.replaceEl(el, tpl);
 
         var optionEl = [];
-        for (var o=0;o< options.length;o++) {
+        for (var o = 0; o < options.length; o++) {
             var oEl = pk.createEl("<div class='pk-option' style='width:" + (100 / options.length) + "%' data-value='" + options[o].value + "'>" + options[o].name + "</div>");
             el.appendChild(oEl);
             optionEl.push(oEl);
@@ -49,27 +49,27 @@ Create a new toggle control
 
         var inputEl = el.children[0],
             indicatorEl = el.children[1];
-/**
-Gets or sets control value
-@method val
-@param [value] {String} Value to set
-@return {String} Returns current value
-*/     
+        /**
+        Gets or sets control value
+        @method val
+        @param [value] {String} Value to set
+        @return {String} Returns current value
+        */
 
-/**
-Gets or sets control disabled state
-@method disabled
-@param [boolean] {Boolean} Disabled state
-@return {Boolean} Returns disabled state
-*/ 
+        /**
+        Gets or sets control disabled state
+        @method disabled
+        @param [boolean] {Boolean} Disabled state
+        @return {Boolean} Returns disabled state
+        */
         var obj = {
-			0:el,
+            0: el,
             val: function(val) {
                 if (val === undefined) {
                     return inputEl.value;
                 }
                 val = val.toString() || options[0].value.toString();
-                for (var o=0;o< options.length;o++) {
+                for (var o = 0; o < options.length; o++) {
                     if (options[o].value.toString() === val) {
                         indicatorEl.style.left = parseInt(o, 0) * 100 / options.length + '%';
                         inputEl.value = val;
@@ -88,10 +88,11 @@ Gets or sets control disabled state
             }
         };
         obj.val(inputValue);
+
         function clickOpt(e) {
             obj.val(pk.attribute(e.target, 'data-value'));
         }
-        for (o=0;o< options.length;o++) {
+        for (o = 0; o < options.length; o++) {
             pk.bindListeners(listeners, optionEl[o]);
             if (!inputDisabled) {
                 pk.bindEvent('click', optionEl[o], clickOpt);

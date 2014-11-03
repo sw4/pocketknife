@@ -1,14 +1,15 @@
 var pk = pk || {};
 /**
 Create a new carousel component
-@class carousel
+@class pk.carousel
 @constructor
 @param options {Object}
-@param options.element {Object} DOM element to convert to carousel
-@param [options.value=0] {Number} Starting carousel item index
-@param [options.tabindex=attribute value, 0] {Number} Tabindex of carousel
+@param options.element {Object} DOM element to convert to component
+@param [options.value=0] {Number} Starting item index
+@param [options.tabindex=0] {Number} Tabindex of component, defaults to the attribute value set on the passed element, or `0`
 @param [options.delay=4000] {Number} Delay in `ms` between item changes
-@returns object {Object} Consisting of original DOM element and class methods
+@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@chainable
 */
 (function(pk) {
     pk.carousel = function(opt) {
@@ -84,10 +85,10 @@ Create a new carousel component
         });
         var oldVal;
 /**
-Gets or sets current carousel item
+Gets or sets control item
 @method val
-@param [value] {Number} HEX color string
-@return {Number} Returns index of current carousel item
+@param [value] {Number} Item index to set
+@return {Number} Returns current item index
 */          
         var obj = {
             0:el,

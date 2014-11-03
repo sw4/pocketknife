@@ -8,7 +8,7 @@ Here's a quick lookup table:
 
 10px - 76.923%
 11px - 84.615%
-12px - 92.308%
+12px - 92.308% 
 13px - 100%
 14px - 107.692%
 15px - 115.385%
@@ -788,10 +788,11 @@ body{
 	color:rgb(86, 96, 118);
 }
 body,h1, h2, h3, h4, h5, h6{
-	font-family:'Raleway';
+	font-family:'Raleway';	
 }
 h1, h2, h3, h4, h5, h6{
 	font-weight:400;
+	color: #000;
 }
 .api-list-item.class{
 	padding:2px 0;

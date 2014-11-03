@@ -87,7 +87,7 @@ Create a new modal component
         */
         return {
             0: el,
-            close: closeModal()
+            close: closeModal
         };
     };
     return pk;

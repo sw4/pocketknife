@@ -1,4 +1,24 @@
 var pk = pk || {};
+/**
+Class used for notification management
+@class pk.notify
+@constructor
+*/
+
+/**
+Create a new notification
+@method push
+@param options {Object}
+@param [options.content] {String} Notification content (`HTML` allowed)
+@param [options.delay=8000] {Number} Time in `ms` for notificaiton to display for
+@returns Object {Object} Returns notification element (item `0`)
+*/ 
+
+/**
+Remove a notification
+@method close
+@param element {Object} Notification element to remove
+*/ 
 (function(pk) {
     var nEl = pk.createEl("<ul class='pk-notify'></ul>");
     document.body.appendChild(nEl);
@@ -18,6 +38,9 @@ var pk = pk || {};
             pk.bindEvent('click', mEl, function() {
                 scope.dismiss(mEl); 
             });
+			return {
+				0:mEl;
+			}
         },
         dismiss: function(dEl) {
             if (!pk.hasClass(dEl, 'pk-show')) {

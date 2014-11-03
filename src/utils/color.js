@@ -147,8 +147,125 @@ Utility class for converting color types and generating color schemes
             g = Math.round(g * 255);
             b = Math.round(b * 255);
             return [r, g, b];
-
         },
+        /**
+        Convert an RGB array to a HSL array
+        @method rgb2hsl
+        @param RGB {Array} Array of red, green and blue components
+        @return {Array} Returns array of hue, saturation and lightness components
+        */		
+        rgb2hsl: function(rgb) {
+            var r = rgb[0],
+                g = rgb[1],
+                b = rgb[2];
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            var max = Math.max(r, g, b),
+                min = Math.min(r, g, b);
+            var h, s, l = (max + min) / 2;
+            if (max === min) {
+                h = s = 0; // achromatic
+            } else {
+                var d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r:
+                        h = (g - b) / d + (g < b ? 6 : 0);
+                        break;
+                    case g:
+                        h = (b - r) / d + 2;
+                        break;
+                    case b:
+                        h = (r - g) / d + 4;
+                        break;
+                }
+                h /= 6;
+            }
+            return [h, s, l];
+        },
+        /**
+        Convert an HSL array to a RGB array
+        @method hsl2rgb
+        @param HSL {Array} Array of hue, saturation and lightness components
+        @return {Array} Returns array of red, green and blue components
+        */				
+        hsl2rgb: function(hsl) {
+            var h = hsl[0],
+                s = hsl[1],
+                l = hsl[2],
+                r, g, b;
+
+            function hue2rgb(p, q, t) {
+                if (t < 0) {
+                    t += 1;
+                }
+                if (t > 1) {
+                    t -= 1;
+                }
+                if (t < 1 / 6) {
+                    return p + (q - p) * 6 * t;
+                }
+                if (t < 1 / 2) {
+                    return q;
+                }
+                if (t < 2 / 3) {
+                    return p + (q - p) * (2 / 3 - t) * 6;
+                }
+                return p;
+            }
+            if (s === 0) {
+                r = g = b = l; // achromatic
+            } else {
+
+                var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                var p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1 / 3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1 / 3);
+            }
+
+            return [r * 255, g * 255, b * 255];
+        },
+        /**
+        Convert a HEX color string to a HSL array
+        @method hex2hsl
+        @param hex {String} HEX color string
+        @return {Array} Returns array of hue, saturation and lightness components
+        */
+        hex2hsl: function(hex) {
+            return this.rgb2hsl(this.hex2rgb(hex));
+        },
+        /**
+        Convert an HSL array to a HEX color string
+        @method hsl2hex
+        @param hsl {Array} Array of hue, saturation and lightness components
+        @return {String} Returns HEX color string
+        */
+        hsl2hex: function(hsl) {
+            return this.rgb2hex(this.hsl2rgb(hsl));
+        },
+		
+        /**
+        Convert an HSV array to HSL array
+        @method hsv2hsl
+        @param hsv {Array} Array of hue, saturation and value components
+        @return {Array} Returns array of hue, saturation and lightness components
+        */
+        hsv2hsl: function(hsv) {
+            return this.rgb2hsl(this.hsv2rgb(hsv));
+        },
+			
+        /**
+        Convert an HSL array to HSV array
+        @method hsl2hsv
+        @param hsl {Array} Array of hue, saturation and lightness components
+        @return {Array} Returns array of hue, saturation and value components
+        */
+        hsl2hsv: function(hsl) {
+            return this.rgb2hsv(this.hsl2rgb(hsl));
+        },			
+		
         /**
         Convert a HEX color string to a HSV array
         @method hex2hsv

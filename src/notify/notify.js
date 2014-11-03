@@ -12,13 +12,13 @@ Create a new notification
 @param [options.content] {String} Notification content (`HTML` allowed)
 @param [options.delay=8000] {Number} Time in `ms` for notificaiton to display for
 @returns Object {Object} Returns notification element (item `0`)
-*/ 
+*/
 
 /**
 Remove a notification
 @method close
 @param element {Object} Notification element to remove
-*/ 
+*/
 (function(pk) {
     var nEl = pk.createEl("<ul class='pk-notify'></ul>");
     document.body.appendChild(nEl);
@@ -36,11 +36,11 @@ Remove a notification
             }, delay);
 
             pk.bindEvent('click', mEl, function() {
-                scope.dismiss(mEl); 
+                scope.dismiss(mEl);
             });
-			return {
-				0:mEl;
-			}
+            return {
+                0: mEl
+            };
         },
         dismiss: function(dEl) {
             if (!pk.hasClass(dEl, 'pk-show')) {

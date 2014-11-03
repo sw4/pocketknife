@@ -1,4 +1,20 @@
 var pk = pk || {};
+/**
+Create a new slider control
+@class pk.slider
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to control
+@param [options.value=0] {Number} Initial value, defaults to the attribute value set on the passed element, or `0`
+@param [options.min=0] {Number} Minimum value
+@param [options.max=100] {Number} Maximum value
+@param [options.name=pk-slider-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-slider-RandInt`
+@param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
+@param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or `false`
+@param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
+@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@chainable
+*/
 (function(pk) {
     pk.slider = function(opt) {
         var el = opt.element,
@@ -31,7 +47,26 @@ var pk = pk || {};
             valueEl = barEl.children[0],
             unitsEl = barEl.children[1];
 
+/**
+Fired on slide event starting
+@event slidestart
+@param element {Object} Element event fired on
+@param event {Object} Event object
+*/
 
+/**
+Fired on during slide event
+@event sliding
+@param element {Object} Element event fired on
+@param event {Object} Event object
+*/
+
+/**
+Fired on slide event ending
+@event slideend
+@param element {Object} Element event fired on
+@param event {Object} Event object
+*/
         pk.bindListeners(listeners, inputEl);
         pk.drag({
             element: maskEl,
@@ -90,6 +125,19 @@ var pk = pk || {};
             }
             obj.val(range * offset + parseInt(obj.val(), 0));
         });
+/**
+Gets or sets control value
+@method val
+@param [value] {Number} Value to set
+@return {Number} Returns current value
+*/     
+
+/**
+Gets or sets control disabled state
+@method disabled
+@param [boolean] {Boolean} Disabled state
+@return {Boolean} Returns disabled state
+*/ 		
         var obj = {
             0: el,
             val: function(val, force) {

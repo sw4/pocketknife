@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900);
+
 /*
 Font sizes for all selectors other than the body are given in percentages,
 with 100% equal to 13px. To calculate a font size percentage, multiply the
@@ -781,3 +783,43 @@ kbd .cmd { font-family: Monaco, Helvetica; }
     font-weight: bold;
 }
 
+
+body,h1, h2, h3, h4, h5, h6{
+	font-family:'Raleway';
+}
+h1, h2, h3, h4, h5, h6{
+	font-weight:400;
+}
+.api-list-item.class{
+	padding:2px 0;
+}
+.api-list-item a:hover, .api-list-item a:focus{
+	font-weight:normal;
+}
+input[type=checkbox]{
+	margin: 0;
+	vertical-align: text-top;
+}
+
+:focus, :active{
+	outline:none;	
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+	color: #d6d6d6;
+	font-style: italic;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #d6d6d6;
+	font-style: italic;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #d6d6d6;
+	font-style: italic;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+	color: #d6d6d6;
+	font-style: italic;
+} 
+#hd{
+	display:none;
+}

@@ -783,7 +783,10 @@ kbd .cmd { font-family: Monaco, Helvetica; }
     font-weight: bold;
 }
 
-
+body{
+	font-size:13px;
+	line-height:1.5em;
+}
 body,h1, h2, h3, h4, h5, h6{
 	font-family:'Raleway';
 }
@@ -793,7 +796,10 @@ h1, h2, h3, h4, h5, h6{
 .api-list-item.class{
 	padding:2px 0;
 }
-.api-list-item a:hover, .api-list-item a:focus{
+.api-list-item a:hover,
+.api-list-item a:focus,
+.apis a:hover,
+.apis a:focus{
 	font-weight:normal;
 }
 input[type=checkbox]{

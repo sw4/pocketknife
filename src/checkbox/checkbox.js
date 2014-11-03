@@ -1,4 +1,25 @@
 var pk = pk || {};
+
+/**
+Create a new checkbox control
+@class pk.checkbox
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to control
+@param [options.value=0] {String} Value of initially selected option, defaults to the attribute value set on the passed element, or `0`
+@param [options.name=pk-checkbox-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-checkbox-RandInt`
+@param [options.label=label] {String} String to use for the control label, defaults to the attribute value set on the passed element, or its `innerHTML`
+@param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
+@param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or `false`
+@param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
+@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@chainable
+*/
+
+@param [options.tabindex=] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
+@param [options.delay=4000] {Number} Delay in `ms` between item changes
+@returns object {Object} Consisting of original DOM element and class methods
+*/
 (function(pk) {
     pk.checkbox = function(opt) {
         var el = opt.element,
@@ -16,7 +37,19 @@ var pk = pk || {};
 		</label>";
         el.innerHTML = '';
         el = pk.replaceEl(el, str);
+/**
+Gets or sets control value
+@method val
+@param [value] {String} Value to set
+@return {String} Returns current value
+*/     
 
+/**
+Gets or sets control disabled state
+@method disabled
+@param [boolean] {Boolean} Disabled state
+@return {Boolean} Returns disabled state
+*/ 
         var obj = {
             0: el,
             val: function(val) {
@@ -37,6 +70,7 @@ var pk = pk || {};
         if (inputDisabled) {
             obj.disabled(true);
         }
+		pk.bindListeners(listeners, el.children[0]);
         return obj;
     };
     return pk;

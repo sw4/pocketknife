@@ -9,7 +9,7 @@ Create a new modal component
 @param [options.header] {String} Modal header content (`HTML` allowed)
 @param [options.content] {String} Modal body content (`HTML` allowed)
 @param [options.draggable] {Boolean} Whether to allow modal dragging
-@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@return Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
 @chainable
 */
 

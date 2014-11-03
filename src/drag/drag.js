@@ -11,7 +11,7 @@ Utility class for creating draggable elements
 @param options.container.element=document.body {Object} DOM element used as container, defaults to `document.body`
 @param options.container.style=restrict {String} Type of containment, either `restrict`, `snap` or {Object} consisting of `x` and `y` values calculated relative to `container.element`
 @param [options.listeners] {Object} Object array of event listeners to bind to underlying element(s) - consisting of `dragstart`, `dragend` and `dragging`
-@returns Object {Object} Consisting of original DOM element (item `0`)
+@return Object {Object} Consisting of original DOM element (item `0`)
 @chainable
 */
 (function(pk) {

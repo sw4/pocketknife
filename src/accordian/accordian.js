@@ -7,7 +7,7 @@ Create a new accordian component
 @param options.element {Object} DOM element to convert to component
 @param [options.animate=true] {Boolean} Animate expand/collapse actions
 @param [options.multiple=true] {Boolean} Allow multiple sections to be expanded simultaneously
-@returns Object {Object} Consisting of original DOM element (item `0`)
+@return Object {Object} Consisting of original DOM element (item `0`)
 @chainable
 */
 

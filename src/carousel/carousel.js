@@ -8,7 +8,7 @@ Create a new carousel component
 @param [options.value=0] {Number} Starting item index
 @param [options.tabindex=0] {Number} Tabindex of component, defaults to the attribute value set on the passed element, or `0`
 @param [options.delay=4000] {Number} Delay in `ms` between item changes
-@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@return Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
 @chainable
 */
 (function(pk) {

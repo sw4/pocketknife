@@ -10,7 +10,7 @@ Create a new rating control
 @param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
 @param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or `false`
 @param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
-@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@return Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
 @chainable
 */
 (function(pk) {

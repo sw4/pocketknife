@@ -7,7 +7,7 @@ Create a new colorpicker control
 @param options.element {Object} DOM element to convert to control 
 @param [options.value=#000000] {String} HEX string of initially selected color, defaults black `#000000`
 @param [options.listeners] {Object} Object array of event listeners to bind (nb. only detects `change` event)
-@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@return Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
 @chainable
 */
 (function(pk) {

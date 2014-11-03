@@ -11,7 +11,7 @@ Create a new notification
 @param options {Object}
 @param [options.content] {String} Notification content (`HTML` allowed)
 @param [options.delay=8000] {Number} Time in `ms` for notificaiton to display for
-@returns Object {Object} Returns notification element (item `0`)
+@return Object {Object} Returns notification element (item `0`)
 */
 
 /**

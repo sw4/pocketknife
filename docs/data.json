@@ -2265,54 +2265,5 @@
             "module": "pocketknife"
         }
     ],
-    "warnings": [
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/accordian/accordian.js:2"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/carousel/carousel.js:2"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/checkbox/checkbox.js:3"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/colorpicker/colorpicker.js:2"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/drag/drag.js:2"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/modal/modal.js:3"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/notify/notify.js:8"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/rating/rating.js:2"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/scroll/scroll.js:2"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/select/select.js:2"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/slider/slider.js:2"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " src/toggle/toggle.js:2"
-        }
-    ]
+    "warnings": []
 }

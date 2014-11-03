@@ -100,6 +100,10 @@ gulp.task('git:commit', function () {
 
 gulp.task('document', function () {
 	plugins.run('yuidoc').exec();
+   gulp.src('_docs_main.css', {base:'./'})
+	.pipe(plugins.rename('main.css'))
+	.pipe(plugins.wait(5000))
+   .pipe(gulp.dest('docs/assets/css/'));	
 });
 
 gulp.task('default', ['watch']);

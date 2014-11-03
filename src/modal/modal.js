@@ -17,7 +17,7 @@ Create a new modal component
     pk.modal = function(opt) {
         var h = opt.header,
             c = opt.content;
-/*jshint multistr: true */
+        /*jshint multistr: true */
         var tpl = "<div class='pk-modal-mask'>\
 			<div class='pk-modal-box pk-animated'>\
 				<div class='pk-modal-header'>" + h + "<span class='pk-modal-close'></span></div>\
@@ -81,16 +81,14 @@ Create a new modal component
                 }
             });
         }
-/**
-Closes modal and removes from DOM
-@method close
-*/ 
-		return {
-			0:el
-			close(){
-				closeModal();
-			}
-		}
+        /**
+        Closes modal and removes from DOM
+        @method close
+        */
+        return {
+            0: el,
+            close: closeModal()
+        };
     };
     return pk;
 })(pk);

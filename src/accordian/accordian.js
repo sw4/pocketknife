@@ -23,7 +23,7 @@ Create a new accordian component
             tEl.style.height = '0';
             setTimeout(function() {
                 tEl.style.height = h + 'px';
-            }, 10); 
+            }, 10);
         }
 
         function doLayout(tEl) {
@@ -37,7 +37,7 @@ Create a new accordian component
                 }
                 if (pk.hasClass(el.children[a], 'pk-show')) {
                     // show...if not already shown
-                    if (parseInt(content.style.height,0) === 0 || !content.style.height) {
+                    if (parseInt(content.style.height, 0) === 0 || !content.style.height) {
                         if (anim) {
                             animHeight(content);
                         } else {
@@ -58,9 +58,9 @@ Create a new accordian component
             doLayout(e.target.parentNode);
         });
         doLayout();
-		return {
-			0:el
-		}
+        return {
+            0: el
+        };
     };
     return pk;
 })(pk);

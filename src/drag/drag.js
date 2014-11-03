@@ -40,43 +40,43 @@ Utility class for creating draggable elements
 
         function augmentEvent(e) {
 
-            e.dragStart = dragStart;
-            e.dragOffset = startOffset;
+                e.dragStart = dragStart;
+                e.dragOffset = startOffset;
 
-            e.dragEnd = {
-                x: e.clientX,
-                y: e.clientY
-            };
-            e.dragDist = {
-                x: e.dragEnd.x - e.dragStart.x,
-                y: e.dragEnd.y - e.dragStart.y
-            };
-            e.dragPerc = {
-                x: (pk.layout(el).left + e.dragDist.x + e.dragOffset.x) / pk.layout(container.element).width,
-                y: (pk.layout(el).top + e.dragDist.y + e.dragOffset.y) / pk.layout(container.element).height
-            };
-            return e;
-        }
-/**
-Fired on drag event starting
-@event dragstart
-@param element {Object} Element event fired on
-@param event {Object} Event object
-*/
+                e.dragEnd = {
+                    x: e.clientX,
+                    y: e.clientY
+                };
+                e.dragDist = {
+                    x: e.dragEnd.x - e.dragStart.x,
+                    y: e.dragEnd.y - e.dragStart.y
+                };
+                e.dragPerc = {
+                    x: (pk.layout(el).left + e.dragDist.x + e.dragOffset.x) / pk.layout(container.element).width,
+                    y: (pk.layout(el).top + e.dragDist.y + e.dragOffset.y) / pk.layout(container.element).height
+                };
+                return e;
+            }
+            /**
+            Fired on drag event starting
+            @event dragstart
+            @param element {Object} Element event fired on
+            @param event {Object} Event object
+            */
 
-/**
-Fired on during drag event
-@event dragging
-@param element {Object} Element event fired on
-@param event {Object} Event object
-*/
+        /**
+        Fired on during drag event
+        @event dragging
+        @param element {Object} Element event fired on
+        @param event {Object} Event object
+        */
 
-/**
-Fired on drag event ending
-@event dragend
-@param element {Object} Element event fired on
-@param event {Object} Event object
-*/
+        /**
+        Fired on drag event ending
+        @event dragend
+        @param element {Object} Element event fired on
+        @param event {Object} Event object
+        */
         pk.bindEvent("mousedown", handle, function(e) {
             dragging = true;
             dragStart = {
@@ -123,7 +123,8 @@ Fired on drag event ending
 
             var h = container.element.tagName === "BODY" ? document.documentElement.clientHeight : container.element.offsetHeight,
                 w = container.element.tagName === "BODY" ? document.documentElement.clientWidth : container.element.offsetWidth,
-				oX = container.style.x || 0, oY = container.style.y || 0;
+                oX = container.style.x || 0,
+                oY = container.style.y || 0;
 
             if (m.x && el.offsetLeft < (0 + oX)) {
                 el.style.left = (0 + oX) + 'px';
@@ -154,8 +155,8 @@ Fired on drag event ending
                 fn.dragging(el, e);
             }
         });
-		return obj{
-			0:el
-		}
+        return {
+            0: el
+        };
     };
 })(pk);

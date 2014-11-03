@@ -263,39 +263,39 @@ Attach custom scrollbars to an element
             pk.bindEvent('touchmove', container[0], drag);
             pk.bindEvent('touchend', window, release);
         }
- 
+
         // KEYBOARD HANDLERS    
         container.setAttribute("tabindex", 0);
         pk.bindEvent('keydown', container, function(e) {
-			if(document.activeElement !== container){
-				return;
-			}
+            if (document.activeElement !== container) {
+                return;
+            }
             if (allowY) {
                 switch (e.keyCode) {
                     case 38: //up cursor					
                         container.scrollTop -= containerH * 0.1;
-						pk.preventBubble(e);
+                        pk.preventBubble(e);
                         break;
                     case 40: //down cursor
                     case 32: //spacebar
                         container.scrollTop += containerH * 0.1;
-						pk.preventBubble(e);
+                        pk.preventBubble(e);
                         break;
                     case 33: //page up
                         container.scrollTop -= containerH;
-						pk.preventBubble(e);
+                        pk.preventBubble(e);
                         break;
                     case 34: //page down
                         container.scrollTop += containerH;
-						pk.preventBubble(e);
+                        pk.preventBubble(e);
                         break;
                     case 36: //home
                         container.scrollTop = 0;
-						pk.preventBubble(e);
+                        pk.preventBubble(e);
                         break;
                     case 35: //end
                         container.scrollTop = contentH;
-						pk.preventBubble(e);
+                        pk.preventBubble(e);
                         break;
                 }
             }
@@ -303,18 +303,18 @@ Attach custom scrollbars to an element
                 switch (e.keyCode) {
                     case 37: //left cursor
                         container.scrollLeft -= containerW * 0.1;
-						pk.preventBubble(e);
+                        pk.preventBubble(e);
                         break;
                     case 39: //right cursor
                         container.scrollLeft += containerW * 0.1;
-						pk.preventBubble(e);
+                        pk.preventBubble(e);
                         break;
                 }
             }
-			return {
-				0:el
-			};
-            
+            return {
+                0: el
+            };
+
         });
     };
     return pk;

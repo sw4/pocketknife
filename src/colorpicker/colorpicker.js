@@ -148,18 +148,23 @@ Create a new colorpicker control
                 color = pk.color.hsv2hex([hsv.h, hsv.s, hsv.v]);
                 lightnessEl.parentNode.style.backgroundColor = pk.color.hsv2hex([hsv.h, 100, 100]);
             }
-
             if (listeners.change && typeof listeners.change === 'function') {
                 listeners.change(prevCol, color);
             }
         }
         pk.bindEvent('click', lightnessEl.parentNode, function(e) {
+            if (e.target === lightnessEl) {
+                return;
+            }
             resolvePos(lightnessEl, {
                 x: (pk.getEventOffset(e).x - pk.layout(lightnessEl).width / 2) / pk.layout(lightnessEl.parentNode).width,
                 y: (pk.getEventOffset(e).y - pk.layout(lightnessEl).height / 2) / pk.layout(lightnessEl.parentNode).width
             });
         });
         pk.bindEvent('click', hueEl.parentNode, function(e) {
+            if (e.target === hueEl) {
+                return;
+            }
             resolvePos(hueEl, {
                 x: false,
                 y: pk.getEventOffset(e).y / pk.layout(hueEl.parentNode).height

@@ -1,8 +1,7 @@
 var pk = pk || {};
 /**
-Utility function for converting color types and generating color schemes
-@class color
-@static
+Utility class for converting color types and generating color schemes
+@class pk.color
 */
 
 (function(pk) {    

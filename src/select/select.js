@@ -11,7 +11,7 @@ Create a new select control
 @param options.options.selected {Boolean} Option selected state
 @param [options.value=0] {String} Value of initially selected option, defaults to the attribute value set on the passed element, or `0`
 @param [options.name=pk-select-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-select-RandInt`
-@param [options.placeholder=Please select...] {String} Placeholder when no options selected, defaults to the attribute value set on the passed element, or `Please select...`
+@param [options.placeholder=string] {String} Placeholder when no options selected, defaults to the attribute value set on the passed element, or `Please select...`
 @param [options.multiple=false] {Boolean} Whether to allow multiple options to be selected, defaults to the attribute value set on the passed element, or `false`
 @param [options.dropdown=false] {Boolean} Display options in dropdown list
 @param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
@@ -54,12 +54,12 @@ Create a new select control
             }
         }
 
-		 /*jshint multistr:true */
+        /*jshint multistr:true */
         var tpl = "<div class='pk-select " + (inputMultiple ? 'pk-select-multiple' : '') + " " + (dropdown ? 'pk-select-dropdown' : '') + " " + (inputDisabled ? 'pk-disabled' : '') + "' tabindex='" + inputTabIndex + "'>\
                 <input type='hidden' name='" + inputName + "'/>\
                 <div class='pk-select-value " + (!inputValue || inputValue.length < 1 ? 'pk-placeholder' : '') + "'>sdsd</div>\
             <ul>";
-        for (var o=0;o< options.length;o++) {
+        for (var o = 0; o < options.length; o++) {
             tpl += "<li class='pk-option' data-value='" + options[o].value + "'>" + options[o].name + "</li>";
         }
         tpl += "</ul></div>";
@@ -102,7 +102,7 @@ Create a new select control
             if (!inputMultiple) {
                 inputValue.splice(1, inputValue.length - 1);
             }
-            for (var o =0; o < options.length; o++) {
+            for (var o = 0; o < options.length; o++) {
                 options[o].selected = (inputValue.indexOf(options[o].value) !== -1) ? true : false;
                 pk.toggleClass(optionsEl.children[o], 'pk-selected', options[o].selected);
                 if (options[o].selected) {
@@ -127,9 +127,9 @@ Create a new select control
             });
         }
         updateValue();
-		return {
-			0:el
-		}
+        return {
+            0: el
+        };
     };
     return pk;
 })(pk);

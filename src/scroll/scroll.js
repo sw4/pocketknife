@@ -1,4 +1,14 @@
 var pk = pk || {};
+/**
+Attach custom scrollbars to an element
+@class pk.scroll
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to attach drag handlers to
+@param options.axis=y {Object} Object consisting of `x` and `y` {Boolean} values denoting scrollable axis, DOM element to attach drag handlers to. Defaults to element attribute `pk-scroll` or `y`
+@returns Object {Object} Consisting of original DOM element (item `0`)
+@chainable
+*/
 (function(pk) {
     // HELPERS FOR jQUERY+ANGULAR
     if (typeof jQuery === 'object') {
@@ -301,6 +311,9 @@ var pk = pk || {};
                         break;
                 }
             }
+			return {
+				0:el
+			};
             
         });
     };

@@ -1,4 +1,15 @@
 var pk = pk || {};
+/**
+Create a new colorpicker control
+@class pk.colorpicker
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to control
+@param [options.value=#000000] {String} HEX string of initially selected color, defaults black `#000000`
+@param [options.listeners] {Object} Object array of event listeners to bind (nb. only detects `change` event)
+@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@chainable
+*/
 (function(pk) {    
     pk.colorpicker = function(opt) {
 	
@@ -170,8 +181,23 @@ var pk = pk || {};
 					resolvePos(lightnessEl, e.dragPerc);			
 				}		
 			}
-		});		
+		});	
+/**
+Fired on selected color changing (click, drag)
+@event change
+@param oldColor {String} HEX color string of previous color
+@param newColor {String} HEX color string of new color
+*/		
+		
+/**
+Gets or sets control value (HEX color string, e.g. `#000000`)
+@method val
+@param [value] {String} Value to set
+@return {String} Returns current value
+*/     
+		
 		var obj={
+			0:el,
 			val:function(val){
 				if(!val){
 					return color;

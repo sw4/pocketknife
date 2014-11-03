@@ -40,12 +40,12 @@ if (!Array.prototype.indexOf) {
 
 // Pocketknife Core
 /**
-@module pk
+@module pocketknife
 */
 var pk = pk || {};
 (function(pk) {
 /**
-@class core
+@class pk
 @static
 */
 

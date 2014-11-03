@@ -1,4 +1,18 @@
 var pk = pk || {};
+
+/**
+Create a new modal component
+@class pk.modal
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to component
+@param [options.header] {String} Modal header content (`HTML` allowed)
+@param [options.content] {String} Modal body content (`HTML` allowed)
+@param [options.draggable] {Boolean} Whether to allow modal dragging
+@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@chainable
+*/
+
 (function(pk) {
     pk.modal = function(opt) {
         var h = opt.header,
@@ -52,7 +66,7 @@ var pk = pk || {};
         }, 500);
         pk.center(box);
 
-        if (opt.drag !== false && pk.drag) {
+        if (opt.draggable !== false && pk.drag) {
             pk.drag({
                 element: box,
                 handle: header,
@@ -67,6 +81,16 @@ var pk = pk || {};
                 }
             });
         }
+/**
+Closes modal and removes from DOM
+@method close
+*/ 
+		return {
+			0:el
+			close(){
+				closeModal();
+			}
+		}
     };
     return pk;
 })(pk);

@@ -47,26 +47,26 @@ Create a new slider control
             valueEl = barEl.children[0],
             unitsEl = barEl.children[1];
 
-/**
-Fired on slide event starting
-@event slidestart
-@param element {Object} Element event fired on
-@param event {Object} Event object
-*/
+        /**
+        Fired on slide event starting
+        @event slidestart
+        @param element {Object} Element event fired on
+        @param event {Object} Event object
+        */
 
-/**
-Fired on during slide event
-@event sliding
-@param element {Object} Element event fired on
-@param event {Object} Event object
-*/
+        /**
+        Fired on during slide event
+        @event sliding
+        @param element {Object} Element event fired on
+        @param event {Object} Event object
+        */
 
-/**
-Fired on slide event ending
-@event slideend
-@param element {Object} Element event fired on
-@param event {Object} Event object
-*/
+        /**
+        Fired on slide event ending
+        @event slideend
+        @param element {Object} Element event fired on
+        @param event {Object} Event object
+        */
         pk.bindListeners(listeners, inputEl);
         pk.drag({
             element: maskEl,
@@ -125,19 +125,19 @@ Fired on slide event ending
             }
             obj.val(range * offset + parseInt(obj.val(), 0));
         });
-/**
-Gets or sets control value
-@method val
-@param [value] {Number} Value to set
-@return {Number} Returns current value
-*/     
+        /**
+        Gets or sets control value
+        @method val
+        @param [value] {Number} Value to set
+        @return {Number} Returns current value
+        */
 
-/**
-Gets or sets control disabled state
-@method disabled
-@param [boolean] {Boolean} Disabled state
-@return {Boolean} Returns disabled state
-*/ 		
+        /**
+        Gets or sets control disabled state
+        @method disabled
+        @param [boolean] {Boolean} Disabled state
+        @return {Boolean} Returns disabled state
+        */
         var obj = {
             0: el,
             val: function(val, force) {

@@ -70,19 +70,19 @@ Create a new rating control
         for (var i = 0; i < rEl.length; i++) {
             pk.bindEvent('click', rEl[i], clickHandler);
         }
-/**
-Gets or sets control value
-@method val
-@param [value] {String} Value to set
-@return {String} Returns current value
-*/     
+        /**
+        Gets or sets control value
+        @method val
+        @param [value] {String} Value to set
+        @return {String} Returns current value
+        */
 
-/**
-Gets or sets control disabled state
-@method disabled
-@param [boolean] {Boolean} Disabled state
-@return {Boolean} Returns disabled state
-*/ 		
+        /**
+        Gets or sets control disabled state
+        @method disabled
+        @param [boolean] {Boolean} Disabled state
+        @return {Boolean} Returns disabled state
+        */
         var obj = {
             0: el,
             val: function(val) {
@@ -108,7 +108,7 @@ Gets or sets control disabled state
             disabled: function(val) {
                 if (val !== undefined) {
                     pk.toggleClass(el, 'pk-disabled', val);
-                    for (var r = 0; r< rEl.length;r++) {
+                    for (var r = 0; r < rEl.length; r++) {
                         pk.attribute(rEl[r], 'disabled', val);
                     }
                 }

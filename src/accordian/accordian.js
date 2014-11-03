@@ -1,12 +1,14 @@
 var pk = pk || {};
 /**
 Create a new accordian component
-@class accordian
+@class pk.accordian
 @constructor
 @param options {Object}
-@param options.element {Object} DOM element to convert to accordian
+@param options.element {Object} DOM element to convert to component
 @param [options.animate=true] {Boolean} Animate expand/collapse actions
-@param [options.multiple=true] {Boolean} Allow multiple sections to be expanded simultaenously
+@param [options.multiple=true] {Boolean} Allow multiple sections to be expanded simultaneously
+@returns Object {Object} Consisting of original DOM element (item `0`)
+@chainable
 */
 
 (function(pk) {
@@ -56,6 +58,9 @@ Create a new accordian component
             doLayout(e.target.parentNode);
         });
         doLayout();
+		return {
+			0:el
+		}
     };
     return pk;
 })(pk);

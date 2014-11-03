@@ -1,4 +1,18 @@
 var pk = pk || {};
+/**
+Create a new rating control
+@class pk.rating
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to control
+@param [options.value=0] {String} Value of initially selected option, defaults to the attribute value set on the passed element, or `0`
+@param [options.name=pk-toggle-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-toggle-RandInt`
+@param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
+@param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or `false`
+@param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
+@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@chainable
+*/
 (function(pk) {
     pk.rating = function(opt) {
         var el = opt.element,
@@ -56,6 +70,19 @@ var pk = pk || {};
         for (var i = 0; i < rEl.length; i++) {
             pk.bindEvent('click', rEl[i], clickHandler);
         }
+/**
+Gets or sets control value
+@method val
+@param [value] {String} Value to set
+@return {String} Returns current value
+*/     
+
+/**
+Gets or sets control disabled state
+@method disabled
+@param [boolean] {Boolean} Disabled state
+@return {Boolean} Returns disabled state
+*/ 		
         var obj = {
             0: el,
             val: function(val) {

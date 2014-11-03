@@ -1,4 +1,19 @@
 var pk = pk || {};
+/**
+Utility class for creating draggable elements
+@class pk.drag
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to attach drag handlers to
+@param [options.handle=element] {Object} DOM element (child of `element`) to use as drag handle
+@param options.move {Object} Show movement during drag, either `true`, `false` or an object consisting of `x` and `y` {Boolean} values
+@param options.container {Object} Object containing details about container
+@param options.container.element=document.body {Object} DOM element used as container, defaults to `document.body`
+@param options.container.style=restrict {String} Type of containment, either `restrict`, `snap` or {Object} consisting of `x` and `y` values calculated relative to `container.element`
+@param [options.listeners] {Object} Object array of event listeners to bind to underlying element(s) - consisting of `dragstart`, `dragend` and `dragging`
+@returns Object {Object} Consisting of original DOM element (item `0`)
+@chainable
+*/
 (function(pk) {
     pk.drag = function(opt) {
         var el = opt.element;
@@ -42,7 +57,26 @@ var pk = pk || {};
             };
             return e;
         }
+/**
+Fired on drag event starting
+@event dragstart
+@param element {Object} Element event fired on
+@param event {Object} Event object
+*/
 
+/**
+Fired on during drag event
+@event dragging
+@param element {Object} Element event fired on
+@param event {Object} Event object
+*/
+
+/**
+Fired on drag event ending
+@event dragend
+@param element {Object} Element event fired on
+@param event {Object} Event object
+*/
         pk.bindEvent("mousedown", handle, function(e) {
             dragging = true;
             dragStart = {
@@ -120,5 +154,8 @@ var pk = pk || {};
                 fn.dragging(el, e);
             }
         });
+		return obj{
+			0:el
+		}
     };
 })(pk);

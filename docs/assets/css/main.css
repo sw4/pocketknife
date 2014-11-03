@@ -840,3 +840,19 @@ code.param-name:not(.optional) + .type:after{
 	margin: 0 0.5em;
 	padding: 2px 4px 1px;
 }
+#api-list > h2{
+	position:relative;
+	width:0;
+	color:#fff;
+	margin: 10px 0 20px;
+}
+#api-list > h2:after{
+	display:block;
+	width:100%;
+	position:absolute;
+	left:0;
+	top:0;
+	color:#000;
+	white-space:nowrap;
+	content:'pocketknife docs';
+}

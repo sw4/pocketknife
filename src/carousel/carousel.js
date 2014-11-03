@@ -56,9 +56,9 @@ Create a new carousel component
         });
 
         pk.bindEvent('keydown', el, function(e) {
-			if(document.activeElement !== el){
-				return;
-			}
+            if (document.activeElement !== el) {
+                return;
+            }
             switch (e.keyCode) {
                 case 34: //page down
                 case 40: //down cursor
@@ -84,14 +84,14 @@ Create a new carousel component
             }
         });
         var oldVal;
-/**
-Gets or sets control item
-@method val
-@param [value] {Number} Item index to set
-@return {Number} Returns current item index
-*/          
+        /**
+        Gets or sets control item
+        @method val
+        @param [value] {Number} Item index to set
+        @return {Number} Returns current item index
+        */
         var obj = {
-            0:el,
+            0: el,
             val: function(val) {
                 val = val.toString();
                 if (val === undefined) {

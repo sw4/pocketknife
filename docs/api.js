@@ -1,19 +1,28 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
-        "accordian",
-        "carousel",
-        "color",
-        "core",
-        "toggle"
+        "pk",
+        "pk.accordian",
+        "pk.carousel",
+        "pk.checkbox",
+        "pk.color",
+        "pk.colorpicker",
+        "pk.drag",
+        "pk.modal",
+        "pk.notify",
+        "pk.rating",
+        "pk.scroll",
+        "pk.select",
+        "pk.slider",
+        "pk.toggle"
     ],
     "modules": [
-        "pk"
+        "pocketknife"
     ],
     "allModules": [
         {
-            "displayName": "pk",
-            "name": "pk"
+            "displayName": "pocketknife",
+            "name": "pocketknife"
         }
     ]
 } };

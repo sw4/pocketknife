@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/toggle/toggle.js - Pocketknife UI</title>
+    <title>src/slider/slider.js - Pocketknife UI</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -110,22 +110,21 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/toggle/toggle.js</h1>
+                        <h1 class="file-heading">File: src/slider/slider.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 var pk = pk || {};
 /**
-Create a new toggle control
-@class pk.toggle
+Create a new slider control
+@class pk.slider
 @constructor
 @param options {Object}
 @param options.element {Object} DOM element to convert to control
-@param options.options {Object} Object array of control options
-@param options.options.value {String} Option value
-@param options.options.name {String} Option name (displayed label)
-@param [options.value=0] {String} Value of initially selected option, defaults to the attribute value set on the passed element, or &#x60;0&#x60;
-@param [options.name=pk-toggle-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or &#x60;pk-toggle-RandInt&#x60;
+@param [options.value=0] {Number} Initial value, defaults to the attribute value set on the passed element, or &#x60;0&#x60;
+@param [options.min=0] {Number} Minimum value
+@param [options.max=100] {Number} Maximum value
+@param [options.name=pk-slider-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or &#x60;pk-slider-RandInt&#x60;
 @param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or &#x60;0&#x60;
 @param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or &#x60;false&#x60;
 @param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
@@ -133,43 +132,120 @@ Create a new toggle control
 @chainable
 */
 (function(pk) {
-    pk.toggle = function(opt) {
+    pk.slider = function(opt) {
         var el = opt.element,
-            options = opt.options || [],
-            // more complex as can take true/false values
-            inputValue = opt.value !== undefined ? opt.value : pk.attribute(el, &#x27;value&#x27;) !== undefined ? pk.attribute(el, &#x27;value&#x27;) : options[0].value,
+            units = opt.units === undefined ? &#x27;&#x27; : opt.units,
             listeners = opt.listeners === undefined ? {} : opt.listeners,
+            min = opt.min || 0,
+            max = opt.max || 100,
+            axis = opt.axis,
+            range = Math.abs(max - min),
+            inputValue = opt.value || el.getAttribute(&#x27;value&#x27;) || 0,
             inputDisabled = (opt.disabled || el.getAttribute(&#x27;disabled&#x27;)) ? &#x27;disabled&#x27; : &#x27;&#x27;,
-            inputName = opt.name || el.getAttribute(&#x27;name&#x27;) || &#x27;pk-toggle-&#x27; + pk.getRand(1, 999),
+            inputName = opt.name || el.getAttribute(&#x27;name&#x27;) || &#x27;pk-slider-&#x27; + pk.getRand(1, 999),
             inputTabIndex = opt.tabindex || el.getAttribute(&#x27;tabindex&#x27;) || 0;
 
-        if (!options) {
-            return;
+        if (!axis || !(axis.indexOf(&quot;x&quot;) &lt; 0 || axis.indexOf(&quot;y&quot;) &lt; 0)) {
+            axis = &quot;x&quot;;
         }
 
-        var tpl = &quot;&lt;div class=&#x27;pk-toggle &quot; + (inputDisabled ? &#x27;pk-disabled&#x27; : &#x27;&#x27;) + &quot;&#x27; tabindex=&#x27;&quot; + inputTabIndex + &quot;&#x27;&gt;\
-			&lt;input type=&#x27;hidden&#x27; name = &#x27;&quot; + inputName + &quot;&#x27; value=&#x27;&quot; + inputValue + &quot;&#x27;/&gt;\
-			&lt;div class=&#x27;pk-toggle-indicator&#x27; style=&#x27;width:&quot; + (100 / options.length) + &quot;%&#x27;&gt;&lt;/div&gt;\
-		&lt;/div&gt;&quot;;
-
-        tpl += &quot;&quot;;
-        el.innerHTML = &#x27;&#x27;;
+        var tpl = &quot;&lt;div class=&#x27;pk-slider pk-slider-&quot; + axis + &quot; &quot; + (inputDisabled ? &#x27;pk-disabled&#x27; : &#x27;&#x27;) + &quot;&#x27; tabindex=&#x27;&quot; + inputTabIndex + &quot;&#x27;&gt;\
+            &lt;input type=&#x27;hidden&#x27; name=&#x27;&quot; + inputName + &quot;&#x27; &quot; + inputDisabled + &quot; value=&#x27;&quot; + inputValue + &quot;&#x27;/&gt;\
+            &lt;div class=&#x27;pk-slider-bar pk-animated&#x27;&gt;\
+                &lt;span class=&#x27;pk-slider-value&#x27;&gt;&lt;/span&gt;&lt;span class=&#x27;pk-slider-units&#x27;&gt;&lt;/span&gt;\
+            &lt;/div&gt;\
+            &lt;div class=&#x27;pk-slider-mask&#x27;&gt;&lt;/div&gt;\
+        &lt;/div&gt;&quot;;
         el = pk.replaceEl(el, tpl);
+        var maskEl = el.children[2],
+            barEl = el.children[1],
+            inputEl = el.children[0],
+            valueEl = barEl.children[0],
+            unitsEl = barEl.children[1];
 
-        var optionEl = [];
-        for (var o = 0; o &lt; options.length; o++) {
-            var oEl = pk.createEl(&quot;&lt;div class=&#x27;pk-option&#x27; style=&#x27;width:&quot; + (100 / options.length) + &quot;%&#x27; data-value=&#x27;&quot; + options[o].value + &quot;&#x27;&gt;&quot; + options[o].name + &quot;&lt;/div&gt;&quot;);
-            el.appendChild(oEl);
-            optionEl.push(oEl);
-        }
+        /**
+        Fired on slide event starting
+        @event slidestart
+        @param element {Object} Element event fired on
+        @param event {Object} Event object
+        */
 
-        var inputEl = el.children[0],
-            indicatorEl = el.children[1];
+        /**
+        Fired on during slide event
+        @event sliding
+        @param element {Object} Element event fired on
+        @param event {Object} Event object
+        */
+
+        /**
+        Fired on slide event ending
+        @event slideend
+        @param element {Object} Element event fired on
+        @param event {Object} Event object
+        */
+        pk.bindListeners(listeners, inputEl);
+        pk.drag({
+            element: maskEl,
+            contain: {
+                element: el
+            },
+            move: false,
+            listeners: {
+                dragging: function(el, e) {
+                    if (obj.disabled()) {
+                        return false;
+                    }
+                    var perc = axis === &quot;x&quot; ? (e.dragDist.x + e.dragOffset.x) / pk.layout(el).width : 1 - (e.dragDist.y + e.dragOffset.y) / pk.layout(el).height;
+                    perc = perc &lt; 0 ? 0 : perc;
+                    perc = perc &gt; 1 ? 1 : perc;
+                    obj.val(min + Math.round(perc * range));
+                    if (listeners &amp;&amp; listeners.sliding) {
+                        listeners.sliding(el, e);
+                    }
+                },
+                dragstart: function(el, e) {
+                    if (obj.disabled()) {
+                        return false;
+                    }
+                    if (listeners &amp;&amp; listeners.slidestart) {
+                        listeners.slidestart(el, e);
+                    }
+                    pk.removeClass(barEl, &#x27;pk-animated&#x27;);
+                },
+                dragend: function(el, e) {
+                    if (obj.disabled()) {
+                        return false;
+                    }
+                    if (listeners &amp;&amp; listeners.slideend) {
+                        listeners.slideend(el, e);
+                    }
+                    pk.addClass(barEl, &#x27;pk-animated&#x27;);
+                }
+            }
+        });
+        pk.bindEvent(&#x27;click&#x27;, maskEl, function(e) {
+            if (obj.disabled()) {
+                return false;
+            }
+            var perc = axis === &quot;x&quot; ? ((e.clientX - maskEl.getBoundingClientRect().left) / pk.layout(el).width) : 1 - ((e.clientY - maskEl.getBoundingClientRect().top) / pk.layout(el).height);
+            obj.val(min + Math.round(perc * range));
+        });
+        pk.bindEvent(&quot;mousewheel&quot;, el, function(e) {
+            pk.preventBubble(e);
+            if (obj.disabled()) {
+                return false;
+            }
+            var offset = 0.1;
+            if (e.wheelDelta &gt; 0 || e.detail &lt; 0) {
+                offset = offset * -1;
+            }
+            obj.val(range * offset + parseInt(obj.val(), 0));
+        });
         /**
         Gets or sets control value
         @method val
-        @param [value] {String} Value to set
-        @return {String} Returns current value
+        @param [value] {Number} Value to set
+        @return {Number} Returns current value
         */
 
         /**
@@ -180,20 +256,20 @@ Create a new toggle control
         */
         var obj = {
             0: el,
-            val: function(val) {
-                if (val === undefined) {
+            val: function(val, force) {
+                if (val === undefined || (obj.disabled() &amp;&amp; !force)) {
                     return inputEl.value;
                 }
-                val = val.toString() || options[0].value.toString();
-                for (var o = 0; o &lt; options.length; o++) {
-                    if (options[o].value.toString() === val) {
-                        indicatorEl.style.left = parseInt(o, 0) * 100 / options.length + &#x27;%&#x27;;
-                        inputEl.value = val;
-                        pk.addClass(optionEl[o], &#x27;pk-selected&#x27;);
-                    } else {
-                        pk.removeClass(optionEl[o], &#x27;pk-selected&#x27;);
-                    }
+                val = val &lt; min ? min : val;
+                val = val &gt; max ? max : val;
+                inputEl.value = val;
+                if (axis === &quot;x&quot;) {
+                    barEl.style.width = (val - min) * 100 / range + &#x27;%&#x27;;
+                } else {
+                    barEl.style.height = (val - min) * 100 / range + &#x27;%&#x27;;
                 }
+                valueEl.innerHTML = val;
+                unitsEl.innerHTML = units;
             },
             disabled: function(val) {
                 if (val !== undefined) {
@@ -203,17 +279,7 @@ Create a new toggle control
                 return pk.attribute(inputEl, &#x27;disabled&#x27;);
             }
         };
-        obj.val(inputValue);
-
-        function clickOpt(e) {
-            obj.val(pk.attribute(e.target, &#x27;data-value&#x27;));
-        }
-        for (o = 0; o &lt; options.length; o++) {
-            pk.bindListeners(listeners, optionEl[o]);
-            if (!inputDisabled) {
-                pk.bindEvent(&#x27;click&#x27;, optionEl[o], clickOpt);
-            }
-        }
+        obj.val(inputValue, true);
         return obj;
     };
     return pk;

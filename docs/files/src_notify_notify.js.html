@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/accordian/accordian.js - Pocketknife UI</title>
+    <title>src/notify/notify.js - Pocketknife UI</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -110,75 +110,66 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/accordian/accordian.js</h1>
+                        <h1 class="file-heading">File: src/notify/notify.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 var pk = pk || {};
 /**
-Create a new accordian component
-@class pk.accordian
+Class used for notification management
+@class pk.notify
 @constructor
-@param options {Object}
-@param options.element {Object} DOM element to convert to component
-@param [options.animate=true] {Boolean} Animate expand/collapse actions
-@param [options.multiple=true] {Boolean} Allow multiple sections to be expanded simultaneously
-@returns Object {Object} Consisting of original DOM element (item &#x60;0&#x60;)
-@chainable
 */
 
+/**
+Create a new notification
+@method push
+@param options {Object}
+@param [options.content] {String} Notification content (&#x60;HTML&#x60; allowed)
+@param [options.delay=8000] {Number} Time in &#x60;ms&#x60; for notificaiton to display for
+@returns Object {Object} Returns notification element (item &#x60;0&#x60;)
+*/
+
+/**
+Remove a notification
+@method close
+@param element {Object} Notification element to remove
+*/
 (function(pk) {
-    pk.accordian = function(opt) {
-        var el = opt.element,
-            anim = opt.animate === false ? false : opt.animate || true,
-            multiple = opt.multiple === false ? false : opt.multiple || true;
-
-        function animHeight(tEl) {
-            tEl.style.height = &#x27;auto&#x27;;
-            var h = pk.layout(tEl).height;
-            tEl.style.height = &#x27;0&#x27;;
+    var nEl = pk.createEl(&quot;&lt;ul class=&#x27;pk-notify&#x27;&gt;&lt;/ul&gt;&quot;);
+    document.body.appendChild(nEl);
+    pk.notify = {
+        push: function(opt) {
+            var mEl = pk.createEl(&quot;&lt;li tabindex=&#x27;&quot; + pk.getRand(1, 999) + &quot;&#x27;&gt;&quot; + opt.content + &quot;&lt;/li&gt;&quot;),
+                delay = opt.delay || 8000;
+            nEl.appendChild(mEl);
             setTimeout(function() {
-                tEl.style.height = h + &#x27;px&#x27;;
+                pk.addClass(mEl, &#x27;pk-show&#x27;);
             }, 10);
-        }
+            var scope = this;
+            setTimeout(function() {
+                scope.dismiss(mEl);
+            }, delay);
 
-        function doLayout(tEl) {
-            for (var a = 0; a &lt; el.children.length; a++) {
-                // loop through each....
-
-                var content = el.children[a].children[1];
-                // if multiple set to false and node passed, hide all other nodes
-                if (tEl &amp;&amp; el.children[a] !== tEl &amp;&amp; multiple === false) {
-                    pk.removeClass(el.children[a], &#x27;pk-show&#x27;);
-                }
-                if (pk.hasClass(el.children[a], &#x27;pk-show&#x27;)) {
-                    // show...if not already shown
-                    if (parseInt(content.style.height, 0) === 0 || !content.style.height) {
-                        if (anim) {
-                            animHeight(content);
-                        } else {
-                            content.style.height = &#x27;auto&#x27;;
-                        }
-                    }
-                } else {
-                    // hide
-                    content.style.height = &#x27;0&#x27;;
-                }
-            }
-        }
-        pk.bindEvent(&#x27;click&#x27;, el, function(e) {
-            if (!pk.hasClass(e.target, &#x27;pk-content-header&#x27;)) {
+            pk.bindEvent(&#x27;click&#x27;, mEl, function() {
+                scope.dismiss(mEl);
+            });
+            return {
+                0: mEl
+            };
+        },
+        dismiss: function(dEl) {
+            if (!pk.hasClass(dEl, &#x27;pk-show&#x27;)) {
                 return;
             }
-            pk.toggleClass(e.target.parentNode, &#x27;pk-show&#x27;);
-            doLayout(e.target.parentNode);
-        });
-        doLayout();
-        return {
-            0: el
-        };
+            pk.removeClass(dEl, &#x27;pk-show&#x27;);
+            setTimeout(function() {
+                if (dEl) {
+                    nEl.removeChild(dEl);
+                }
+            }, 1000);
+        }
     };
-    return pk;
 })(pk);
 
     </pre>

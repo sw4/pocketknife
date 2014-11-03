@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/toggle/toggle.js - Pocketknife UI</title>
+    <title>src/checkbox/checkbox.js - Pocketknife UI</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -110,22 +110,21 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/toggle/toggle.js</h1>
+                        <h1 class="file-heading">File: src/checkbox/checkbox.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 var pk = pk || {};
+
 /**
-Create a new toggle control
-@class pk.toggle
+Create a new checkbox control
+@class pk.checkbox
 @constructor
 @param options {Object}
 @param options.element {Object} DOM element to convert to control
-@param options.options {Object} Object array of control options
-@param options.options.value {String} Option value
-@param options.options.name {String} Option name (displayed label)
 @param [options.value=0] {String} Value of initially selected option, defaults to the attribute value set on the passed element, or &#x60;0&#x60;
-@param [options.name=pk-toggle-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or &#x60;pk-toggle-RandInt&#x60;
+@param [options.name=pk-checkbox-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or &#x60;pk-checkbox-RandInt&#x60;
+@param [options.label=label] {String} String to use for the control label, defaults to the attribute value set on the passed element, or its &#x60;innerHTML&#x60;
 @param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or &#x60;0&#x60;
 @param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or &#x60;false&#x60;
 @param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
@@ -133,38 +132,23 @@ Create a new toggle control
 @chainable
 */
 (function(pk) {
-    pk.toggle = function(opt) {
+    pk.checkbox = function(opt) {
         var el = opt.element,
-            options = opt.options || [],
-            // more complex as can take true/false values
-            inputValue = opt.value !== undefined ? opt.value : pk.attribute(el, &#x27;value&#x27;) !== undefined ? pk.attribute(el, &#x27;value&#x27;) : options[0].value,
-            listeners = opt.listeners === undefined ? {} : opt.listeners,
+            //    listeners = opt.listeners === undefined ? {} : opt.listeners,
+            inputValue = opt.value || el.getAttribute(&#x27;value&#x27;) || 0,
+            inputLabel = opt.label || el.getAttribute(&#x27;label&#x27;) || el.innerHTML,
             inputDisabled = (opt.disabled || el.getAttribute(&#x27;disabled&#x27;)) ? &#x27;disabled&#x27; : &#x27;&#x27;,
-            inputName = opt.name || el.getAttribute(&#x27;name&#x27;) || &#x27;pk-toggle-&#x27; + pk.getRand(1, 999),
+            inputName = opt.name || el.getAttribute(&#x27;name&#x27;) || &#x27;pk-checkbox-&#x27; + pk.getRand(1, 999),
+            listeners = opt.listeners === undefined ? {} : opt.listeners,
             inputTabIndex = opt.tabindex || el.getAttribute(&#x27;tabindex&#x27;) || 0;
 
-        if (!options) {
-            return;
-        }
-
-        var tpl = &quot;&lt;div class=&#x27;pk-toggle &quot; + (inputDisabled ? &#x27;pk-disabled&#x27; : &#x27;&#x27;) + &quot;&#x27; tabindex=&#x27;&quot; + inputTabIndex + &quot;&#x27;&gt;\
-			&lt;input type=&#x27;hidden&#x27; name = &#x27;&quot; + inputName + &quot;&#x27; value=&#x27;&quot; + inputValue + &quot;&#x27;/&gt;\
-			&lt;div class=&#x27;pk-toggle-indicator&#x27; style=&#x27;width:&quot; + (100 / options.length) + &quot;%&#x27;&gt;&lt;/div&gt;\
-		&lt;/div&gt;&quot;;
-
-        tpl += &quot;&quot;;
+        /*jshint multistr:true */
+        var str = &quot;&lt;label class=&#x27;pk-checkbox&#x27; for=&#x27;&quot; + inputName + &quot;&#x27;&gt;\
+		&lt;input type = &#x27;checkbox&#x27;  id = &#x27;&quot; + inputName + &quot;&#x27;  name = &#x27;&quot; + inputName + &quot;&#x27;  value = &#x27;&quot; + inputValue + &quot;&#x27;  tabindex = &#x27;&quot; + inputTabIndex + &quot;&#x27; / &gt;\
+            &lt;span class = &#x27;pk-label&#x27; &gt; &quot; + inputLabel + &quot; &lt;/span&gt;\
+		&lt;/label&gt;&quot;;
         el.innerHTML = &#x27;&#x27;;
-        el = pk.replaceEl(el, tpl);
-
-        var optionEl = [];
-        for (var o = 0; o &lt; options.length; o++) {
-            var oEl = pk.createEl(&quot;&lt;div class=&#x27;pk-option&#x27; style=&#x27;width:&quot; + (100 / options.length) + &quot;%&#x27; data-value=&#x27;&quot; + options[o].value + &quot;&#x27;&gt;&quot; + options[o].name + &quot;&lt;/div&gt;&quot;);
-            el.appendChild(oEl);
-            optionEl.push(oEl);
-        }
-
-        var inputEl = el.children[0],
-            indicatorEl = el.children[1];
+        el = pk.replaceEl(el, str);
         /**
         Gets or sets control value
         @method val
@@ -182,38 +166,23 @@ Create a new toggle control
             0: el,
             val: function(val) {
                 if (val === undefined) {
-                    return inputEl.value;
+                    return inputValue;
                 }
-                val = val.toString() || options[0].value.toString();
-                for (var o = 0; o &lt; options.length; o++) {
-                    if (options[o].value.toString() === val) {
-                        indicatorEl.style.left = parseInt(o, 0) * 100 / options.length + &#x27;%&#x27;;
-                        inputEl.value = val;
-                        pk.addClass(optionEl[o], &#x27;pk-selected&#x27;);
-                    } else {
-                        pk.removeClass(optionEl[o], &#x27;pk-selected&#x27;);
-                    }
-                }
+                pk.attribute(el.children[0], &#x27;checked&#x27;, Boolean(val));
             },
             disabled: function(val) {
                 if (val !== undefined) {
-                    pk.toggleClass(el, &#x27;pk-disabled&#x27;, val);
-                    pk.attribute(inputEl, &#x27;disabled&#x27;, val);
+                    pk.toggleClass(el, &#x27;pk-disabled&#x27;, Boolean(val));
+                    pk.attribute(el.children[0], &#x27;disabled&#x27;, Boolean(val));
                 }
-                return pk.attribute(inputEl, &#x27;disabled&#x27;);
+                return pk.attribute(el.children[0], &#x27;disabled&#x27;);
             }
         };
         obj.val(inputValue);
-
-        function clickOpt(e) {
-            obj.val(pk.attribute(e.target, &#x27;data-value&#x27;));
+        if (inputDisabled) {
+            obj.disabled(true);
         }
-        for (o = 0; o &lt; options.length; o++) {
-            pk.bindListeners(listeners, optionEl[o]);
-            if (!inputDisabled) {
-                pk.bindEvent(&#x27;click&#x27;, optionEl[o], clickOpt);
-            }
-        }
+        pk.bindListeners(listeners, el.children[0]);
         return obj;
     };
     return pk;

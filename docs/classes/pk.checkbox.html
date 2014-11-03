@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>carousel - Pocketknife UI</title>
+    <title>pk.checkbox - Pocketknife UI</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -41,21 +41,39 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/accordian.html">accordian</a></li>
+                <li><a href="../classes/pk.html">pk</a></li>
             
-                <li><a href="../classes/carousel.html">carousel</a></li>
+                <li><a href="../classes/pk.accordian.html">pk.accordian</a></li>
             
-                <li><a href="../classes/color.html">color</a></li>
+                <li><a href="../classes/pk.carousel.html">pk.carousel</a></li>
             
-                <li><a href="../classes/core.html">core</a></li>
+                <li><a href="../classes/pk.checkbox.html">pk.checkbox</a></li>
             
-                <li><a href="../classes/toggle.html">toggle</a></li>
+                <li><a href="../classes/pk.color.html">pk.color</a></li>
+            
+                <li><a href="../classes/pk.colorpicker.html">pk.colorpicker</a></li>
+            
+                <li><a href="../classes/pk.drag.html">pk.drag</a></li>
+            
+                <li><a href="../classes/pk.modal.html">pk.modal</a></li>
+            
+                <li><a href="../classes/pk.notify.html">pk.notify</a></li>
+            
+                <li><a href="../classes/pk.rating.html">pk.rating</a></li>
+            
+                <li><a href="../classes/pk.scroll.html">pk.scroll</a></li>
+            
+                <li><a href="../classes/pk.select.html">pk.select</a></li>
+            
+                <li><a href="../classes/pk.slider.html">pk.slider</a></li>
+            
+                <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/pk.html">pk</a></li>
+                <li><a href="../modules/pocketknife.html">pocketknife</a></li>
             
             </ul>
         </div>
@@ -92,7 +110,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>carousel Class</h1>
+                        <h1>pk.checkbox Class</h1>
 <div class="box meta">
     
 
@@ -100,13 +118,13 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_carousel_carousel.js.html#l2"><code>src&#x2F;carousel&#x2F;carousel.js:2</code></a>
+            Defined in: <a href="../files/src_checkbox_checkbox.js.html#l3"><code>src&#x2F;checkbox&#x2F;checkbox.js:3</code></a>
         </div>
     
 
     
         
-            Module: <a href="../modules/pk.html">pk</a>
+            Module: <a href="../modules/pocketknife.html">pocketknife</a>
         
     
 
@@ -116,15 +134,15 @@
 
 
 <div class="box intro">
-    <p>Create a new carousel component</p>
+    <p>Create a new checkbox control</p>
 
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_carousel" class="method item">
-    <h3 class="name"><code>carousel</code></h3>
+        <div id="method_pk.checkbox" class="method item">
+    <h3 class="name"><code>pk.checkbox</code></h3>
 
     
         <div class="args">
@@ -133,12 +151,6 @@
                 <li class="arg">
                     
                         <code>options</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>[options.tabindex=attribute</code>
                     
                 </li>
             
@@ -161,6 +173,8 @@
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -175,7 +189,7 @@
             
         
         
-        <a href="../files/src_carousel_carousel.js.html#l2"><code>src&#x2F;carousel&#x2F;carousel.js:2</code></a>
+        <a href="../files/src_checkbox_checkbox.js.html#l3"><code>src&#x2F;checkbox&#x2F;checkbox.js:3</code></a>
         
         </p>
 
@@ -217,7 +231,7 @@
                                 
 
                                 <div class="param-description">
-                                    <p>DOM element to convert to carousel</p>
+                                    <p>DOM element to convert to control</p>
 
                                 </div>
 
@@ -227,12 +241,12 @@
                             <li class="param">
                                 
                                     <code class="param-name optional">[value=0]</code>
-                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
                                 <div class="param-description">
-                                    <p>Starting carousel item index</p>
+                                    <p>Value of initially selected option, defaults to the attribute value set on the passed element, or <code>0</code></p>
 
                                 </div>
 
@@ -241,13 +255,73 @@
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[delay=4000]</code>
+                                    <code class="param-name optional">[name=pk-checkbox-RandInt]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Name of underlying input control, defaults to the attribute value set on the passed element, or <code>pk-checkbox-RandInt</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[label=label]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>String to use for the control label, defaults to the attribute value set on the passed element, or its <code>innerHTML</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[tabindex=0]</code>
                                     <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
                                 <div class="param-description">
-                                    <p>Delay in <code>ms</code> between item changes</p>
+                                    <p>Tabindex of control, defaults to the attribute value set on the passed element, or <code>0</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[disabled=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Disabled state of control, defaults to the attribute value set on the passed element, or <code>false</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[listeners]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Object array of event listeners to bind to underlying input(s)</p>
 
                                 </div>
 
@@ -255,22 +329,6 @@
                             </li>
                             
                         </ul>
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">[options.tabindex=attribute</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>value, 0]  Tabindex of carousel</p>
-
-                    </div>
-
                     
                 </li>
             
@@ -287,7 +345,7 @@
                     
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
                     
-                    <p>object  Consisting of original DOM element and class methods</p>
+                    <p>Object  Consisting of original DOM element (item <code>0</code>) and class methods (see below)</p>
 
                 
             </div>
@@ -323,6 +381,13 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
+                                <a href="#method_disabled">disabled</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_val">val</a>
 
                                 
@@ -345,8 +410,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_val" class="method item">
-    <h3 class="name"><code>val</code></h3>
+                    <div id="method_disabled" class="method item">
+    <h3 class="name"><code>disabled</code></h3>
 
     
         <div class="args">
@@ -354,7 +419,7 @@
             
                 <li class="arg">
                     
-                        <code class="optional">[value]</code>
+                        <code class="optional">[boolean]</code>
                     
                 </li>
             
@@ -364,7 +429,7 @@
 
     
         <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
         </span>
     
 
@@ -391,7 +456,7 @@
             
         
         
-        <a href="../files/src_carousel_carousel.js.html#l86"><code>src&#x2F;carousel&#x2F;carousel.js:86</code></a>
+        <a href="../files/src_checkbox_checkbox.js.html#l43"><code>src&#x2F;checkbox&#x2F;checkbox.js:43</code></a>
         
         </p>
 
@@ -402,7 +467,7 @@
     </div>
 
     <div class="description">
-        <p>Gets or sets current carousel item</p>
+        <p>Gets or sets control disabled state</p>
 
     </div>
 
@@ -414,15 +479,15 @@
             
                 <li class="param">
                     
-                        <code class="param-name optional">[value]</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                        <code class="param-name optional">[boolean]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                         <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>HEX color string</p>
+                        <p>Disabled state</p>
 
                     </div>
 
@@ -440,9 +505,117 @@
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>:
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
                     
-                    <p>Returns index of current carousel item</p>
+                    <p>Returns disabled state</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_val" class="method item">
+    <h3 class="name"><code>val</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[value]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_checkbox_checkbox.js.html#l36"><code>src&#x2F;checkbox&#x2F;checkbox.js:36</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Gets or sets control value</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[value]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Value to set</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>:
+                    
+                    <p>Returns current value</p>
 
                 
             </div>

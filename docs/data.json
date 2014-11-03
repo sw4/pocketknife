@@ -10,7 +10,7 @@
             "name": "src/accordian/accordian.js",
             "modules": {},
             "classes": {
-                "accordian": 1
+                "pk.accordian": 1
             },
             "fors": {},
             "namespaces": {}
@@ -19,7 +19,25 @@
             "name": "src/carousel/carousel.js",
             "modules": {},
             "classes": {
-                "carousel": 1
+                "pk.carousel": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/checkbox/checkbox.js": {
+            "name": "src/checkbox/checkbox.js",
+            "modules": {},
+            "classes": {
+                "pk.checkbox": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/colorpicker/colorpicker.js": {
+            "name": "src/colorpicker/colorpicker.js",
+            "modules": {},
+            "classes": {
+                "pk.colorpicker": 1
             },
             "fors": {},
             "namespaces": {}
@@ -27,10 +45,73 @@
         "src/core/core.js": {
             "name": "src/core/core.js",
             "modules": {
-                "pk": 1
+                "pocketknife": 1
             },
             "classes": {
-                "core": 1
+                "pk": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/drag/drag.js": {
+            "name": "src/drag/drag.js",
+            "modules": {},
+            "classes": {
+                "pk.drag": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/modal/modal.js": {
+            "name": "src/modal/modal.js",
+            "modules": {},
+            "classes": {
+                "pk.modal": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/notify/notify.js": {
+            "name": "src/notify/notify.js",
+            "modules": {},
+            "classes": {
+                "pk.notify": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/rating/rating.js": {
+            "name": "src/rating/rating.js",
+            "modules": {},
+            "classes": {
+                "pk.rating": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/scroll/scroll.js": {
+            "name": "src/scroll/scroll.js",
+            "modules": {},
+            "classes": {
+                "pk.scroll": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/select/select.js": {
+            "name": "src/select/select.js",
+            "modules": {},
+            "classes": {
+                "pk.select": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/slider/slider.js": {
+            "name": "src/slider/slider.js",
+            "modules": {},
+            "classes": {
+                "pk.slider": 1
             },
             "fors": {},
             "namespaces": {}
@@ -39,7 +120,7 @@
             "name": "src/toggle/toggle.js",
             "modules": {},
             "classes": {
-                "toggle": 1
+                "pk.toggle": 1
             },
             "fors": {},
             "namespaces": {}
@@ -48,22 +129,31 @@
             "name": "src/utils/color.js",
             "modules": {},
             "classes": {
-                "color": 1
+                "pk.color": 1
             },
             "fors": {},
             "namespaces": {}
         }
     },
     "modules": {
-        "pk": {
-            "name": "pk",
+        "pocketknife": {
+            "name": "pocketknife",
             "submodules": {},
             "classes": {
-                "accordian": 1,
-                "carousel": 1,
-                "core": 1,
-                "toggle": 1,
-                "color": 1
+                "pk.accordian": 1,
+                "pk.carousel": 1,
+                "pk.checkbox": 1,
+                "pk.colorpicker": 1,
+                "pk": 1,
+                "pk.drag": 1,
+                "pk.modal": 1,
+                "pk.notify": 1,
+                "pk.rating": 1,
+                "pk.scroll": 1,
+                "pk.select": 1,
+                "pk.slider": 1,
+                "pk.toggle": 1,
+                "pk.color": 1
             },
             "fors": {},
             "namespaces": {},
@@ -73,15 +163,15 @@
         }
     },
     "classes": {
-        "accordian": {
-            "name": "accordian",
-            "shortname": "accordian",
+        "pk.accordian": {
+            "name": "pk.accordian",
+            "shortname": "pk.accordian",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "pk",
+            "module": "pocketknife",
             "file": "src/accordian/accordian.js",
             "line": 2,
             "description": "Create a new accordian component",
@@ -94,7 +184,7 @@
                     "props": [
                         {
                             "name": "element",
-                            "description": "DOM element to convert to accordian",
+                            "description": "DOM element to convert to component",
                             "type": "Object"
                         },
                         {
@@ -106,24 +196,29 @@
                         },
                         {
                             "name": "multiple",
-                            "description": "Allow multiple sections to be expanded simultaenously",
+                            "description": "Allow multiple sections to be expanded simultaneously",
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "true"
                         }
                     ]
                 }
-            ]
+            ],
+            "return": {
+                "description": "Object  Consisting of original DOM element (item `0`)",
+                "type": "Object"
+            },
+            "chainable": 1
         },
-        "carousel": {
-            "name": "carousel",
-            "shortname": "carousel",
+        "pk.carousel": {
+            "name": "pk.carousel",
+            "shortname": "pk.carousel",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "pk",
+            "module": "pocketknife",
             "file": "src/carousel/carousel.js",
             "line": 2,
             "description": "Create a new carousel component",
@@ -136,12 +231,19 @@
                     "props": [
                         {
                             "name": "element",
-                            "description": "DOM element to convert to carousel",
+                            "description": "DOM element to convert to component",
                             "type": "Object"
                         },
                         {
                             "name": "value",
-                            "description": "Starting carousel item index",
+                            "description": "Starting item index",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "tabindex",
+                            "description": "Tabindex of component, defaults to the attribute value set on the passed element, or `0`",
                             "type": "Number",
                             "optional": true,
                             "optdefault": "0"
@@ -154,45 +256,26 @@
                             "optdefault": "4000"
                         }
                     ]
-                },
-                {
-                    "name": "[options.tabindex=attribute",
-                    "description": "value, 0]  Tabindex of carousel",
-                    "type": "Number"
                 }
             ],
             "return": {
-                "description": "object  Consisting of original DOM element and class methods",
+                "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
                 "type": "Object"
-            }
+            },
+            "chainable": 1
         },
-        "core": {
-            "name": "core",
-            "shortname": "core",
+        "pk.checkbox": {
+            "name": "pk.checkbox",
+            "shortname": "pk.checkbox",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "pk",
-            "namespace": "",
-            "file": "src/core/core.js",
-            "line": 47,
-            "static": 1
-        },
-        "toggle": {
-            "name": "toggle",
-            "shortname": "toggle",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "pk",
-            "namespace": "",
-            "file": "src/toggle/toggle.js",
-            "line": 2,
-            "description": "Create a new toggle component",
+            "module": "pocketknife",
+            "file": "src/checkbox/checkbox.js",
+            "line": 3,
+            "description": "Create a new checkbox control",
             "is_constructor": 1,
             "params": [
                 {
@@ -202,72 +285,751 @@
                     "props": [
                         {
                             "name": "element",
-                            "description": "DOM element to convert to toggle",
+                            "description": "DOM element to convert to control",
                             "type": "Object"
                         },
                         {
                             "name": "value",
-                            "description": "Starting toggle option index",
+                            "description": "Value of initially selected option, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-checkbox-RandInt`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "pk-checkbox-RandInt"
+                        },
+                        {
+                            "name": "label",
+                            "description": "String to use for the control label, defaults to the attribute value set on the passed element, or its `innerHTML`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "label"
+                        },
+                        {
+                            "name": "tabindex",
+                            "description": "Tabindex of control, defaults to the attribute value set on the passed element, or `0`",
                             "type": "Number",
                             "optional": true,
                             "optdefault": "0"
                         },
                         {
-                            "name": "delay",
-                            "description": "Delay in `ms` between item changes",
-                            "type": "Number",
+                            "name": "disabled",
+                            "description": "Disabled state of control, defaults to the attribute value set on the passed element, or `false`",
+                            "type": "Boolean",
                             "optional": true,
-                            "optdefault": "4000"
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "listeners",
+                            "description": "Object array of event listeners to bind to underlying input(s)",
+                            "type": "Object",
+                            "optional": true
                         }
                     ]
-                },
-                {
-                    "name": "[options.tabindex=attribute",
-                    "description": "value, 0]  Tabindex of carousel",
-                    "type": "Number"
                 }
             ],
             "return": {
-                "description": "object  Consisting of original DOM element and class methods",
+                "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
                 "type": "Object"
-            }
+            },
+            "chainable": 1
         },
-        "color": {
-            "name": "color",
-            "shortname": "color",
+        "pk.colorpicker": {
+            "name": "pk.colorpicker",
+            "shortname": "pk.colorpicker",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "pk",
+            "module": "pocketknife",
+            "file": "src/colorpicker/colorpicker.js",
+            "line": 2,
+            "description": "Create a new colorpicker control",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to control",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "value",
+                            "description": "HEX string of initially selected color, defaults black `#000000`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "#000000"
+                        },
+                        {
+                            "name": "listeners",
+                            "description": "Object array of event listeners to bind (nb. only detects `change` event)",
+                            "type": "Object",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
+                "type": "Object"
+            },
+            "chainable": 1
+        },
+        "pk": {
+            "name": "pk",
+            "shortname": "pk",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/core/core.js",
+            "line": 47,
+            "static": 1
+        },
+        "pk.drag": {
+            "name": "pk.drag",
+            "shortname": "pk.drag",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/drag/drag.js",
+            "line": 2,
+            "description": "Utility class for creating draggable elements",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to attach drag handlers to",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "handle",
+                            "description": "DOM element (child of `element`) to use as drag handle",
+                            "type": "Object",
+                            "optional": true,
+                            "optdefault": "element"
+                        },
+                        {
+                            "name": "move",
+                            "description": "Show movement during drag, either `true`, `false` or an object consisting of `x` and `y` {Boolean} values",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "container",
+                            "description": "Object containing details about container",
+                            "type": "Object",
+                            "props": [
+                                {
+                                    "name": "element=document.body",
+                                    "description": "DOM element used as container, defaults to `document.body`",
+                                    "type": "Object"
+                                },
+                                {
+                                    "name": "style=restrict",
+                                    "description": "Type of containment, either `restrict`, `snap` or {Object} consisting of `x` and `y` values calculated relative to `container.element`",
+                                    "type": "String"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "listeners",
+                            "description": "Object array of event listeners to bind to underlying element(s) - consisting of `dragstart`, `dragend` and `dragging`",
+                            "type": "Object",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Consisting of original DOM element (item `0`)",
+                "type": "Object"
+            },
+            "chainable": 1
+        },
+        "pk.modal": {
+            "name": "pk.modal",
+            "shortname": "pk.modal",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/modal/modal.js",
+            "line": 3,
+            "description": "Create a new modal component",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to component",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "header",
+                            "description": "Modal header content (`HTML` allowed)",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "content",
+                            "description": "Modal body content (`HTML` allowed)",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "draggable",
+                            "description": "Whether to allow modal dragging",
+                            "type": "Boolean",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
+                "type": "Object"
+            },
+            "chainable": 1
+        },
+        "pk.notify": {
+            "name": "pk.notify",
+            "shortname": "pk.notify",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/notify/notify.js",
+            "line": 2,
+            "description": "Class used for notification management",
+            "is_constructor": 1
+        },
+        "pk.rating": {
+            "name": "pk.rating",
+            "shortname": "pk.rating",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/rating/rating.js",
+            "line": 2,
+            "description": "Create a new rating control",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to control",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "value",
+                            "description": "Value of initially selected option, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-toggle-RandInt`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "pk-toggle-RandInt"
+                        },
+                        {
+                            "name": "tabindex",
+                            "description": "Tabindex of control, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "disabled",
+                            "description": "Disabled state of control, defaults to the attribute value set on the passed element, or `false`",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "listeners",
+                            "description": "Object array of event listeners to bind to underlying input(s)",
+                            "type": "Object",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
+                "type": "Object"
+            },
+            "chainable": 1
+        },
+        "pk.scroll": {
+            "name": "pk.scroll",
+            "shortname": "pk.scroll",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/scroll/scroll.js",
+            "line": 2,
+            "description": "Attach custom scrollbars to an element",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to attach drag handlers to",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "axis",
+                            "description": "Object consisting of `x` and `y` {Boolean} values denoting scrollable axis, DOM element to attach drag handlers to. Defaults to element attribute `pk-scroll` or `y`",
+                            "type": "Object",
+                            "optional": true,
+                            "optdefault": "y"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Consisting of original DOM element (item `0`)",
+                "type": "Object"
+            },
+            "chainable": 1
+        },
+        "pk.select": {
+            "name": "pk.select",
+            "shortname": "pk.select",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/select/select.js",
+            "line": 2,
+            "description": "Create a new select control",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to control",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "options",
+                            "description": "Object array of control options",
+                            "type": "Object",
+                            "props": [
+                                {
+                                    "name": "value",
+                                    "description": "Option value",
+                                    "type": "String"
+                                },
+                                {
+                                    "name": "name",
+                                    "description": "Option name (displayed label)",
+                                    "type": "String"
+                                },
+                                {
+                                    "name": "selected",
+                                    "description": "Option selected state",
+                                    "type": "Boolean"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "value",
+                            "description": "Value of initially selected option, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-select-RandInt`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "pk-select-RandInt"
+                        },
+                        {
+                            "name": "placeholder",
+                            "description": "Placeholder when no options selected, defaults to the attribute value set on the passed element, or `Please select...`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "string"
+                        },
+                        {
+                            "name": "multiple",
+                            "description": "Whether to allow multiple options to be selected, defaults to the attribute value set on the passed element, or `false`",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "dropdown",
+                            "description": "Display options in dropdown list",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "tabindex",
+                            "description": "Tabindex of control, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "disabled",
+                            "description": "Disabled state of control, defaults to the attribute value set on the passed element, or `false`",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
+                "type": "Object"
+            },
+            "chainable": 1
+        },
+        "pk.slider": {
+            "name": "pk.slider",
+            "shortname": "pk.slider",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/slider/slider.js",
+            "line": 2,
+            "description": "Create a new slider control",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to control",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "value",
+                            "description": "Initial value, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "min",
+                            "description": "Minimum value",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "max",
+                            "description": "Maximum value",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "100"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-slider-RandInt`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "pk-slider-RandInt"
+                        },
+                        {
+                            "name": "tabindex",
+                            "description": "Tabindex of control, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "disabled",
+                            "description": "Disabled state of control, defaults to the attribute value set on the passed element, or `false`",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "listeners",
+                            "description": "Object array of event listeners to bind to underlying input(s)",
+                            "type": "Object",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
+                "type": "Object"
+            },
+            "chainable": 1
+        },
+        "pk.toggle": {
+            "name": "pk.toggle",
+            "shortname": "pk.toggle",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/toggle/toggle.js",
+            "line": 2,
+            "description": "Create a new toggle control",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to control",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "options",
+                            "description": "Object array of control options",
+                            "type": "Object",
+                            "props": [
+                                {
+                                    "name": "value",
+                                    "description": "Option value",
+                                    "type": "String"
+                                },
+                                {
+                                    "name": "name",
+                                    "description": "Option name (displayed label)",
+                                    "type": "String"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "value",
+                            "description": "Value of initially selected option, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-toggle-RandInt`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "pk-toggle-RandInt"
+                        },
+                        {
+                            "name": "tabindex",
+                            "description": "Tabindex of control, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "disabled",
+                            "description": "Disabled state of control, defaults to the attribute value set on the passed element, or `false`",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "listeners",
+                            "description": "Object array of event listeners to bind to underlying input(s)",
+                            "type": "Object",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
+                "type": "Object"
+            },
+            "chainable": 1
+        },
+        "pk.color": {
+            "name": "pk.color",
+            "shortname": "pk.color",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
             "namespace": "",
             "file": "src/utils/color.js",
             "line": 2,
-            "description": "Utility function for converting color types and generating color schemes",
-            "static": 1
+            "description": "Utility class for converting color types and generating color schemes"
         }
     },
     "classitems": [
         {
             "file": "src/carousel/carousel.js",
-            "line": 86,
-            "description": "Gets or sets current carousel item",
+            "line": 87,
+            "description": "Gets or sets control item",
             "itemtype": "method",
             "name": "val",
             "params": [
                 {
                     "name": "value",
-                    "description": "HEX color string",
+                    "description": "Item index to set",
                     "type": "Number",
                     "optional": true
                 }
             ],
             "return": {
-                "description": "Returns index of current carousel item",
+                "description": "Returns current item index",
                 "type": "Number"
             },
-            "class": "carousel"
+            "class": "pk.carousel"
+        },
+        {
+            "file": "src/checkbox/checkbox.js",
+            "line": 36,
+            "description": "Gets or sets control value",
+            "itemtype": "method",
+            "name": "val",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "Value to set",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns current value",
+                "type": "String"
+            },
+            "class": "pk.checkbox"
+        },
+        {
+            "file": "src/checkbox/checkbox.js",
+            "line": 43,
+            "description": "Gets or sets control disabled state",
+            "itemtype": "method",
+            "name": "disabled",
+            "params": [
+                {
+                    "name": "boolean",
+                    "description": "Disabled state",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns disabled state",
+                "type": "Boolean"
+            },
+            "class": "pk.checkbox"
+        },
+        {
+            "file": "src/colorpicker/colorpicker.js",
+            "line": 201,
+            "description": "Fired on selected color changing (click, drag)",
+            "itemtype": "event",
+            "name": "change",
+            "params": [
+                {
+                    "name": "oldColor",
+                    "description": "HEX color string of previous color",
+                    "type": "String"
+                },
+                {
+                    "name": "newColor",
+                    "description": "HEX color string of new color",
+                    "type": "String"
+                }
+            ],
+            "class": "pk.colorpicker"
+        },
+        {
+            "file": "src/colorpicker/colorpicker.js",
+            "line": 208,
+            "description": "Gets or sets control value (HEX color string, e.g. `#000000`)",
+            "itemtype": "method",
+            "name": "val",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "Value to set",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns current value",
+                "type": "String"
+            },
+            "class": "pk.colorpicker"
         },
         {
             "file": "src/core/core.js",
@@ -286,8 +1048,8 @@
                 "description": "Returns `false`",
                 "type": "Boolean"
             },
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -316,8 +1078,8 @@
                 "description": "`true` if class added, `false` if removed.",
                 "type": "Boolean"
             },
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -341,8 +1103,8 @@
                 "description": "`true` if class found, `false` if not.",
                 "type": "Boolean"
             },
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -362,8 +1124,8 @@
                 "type": "Object"
             },
             "chainable": 1,
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -387,8 +1149,8 @@
                 "description": "Returns style property value",
                 "type": "String"
             },
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -413,8 +1175,8 @@
                 "type": "Object"
             },
             "chainable": 1,
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -439,8 +1201,8 @@
                 "type": "Object"
             },
             "chainable": 1,
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -470,8 +1232,8 @@
                 "type": "Object"
             },
             "chainable": 1,
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -501,8 +1263,8 @@
                 "type": "Object"
             },
             "chainable": 1,
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -526,8 +1288,8 @@
                 "description": "Returns object consisting of `top`, `right`, `bottom`, `left`, `height` and `width` values",
                 "type": "Object"
             },
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -552,8 +1314,8 @@
                 "type": "Object"
             },
             "chainable": 1,
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -577,8 +1339,8 @@
                 "description": "Returns pseudo-random number between §min§ and §max§",
                 "type": "Number"
             },
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -597,8 +1359,8 @@
                 "description": "Returns unit type",
                 "type": "String"
             },
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -623,8 +1385,8 @@
                 "type": "Object"
             },
             "chainable": 1,
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -644,8 +1406,8 @@
                 "type": "Object"
             },
             "chainable": 1,
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -664,8 +1426,8 @@
                 "description": "Returns index of passed element",
                 "type": "Number"
             },
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -690,8 +1452,8 @@
                 "type": "Object"
             },
             "chainable": 1,
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -710,8 +1472,8 @@
                 "description": "Returns array of passed variable",
                 "type": "Array"
             },
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -742,8 +1504,8 @@
                 "description": "Returns resulting `array`",
                 "type": "Array"
             },
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -773,8 +1535,8 @@
                 "type": "Object"
             },
             "chainable": 1,
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
         },
         {
             "file": "src/core/core.js",
@@ -793,12 +1555,324 @@
                 "description": "Returns object comprising of normalized `x` and `y` offsets",
                 "type": "Object"
             },
-            "class": "core",
-            "module": "pk"
+            "class": "pk",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/drag/drag.js",
+            "line": 60,
+            "description": "Fired on drag event starting",
+            "itemtype": "event",
+            "name": "dragstart",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "Element event fired on",
+                    "type": "Object"
+                },
+                {
+                    "name": "event",
+                    "description": "Event object",
+                    "type": "Object"
+                }
+            ],
+            "class": "pk.drag",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/drag/drag.js",
+            "line": 67,
+            "description": "Fired on during drag event",
+            "itemtype": "event",
+            "name": "dragging",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "Element event fired on",
+                    "type": "Object"
+                },
+                {
+                    "name": "event",
+                    "description": "Event object",
+                    "type": "Object"
+                }
+            ],
+            "class": "pk.drag",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/drag/drag.js",
+            "line": 74,
+            "description": "Fired on drag event ending",
+            "itemtype": "event",
+            "name": "dragend",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "Element event fired on",
+                    "type": "Object"
+                },
+                {
+                    "name": "event",
+                    "description": "Event object",
+                    "type": "Object"
+                }
+            ],
+            "class": "pk.drag",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/modal/modal.js",
+            "line": 84,
+            "description": "Closes modal and removes from DOM",
+            "itemtype": "method",
+            "name": "close",
+            "class": "pk.modal",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/notify/notify.js",
+            "line": 8,
+            "description": "Create a new notification",
+            "itemtype": "method",
+            "name": "push",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "content",
+                            "description": "Notification content (`HTML` allowed)",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Time in `ms` for notificaiton to display for",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "8000"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Returns notification element (item `0`)",
+                "type": "Object"
+            },
+            "class": "pk.notify",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/notify/notify.js",
+            "line": 17,
+            "description": "Remove a notification",
+            "itemtype": "method",
+            "name": "close",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "Notification element to remove",
+                    "type": "Object"
+                }
+            ],
+            "class": "pk.notify",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/rating/rating.js",
+            "line": 73,
+            "description": "Gets or sets control value",
+            "itemtype": "method",
+            "name": "val",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "Value to set",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns current value",
+                "type": "String"
+            },
+            "class": "pk.rating",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/rating/rating.js",
+            "line": 80,
+            "description": "Gets or sets control disabled state",
+            "itemtype": "method",
+            "name": "disabled",
+            "params": [
+                {
+                    "name": "boolean",
+                    "description": "Disabled state",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns disabled state",
+                "type": "Boolean"
+            },
+            "class": "pk.rating",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/slider/slider.js",
+            "line": 50,
+            "description": "Fired on slide event starting",
+            "itemtype": "event",
+            "name": "slidestart",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "Element event fired on",
+                    "type": "Object"
+                },
+                {
+                    "name": "event",
+                    "description": "Event object",
+                    "type": "Object"
+                }
+            ],
+            "class": "pk.slider",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/slider/slider.js",
+            "line": 57,
+            "description": "Fired on during slide event",
+            "itemtype": "event",
+            "name": "sliding",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "Element event fired on",
+                    "type": "Object"
+                },
+                {
+                    "name": "event",
+                    "description": "Event object",
+                    "type": "Object"
+                }
+            ],
+            "class": "pk.slider",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/slider/slider.js",
+            "line": 64,
+            "description": "Fired on slide event ending",
+            "itemtype": "event",
+            "name": "slideend",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "Element event fired on",
+                    "type": "Object"
+                },
+                {
+                    "name": "event",
+                    "description": "Event object",
+                    "type": "Object"
+                }
+            ],
+            "class": "pk.slider",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/slider/slider.js",
+            "line": 128,
+            "description": "Gets or sets control value",
+            "itemtype": "method",
+            "name": "val",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "Value to set",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns current value",
+                "type": "Number"
+            },
+            "class": "pk.slider",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/slider/slider.js",
+            "line": 135,
+            "description": "Gets or sets control disabled state",
+            "itemtype": "method",
+            "name": "disabled",
+            "params": [
+                {
+                    "name": "boolean",
+                    "description": "Disabled state",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns disabled state",
+                "type": "Boolean"
+            },
+            "class": "pk.slider",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/toggle/toggle.js",
+            "line": 52,
+            "description": "Gets or sets control value",
+            "itemtype": "method",
+            "name": "val",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "Value to set",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns current value",
+                "type": "String"
+            },
+            "class": "pk.toggle",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/toggle/toggle.js",
+            "line": 59,
+            "description": "Gets or sets control disabled state",
+            "itemtype": "method",
+            "name": "disabled",
+            "params": [
+                {
+                    "name": "boolean",
+                    "description": "Disabled state",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns disabled state",
+                "type": "Boolean"
+            },
+            "class": "pk.toggle",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 11,
+            "line": 10,
             "description": "Convert a HEX color string to an RGB",
             "itemtype": "method",
             "name": "hex2rgb",
@@ -813,12 +1887,12 @@
                 "description": "Returns array of red, clue and green components",
                 "type": "Array"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 29,
+            "line": 28,
             "description": "Convert an RGB array to a HEX color string",
             "itemtype": "method",
             "name": "rgb2hex",
@@ -833,12 +1907,12 @@
                 "description": "Returns HEX color string",
                 "type": "String"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 46,
+            "line": 45,
             "description": "Convert an RGB array to a HSV array",
             "itemtype": "method",
             "name": "rgb2hsv",
@@ -853,12 +1927,12 @@
                 "description": "Returns array of hue, saturation and value components",
                 "type": "Array"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 88,
+            "line": 87,
             "description": "Convert an HSV array to a RGB array",
             "itemtype": "method",
             "name": "rgb2hsv",
@@ -873,12 +1947,132 @@
                 "description": "Returns array of red, clue and green components",
                 "type": "Array"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 153,
+            "line": 151,
+            "description": "Convert an RGB array to a HSL array",
+            "itemtype": "method",
+            "name": "rgb2hsl",
+            "params": [
+                {
+                    "name": "RGB",
+                    "description": "Array of red, green and blue components",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns array of hue, saturation and lightness components",
+                "type": "Array"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 187,
+            "description": "Convert an HSL array to a RGB array",
+            "itemtype": "method",
+            "name": "hsl2rgb",
+            "params": [
+                {
+                    "name": "HSL",
+                    "description": "Array of hue, saturation and lightness components",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns array of red, green and blue components",
+                "type": "Array"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 230,
+            "description": "Convert a HEX color string to a HSL array",
+            "itemtype": "method",
+            "name": "hex2hsl",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns array of hue, saturation and lightness components",
+                "type": "Array"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 239,
+            "description": "Convert an HSL array to a HEX color string",
+            "itemtype": "method",
+            "name": "hsl2hex",
+            "params": [
+                {
+                    "name": "hsl",
+                    "description": "Array of hue, saturation and lightness components",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns HEX color string",
+                "type": "String"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 249,
+            "description": "Convert an HSV array to HSL array",
+            "itemtype": "method",
+            "name": "hsv2hsl",
+            "params": [
+                {
+                    "name": "hsv",
+                    "description": "Array of hue, saturation and value components",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns array of hue, saturation and lightness components",
+                "type": "Array"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 259,
+            "description": "Convert an HSL array to HSV array",
+            "itemtype": "method",
+            "name": "hsl2hsv",
+            "params": [
+                {
+                    "name": "hsl",
+                    "description": "Array of hue, saturation and lightness components",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns array of hue, saturation and value components",
+                "type": "Array"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 269,
             "description": "Convert a HEX color string to a HSV array",
             "itemtype": "method",
             "name": "hex2hsv",
@@ -893,12 +2087,12 @@
                 "description": "Returns array of hue, saturation and value components",
                 "type": "Array"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 162,
+            "line": 278,
             "description": "Convert an HSV array to a HEX color string",
             "itemtype": "method",
             "name": "hsv2hex",
@@ -913,12 +2107,12 @@
                 "description": "Returns HEX color string",
                 "type": "String"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 171,
+            "line": 287,
             "description": "Generate a series of randomized HEX color strings",
             "itemtype": "method",
             "name": "random",
@@ -933,12 +2127,12 @@
                 "description": "Returns Array of HEX color strings",
                 "type": "Array"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 186,
+            "line": 302,
             "description": "Generate (palette of) complementary color(s) from passed HEX color string",
             "itemtype": "method",
             "name": "complement",
@@ -959,12 +2153,12 @@
                 "description": "Returns array of HEX color strings",
                 "type": "Array"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 211,
+            "line": 327,
             "description": "Generate triadic color palette",
             "itemtype": "method",
             "name": "triadic",
@@ -979,12 +2173,12 @@
                 "description": "Returns array of HEX color strings",
                 "type": "Array"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 220,
+            "line": 336,
             "description": "Generate tetradic color palette",
             "itemtype": "method",
             "name": "tetradic",
@@ -999,12 +2193,12 @@
                 "description": "Returns array of HEX color strings",
                 "type": "Array"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 229,
+            "line": 345,
             "description": "Generate pentadic color palette",
             "itemtype": "method",
             "name": "pentadic",
@@ -1019,12 +2213,12 @@
                 "description": "Returns array of HEX color strings",
                 "type": "Array"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         },
         {
             "file": "src/utils/color.js",
-            "line": 247,
+            "line": 363,
             "description": "Generate algorithmic color palette",
             "itemtype": "method",
             "name": "algorithmic",
@@ -1067,14 +2261,54 @@
                 "description": "Returns array of HEX color strings",
                 "type": "Array"
             },
-            "class": "color",
-            "module": "pk"
+            "class": "pk.color",
+            "module": "pocketknife"
         }
     ],
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
+            "line": " src/accordian/accordian.js:2"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
             "line": " src/carousel/carousel.js:2"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/checkbox/checkbox.js:3"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/colorpicker/colorpicker.js:2"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/drag/drag.js:2"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/modal/modal.js:3"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/notify/notify.js:8"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/rating/rating.js:2"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/scroll/scroll.js:2"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/select/select.js:2"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/slider/slider.js:2"
         },
         {
             "message": "replacing incorrect tag: returns with return",

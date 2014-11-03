@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>accordian - Pocketknife UI</title>
+    <title>pk.modal - Pocketknife UI</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -41,21 +41,39 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/accordian.html">accordian</a></li>
+                <li><a href="../classes/pk.html">pk</a></li>
             
-                <li><a href="../classes/carousel.html">carousel</a></li>
+                <li><a href="../classes/pk.accordian.html">pk.accordian</a></li>
             
-                <li><a href="../classes/color.html">color</a></li>
+                <li><a href="../classes/pk.carousel.html">pk.carousel</a></li>
             
-                <li><a href="../classes/core.html">core</a></li>
+                <li><a href="../classes/pk.checkbox.html">pk.checkbox</a></li>
             
-                <li><a href="../classes/toggle.html">toggle</a></li>
+                <li><a href="../classes/pk.color.html">pk.color</a></li>
+            
+                <li><a href="../classes/pk.colorpicker.html">pk.colorpicker</a></li>
+            
+                <li><a href="../classes/pk.drag.html">pk.drag</a></li>
+            
+                <li><a href="../classes/pk.modal.html">pk.modal</a></li>
+            
+                <li><a href="../classes/pk.notify.html">pk.notify</a></li>
+            
+                <li><a href="../classes/pk.rating.html">pk.rating</a></li>
+            
+                <li><a href="../classes/pk.scroll.html">pk.scroll</a></li>
+            
+                <li><a href="../classes/pk.select.html">pk.select</a></li>
+            
+                <li><a href="../classes/pk.slider.html">pk.slider</a></li>
+            
+                <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/pk.html">pk</a></li>
+                <li><a href="../modules/pocketknife.html">pocketknife</a></li>
             
             </ul>
         </div>
@@ -92,7 +110,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>accordian Class</h1>
+                        <h1>pk.modal Class</h1>
 <div class="box meta">
     
 
@@ -100,13 +118,13 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_accordian_accordian.js.html#l2"><code>src&#x2F;accordian&#x2F;accordian.js:2</code></a>
+            Defined in: <a href="../files/src_modal_modal.js.html#l3"><code>src&#x2F;modal&#x2F;modal.js:3</code></a>
         </div>
     
 
     
         
-            Module: <a href="../modules/pk.html">pk</a>
+            Module: <a href="../modules/pocketknife.html">pocketknife</a>
         
     
 
@@ -116,15 +134,15 @@
 
 
 <div class="box intro">
-    <p>Create a new accordian component</p>
+    <p>Create a new modal component</p>
 
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_accordian" class="method item">
-    <h3 class="name"><code>accordian</code></h3>
+        <div id="method_pk.modal" class="method item">
+    <h3 class="name"><code>pk.modal</code></h3>
 
     
         <div class="args">
@@ -141,7 +159,9 @@
     
 
     
-
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
     
 
     
@@ -150,6 +170,10 @@
 
     
 
+    
+
+    
+        <span class="flag chainable">chainable</span>
     
 
     
@@ -165,7 +189,7 @@
             
         
         
-        <a href="../files/src_accordian_accordian.js.html#l2"><code>src&#x2F;accordian&#x2F;accordian.js:2</code></a>
+        <a href="../files/src_modal_modal.js.html#l3"><code>src&#x2F;modal&#x2F;modal.js:3</code></a>
         
         </p>
 
@@ -207,7 +231,7 @@
                                 
 
                                 <div class="param-description">
-                                    <p>DOM element to convert to accordian</p>
+                                    <p>DOM element to convert to component</p>
 
                                 </div>
 
@@ -216,13 +240,13 @@
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[animate=true]</code>
-                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <code class="param-name optional">[header]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
                                 <div class="param-description">
-                                    <p>Animate expand/collapse actions</p>
+                                    <p>Modal header content (<code>HTML</code> allowed)</p>
 
                                 </div>
 
@@ -231,13 +255,28 @@
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[multiple=true]</code>
+                                    <code class="param-name optional">[content]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Modal body content (<code>HTML</code> allowed)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[draggable]</code>
                                     <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
                                 <div class="param-description">
-                                    <p>Allow multiple sections to be expanded simultaenously</p>
+                                    <p>Whether to allow modal dragging</p>
 
                                 </div>
 
@@ -253,6 +292,20 @@
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    
+                    <p>Object  Consisting of original DOM element (item <code>0</code>) and class methods (see below)</p>
+
+                
+            </div>
+        </div>
+    
 
     
 </div>
@@ -265,6 +318,8 @@
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
         
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
         
         
         
@@ -275,6 +330,21 @@
             <h2 class="off-left">Item Index</h2>
 
             
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_close">close</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
 
             
 
@@ -283,6 +353,67 @@
             
         </div>
 
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_close" class="method item">
+    <h3 class="name"><code>close</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_modal_modal.js.html#l84"><code>src&#x2F;modal&#x2F;modal.js:84</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Closes modal and removes from DOM</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         

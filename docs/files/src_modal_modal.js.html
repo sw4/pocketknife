@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/accordian/accordian.js - Pocketknife UI</title>
+    <title>src/modal/modal.js - Pocketknife UI</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -110,72 +110,100 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/accordian/accordian.js</h1>
+                        <h1 class="file-heading">File: src/modal/modal.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 var pk = pk || {};
+
 /**
-Create a new accordian component
-@class pk.accordian
+Create a new modal component
+@class pk.modal
 @constructor
 @param options {Object}
 @param options.element {Object} DOM element to convert to component
-@param [options.animate=true] {Boolean} Animate expand/collapse actions
-@param [options.multiple=true] {Boolean} Allow multiple sections to be expanded simultaneously
-@returns Object {Object} Consisting of original DOM element (item &#x60;0&#x60;)
+@param [options.header] {String} Modal header content (&#x60;HTML&#x60; allowed)
+@param [options.content] {String} Modal body content (&#x60;HTML&#x60; allowed)
+@param [options.draggable] {Boolean} Whether to allow modal dragging
+@returns Object {Object} Consisting of original DOM element (item &#x60;0&#x60;) and class methods (see below)
 @chainable
 */
 
 (function(pk) {
-    pk.accordian = function(opt) {
-        var el = opt.element,
-            anim = opt.animate === false ? false : opt.animate || true,
-            multiple = opt.multiple === false ? false : opt.multiple || true;
+    pk.modal = function(opt) {
+        var h = opt.header,
+            c = opt.content;
+        /*jshint multistr: true */
+        var tpl = &quot;&lt;div class=&#x27;pk-modal-mask&#x27;&gt;\
+			&lt;div class=&#x27;pk-modal-box pk-animated&#x27;&gt;\
+				&lt;div class=&#x27;pk-modal-header&#x27;&gt;&quot; + h + &quot;&lt;span class=&#x27;pk-modal-close&#x27;&gt;&lt;/span&gt;&lt;/div&gt;\
+				&lt;div class=&#x27;pk-modal-content&#x27;&gt;&quot; + c + &quot;&lt;/div&gt;\
+			&lt;/div&gt;\
+		&lt;/div&gt;&quot;;
 
-        function animHeight(tEl) {
-            tEl.style.height = &#x27;auto&#x27;;
-            var h = pk.layout(tEl).height;
-            tEl.style.height = &#x27;0&#x27;;
+        var el = pk.createEl(tpl),
+            box = el.children[0],
+            header = box.children[0],
+            close = header.children[0];
+
+        if (document.body.children.length &gt; 0) {
+            document.body.insertBefore(el, document.body.children[0]);
+        } else {
+            document.body.appendChild(el);
+        }
+
+        function closeModal() {
+            pk.removeClass(el, &#x27;pk-show&#x27;);
             setTimeout(function() {
-                tEl.style.height = h + &#x27;px&#x27;;
-            }, 10);
+                el.parentNode.removeChild(el);
+            }, 500);
         }
-
-        function doLayout(tEl) {
-            for (var a = 0; a &lt; el.children.length; a++) {
-                // loop through each....
-
-                var content = el.children[a].children[1];
-                // if multiple set to false and node passed, hide all other nodes
-                if (tEl &amp;&amp; el.children[a] !== tEl &amp;&amp; multiple === false) {
-                    pk.removeClass(el.children[a], &#x27;pk-show&#x27;);
-                }
-                if (pk.hasClass(el.children[a], &#x27;pk-show&#x27;)) {
-                    // show...if not already shown
-                    if (parseInt(content.style.height, 0) === 0 || !content.style.height) {
-                        if (anim) {
-                            animHeight(content);
-                        } else {
-                            content.style.height = &#x27;auto&#x27;;
-                        }
-                    }
-                } else {
-                    // hide
-                    content.style.height = &#x27;0&#x27;;
-                }
-            }
-        }
-        pk.bindEvent(&#x27;click&#x27;, el, function(e) {
-            if (!pk.hasClass(e.target, &#x27;pk-content-header&#x27;)) {
+        pk.bindEvent(&quot;click&quot;, el, function(e) {
+            if (e.target !== el) {
                 return;
             }
-            pk.toggleClass(e.target.parentNode, &#x27;pk-show&#x27;);
-            doLayout(e.target.parentNode);
+            closeModal();
         });
-        doLayout();
+        pk.bindEvent(&quot;click&quot;, close, closeModal);
+        pk.bindEvent(&quot;resize&quot;, window, function() {
+            pk.center(box);
+        });
+        setTimeout(function() {
+            pk.addClass(el, &#x27;pk-show&#x27;);
+        }, 10);
+
+        var boxH = box.offsetHeight || 0;
+        setInterval(function() {
+            var boxHN = box.offsetHeight;
+            if (boxH !== boxHN) {
+                pk.center(box);
+                boxH = boxHN;
+            }
+        }, 500);
+        pk.center(box);
+
+        if (opt.draggable !== false &amp;&amp; pk.drag) {
+            pk.drag({
+                element: box,
+                handle: header,
+                move: true,
+                listeners: {
+                    dragstart: function() {
+                        pk.removeClass(box, &#x27;pk-animated&#x27;);
+                    },
+                    dragend: function() {
+                        pk.addClass(box, &#x27;pk-animated&#x27;);
+                    }
+                }
+            });
+        }
+        /**
+        Closes modal and removes from DOM
+        @method close
+        */
         return {
-            0: el
+            0: el,
+            close: closeModal
         };
     };
     return pk;

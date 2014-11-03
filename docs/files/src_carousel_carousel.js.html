@@ -41,21 +41,39 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/accordian.html">accordian</a></li>
+                <li><a href="../classes/pk.html">pk</a></li>
             
-                <li><a href="../classes/carousel.html">carousel</a></li>
+                <li><a href="../classes/pk.accordian.html">pk.accordian</a></li>
             
-                <li><a href="../classes/color.html">color</a></li>
+                <li><a href="../classes/pk.carousel.html">pk.carousel</a></li>
             
-                <li><a href="../classes/core.html">core</a></li>
+                <li><a href="../classes/pk.checkbox.html">pk.checkbox</a></li>
             
-                <li><a href="../classes/toggle.html">toggle</a></li>
+                <li><a href="../classes/pk.color.html">pk.color</a></li>
+            
+                <li><a href="../classes/pk.colorpicker.html">pk.colorpicker</a></li>
+            
+                <li><a href="../classes/pk.drag.html">pk.drag</a></li>
+            
+                <li><a href="../classes/pk.modal.html">pk.modal</a></li>
+            
+                <li><a href="../classes/pk.notify.html">pk.notify</a></li>
+            
+                <li><a href="../classes/pk.rating.html">pk.rating</a></li>
+            
+                <li><a href="../classes/pk.scroll.html">pk.scroll</a></li>
+            
+                <li><a href="../classes/pk.select.html">pk.select</a></li>
+            
+                <li><a href="../classes/pk.slider.html">pk.slider</a></li>
+            
+                <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/pk.html">pk</a></li>
+                <li><a href="../modules/pocketknife.html">pocketknife</a></li>
             
             </ul>
         </div>
@@ -99,14 +117,15 @@
 var pk = pk || {};
 /**
 Create a new carousel component
-@class carousel
+@class pk.carousel
 @constructor
 @param options {Object}
-@param options.element {Object} DOM element to convert to carousel
-@param [options.value=0] {Number} Starting carousel item index
-@param [options.tabindex=attribute value, 0] {Number} Tabindex of carousel
+@param options.element {Object} DOM element to convert to component
+@param [options.value=0] {Number} Starting item index
+@param [options.tabindex=0] {Number} Tabindex of component, defaults to the attribute value set on the passed element, or &#x60;0&#x60;
 @param [options.delay=4000] {Number} Delay in &#x60;ms&#x60; between item changes
-@returns object {Object} Consisting of original DOM element and class methods
+@returns Object {Object} Consisting of original DOM element (item &#x60;0&#x60;) and class methods (see below)
+@chainable
 */
 (function(pk) {
     pk.carousel = function(opt) {
@@ -153,9 +172,9 @@ Create a new carousel component
         });
 
         pk.bindEvent(&#x27;keydown&#x27;, el, function(e) {
-			if(document.activeElement !== el){
-				return;
-			}
+            if (document.activeElement !== el) {
+                return;
+            }
             switch (e.keyCode) {
                 case 34: //page down
                 case 40: //down cursor
@@ -181,14 +200,14 @@ Create a new carousel component
             }
         });
         var oldVal;
-/**
-Gets or sets current carousel item
-@method val
-@param [value] {Number} HEX color string
-@return {Number} Returns index of current carousel item
-*/          
+        /**
+        Gets or sets control item
+        @method val
+        @param [value] {Number} Item index to set
+        @return {Number} Returns current item index
+        */
         var obj = {
-            0:el,
+            0: el,
             val: function(val) {
                 val = val.toString();
                 if (val === undefined) {

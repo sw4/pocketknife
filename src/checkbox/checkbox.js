@@ -23,6 +23,7 @@ Create a new checkbox control
             inputLabel = opt.label || el.getAttribute('label') || el.innerHTML,
             inputDisabled = (opt.disabled || el.getAttribute('disabled')) ? 'disabled' : '',
             inputName = opt.name || el.getAttribute('name') || 'pk-checkbox-' + pk.getRand(1, 999),
+            listeners = opt.listeners === undefined ? {} : opt.listeners,
             inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0;
 
         /*jshint multistr:true */
@@ -32,19 +33,19 @@ Create a new checkbox control
 		</label>";
         el.innerHTML = '';
         el = pk.replaceEl(el, str);
-/**
-Gets or sets control value
-@method val
-@param [value] {String} Value to set
-@return {String} Returns current value
-*/     
+        /**
+        Gets or sets control value
+        @method val
+        @param [value] {String} Value to set
+        @return {String} Returns current value
+        */
 
-/**
-Gets or sets control disabled state
-@method disabled
-@param [boolean] {Boolean} Disabled state
-@return {Boolean} Returns disabled state
-*/ 
+        /**
+        Gets or sets control disabled state
+        @method disabled
+        @param [boolean] {Boolean} Disabled state
+        @return {Boolean} Returns disabled state
+        */
         var obj = {
             0: el,
             val: function(val) {
@@ -65,7 +66,7 @@ Gets or sets control disabled state
         if (inputDisabled) {
             obj.disabled(true);
         }
-		pk.bindListeners(listeners, el.children[0]);
+        pk.bindListeners(listeners, el.children[0]);
         return obj;
     };
     return pk;

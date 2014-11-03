@@ -1,14 +1,20 @@
 var pk = pk || {};
 /**
-Create a new toggle component
-@class toggle
+Create a new toggle control
+@class pk.toggle
 @constructor
 @param options {Object}
-@param options.element {Object} DOM element to convert to toggle
-@param [options.value=0] {Number} Starting toggle option index
-@param [options.tabindex=attribute value, 0] {Number} Tabindex of carousel
-@param [options.delay=4000] {Number} Delay in `ms` between item changes
-@returns object {Object} Consisting of original DOM element and class methods
+@param options.element {Object} DOM element to convert to control
+@param options.options {Object} Object array of control options
+@param options.options.value {String} Option value
+@param options.options.name {String} Option name (displayed label)
+@param [options.value=0] {String} Value of initially selected option, defaults to the attribute value set on the passed element, or `0`
+@param [options.name=pk-toggle-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-toggle-RandInt`
+@param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
+@param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or `false`
+@param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
+@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@chainable
 */
 (function(pk) {
     pk.toggle = function(opt) {
@@ -43,8 +49,21 @@ Create a new toggle component
 
         var inputEl = el.children[0],
             indicatorEl = el.children[1];
+/**
+Gets or sets control value
+@method val
+@param [value] {String} Value to set
+@return {String} Returns current value
+*/     
 
+/**
+Gets or sets control disabled state
+@method disabled
+@param [boolean] {Boolean} Disabled state
+@return {Boolean} Returns disabled state
+*/ 
         var obj = {
+			0:el,
             val: function(val) {
                 if (val === undefined) {
                     return inputEl.value;

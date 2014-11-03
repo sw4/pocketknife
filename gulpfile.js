@@ -79,6 +79,25 @@ gulp.task('watch', ['browser-sync'], function () {
    return true;
 });
 
+gulp.task('git:discard', function () {
+	plugins.run('git stash').exec();
+	plugins.run('git checkout master').exec();
+	plugins.run('git pull').exec();
+});
+gulp.task('git:discard', function () {
+	plugins.run('git stash').exec();
+	plugins.run('git checkout master').exec();
+	plugins.run('git pull').exec();
+});
+gulp.task('git:commit', function () {
+	plugins.run('git add -A && git commit -m "CI auto-commit"').exec();
+	plugins.run('git push').exec();
+});
+
+
+
+
+
 gulp.task('document', function () {
 	plugins.run('yuidoc').exec();
 });

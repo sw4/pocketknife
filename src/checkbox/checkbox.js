@@ -15,11 +15,6 @@ Create a new checkbox control
 @returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
 @chainable
 */
-
-@param [options.tabindex=] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
-@param [options.delay=4000] {Number} Delay in `ms` between item changes
-@returns object {Object} Consisting of original DOM element and class methods
-*/
 (function(pk) {
     pk.checkbox = function(opt) {
         var el = opt.element,

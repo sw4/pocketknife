@@ -1,4 +1,24 @@
 var pk = pk || {};
+/**
+Create a new select control
+@class pk.select
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to control
+@param options.options {Object} Object array of control options
+@param options.options.value {String} Option value
+@param options.options.name {String} Option name (displayed label)
+@param options.options.selected {Boolean} Option selected state
+@param [options.value=0] {String} Value of initially selected option, defaults to the attribute value set on the passed element, or `0`
+@param [options.name=pk-select-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-select-RandInt`
+@param [options.placeholder=Please select...] {String} Placeholder when no options selected, defaults to the attribute value set on the passed element, or `Please select...`
+@param [options.multiple=false] {Boolean} Whether to allow multiple options to be selected, defaults to the attribute value set on the passed element, or `false`
+@param [options.dropdown=false] {Boolean} Display options in dropdown list
+@param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
+@param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or `false`
+@returns Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@chainable
+*/
 (function(pk) {
     pk.select = function(opt) {
 
@@ -107,6 +127,9 @@ var pk = pk || {};
             });
         }
         updateValue();
+		return {
+			0:el
+		}
     };
     return pk;
 })(pk);

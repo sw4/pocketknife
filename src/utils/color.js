@@ -28,10 +28,11 @@ Utility class for converting color types and generating color schemes
         /**
         Convert an RGB array to a HEX color string
         @method rgb2hex
-        @param hex {Array} Array of red, clue and green components
+        @param rgb {Array} Array of red, clue and green components
         @return {String} Returns HEX color string
         */
         rgb2hex: function(rgb) {
+			rgb=pk.toArr(rgb);
             var hex = '',
                 h, i, c;
             for (i = 0; i < rgb.length; i += 1) {
@@ -49,6 +50,7 @@ Utility class for converting color types and generating color schemes
         @return {Array} Returns array of hue, saturation and value components
         */
         rgb2hsv: function(rgb) {
+			rgb=pk.toArr(rgb);
             var
                 r = rgb[0],
                 g = rgb[1],
@@ -86,11 +88,12 @@ Utility class for converting color types and generating color schemes
         },
         /**
         Convert an HSV array to a RGB array
-        @method rgb2hsv
+        @method hsv2rgb
         @param hsv {Array} Array of hue, saturation and value components
         @return {Array} Returns array of red, clue and green components
         */
         hsv2rgb: function(hsv) {
+			hsv=pk.toArr(hsv);
             var
                 r, g, b, i, f, p, q, t, h = hsv[0],
                 s = hsv[1],
@@ -155,6 +158,7 @@ Utility class for converting color types and generating color schemes
         @return {Array} Returns array of hue, saturation and lightness components
         */		
         rgb2hsl: function(rgb) {
+			rgb=pk.toArr(rgb);
             var r = rgb[0],
                 g = rgb[1],
                 b = rgb[2];
@@ -191,6 +195,7 @@ Utility class for converting color types and generating color schemes
         @return {Array} Returns array of red, green and blue components
         */				
         hsl2rgb: function(hsl) {
+			hsl=pk.toArr(hsl);
             var h = hsl[0],
                 s = hsl[1],
                 l = hsl[2],
@@ -243,7 +248,7 @@ Utility class for converting color types and generating color schemes
         @return {String} Returns HEX color string
         */
         hsl2hex: function(hsl) {
-            return this.rgb2hex(this.hsl2rgb(hsl));
+            return this.rgb2hex(this.hsl2rgb(pk.toArr(hsl)));
         },
 		
         /**
@@ -253,7 +258,7 @@ Utility class for converting color types and generating color schemes
         @return {Array} Returns array of hue, saturation and lightness components
         */
         hsv2hsl: function(hsv) {
-            return this.rgb2hsl(this.hsv2rgb(hsv));
+            return this.rgb2hsl(this.hsv2rgb(pk.toArr(hsv)));
         },
 			
         /**
@@ -263,7 +268,7 @@ Utility class for converting color types and generating color schemes
         @return {Array} Returns array of hue, saturation and value components
         */
         hsl2hsv: function(hsl) {
-            return this.rgb2hsv(this.hsl2rgb(hsl));
+            return this.rgb2hsv(this.hsl2rgb(pk.toArr(hsl)));
         },			
 		
         /**
@@ -282,7 +287,7 @@ Utility class for converting color types and generating color schemes
         @return {String} Returns HEX color string
         */
         hsv2hex: function(hsv) {
-            return this.rgb2hex(this.hsv2rgb(hsv));
+            return this.rgb2hex(this.hsv2rgb(pk.toArr(hsv)));
         },
         /**
         Generate a series of randomized HEX color strings
@@ -321,8 +326,13 @@ Utility class for converting color types and generating color schemes
                     rotation = 180;
                     scope = 180;
                     break;
-            }
-            return this.algorithmic(hex, count, "hue", scope, rotation);
+            }			
+            return this.algorithmic({
+				hex:hex,
+				count:count,
+				scope:scope,
+				rotation:180
+			});
         },
         /**
         Generate triadic color palette
@@ -331,7 +341,7 @@ Utility class for converting color types and generating color schemes
         @return {Array} Returns array of HEX color strings
         */
         triadic: function(hex) {
-            return this.algorithmic(hex, 3, "hue", 360, 0);
+            return this.algorithmic({hex:hex});
         },
         /**
         Generate tetradic color palette
@@ -340,7 +350,10 @@ Utility class for converting color types and generating color schemes
         @return {Array} Returns array of HEX color strings
         */
         tetradic: function(hex) {
-            return this.algorithmic(hex, 4, "hue", 360, 0);
+            return this.algorithmic({
+				hex:hex,
+				count:4
+			});
         },
         /**
         Generate pentadic color palette
@@ -349,7 +362,10 @@ Utility class for converting color types and generating color schemes
         @return {Array} Returns array of HEX color strings
         */
         pentadic: function(hex) {
-            return this.algorithmic(hex, 5, "hue", 360, 0);
+            return this.algorithmic({
+				hex:hex,
+				count:5
+			});
         },
         degrees: function(degrees, offset) {
             degrees += offset;
@@ -363,20 +379,21 @@ Utility class for converting color types and generating color schemes
         /**
         Generate algorithmic color palette
         @method algorithmic
-        @param hex {String} HEX color string
-        @param [count=3] {Number} Number of colors to produce
-        @param [type=hue] {String} Component to calculate on, either `hue`, `saturation` or `value`
-        @param [scope=360] {Number} Number of degrees of rotation to consider
-        @param [rotation=0] {Number} Number of degrees of rotation to calculate from
+		@param options {Object} Algorithmic color transformation options
+        @param options.hex {String} HEX color string
+        @param [options.count=3] {Number} Number of colors to produce
+        @param [options.type=hue] {String} Component to calculate on, either `hue`, `saturation` or `value`
+        @param [options.scope=360] {Number} Number of degrees of rotation to consider
+        @param [options.rotation=0] {Number} Number of degrees of rotation to calculate from
         @return {Array} Returns array of HEX color strings
         */
         // pick a point on the wheel, the number of degrees either side to cover and the split
-        algorithmic: function(hex, count, type, scope, rotation) {
-            count = typeof count !== 'number' ? 3 : count;
-            type = typeof type !== 'string' ? 'hue' : type;
-            scope = typeof scope !== 'number' ? 360 : scope;
-            rotation = typeof rotation !== 'number' ? 0 : rotation;
-            var
+        algorithmic: function(opt) {
+            var count = opt.count && typeof opt.count !== 'number' ? 3 : opt.count;
+				type = opt.type && typeof opt.type !== 'string' ? 'hue' : opt.type;
+				scope = opt.scope && typeof opt.scope !== 'number' ? 360 : opt.scope;
+				rotation = opt.rotation && typeof opt.rotation !== 'number' ? 0 : opt.rotation
+				hex=opt.hex,
                 hsv = this.hex2hsv(hex),
                 h = hsv[0],
                 s = hsv[1],

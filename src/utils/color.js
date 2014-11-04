@@ -1,6 +1,10 @@
 var pk = pk || {};
 /**
-Utility class for converting color types and generating color schemes
+Utility class for converting color types and generating color schemes. 
+
+For color conversion methods, where the expected parameter is an array, the method can also be passed a comma separated value list from which an array will automatically be extrapolated.
+
+
 @class pk.color
 */
 
@@ -9,8 +13,8 @@ Utility class for converting color types and generating color schemes
 
         /**
         Convert a HEX color string to an RGB
-        @method hex2rgb
-        @param hex {String} HEX color string
+        @method hex2rgb 
+		@param hex {String} HEX color string 
         @return {Array} Returns array of red, clue and green components
         */
         hex2rgb: function(hex) {

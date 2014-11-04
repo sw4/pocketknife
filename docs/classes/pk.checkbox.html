@@ -14,7 +14,7 @@
 <body class="yui3-skin-sam">
 <div class="github-fork-ribbon-wrapper right">
     <div class="github-fork-ribbon">
-        <a href="https://github.com/sw4/pocketknife/" target="_new">Fork me on GitHub</a>
+        <a href="https://github.com/sw4/pocketknife/" target="_new"><i class='fa fa-github' style='margin-right:10px;'></i>Contribute!</a>
     </div>
 </div>
 <div id="doc">

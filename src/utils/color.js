@@ -20,7 +20,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
 
         @method hex2rgb 
 		@param hex {String} HEX color string 
-        @return {Array} Returns array of red, clue and green components
+        @return {Array} Returns array of red, blue and green components
         */
         hex2rgb: function(hex) {
             var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
@@ -41,7 +41,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
             // color = '#FF0000'
 
         @method rgb2hex
-        @param rgb {Array} Array of red, clue and green components
+        @param rgb {Array} Array of red, blue and green components
         @return {String} Returns HEX color string
         */
         rgb2hex: function(rgb) {
@@ -63,7 +63,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
             // color = [0,100,100]
 
         @method rgb2hsv
-        @param rgb {Array} Array of red, clue and green components
+        @param rgb {Array} Array of red, blue and green components
         @return {Array} Returns array of hue, saturation and value components
         */
         rgb2hsv: function(rgb) {
@@ -111,7 +111,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
 
         @method hsv2rgb
         @param hsv {Array} Array of hue, saturation and value components
-        @return {Array} Returns array of red, clue and green components
+        @return {Array} Returns array of red, blue and green components
         */
         hsv2rgb: function(hsv) {
 			hsv=pk.toArr(hsv);

@@ -2,7 +2,7 @@ var pk = pk || {};
 /**
 Class used for notification management
 @class pk.notify
-@constructor
+@static
 */
 
 /**

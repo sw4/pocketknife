@@ -532,7 +532,7 @@
             "file": "src/notify/notify.js",
             "line": 2,
             "description": "Class used for notification management",
-            "is_constructor": 1
+            "static": 1
         },
         "pk.rating": {
             "name": "pk.rating",

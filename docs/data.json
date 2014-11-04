@@ -927,7 +927,7 @@
             "namespace": "",
             "file": "src/utils/color.js",
             "line": 2,
-            "description": "Utility class for converting color types and generating color schemes"
+            "description": "Utility class for converting color types and generating color schemes. \n\n<div class='info-well'>\nFor color conversion methods, where the expected parameter is an array e.g `[0,0,0]`, the method can also be passed a comma separated value string, e.g. `'0,0,0'`, from which an array will automatically be extrapolated.\n</div>"
         }
     },
     "classitems": [
@@ -1872,8 +1872,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 10,
-            "description": "Convert a HEX color string to an RGB",
+            "line": 15,
+            "description": "Convert a HEX color string to an RGB\n\n    var color=pk.color.hex2rgb('#FF0000');\n    // color = [255,0,0]",
             "itemtype": "method",
             "name": "hex2rgb",
             "params": [
@@ -1892,13 +1892,13 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 28,
-            "description": "Convert an RGB array to a HEX color string",
+            "line": 37,
+            "description": "Convert an RGB array to a HEX color string\n\n    var color=pk.color.rgb2hex([255,0,0]);\n    // color = '#FF0000'",
             "itemtype": "method",
             "name": "rgb2hex",
             "params": [
                 {
-                    "name": "hex",
+                    "name": "rgb",
                     "description": "Array of red, clue and green components",
                     "type": "Array"
                 }
@@ -1912,8 +1912,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 45,
-            "description": "Convert an RGB array to a HSV array",
+            "line": 59,
+            "description": "Convert an RGB array to a HSV array\n\n    var color=pk.color.rgb2hsv([255,0,0]);\n    // color = [0,100,100]",
             "itemtype": "method",
             "name": "rgb2hsv",
             "params": [
@@ -1932,10 +1932,10 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 87,
-            "description": "Convert an HSV array to a RGB array",
+            "line": 106,
+            "description": "Convert an HSV array to a RGB array\n\n    var color=pk.color.hsv2rgb([0,100,100]);\n    // color = [255,0,0]",
             "itemtype": "method",
-            "name": "rgb2hsv",
+            "name": "hsv2rgb",
             "params": [
                 {
                     "name": "hsv",
@@ -1952,8 +1952,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 151,
-            "description": "Convert an RGB array to a HSL array",
+            "line": 175,
+            "description": "Convert an RGB array to a HSL array\n\n    var color=pk.color.rgb2hsl([255,0,0]);\n    // color = [0,100,50]",
             "itemtype": "method",
             "name": "rgb2hsl",
             "params": [
@@ -1972,8 +1972,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 187,
-            "description": "Convert an HSL array to a RGB array",
+            "line": 216,
+            "description": "Convert an HSL array to a RGB array\n\n    var color=pk.color.hsl2rgb([0,100,50]);\n    // color = [255,0,0]",
             "itemtype": "method",
             "name": "hsl2rgb",
             "params": [
@@ -1992,8 +1992,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 230,
-            "description": "Convert a HEX color string to a HSL array",
+            "line": 264,
+            "description": "Convert a HEX color string to a HSL array\n\n    var color=pk.color.hex2hsl('#FF0000');\n    // color = [0,100,50]",
             "itemtype": "method",
             "name": "hex2hsl",
             "params": [
@@ -2012,8 +2012,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 239,
-            "description": "Convert an HSL array to a HEX color string",
+            "line": 277,
+            "description": "Convert an HSL array to a HEX color string\n\n    var color=pk.color.hsl2hex([0,100,50]);\n    // color = '#FF0000'",
             "itemtype": "method",
             "name": "hsl2hex",
             "params": [
@@ -2032,8 +2032,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 249,
-            "description": "Convert an HSV array to HSL array",
+            "line": 291,
+            "description": "Convert an HSV array to HSL array\n\n    var color=pk.color.hsv2hsl([0,100,100]);\n    // color = [0,100,50]",
             "itemtype": "method",
             "name": "hsv2hsl",
             "params": [
@@ -2052,8 +2052,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 259,
-            "description": "Convert an HSL array to HSV array",
+            "line": 305,
+            "description": "Convert an HSL array to HSV array\n\n    var color=pk.color.hsl2hsv([0,100,50]);\n    // color = [0,100,100]",
             "itemtype": "method",
             "name": "hsl2hsv",
             "params": [
@@ -2072,8 +2072,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 269,
-            "description": "Convert a HEX color string to a HSV array",
+            "line": 319,
+            "description": "Convert a HEX color string to a HSV array\n\n    var color=pk.color.hex2hsv('#FF0000');\n    // color = [0,100,100]",
             "itemtype": "method",
             "name": "hex2hsv",
             "params": [
@@ -2092,8 +2092,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 278,
-            "description": "Convert an HSV array to a HEX color string",
+            "line": 332,
+            "description": "Convert an HSV array to a HEX color string\n\n    var color=pk.color.hsv2hex([0,100,100]);\n    // color = '#FF0000'",
             "itemtype": "method",
             "name": "hsv2hex",
             "params": [
@@ -2112,8 +2112,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 287,
-            "description": "Generate a series of randomized HEX color strings",
+            "line": 345,
+            "description": "Generate a series of randomized HEX color strings\n\n    var color=pk.color.rgb2hex([0,100,100]);\n    // color = [255,0,0]",
             "itemtype": "method",
             "name": "random",
             "params": [
@@ -2132,7 +2132,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 302,
+            "line": 364,
             "description": "Generate (palette of) complementary color(s) from passed HEX color string",
             "itemtype": "method",
             "name": "complement",
@@ -2158,7 +2158,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 327,
+            "line": 394,
             "description": "Generate triadic color palette",
             "itemtype": "method",
             "name": "triadic",
@@ -2178,7 +2178,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 336,
+            "line": 403,
             "description": "Generate tetradic color palette",
             "itemtype": "method",
             "name": "tetradic",
@@ -2198,7 +2198,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 345,
+            "line": 415,
             "description": "Generate pentadic color palette",
             "itemtype": "method",
             "name": "pentadic",
@@ -2218,43 +2218,50 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 363,
+            "line": 436,
             "description": "Generate algorithmic color palette",
             "itemtype": "method",
             "name": "algorithmic",
             "params": [
                 {
-                    "name": "hex",
-                    "description": "HEX color string",
-                    "type": "String"
-                },
-                {
-                    "name": "count",
-                    "description": "Number of colors to produce",
-                    "type": "Number",
-                    "optional": true,
-                    "optdefault": "3"
-                },
-                {
-                    "name": "type",
-                    "description": "Component to calculate on, either `hue`, `saturation` or `value`",
-                    "type": "String",
-                    "optional": true,
-                    "optdefault": "hue"
-                },
-                {
-                    "name": "scope",
-                    "description": "Number of degrees of rotation to consider",
-                    "type": "Number",
-                    "optional": true,
-                    "optdefault": "360"
-                },
-                {
-                    "name": "rotation",
-                    "description": "Number of degrees of rotation to calculate from",
-                    "type": "Number",
-                    "optional": true,
-                    "optdefault": "0"
+                    "name": "options",
+                    "description": "Algorithmic color transformation options",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "hex",
+                            "description": "HEX color string",
+                            "type": "String"
+                        },
+                        {
+                            "name": "count",
+                            "description": "Number of colors to produce",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "3"
+                        },
+                        {
+                            "name": "type",
+                            "description": "Component to calculate on, either `hue`, `saturation` or `value`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "hue"
+                        },
+                        {
+                            "name": "scope",
+                            "description": "Number of degrees of rotation to consider",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "360"
+                        },
+                        {
+                            "name": "rotation",
+                            "description": "Number of degrees of rotation to calculate from",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        }
+                    ]
                 }
             ],
             "return": {

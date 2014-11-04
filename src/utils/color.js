@@ -2,8 +2,9 @@ var pk = pk || {};
 /**
 Utility class for converting color types and generating color schemes. 
 
-For color conversion methods, where the expected parameter is an array, the method can also be passed a comma separated value list from which an array will automatically be extrapolated.
-
+<div class='info-well'>
+For color conversion methods, where the expected parameter is an array e.g `[0,0,0]`, the method can also be passed a comma separated value string, e.g. `'0,0,0'`, from which an array will automatically be extrapolated.
+</div>
 
 @class pk.color
 */
@@ -13,6 +14,10 @@ For color conversion methods, where the expected parameter is an array, the meth
 
         /**
         Convert a HEX color string to an RGB
+
+            var color=pk.color.hex2rgb('#FF0000');
+            // color = [255,0,0]
+
         @method hex2rgb 
 		@param hex {String} HEX color string 
         @return {Array} Returns array of red, clue and green components
@@ -31,6 +36,10 @@ For color conversion methods, where the expected parameter is an array, the meth
         },
         /**
         Convert an RGB array to a HEX color string
+
+            var color=pk.color.rgb2hex([255,0,0]);
+            // color = '#FF0000'
+
         @method rgb2hex
         @param rgb {Array} Array of red, clue and green components
         @return {String} Returns HEX color string
@@ -49,6 +58,10 @@ For color conversion methods, where the expected parameter is an array, the meth
         },
         /**
         Convert an RGB array to a HSV array
+
+            var color=pk.color.rgb2hsv([255,0,0]);
+            // color = [0,100,100]
+
         @method rgb2hsv
         @param rgb {Array} Array of red, clue and green components
         @return {Array} Returns array of hue, saturation and value components
@@ -92,6 +105,10 @@ For color conversion methods, where the expected parameter is an array, the meth
         },
         /**
         Convert an HSV array to a RGB array
+
+            var color=pk.color.hsv2rgb([0,100,100]);
+            // color = [255,0,0]
+
         @method hsv2rgb
         @param hsv {Array} Array of hue, saturation and value components
         @return {Array} Returns array of red, clue and green components
@@ -157,6 +174,10 @@ For color conversion methods, where the expected parameter is an array, the meth
         },
         /**
         Convert an RGB array to a HSL array
+
+            var color=pk.color.rgb2hsl([255,0,0]);
+            // color = [0,100,50]
+
         @method rgb2hsl
         @param RGB {Array} Array of red, green and blue components
         @return {Array} Returns array of hue, saturation and lightness components
@@ -194,6 +215,10 @@ For color conversion methods, where the expected parameter is an array, the meth
         },
         /**
         Convert an HSL array to a RGB array
+
+            var color=pk.color.hsl2rgb([0,100,50]);
+            // color = [255,0,0]
+
         @method hsl2rgb
         @param HSL {Array} Array of hue, saturation and lightness components
         @return {Array} Returns array of red, green and blue components
@@ -238,6 +263,10 @@ For color conversion methods, where the expected parameter is an array, the meth
         },
         /**
         Convert a HEX color string to a HSL array
+
+            var color=pk.color.hex2hsl('#FF0000');
+            // color = [0,100,50]
+
         @method hex2hsl
         @param hex {String} HEX color string
         @return {Array} Returns array of hue, saturation and lightness components
@@ -247,6 +276,10 @@ For color conversion methods, where the expected parameter is an array, the meth
         },
         /**
         Convert an HSL array to a HEX color string
+
+            var color=pk.color.hsl2hex([0,100,50]);
+            // color = '#FF0000'
+
         @method hsl2hex
         @param hsl {Array} Array of hue, saturation and lightness components
         @return {String} Returns HEX color string
@@ -257,6 +290,10 @@ For color conversion methods, where the expected parameter is an array, the meth
 		
         /**
         Convert an HSV array to HSL array
+
+            var color=pk.color.hsv2hsl([0,100,100]);
+            // color = [0,100,50]
+
         @method hsv2hsl
         @param hsv {Array} Array of hue, saturation and value components
         @return {Array} Returns array of hue, saturation and lightness components
@@ -267,6 +304,10 @@ For color conversion methods, where the expected parameter is an array, the meth
 			
         /**
         Convert an HSL array to HSV array
+
+            var color=pk.color.hsl2hsv([0,100,50]);
+            // color = [0,100,100]
+
         @method hsl2hsv
         @param hsl {Array} Array of hue, saturation and lightness components
         @return {Array} Returns array of hue, saturation and value components
@@ -277,6 +318,10 @@ For color conversion methods, where the expected parameter is an array, the meth
 		
         /**
         Convert a HEX color string to a HSV array
+
+            var color=pk.color.hex2hsv('#FF0000');
+            // color = [0,100,100]
+
         @method hex2hsv
         @param hex {String} HEX color string
         @return {Array} Returns array of hue, saturation and value components
@@ -286,6 +331,10 @@ For color conversion methods, where the expected parameter is an array, the meth
         },
         /**
         Convert an HSV array to a HEX color string
+
+            var color=pk.color.hsv2hex([0,100,100]);
+            // color = '#FF0000'
+
         @method hsv2hex
         @param hsv {Array} Array of hue, saturation and value components
         @return {String} Returns HEX color string
@@ -295,6 +344,10 @@ For color conversion methods, where the expected parameter is an array, the meth
         },
         /**
         Generate a series of randomized HEX color strings
+
+            var color=pk.color.rgb2hex([0,100,100]);
+            // color = [255,0,0]
+
         @method random
         @param count {Number} Number of random colors to generate
         @return {Array} Returns Array of HEX color strings

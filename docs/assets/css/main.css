@@ -1,4 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900);
 /*
 Font sizes for all selectors other than the body are given in percentages,
 with 100% equal to 13px. To calculate a font size percentage, multiply the
@@ -8,7 +7,7 @@ Here's a quick lookup table:
 
 10px - 76.923%
 11px - 84.615%
-12px - 92.308% 
+12px - 92.308%
 13px - 100%
 14px - 107.692%
 15px - 115.385%
@@ -782,77 +781,3 @@ kbd .cmd { font-family: Monaco, Helvetica; }
     font-weight: bold;
 }
 
-body{
-	font-size:13px;
-	line-height:1.5em;
-	color:rgb(86, 96, 118);
-}
-body,h1, h2, h3, h4, h5, h6{
-	font-family:'Raleway';	
-}
-h1, h2, h3, h4, h5, h6{
-	font-weight:400;
-	color: #000;
-}
-.api-list-item.class{
-	padding:2px 0;
-}
-.api-list-item a:hover,
-.api-list-item a:focus,
-.apis a:hover,
-.apis a:focus{
-	font-weight:normal;
-}
-input[type=checkbox]{
-	margin: 0;
-	vertical-align: text-top;
-}
-
-:focus, :active{
-	outline:none;	
-}
-::-webkit-input-placeholder { /* WebKit browsers */
-	color: #d6d6d6;
-	font-style: italic;
-}
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-	color: #d6d6d6;
-	font-style: italic;
-}
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-	color: #d6d6d6;
-	font-style: italic;
-}
-:-ms-input-placeholder { /* Internet Explorer 10+ */
-	color: #d6d6d6;
-	font-style: italic;
-} 
-#hd{
-	display:none;
-}
-code.param-name:not(.optional) + .type:after{
-	display:inline;
-	content:'required';
-	background: #60a5ff;
-	border-radius: 3px;
-	color: #fff;
-	font-size: 11px;
-	margin: 0 0.5em;
-	padding: 2px 4px 1px;
-}
-#api-list > h2{
-	position:relative;
-	width:0;
-	color:#fff;
-	margin: 10px 0 20px;
-}
-#api-list > h2:after{
-	display:block;
-	width:100%;
-	position:absolute;
-	left:0;
-	top:0;
-	color:#000;
-	white-space:nowrap;
-	content:'pocketknife docs';
-}

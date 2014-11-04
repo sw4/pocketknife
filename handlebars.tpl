@@ -6,15 +6,16 @@
     <link rel="stylesheet" href="{{yuiGridsUrl}}">
     <link rel="stylesheet" href="{{projectAssets}}/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="{{projectAssets}}/css/main.css" id="site_styles">
-	<link rel="stylesheet" href="{{projectAssets}}/css/custom.css" id="site_custom">
+    <link rel="stylesheet" href="{{projectAssets}}/css/custom.css" id="site_custom">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="{{projectAssets}}/favicon.png">
     <script src="{{yuiSeedUrl}}"></script>
 </head>
 <body class="yui3-skin-sam">
 <div class="github-fork-ribbon-wrapper right">
-	<div class="github-fork-ribbon">
-		<a href="https://github.com/sw4/pocketknife/" target="_new">Fork me on GitHub</a>
-	</div>
+    <div class="github-fork-ribbon">
+        <a href="https://github.com/sw4/pocketknife/" target="_new">Fork me on GitHub</a>
+    </div>
 </div>
 <div id="doc">
     <div id="hd" class="yui3-g header">

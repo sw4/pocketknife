@@ -1,6 +1,38 @@
 var pk = pk || {};
 /**
-Create a new accordian component
+Create a new accordian component from an unordered list element `<ul>` with the below structure:
+
+HTML:
+
+	<ul id='accordian'>
+        <li>
+            <h3 class='pk-content-header'>Content header</h3>
+            <div class='pk-content'>
+				Content to collapse
+			</div>
+        </li>
+        <li>
+            <h3 class='pk-content-header'>Content header</h3>
+            <div class='pk-content'>
+				Content to collapse
+			</div>
+        </li>
+        <li>
+            <h3 class='pk-content-header'>Content header</h3>
+            <div class='pk-content'>
+				Content to collapse
+			</div>
+        </li>		
+    </ul>
+
+Javascript:
+
+	pk.accordian({
+		element: document.getElementById('accordian'),
+		animate: true,
+		multiple: true
+	});		
+		
 @class pk.accordian
 @constructor
 @param options {Object}
@@ -17,6 +49,8 @@ Create a new accordian component
             anim = opt.animate === false ? false : opt.animate || true,
             multiple = opt.multiple === false ? false : opt.multiple || true;
 
+		pk.addClass(el, 'pk-accordian');
+		
         function animHeight(tEl) {
             tEl.style.height = 'auto';
             var h = pk.layout(tEl).height;

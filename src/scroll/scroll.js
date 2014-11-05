@@ -1,6 +1,20 @@
 var pk = pk || {};
 /**
 Attach custom scrollbars to an element
+
+HTML:
+
+	<div id='scroll'>
+		...long content....
+    </div>
+	
+Javascript:
+
+	pk.scroll({
+		element: document.getElementById('scroll'),
+		axis: 'xy'
+	});
+	
 @class pk.scroll
 @constructor
 @param options {Object}

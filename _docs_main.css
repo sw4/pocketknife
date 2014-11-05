@@ -85,7 +85,7 @@ code.param-name:not(.optional) + .type:after{
   position: relative;
   margin-bottom: 10px;
 }
-.info-well code{
+.intro code{
 	background: #FCFBFA;
 	border: 1px solid #EFEEED;
 	padding: 0 3px;

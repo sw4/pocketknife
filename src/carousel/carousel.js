@@ -1,6 +1,22 @@
 var pk = pk || {};
 /**
-Create a new carousel component
+Create a new carousel component from an unordered list element `<ul>`
+
+HTML:
+
+    <ul id='carousel'>
+        <li>Slide 1</li>
+        <li>Slide 2</li>
+        <li>Slide 3</li>
+    </ul>
+
+Javascript:
+	
+	pk.carousel({
+		element: document.getElementById('carousel'),
+		delay:5000
+	});
+
 @class pk.carousel
 @constructor
 @param options {Object}

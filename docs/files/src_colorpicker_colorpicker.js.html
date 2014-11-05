@@ -123,6 +123,23 @@
 var pk = pk || {};
 /**
 Create a new colorpicker control
+
+HTML
+
+	&lt;div id=&#x27;colorpicker&#x27;&gt;&lt;/div&gt;
+
+Javascript:
+
+	pk.colorpicker({
+		element: document.getElementById(&#x27;colorpicker&#x27;),
+		value:&#x27;#FF0000&#x27;,
+		listeners:{
+			change:function(oldCol,newCol){
+				// do something
+			}
+		}
+	});
+	
 @class pk.colorpicker
 @constructor
 @param options {Object}

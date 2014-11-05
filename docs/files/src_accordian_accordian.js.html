@@ -122,7 +122,39 @@
     <pre class="code prettyprint linenums">
 var pk = pk || {};
 /**
-Create a new accordian component
+Create a new accordian component from an unordered list element &#x60;&lt;ul&gt;&#x60; with the below structure:
+
+HTML:
+
+	&lt;ul id=&#x27;accordian&#x27;&gt;
+        &lt;li&gt;
+            &lt;h3 class=&#x27;pk-content-header&#x27;&gt;Content header&lt;/h3&gt;
+            &lt;div class=&#x27;pk-content&#x27;&gt;
+				Content to collapse
+			&lt;/div&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;h3 class=&#x27;pk-content-header&#x27;&gt;Content header&lt;/h3&gt;
+            &lt;div class=&#x27;pk-content&#x27;&gt;
+				Content to collapse
+			&lt;/div&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;h3 class=&#x27;pk-content-header&#x27;&gt;Content header&lt;/h3&gt;
+            &lt;div class=&#x27;pk-content&#x27;&gt;
+				Content to collapse
+			&lt;/div&gt;
+        &lt;/li&gt;		
+    &lt;/ul&gt;
+
+Javascript:
+
+	pk.accordian({
+		element: document.getElementById(&#x27;accordian&#x27;),
+		animate: true,
+		multiple: true
+	});		
+		
 @class pk.accordian
 @constructor
 @param options {Object}
@@ -139,6 +171,8 @@ Create a new accordian component
             anim = opt.animate === false ? false : opt.animate || true,
             multiple = opt.multiple === false ? false : opt.multiple || true;
 
+		pk.addClass(el, &#x27;pk-accordian&#x27;);
+		
         function animHeight(tEl) {
             tEl.style.height = &#x27;auto&#x27;;
             var h = pk.layout(tEl).height;

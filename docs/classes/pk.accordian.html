@@ -140,7 +140,34 @@
 
 
 <div class="box intro">
-    <p>Create a new accordian component</p>
+    <p>Create a new accordian component from an unordered list element <code>&lt;ul&gt;</code> with the below structure:</p>
+<p>HTML:</p>
+<pre class="code prettyprint"><code>&lt;ul id=&#39;accordian&#39;&gt;
+    &lt;li&gt;
+        &lt;h3 class=&#39;pk-content-header&#39;&gt;Content header&lt;/h3&gt;
+        &lt;div class=&#39;pk-content&#39;&gt;
+            Content to collapse
+        &lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3 class=&#39;pk-content-header&#39;&gt;Content header&lt;/h3&gt;
+        &lt;div class=&#39;pk-content&#39;&gt;
+            Content to collapse
+        &lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;h3 class=&#39;pk-content-header&#39;&gt;Content header&lt;/h3&gt;
+        &lt;div class=&#39;pk-content&#39;&gt;
+            Content to collapse
+        &lt;/div&gt;
+    &lt;/li&gt;        
+&lt;/ul&gt;</code></pre>
+<p>Javascript:</p>
+<pre class="code prettyprint"><code>pk.accordian({
+    element: document.getElementById(&#39;accordian&#39;),
+    animate: true,
+    multiple: true
+});</code></pre>
 
 </div>
 

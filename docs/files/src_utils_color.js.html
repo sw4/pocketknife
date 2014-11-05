@@ -145,8 +145,11 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
         @return {Array} Returns array of red, blue and green components
         */
         hex2rgb: function(hex) {
+		
             var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
                 result, r, g, b;
+				
+			
             hex = hex.replace(shorthandRegex, function(r, g, b) {
                 return r + r + g + g + b + b;
             });
@@ -188,7 +191,7 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
         @param rgb {Array} Array of red, blue and green components
         @return {Array} Returns array of hue, saturation and value components
         */
-        rgb2hsv: function(rgb) {
+        rgb2hsv: function(rgb) {		
 			rgb=pk.toArr(rgb);
             var
                 r = rgb[0],
@@ -198,7 +201,6 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
                 max = Math.max(r, g, b),
                 delta = max - min,
                 h, s, v = max;
-
             v = Math.floor(max / 255 * 100);
 
             if (max !== 0) {
@@ -206,18 +208,16 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
             } else {
                 return [0, 0, 0];
             }
-
             if (delta === 0) {
                 h = 0;
-            } else {
-                if (r === max) {
-                    h = delta(g - b) / delta;
-                } else if (g === max) {
-                    h = 2 + (b - r) / delta;
-
-                } else {
-                    h = 4 + (r - g) / delta;
-                }
+            } else {			
+				if (r === max) {
+					h = (g - b) / delta;
+				} else if (g === max) {
+					h = 2 + (b - r) / delta;
+				} else {
+					h = 4 + (r - g) / delta;
+				}
             }
             h = Math.floor(h * 60);
             if (h &lt; 0) {
@@ -467,8 +467,8 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
         /**
         Generate a series of randomized HEX color strings
 
-            var color=pk.color.rgb2hex([0,100,100]);
-            // color = [255,0,0]
+            var palette=pk.color.random(5);
+            // palette = [&quot;#efa6a8&quot;, &quot;#91abb&quot;, &quot;#ebac2c&quot;, &quot;#2b561&quot;, &quot;#7b4b51&quot;]
 
         @method random
         @param count {Number} Number of random colors to generate
@@ -485,9 +485,16 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
         },
         /**
         Generate (palette of) complementary color(s) from passed HEX color string
+		
+            var palette=pk.color.complement(&#x27;#FF0000&#x27;, &#x27;split&#x27;);
+            // palette = [&quot;#80ff00&quot;, &quot;#00ffff&quot;, &quot;#8000ff&quot;]
+			
+            var palette=pk.color.complement(&#x27;#FF0000&#x27;, &#x27;double&#x27;);
+            // palette = [&quot;#80ff00&quot;, &quot;#00ff40&quot;, &quot;#00ffff&quot;, &quot;#0040ff&quot;, &quot;#8000ff&quot;] 			
+		
         @method complement
         @param hex {String} HEX color string
-        @param [type] {String} Type of complementary palette to create, either &#x60;split&#x60; or &#x60;double&#x60;
+        @param [type] {String} Type of complementary palette to create, defaults to single complementary color, can be &#x60;split&#x60; or &#x60;double&#x60;
         @return {Array} Returns array of HEX color strings
         */
         complement: function(hex, type) {
@@ -515,6 +522,11 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
         },
         /**
         Generate triadic color palette
+		
+            var palette=pk.color.triadic(&#x27;#FF0000&#x27;);
+            // palette = [&quot;#ff0000&quot;, &quot;#00ff00&quot;, &quot;#0000ff&quot;] 
+				
+		
         @method triadic
         @param hex {String} HEX color string
         @return {Array} Returns array of HEX color strings
@@ -524,6 +536,10 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
         },
         /**
         Generate tetradic color palette
+		
+            var palette=pk.color.triadic(&#x27;#FF0000&#x27;);
+            // palette = [&quot;#ff0000&quot;, &quot;#80ff00&quot;, &quot;#00ffff&quot;, &quot;#8000ff&quot;] 
+			
         @method tetradic
         @param hex {String} HEX color string
         @return {Array} Returns array of HEX color strings
@@ -536,6 +552,10 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
         },
         /**
         Generate pentadic color palette
+		
+            var palette=pk.color.triadic(&#x27;#FF0000&#x27;);
+            // palette = [&quot;#ff0000&quot;, &quot;#ccff00&quot;, &quot;#00ff66&quot;, &quot;#0066ff&quot;, &quot;#cc00ff&quot;] 
+			
         @method pentadic
         @param hex {String} HEX color string
         @return {Array} Returns array of HEX color strings
@@ -557,6 +577,19 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
         },
         /**
         Generate algorithmic color palette
+		
+            var palette=pk.color.algorithmic ({hex:&#x27;#FF0000&#x27;});
+            // palette = [&quot;#ff0000&quot;, &quot;#00ff00&quot;, &quot;#0000ff&quot;] 		
+		
+            var palette=pk.color.algorithmic ({hex:&#x27;#FF0000&#x27;, count: 5});
+            // palette = [&quot;#ff0000&quot;, &quot;#ccff00&quot;, &quot;#00ff66&quot;, &quot;#0066ff&quot;, &quot;#cc00ff&quot;]  			
+		
+            var palette=pk.color.algorithmic ({hex:&#x27;#FF0000&#x27;, scope: 100, count:4});
+            // palette = [&quot;#ff00d4&quot;, &quot;#ff0047&quot;, &quot;#ff4700&quot;, &quot;#ffd500&quot;]
+
+            var palette=pk.color.algorithmic ({hex:&#x27;#FF0000&#x27;, type:&#x27;saturation&#x27;, scope:50});
+            // palette = [&quot;#ffffff&quot;, &quot;#ffbfbf&quot;, &quot;#ff8080&quot;]
+			
         @method algorithmic
 		@param options {Object} Algorithmic color transformation options
         @param options.hex {String} HEX color string
@@ -568,11 +601,12 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
         */
         // pick a point on the wheel, the number of degrees either side to cover and the split
         algorithmic: function(opt) {
-            var count = opt.count &amp;&amp; typeof opt.count !== &#x27;number&#x27; ? 3 : opt.count;
-				type = opt.type &amp;&amp; typeof opt.type !== &#x27;string&#x27; ? &#x27;hue&#x27; : opt.type;
-				scope = opt.scope &amp;&amp; typeof opt.scope !== &#x27;number&#x27; ? 360 : opt.scope;
-				rotation = opt.rotation &amp;&amp; typeof opt.rotation !== &#x27;number&#x27; ? 0 : opt.rotation
-				hex=opt.hex,
+			if(!opt.hex){return;}
+			var hex=opt.hex,
+				count = opt.count &amp;&amp; typeof parseInt(opt.count,0) === &#x27;number&#x27; ? parseInt(opt.count,0) : 3,
+				type = opt.type &amp;&amp; typeof opt.type === &#x27;string&#x27; ? opt.type : &#x27;hue&#x27;,
+				scope = opt.scope &amp;&amp; typeof parseInt(opt.scope,0) === &#x27;number&#x27; ? parseInt(opt.scope,0) : 360,
+				rotation = opt.rotation &amp;&amp; typeof parseInt(opt.rotation,0) === &#x27;number&#x27; ? parseInt(opt.rotation,0) : 0,
                 hsv = this.hex2hsv(hex),
                 h = hsv[0],
                 s = hsv[1],
@@ -600,7 +634,7 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
                         break;
                 }
             }
-            return palette;
+            return palette; 
         }
     };
     return pk;

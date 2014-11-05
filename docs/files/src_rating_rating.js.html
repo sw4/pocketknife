@@ -123,6 +123,18 @@
 var pk = pk || {};
 /**
 Create a new rating control
+
+HTML:
+
+	&lt;input id=&#x27;rating&#x27; /&gt;
+	
+Javascript:
+
+	pk.rating({
+		element: document.getElementById(&#x27;rating&#x27;),
+		value: 3
+	});
+
 @class pk.rating
 @constructor
 @param options {Object}

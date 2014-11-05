@@ -123,6 +123,21 @@
 var pk = pk || {};
 /**
 Create a new slider control
+
+HTML:
+
+	&lt;input id=&#x27;slider&#x27; /&gt;
+	
+Javascript:
+
+	pk.slider({
+		element: document.getElementById(&#x27;slider&#x27;),
+		units: &#x27;mm&#x27;,
+		min: 30,
+		max: 980,
+		value: 133
+	});
+	
 @class pk.slider
 @constructor
 @param options {Object}

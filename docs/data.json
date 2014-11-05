@@ -174,7 +174,7 @@
             "module": "pocketknife",
             "file": "src/accordian/accordian.js",
             "line": 2,
-            "description": "Create a new accordian component",
+            "description": "Create a new accordian component from an unordered list element `<ul>` with the below structure:\n\nHTML:\n\n\t<ul id='accordian'>\n        <li>\n            <h3 class='pk-content-header'>Content header</h3>\n            <div class='pk-content'>\n\t\t\t\tContent to collapse\n\t\t\t</div>\n        </li>\n        <li>\n            <h3 class='pk-content-header'>Content header</h3>\n            <div class='pk-content'>\n\t\t\t\tContent to collapse\n\t\t\t</div>\n        </li>\n        <li>\n            <h3 class='pk-content-header'>Content header</h3>\n            <div class='pk-content'>\n\t\t\t\tContent to collapse\n\t\t\t</div>\n        </li>\t\t\n    </ul>\n\nJavascript:\n\n\tpk.accordian({\n\t\telement: document.getElementById('accordian'),\n\t\tanimate: true,\n\t\tmultiple: true\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -221,7 +221,7 @@
             "module": "pocketknife",
             "file": "src/carousel/carousel.js",
             "line": 2,
-            "description": "Create a new carousel component",
+            "description": "Create a new carousel component from an unordered list element `<ul>`\n\nHTML:\n\n    <ul id='carousel'>\n        <li>Slide 1</li>\n        <li>Slide 2</li>\n        <li>Slide 3</li>\n    </ul>\n\nJavascript:\n\t\n\tpk.carousel({\n\t\telement: document.getElementById('carousel'),\n\t\tdelay:5000\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -275,7 +275,7 @@
             "module": "pocketknife",
             "file": "src/checkbox/checkbox.js",
             "line": 3,
-            "description": "Create a new checkbox control",
+            "description": "Create a new checkbox control\n\nHTML:\n\n\t<input type='checkbox' id='checkbox' />\n\nJavascript:\n\t\n\tpk.checkbox({\n\t\telement: document.getElementById('checkbox'),\n\t\tlabel: 'Checked',\n\t\tvalue: true\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -349,7 +349,7 @@
             "module": "pocketknife",
             "file": "src/colorpicker/colorpicker.js",
             "line": 2,
-            "description": "Create a new colorpicker control",
+            "description": "Create a new colorpicker control\n\nHTML\n\n\t<div id='colorpicker'></div>\n\nJavascript:\n\n\tpk.colorpicker({\n\t\telement: document.getElementById('colorpicker'),\n\t\tvalue:'#FF0000',\n\t\tlisteners:{\n\t\t\tchange:function(oldCol,newCol){\n\t\t\t\t// do something\n\t\t\t}\n\t\t}\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -410,7 +410,7 @@
             "namespace": "",
             "file": "src/drag/drag.js",
             "line": 2,
-            "description": "Utility class for creating draggable elements",
+            "description": "Utility class for creating draggable elements\n\nHTML:\n\n\t<div id='draggable'></div>\n\nJavascript:\n\t\n\tpk.drag({\n\t\telement: document.getElementById('draggable'),\n\t\tmove: true,\n\t\tcontainer:{\n\t\t\telement:document.body,\n\t\t\tstyle:'restrict'\n\t\t},\n\t\tlisteners: {\n\t\t\tdragstart: function() {\n\t\t\t\t// started dragging\n\t\t\t},\n\t\t\tdragging: function() {\n\t\t\t\t// dragging\n\t\t\t},\n\t\t\tdragend: function() {\n\t\t\t\t// stopped dragging\n\t\t\t}\n\t\t}\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -479,7 +479,7 @@
             "namespace": "",
             "file": "src/modal/modal.js",
             "line": 3,
-            "description": "Create a new modal component",
+            "description": "Create a new modal component\n\nHTML:\n\n\t<button onclick=\"showModal();\">Show Modal</button>\n\nJavascript: \n\n\tfunction showModal(){\n\t\tpk.modal({\n\t\t\theader:'Modal header',\n\t\t\tcontent:'Modal content', \n\t\t\tdraggable:true\n\t\t});\n\t}",
             "is_constructor": 1,
             "params": [
                 {
@@ -531,7 +531,7 @@
             "namespace": "",
             "file": "src/notify/notify.js",
             "line": 2,
-            "description": "Class used for notification management",
+            "description": "Class used for notification management\n\nHTML\n\n    <button onclick=\"showNotification();\">Show Notification</button>\n\nJavascript:\n\n\tfunction showNotification(){\n\t\tpk.notify.push({\n\t\t\tcontent:'Default message'\n\t\t});\n\t}",
             "static": 1
         },
         "pk.rating": {
@@ -546,7 +546,7 @@
             "namespace": "",
             "file": "src/rating/rating.js",
             "line": 2,
-            "description": "Create a new rating control",
+            "description": "Create a new rating control\n\nHTML:\n\n\t<input id='rating' />\n\t\nJavascript:\n\n\tpk.rating({\n\t\telement: document.getElementById('rating'),\n\t\tvalue: 3\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -614,7 +614,7 @@
             "namespace": "",
             "file": "src/scroll/scroll.js",
             "line": 2,
-            "description": "Attach custom scrollbars to an element",
+            "description": "Attach custom scrollbars to an element\n\nHTML:\n\n\t<div id='scroll'>\n\t\t...long content....\n    </div>\n\t\nJavascript:\n\n\tpk.scroll({\n\t\telement: document.getElementById('scroll'),\n\t\taxis: 'xy'\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -655,7 +655,7 @@
             "namespace": "",
             "file": "src/select/select.js",
             "line": 2,
-            "description": "Create a new select control",
+            "description": "Create a new select control. Controls can be converted from existing `select` or `ul` elements, or generated by passing an `options` parameter\n\nHTML\n\n\t<!-- Generate from an existing element -->\n\t\n    <select id='selectFromEl'>\n        <option value='val1'>\n            option 1\n        </option>\n        <option value='val2'>\n            option 2\n        </option>\n        <option value='val3'>\n            option 3\n        </option>\n        <option value='val4'>\n            option 4\n        </option>\n        <option value='val5'>\n            option 5\n        </option>\n    </select>\n\t\n\t<!-- Generate from passing an options object -->\n\t\n\t<div id='selectFromObject'></div>\n\nJavascript\n\t\n\t// Single select with no dropdown and pre-selected value\n\t\n\tpk.select({\n\t\telement: document.getElementById('selectFromEl'),\n\t\tvalue: 'val3'\n\t});\t\n\t\n\t// Multiple select with dropdown\n\t\n\tpk.select({\n\t\telement: document.getElementById('selectFromObject'),\n\t\toptions:[\n\t\t\t{\n\t\t\t\tvalue:'val1',\n\t\t\t\tname:'value 1'\n\t\t\t},\n\t\t\t{\n\t\t\t\tvalue:'val2',\n\t\t\t\tname:'value 2'\n\t\t\t},\n\t\t\t{\n\t\t\t\tvalue:'val3',\n\t\t\t\tname:'value 3'\n\t\t\t},\n\t\t\t{\n\t\t\t\tvalue:'val4',\n\t\t\t\tname:'value 4'\n\t\t\t},\n\t\t\t{\n\t\t\t\tvalue:'val5',\n\t\t\t\tname:'value 5'\n\t\t\t},\n\t\t]\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -671,7 +671,7 @@
                         {
                             "name": "options",
                             "description": "Object array of control options",
-                            "type": "Object",
+                            "type": "Array",
                             "props": [
                                 {
                                     "name": "value",
@@ -760,7 +760,7 @@
             "namespace": "",
             "file": "src/slider/slider.js",
             "line": 2,
-            "description": "Create a new slider control",
+            "description": "Create a new slider control\n\nHTML:\n\n\t<input id='slider' />\n\t\nJavascript:\n\n\tpk.slider({\n\t\telement: document.getElementById('slider'),\n\t\tunits: 'mm',\n\t\tmin: 30,\n\t\tmax: 980,\n\t\tvalue: 133\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -842,7 +842,7 @@
             "namespace": "",
             "file": "src/toggle/toggle.js",
             "line": 2,
-            "description": "Create a new toggle control",
+            "description": "Create a new toggle control\n\nHTML:\n\n\t<input id='toggle' />\n\nJavascript:\n\n\tpk.toggle({\n\t\telement: document.getElementById('toggle'),\n\t\toptions: [{\n\t\t\tvalue: true,\n\t\t\tname: 'yes'\n\t\t}, {\n\t\t\tvalue: false,\n\t\t\tname: 'no'\n\t\t}, {\n\t\t\tvalue: 'other',\n\t\t\tname: 'other'\n\t\t}],\n\t\tvalue: false\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -933,7 +933,7 @@
     "classitems": [
         {
             "file": "src/carousel/carousel.js",
-            "line": 87,
+            "line": 103,
             "description": "Gets or sets control item",
             "itemtype": "method",
             "name": "val",
@@ -953,7 +953,7 @@
         },
         {
             "file": "src/checkbox/checkbox.js",
-            "line": 36,
+            "line": 49,
             "description": "Gets or sets control value",
             "itemtype": "method",
             "name": "val",
@@ -973,7 +973,7 @@
         },
         {
             "file": "src/checkbox/checkbox.js",
-            "line": 43,
+            "line": 56,
             "description": "Gets or sets control disabled state",
             "itemtype": "method",
             "name": "disabled",
@@ -993,7 +993,7 @@
         },
         {
             "file": "src/colorpicker/colorpicker.js",
-            "line": 201,
+            "line": 218,
             "description": "Fired on selected color changing (click, drag)",
             "itemtype": "event",
             "name": "change",
@@ -1013,7 +1013,7 @@
         },
         {
             "file": "src/colorpicker/colorpicker.js",
-            "line": 208,
+            "line": 225,
             "description": "Gets or sets control value (HEX color string, e.g. `#000000`)",
             "itemtype": "method",
             "name": "val",
@@ -1560,7 +1560,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 60,
+            "line": 87,
             "description": "Fired on drag event starting",
             "itemtype": "event",
             "name": "dragstart",
@@ -1581,7 +1581,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 67,
+            "line": 94,
             "description": "Fired on during drag event",
             "itemtype": "event",
             "name": "dragging",
@@ -1602,7 +1602,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 74,
+            "line": 101,
             "description": "Fired on drag event ending",
             "itemtype": "event",
             "name": "dragend",
@@ -1623,7 +1623,7 @@
         },
         {
             "file": "src/modal/modal.js",
-            "line": 84,
+            "line": 99,
             "description": "Closes modal and removes from DOM",
             "itemtype": "method",
             "name": "close",
@@ -1632,7 +1632,7 @@
         },
         {
             "file": "src/notify/notify.js",
-            "line": 8,
+            "line": 21,
             "description": "Create a new notification",
             "itemtype": "method",
             "name": "push",
@@ -1667,7 +1667,7 @@
         },
         {
             "file": "src/notify/notify.js",
-            "line": 17,
+            "line": 30,
             "description": "Remove a notification",
             "itemtype": "method",
             "name": "close",
@@ -1683,7 +1683,7 @@
         },
         {
             "file": "src/rating/rating.js",
-            "line": 73,
+            "line": 85,
             "description": "Gets or sets control value",
             "itemtype": "method",
             "name": "val",
@@ -1704,7 +1704,7 @@
         },
         {
             "file": "src/rating/rating.js",
-            "line": 80,
+            "line": 92,
             "description": "Gets or sets control disabled state",
             "itemtype": "method",
             "name": "disabled",
@@ -1725,7 +1725,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 50,
+            "line": 65,
             "description": "Fired on slide event starting",
             "itemtype": "event",
             "name": "slidestart",
@@ -1746,7 +1746,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 57,
+            "line": 72,
             "description": "Fired on during slide event",
             "itemtype": "event",
             "name": "sliding",
@@ -1767,7 +1767,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 64,
+            "line": 79,
             "description": "Fired on slide event ending",
             "itemtype": "event",
             "name": "slideend",
@@ -1788,7 +1788,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 128,
+            "line": 143,
             "description": "Gets or sets control value",
             "itemtype": "method",
             "name": "val",
@@ -1809,7 +1809,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 135,
+            "line": 150,
             "description": "Gets or sets control disabled state",
             "itemtype": "method",
             "name": "disabled",
@@ -1830,7 +1830,7 @@
         },
         {
             "file": "src/toggle/toggle.js",
-            "line": 52,
+            "line": 74,
             "description": "Gets or sets control value",
             "itemtype": "method",
             "name": "val",
@@ -1851,7 +1851,7 @@
         },
         {
             "file": "src/toggle/toggle.js",
-            "line": 59,
+            "line": 81,
             "description": "Gets or sets control disabled state",
             "itemtype": "method",
             "name": "disabled",
@@ -1892,7 +1892,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 37,
+            "line": 40,
             "description": "Convert an RGB array to a HEX color string\n\n    var color=pk.color.rgb2hex([255,0,0]);\n    // color = '#FF0000'",
             "itemtype": "method",
             "name": "rgb2hex",
@@ -1912,7 +1912,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 59,
+            "line": 62,
             "description": "Convert an RGB array to a HSV array\n\n    var color=pk.color.rgb2hsv([255,0,0]);\n    // color = [0,100,100]",
             "itemtype": "method",
             "name": "rgb2hsv",
@@ -2113,7 +2113,7 @@
         {
             "file": "src/utils/color.js",
             "line": 345,
-            "description": "Generate a series of randomized HEX color strings\n\n    var color=pk.color.rgb2hex([0,100,100]);\n    // color = [255,0,0]",
+            "description": "Generate a series of randomized HEX color strings\n\n    var palette=pk.color.random(5);\n    // palette = [\"#efa6a8\", \"#91abb\", \"#ebac2c\", \"#2b561\", \"#7b4b51\"]",
             "itemtype": "method",
             "name": "random",
             "params": [
@@ -2133,7 +2133,7 @@
         {
             "file": "src/utils/color.js",
             "line": 364,
-            "description": "Generate (palette of) complementary color(s) from passed HEX color string",
+            "description": "Generate (palette of) complementary color(s) from passed HEX color string\n\t\t\n    var palette=pk.color.complement('#FF0000', 'split');\n    // palette = [\"#80ff00\", \"#00ffff\", \"#8000ff\"]\n\t\t\t\n    var palette=pk.color.complement('#FF0000', 'double');\n    // palette = [\"#80ff00\", \"#00ff40\", \"#00ffff\", \"#0040ff\", \"#8000ff\"]",
             "itemtype": "method",
             "name": "complement",
             "params": [
@@ -2144,7 +2144,7 @@
                 },
                 {
                     "name": "type",
-                    "description": "Type of complementary palette to create, either `split` or `double`",
+                    "description": "Type of complementary palette to create, defaults to single complementary color, can be `split` or `double`",
                     "type": "String",
                     "optional": true
                 }
@@ -2158,8 +2158,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 394,
-            "description": "Generate triadic color palette",
+            "line": 401,
+            "description": "Generate triadic color palette\n\t\t\n    var palette=pk.color.triadic('#FF0000');\n    // palette = [\"#ff0000\", \"#00ff00\", \"#0000ff\"]",
             "itemtype": "method",
             "name": "triadic",
             "params": [
@@ -2178,8 +2178,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 403,
-            "description": "Generate tetradic color palette",
+            "line": 415,
+            "description": "Generate tetradic color palette\n\t\t\n    var palette=pk.color.triadic('#FF0000');\n    // palette = [\"#ff0000\", \"#80ff00\", \"#00ffff\", \"#8000ff\"]",
             "itemtype": "method",
             "name": "tetradic",
             "params": [
@@ -2198,8 +2198,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 415,
-            "description": "Generate pentadic color palette",
+            "line": 431,
+            "description": "Generate pentadic color palette\n\t\t\n    var palette=pk.color.triadic('#FF0000');\n    // palette = [\"#ff0000\", \"#ccff00\", \"#00ff66\", \"#0066ff\", \"#cc00ff\"]",
             "itemtype": "method",
             "name": "pentadic",
             "params": [
@@ -2218,8 +2218,8 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 436,
-            "description": "Generate algorithmic color palette",
+            "line": 456,
+            "description": "Generate algorithmic color palette\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000'});\n    // palette = [\"#ff0000\", \"#00ff00\", \"#0000ff\"] \t\t\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000', count: 5});\n    // palette = [\"#ff0000\", \"#ccff00\", \"#00ff66\", \"#0066ff\", \"#cc00ff\"]  \t\t\t\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000', scope: 100, count:4});\n    // palette = [\"#ff00d4\", \"#ff0047\", \"#ff4700\", \"#ffd500\"]\n\n    var palette=pk.color.algorithmic ({hex:'#FF0000', type:'saturation', scope:50});\n    // palette = [\"#ffffff\", \"#ffbfbf\", \"#ff8080\"]",
             "itemtype": "method",
             "name": "algorithmic",
             "params": [

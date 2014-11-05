@@ -140,7 +140,18 @@
 
 
 <div class="box intro">
-    <p>Create a new carousel component</p>
+    <p>Create a new carousel component from an unordered list element <code>&lt;ul&gt;</code></p>
+<p>HTML:</p>
+<pre class="code prettyprint"><code>&lt;ul id=&#39;carousel&#39;&gt;
+    &lt;li&gt;Slide 1&lt;/li&gt;
+    &lt;li&gt;Slide 2&lt;/li&gt;
+    &lt;li&gt;Slide 3&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<p>Javascript:</p>
+<pre class="code prettyprint"><code>pk.carousel({
+    element: document.getElementById(&#39;carousel&#39;),
+    delay:5000
+});</code></pre>
 
 </div>
 
@@ -410,7 +421,7 @@
             
         
         
-        <a href="../files/src_carousel_carousel.js.html#l87"><code>src&#x2F;carousel&#x2F;carousel.js:87</code></a>
+        <a href="../files/src_carousel_carousel.js.html#l103"><code>src&#x2F;carousel&#x2F;carousel.js:103</code></a>
         
         </p>
 

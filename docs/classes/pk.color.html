@@ -358,7 +358,7 @@ For color conversion methods, where the expected parameter is an array e.g <code
             
         
         
-        <a href="../files/src_utils_color.js.html#l436"><code>src&#x2F;utils&#x2F;color.js:436</code></a>
+        <a href="../files/src_utils_color.js.html#l456"><code>src&#x2F;utils&#x2F;color.js:456</code></a>
         
         </p>
 
@@ -370,6 +370,17 @@ For color conversion methods, where the expected parameter is an array e.g <code
 
     <div class="description">
         <p>Generate algorithmic color palette</p>
+<pre class="code prettyprint"><code>var palette=pk.color.algorithmic ({hex:&#39;#FF0000&#39;});
+// palette = [&quot;#ff0000&quot;, &quot;#00ff00&quot;, &quot;#0000ff&quot;]         
+
+var palette=pk.color.algorithmic ({hex:&#39;#FF0000&#39;, count: 5});
+// palette = [&quot;#ff0000&quot;, &quot;#ccff00&quot;, &quot;#00ff66&quot;, &quot;#0066ff&quot;, &quot;#cc00ff&quot;]              
+
+var palette=pk.color.algorithmic ({hex:&#39;#FF0000&#39;, scope: 100, count:4});
+// palette = [&quot;#ff00d4&quot;, &quot;#ff0047&quot;, &quot;#ff4700&quot;, &quot;#ffd500&quot;]
+
+var palette=pk.color.algorithmic ({hex:&#39;#FF0000&#39;, type:&#39;saturation&#39;, scope:50});
+// palette = [&quot;#ffffff&quot;, &quot;#ffbfbf&quot;, &quot;#ff8080&quot;]</code></pre>
 
     </div>
 
@@ -561,6 +572,11 @@ For color conversion methods, where the expected parameter is an array e.g <code
 
     <div class="description">
         <p>Generate (palette of) complementary color(s) from passed HEX color string</p>
+<pre class="code prettyprint"><code>var palette=pk.color.complement(&#39;#FF0000&#39;, &#39;split&#39;);
+// palette = [&quot;#80ff00&quot;, &quot;#00ffff&quot;, &quot;#8000ff&quot;]
+
+var palette=pk.color.complement(&#39;#FF0000&#39;, &#39;double&#39;);
+// palette = [&quot;#80ff00&quot;, &quot;#00ff40&quot;, &quot;#00ffff&quot;, &quot;#0040ff&quot;, &quot;#8000ff&quot;]</code></pre>
 
     </div>
 
@@ -596,7 +612,7 @@ For color conversion methods, where the expected parameter is an array e.g <code
                     
 
                     <div class="param-description">
-                        <p>Type of complementary palette to create, either <code>split</code> or <code>double</code></p>
+                        <p>Type of complementary palette to create, defaults to single complementary color, can be <code>split</code> or <code>double</code></p>
 
                     </div>
 
@@ -1654,7 +1670,7 @@ For color conversion methods, where the expected parameter is an array e.g <code
             
         
         
-        <a href="../files/src_utils_color.js.html#l415"><code>src&#x2F;utils&#x2F;color.js:415</code></a>
+        <a href="../files/src_utils_color.js.html#l431"><code>src&#x2F;utils&#x2F;color.js:431</code></a>
         
         </p>
 
@@ -1666,6 +1682,8 @@ For color conversion methods, where the expected parameter is an array e.g <code
 
     <div class="description">
         <p>Generate pentadic color palette</p>
+<pre class="code prettyprint"><code>var palette=pk.color.triadic(&#39;#FF0000&#39;);
+// palette = [&quot;#ff0000&quot;, &quot;#ccff00&quot;, &quot;#00ff66&quot;, &quot;#0066ff&quot;, &quot;#cc00ff&quot;]</code></pre>
 
     </div>
 
@@ -1773,8 +1791,8 @@ For color conversion methods, where the expected parameter is an array e.g <code
 
     <div class="description">
         <p>Generate a series of randomized HEX color strings</p>
-<pre class="code prettyprint"><code>var color=pk.color.rgb2hex([0,100,100]);
-// color = [255,0,0]</code></pre>
+<pre class="code prettyprint"><code>var palette=pk.color.random(5);
+// palette = [&quot;#efa6a8&quot;, &quot;#91abb&quot;, &quot;#ebac2c&quot;, &quot;#2b561&quot;, &quot;#7b4b51&quot;]</code></pre>
 
     </div>
 
@@ -1870,7 +1888,7 @@ For color conversion methods, where the expected parameter is an array e.g <code
             
         
         
-        <a href="../files/src_utils_color.js.html#l37"><code>src&#x2F;utils&#x2F;color.js:37</code></a>
+        <a href="../files/src_utils_color.js.html#l40"><code>src&#x2F;utils&#x2F;color.js:40</code></a>
         
         </p>
 
@@ -2088,7 +2106,7 @@ For color conversion methods, where the expected parameter is an array e.g <code
             
         
         
-        <a href="../files/src_utils_color.js.html#l59"><code>src&#x2F;utils&#x2F;color.js:59</code></a>
+        <a href="../files/src_utils_color.js.html#l62"><code>src&#x2F;utils&#x2F;color.js:62</code></a>
         
         </p>
 
@@ -2197,7 +2215,7 @@ For color conversion methods, where the expected parameter is an array e.g <code
             
         
         
-        <a href="../files/src_utils_color.js.html#l403"><code>src&#x2F;utils&#x2F;color.js:403</code></a>
+        <a href="../files/src_utils_color.js.html#l415"><code>src&#x2F;utils&#x2F;color.js:415</code></a>
         
         </p>
 
@@ -2209,6 +2227,8 @@ For color conversion methods, where the expected parameter is an array e.g <code
 
     <div class="description">
         <p>Generate tetradic color palette</p>
+<pre class="code prettyprint"><code>var palette=pk.color.triadic(&#39;#FF0000&#39;);
+// palette = [&quot;#ff0000&quot;, &quot;#80ff00&quot;, &quot;#00ffff&quot;, &quot;#8000ff&quot;]</code></pre>
 
     </div>
 
@@ -2304,7 +2324,7 @@ For color conversion methods, where the expected parameter is an array e.g <code
             
         
         
-        <a href="../files/src_utils_color.js.html#l394"><code>src&#x2F;utils&#x2F;color.js:394</code></a>
+        <a href="../files/src_utils_color.js.html#l401"><code>src&#x2F;utils&#x2F;color.js:401</code></a>
         
         </p>
 
@@ -2316,6 +2336,8 @@ For color conversion methods, where the expected parameter is an array e.g <code
 
     <div class="description">
         <p>Generate triadic color palette</p>
+<pre class="code prettyprint"><code>var palette=pk.color.triadic(&#39;#FF0000&#39;);
+// palette = [&quot;#ff0000&quot;, &quot;#00ff00&quot;, &quot;#0000ff&quot;]</code></pre>
 
     </div>
 

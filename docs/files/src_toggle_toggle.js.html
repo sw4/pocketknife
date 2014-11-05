@@ -123,6 +123,28 @@
 var pk = pk || {};
 /**
 Create a new toggle control
+
+HTML:
+
+	&lt;input id=&#x27;toggle&#x27; /&gt;
+
+Javascript:
+
+	pk.toggle({
+		element: document.getElementById(&#x27;toggle&#x27;),
+		options: [{
+			value: true,
+			name: &#x27;yes&#x27;
+		}, {
+			value: false,
+			name: &#x27;no&#x27;
+		}, {
+			value: &#x27;other&#x27;,
+			name: &#x27;other&#x27;
+		}],
+		value: false
+	});
+	
 @class pk.toggle
 @constructor
 @param options {Object}

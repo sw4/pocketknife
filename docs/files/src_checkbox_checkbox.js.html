@@ -124,6 +124,19 @@ var pk = pk || {};
 
 /**
 Create a new checkbox control
+
+HTML:
+
+	&lt;input type=&#x27;checkbox&#x27; id=&#x27;checkbox&#x27; /&gt;
+
+Javascript:
+	
+	pk.checkbox({
+		element: document.getElementById(&#x27;checkbox&#x27;),
+		label: &#x27;Checked&#x27;,
+		value: true
+	});
+	
 @class pk.checkbox
 @constructor
 @param options {Object}

@@ -141,6 +141,28 @@
 
 <div class="box intro">
     <p>Utility class for creating draggable elements</p>
+<p>HTML:</p>
+<pre class="code prettyprint"><code>&lt;div id=&#39;draggable&#39;&gt;&lt;/div&gt;</code></pre>
+<p>Javascript:</p>
+<pre class="code prettyprint"><code>pk.drag({
+    element: document.getElementById(&#39;draggable&#39;),
+    move: true,
+    container:{
+        element:document.body,
+        style:&#39;restrict&#39;
+    },
+    listeners: {
+        dragstart: function() {
+            // started dragging
+        },
+        dragging: function() {
+            // dragging
+        },
+        dragend: function() {
+            // stopped dragging
+        }
+    }
+});</code></pre>
 
 </div>
 
@@ -446,7 +468,7 @@
             
         
         
-        <a href="../files/src_drag_drag.js.html#l74"><code>src&#x2F;drag&#x2F;drag.js:74</code></a>
+        <a href="../files/src_drag_drag.js.html#l101"><code>src&#x2F;drag&#x2F;drag.js:101</code></a>
         
         </p>
 
@@ -530,7 +552,7 @@
             
         
         
-        <a href="../files/src_drag_drag.js.html#l67"><code>src&#x2F;drag&#x2F;drag.js:67</code></a>
+        <a href="../files/src_drag_drag.js.html#l94"><code>src&#x2F;drag&#x2F;drag.js:94</code></a>
         
         </p>
 
@@ -614,7 +636,7 @@
             
         
         
-        <a href="../files/src_drag_drag.js.html#l60"><code>src&#x2F;drag&#x2F;drag.js:60</code></a>
+        <a href="../files/src_drag_drag.js.html#l87"><code>src&#x2F;drag&#x2F;drag.js:87</code></a>
         
         </p>
 

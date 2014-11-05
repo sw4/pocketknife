@@ -122,7 +122,23 @@
     <pre class="code prettyprint linenums">
 var pk = pk || {};
 /**
-Create a new carousel component
+Create a new carousel component from an unordered list element &#x60;&lt;ul&gt;&#x60;
+
+HTML:
+
+    &lt;ul id=&#x27;carousel&#x27;&gt;
+        &lt;li&gt;Slide 1&lt;/li&gt;
+        &lt;li&gt;Slide 2&lt;/li&gt;
+        &lt;li&gt;Slide 3&lt;/li&gt;
+    &lt;/ul&gt;
+
+Javascript:
+	
+	pk.carousel({
+		element: document.getElementById(&#x27;carousel&#x27;),
+		delay:5000
+	});
+
 @class pk.carousel
 @constructor
 @param options {Object}

@@ -6,7 +6,7 @@ body{
   color:rgb(86, 96, 118);
 }
 body,h1, h2, h3, h4, h5, h6{
-  font-family:'Raleway';  
+  font-family:Raleway, Arial, Tahoma;  
 }
 h1, h2, h3, h4, h5, h6{
   font-weight:400;
@@ -53,7 +53,7 @@ input[type=checkbox]{
 code.param-name:not(.optional) + .type:after{
   display:inline;
   content: '\f06a\0020required';
-  font-family: FontAwesome;
+  font-family: FontAwesome, Raleway, Arial, Tahoma;
   background: #60a5ff;
   border-radius: 3px;
   color: #fff;
@@ -85,7 +85,11 @@ code.param-name:not(.optional) + .type:after{
   position: relative;
   margin-bottom: 10px;
 }
-
+.info-well code{
+	background: #FCFBFA;
+	border: 1px solid #EFEEED;
+	padding: 0 3px;
+}
 .info-well:before{
   content: "\f05a";
   font-family: FontAwesome;

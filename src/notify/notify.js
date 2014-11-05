@@ -1,6 +1,19 @@
 var pk = pk || {};
 /**
 Class used for notification management
+
+HTML
+
+    <button onclick="showNotification();">Show Notification</button>
+
+Javascript:
+
+	function showNotification(){
+		pk.notify.push({
+			content:'Default message'
+		});
+	}
+
 @class pk.notify
 @static
 */

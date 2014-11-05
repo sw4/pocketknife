@@ -68,7 +68,9 @@ code.param-name:not(.optional) + .type:after{
 	border-color: hsl(169, 88%, 40%)!important;
 	border: solid hsl(169, 88%, 40%)!important;
 }
-
+.yui3-skin-sam .yui3-tab-selected{
+	margin-bottom:0;
+}
 .yui3-skin-sam .yui3-tab-selected .yui3-tab-label, .yui3-skin-sam .yui3-tab-selected .yui3-tab-label:focus, .yui3-skin-sam .yui3-tab-selected .yui3-tab-label:hover{
 background: hsl(169, 88%, 40%)!important;
 	border: solid hsl(169, 88%, 40%)!important;
@@ -76,6 +78,7 @@ background: hsl(169, 88%, 40%)!important;
 .yui3-skin-sam .yui3-tab-label{
 	background: #F2F2F2!important;
 	border: solid #F2F2F2!important;
+	transition:background 200ms ease-in, border 200ms ease-in;
 	}
 .yui3-skin-sam .yui3-tab-label:hover, .yui3-skin-sam .yui3-tab-label:focus{
 	color:hsl(169, 88%, 40%);
@@ -93,6 +96,9 @@ background: hsl(169, 88%, 40%)!important;
 	border-radius: 0;
 	color: #fff;
 	outline: none;
+}
+#classdocs .item{
+	border-bottom-color:#a9d1c9;
 }
 a{
 color: hsl(169, 88%, 30%);

@@ -59,7 +59,7 @@ code.param-name:not(.optional) + .type:after{
   color: #fff;
   font-size: 11px;
   margin: 0 0.5em;
-  padding: 2px 4px 1px;
+  padding: 3px 4px 2px;
 }
 .yui3-skin-sam .yui3-tabview-list{
 	border-bottom: solid hsl(169, 88%, 40%)!important;

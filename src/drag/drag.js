@@ -1,6 +1,33 @@
 var pk = pk || {};
 /**
 Utility class for creating draggable elements
+
+HTML:
+
+	<div id='draggable'></div>
+
+Javascript:
+	
+	pk.drag({
+		element: document.getElementById('draggable'),
+		move: true,
+		container:{
+			element:document.body,
+			style:'restrict'
+		},
+		listeners: {
+			dragstart: function() {
+				// started dragging
+			},
+			dragging: function() {
+				// dragging
+			},
+			dragend: function() {
+				// stopped dragging
+			}
+		}
+	});
+
 @class pk.drag
 @constructor
 @param options {Object}

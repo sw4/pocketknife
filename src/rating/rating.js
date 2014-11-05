@@ -1,6 +1,18 @@
 var pk = pk || {};
 /**
 Create a new rating control
+
+HTML:
+
+	<input id='rating' />
+	
+Javascript:
+
+	pk.rating({
+		element: document.getElementById('rating'),
+		value: 3
+	});
+
 @class pk.rating
 @constructor
 @param options {Object}

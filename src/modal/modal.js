@@ -2,6 +2,21 @@ var pk = pk || {};
 
 /**
 Create a new modal component
+
+HTML:
+
+	<button onclick="showModal();">Show Modal</button>
+
+Javascript: 
+
+	function showModal(){
+		pk.modal({
+			header:'Modal header',
+			content:'Modal content', 
+			draggable:true
+		});
+	}
+
 @class pk.modal
 @constructor
 @param options {Object}

@@ -324,7 +324,7 @@ Forces the passed variable into an array, xploding comma seperated strings, keep
 @param variable {Undefined} Variable to force into array
 @return {Array} Returns array of passed variable
 */  
-    pk.toArr = function(v) {
+    pk.toArr = function(v) {	
         var a = [];
         if (v && typeof v !== "object") {
             if (v.indexOf(',') !== -1) {

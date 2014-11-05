@@ -74,13 +74,17 @@ background: hsl(169, 88%, 40%)!important;
 	border: solid hsl(169, 88%, 40%)!important;
 }
 .yui3-skin-sam .yui3-tab-label{
-	background: #f5f5f5!important;
-	border: solid #f5f5f5!important;
+	background: #F2F2F2!important;
+	border: solid #F2F2F2!important;
 	}
 .yui3-skin-sam .yui3-tab-label:hover, .yui3-skin-sam .yui3-tab-label:focus{
 	color:hsl(169, 88%, 40%);
-	background: #f5f5f5!important;
-	border: solid #f5f5f5!important;
+	background: #F2F2F2!important;
+	border: solid #F2F2F2!important;
+}
+.apis a {
+	font-size: 0.96em;
+	padding: 4px 4px;
 }
 .apis a:hover, .apis a:focus {
 	background: hsl(169, 91%, 40%);

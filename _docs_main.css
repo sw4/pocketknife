@@ -62,18 +62,18 @@ code.param-name:not(.optional) + .type:after{
   padding: 3px 4px 2px;
 }
 .yui3-skin-sam .yui3-tabview-list{
-	border-bottom: solid hsl(169, 88%, 40%)!important;
+	border-bottom: solid hsl(204, 70%, 58%)!important;
 }
 .yui3-skin-sam .yui3-tab-selected .yui3-tab-label{
-	border-color: hsl(169, 88%, 40%)!important;
-	border: solid hsl(169, 88%, 40%)!important;
+	border-color: hsl(204, 70%, 58%)!important;
+	border: solid hsl(204, 70%, 58%)!important;
 }
 .yui3-skin-sam .yui3-tab-selected{
 	margin-bottom:0!important;
 }
 .yui3-skin-sam .yui3-tab-selected .yui3-tab-label, .yui3-skin-sam .yui3-tab-selected .yui3-tab-label:focus, .yui3-skin-sam .yui3-tab-selected .yui3-tab-label:hover{
-background: hsl(169, 88%, 40%)!important;
-	border: solid hsl(169, 88%, 40%)!important;
+background: hsl(204, 70%, 58%)!important;
+	border: solid hsl(204, 70%, 58%)!important;
 }
 .yui3-skin-sam .yui3-tab-label{
 	background: #F2F2F2!important;
@@ -81,7 +81,7 @@ background: hsl(169, 88%, 40%)!important;
 	transition:background 200ms ease-in, border 200ms ease-in;
 }
 .yui3-skin-sam .yui3-tab-label:hover, .yui3-skin-sam .yui3-tab-label:focus{
-	color:hsl(169, 88%, 40%);
+	color:hsl(204, 70%, 58%);
 	background: #F2F2F2!important;
 	border: solid #F2F2F2!important;
 }
@@ -91,8 +91,8 @@ background: hsl(169, 88%, 40%)!important;
 }
 .apis a:hover, .apis a:focus {
 	background: hsl(169, 91%, 40%);
-	background: -moz-linear-gradient(top, #e8edfc 0%, #becef7 100%);
-	border-color: hsl(169, 88%, 40%);
+	background: hsl(204, 64%, 49%);
+	border-color: hsl(204, 70%, 58%);
 	border-radius: 0;
 	color: #fff;
 	outline: none;
@@ -101,7 +101,7 @@ background: hsl(169, 88%, 40%)!important;
 	border-bottom-color:#a9d1c9;
 }
 a{
-color: hsl(169, 88%, 30%);
+color: hsl(204, 64%, 49%);
 }
 #api-list > h2{
   position:relative;
@@ -165,7 +165,7 @@ color: hsl(169, 88%, 30%);
   padding: 2px 0;
 
   /* Set the base colour */
-  background-color: #4f9689;
+  background-color: hsl(204, 64%, 49%);
 
   /* Set a gradient: transparent black at the top to almost-transparent black at the bottom */
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.15)));

@@ -97,6 +97,9 @@ background: hsl(204, 70%, 58%)!important;
 	color: #fff;
 	outline: none;
 }
+.api-list-item a:hover, .api-list-item a:focus{
+	text-shadow:none;
+}
 #classdocs .item{
 	border-bottom-color:#a9d1c9;
 }
@@ -119,6 +122,7 @@ color: hsl(204, 64%, 49%);
   white-space:nowrap;
   content:'pocketknife docs';
 }
+
 #api-options{
   right:8em;
 }

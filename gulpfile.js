@@ -36,9 +36,34 @@ var gulp = require('gulp'),
 	  ' */',
 	  ''].join('\n');
 
- 
+gulp.task('build:scroll', function() {
+
+  gulp.src(['src/core/core.less', 'src/drag/drag.less', 'src/scroll/scroll.less'], {base:'./'})
+    .pipe(plugins.concat('scroll.less'))
+	.pipe(plugins.replace('pk', 'ui'))
+	.pipe(plugins.less())
+	.pipe(plugins.autoprefixer({
+		browsers:['last 2 version', 'ie 8', 'ie 9'],
+		cascade:true
+	}))
+	.pipe(plugins.csslint())
+	.pipe(plugins.minifyCss())
+	.pipe(plugins.rename('scroll.min.css'))
+    .pipe(gulp.dest('../ui/scroll/'));
+	
+	gulp.src(['src/core/core.js', 'src/drag/drag.js', 'src/scroll/scroll.js'], {base: './'})
+    .pipe(plugins.concat('scroll.js'))
+	.pipe(plugins.replace('pk', 'ui'))
+	.pipe(plugins.jshint())
+	.pipe(plugins.uglify())
+	.pipe(plugins.rename('scroll.min.js'))
+    .pipe(gulp.dest('../ui/scroll/'));
+
+});
+
 gulp.task('build:styles', function() {
   return gulp.src('src/**/*.less', {base:'./'})
+	.pipe(plugins.plumber())
     .pipe(plugins.concat(pkg.name+'.less'))
 	.pipe(plugins.less())
 	.pipe(plugins.autoprefixer({
@@ -54,32 +79,20 @@ gulp.task('build:styles', function() {
 
 gulp.task('bump', function(){
   return gulp.src('./package.json')
+	.pipe(plugins.plumber())
 	.pipe(plugins.bump({type:'patch'}))
 	.pipe(gulp.dest('./'));
 });
 
 gulp.task('build:js',function() {
   return gulp.src('src/**/*.js', {base: './'})
+	.pipe(plugins.plumber())
     .pipe(plugins.concat(pkg.name+'.js'))
 	.pipe(plugins.jshint())
 	.pipe(plugins.uglify())
 	.pipe(plugins.rename(pkg.name+'.min.js'))
 	.pipe(plugins.header(banner, { pkg : pkg } ))
     .pipe(gulp.dest('dist/'));
-});
-
-gulp.task('build:icons', function(){
-  return gulp.src(['src/icons/*.svg'])
-    .pipe(plugins.iconfontCss({
-      fontName: 'pk',
-      path: 'less',
-	  fontPath:'src/',
-      targetPath: '../fontIcons.less'
-    }))
-    .pipe(plugins.iconfont({
-      fontName: 'fontIcons'
-     }))
-    .pipe(gulp.dest('src/fonts/src/'));
 });
 
 gulp.task('browser-sync', function () {

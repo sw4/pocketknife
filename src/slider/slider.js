@@ -12,7 +12,7 @@ Javascript:
 		element: document.getElementById('slider'),
 		units: 'mm',
 		min: 30,
-		max: 980,
+		max: 980, 
 		value: 133
 	});
 	
@@ -154,12 +154,11 @@ Javascript:
                     }
 					var perc=0;
 					if(circle){
-						var xPerc=pk.perc(e.dragDist.x + e.dragOffset.x,pk.layout(el).width),
-						origin={
+						var origin={
 							x:l.left+(l.width/2),
 							y:l.top+(l.height/2)
 						}
-						if(xPerc >= .5){
+						if(e.pageX >= origin.x){
 							perc = 90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI;					 
 						}else{					 
 							perc = 180+(90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI);
@@ -201,7 +200,21 @@ Javascript:
             if (obj.disabled()) {
                 return false;
             }
-            var perc = axis === "x" ? ((e.clientX - el.getBoundingClientRect().left) / pk.layout(el).width) : 1 - ((e.clientY - el.getBoundingClientRect().top) / pk.layout(el).height);
+			var perc=0;
+			if(circle){			
+				var origin={
+					x:l.left+(l.width/2),
+					y:l.top+(l.height/2)
+				}
+				if(e.pageX >= origin.x){
+					perc = 90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI;					 
+				}else{					 
+					perc = 180+(90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI);
+				}		
+				perc=perc/360;					
+			}else{
+				perc = axis === "x" ? ((e.clientX - el.getBoundingClientRect().left) / pk.layout(el).width) : 1 - ((e.clientY - el.getBoundingClientRect().top) / pk.layout(el).height);
+			}
             obj.val(min + Math.round(perc * range));
         });
         pk.bindEvent("mousewheel", el, function(e) {

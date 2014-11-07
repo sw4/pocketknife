@@ -46,7 +46,6 @@
 </head>
 
 <body>
-
     <h1>Accordian</h1>
     <ul id='accordian1' class='pk-accordian'>
         <li>
@@ -137,6 +136,19 @@
     <h1 id='colorpicker2'>Colorpicker</h1>
     
     <span id='colorpicker1'></span>
+    <br>
+    <br>
+	<h1 id='colorpicker2'>Colors Util</h1>
+    
+    <div id='colorOutput' style='line-height:40px;-webkit-column-count:3;column-width:33%;'>
+		Complement:<div data-color='complement'></div>
+		Complement (split):<div data-color='complement' data-type='split'></div>
+		Complement (double):<div data-color='complement' data-type='double'></div>
+		Triadic:<div data-color='triadic'></div>
+		Tetradic:<div data-color='tetradic'></div>
+		Pentadic:<div data-color='pentadic'></div>
+	</div>
+	
     <br>
     <br>
     <h1>Modal Dialog</h1>
@@ -282,13 +294,13 @@
     </select>
     <br>
     <br>
-
     <script src="dist/pocketknife.min.js"></script>
     <script>
+	
         pk.carousel({
             element: document.getElementById('carousel1')
         });
-
+        // pk.datepicker();
         pk.rating({
             element: document.getElementById('rating1'),
             value: 3
@@ -366,11 +378,26 @@
 
         pk.colorpicker({
             element: document.getElementById('colorpicker1'),
+			value:'#49A3DF',
             listeners:{
-change:function(oldCol,newCol){
- document.getElementById('colorpicker2').style.color=newCol;
-}
-
+				change:function(oldCol,newCol){
+					document.getElementById('colorpicker2').style.color=newCol;	 
+					var outputEl = document.getElementById('colorOutput');	 
+					for(var u=0;u<outputEl.children.length;u++){
+						if(pk.attribute(outputEl.children[u],'data-color')){
+							outputEl.children[u].innerHTML='';
+							if(pk.attribute(outputEl.children[u],'data-color')==='complement' && pk.attribute(outputEl.children[u],'data-type')){
+								var cols = pk.color[pk.attribute(outputEl.children[u],'data-color')](newCol, pk.attribute(outputEl.children[u],'data-type'));	
+							}else{
+								var cols = pk.color[pk.attribute(outputEl.children[u],'data-color')](newCol);							
+							}
+							for(var c=0;c<cols.length;c++){ 
+								var cEl=pk.createEl("<span style='display:inline-block;height:40px;width:40px;background:"+cols[c]+";'></span>");
+								outputEl.children[u].appendChild(cEl);
+							}		
+						}	
+					}
+				}
             }
         });
     </script>

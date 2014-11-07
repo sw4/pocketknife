@@ -1,17 +1,23 @@
 .pk-slider {
     display: inline-block;
-    height: @item-height*0.85;
-    line-height: @item-height*0.85;
     position: relative;
-    border: 1px solid darken(@color-background, 10%);
-    width: @item-width;
     box-sizing: border-box;
+	color:@color-background;	
+}
+.pk-slider:not(.pk-slider-circle){
+    line-height: @item-height*0.85;
+    border: 1px solid darken(@color-background, 10%);
     background: darken(@color-background, 2%);
 	border-radius:@item-rounding;
-	color:@color-background;
-	
+	color:@color-background;	
+} 
+.pk-slider.pk-slider-circle{
+	width: @item-width/2;
+	height: @item-width/2;
+	circle{
+		stroke:fade(@color-highlight, 50%);
+	}
 }
-
 .pk-slider:focus, .pk-slider:active {
     outline: none;
 }
@@ -20,8 +26,12 @@
     width: @item-height*0.85;
     height: @item-width;
 }
+.pk-slider-x {
+    height: @item-height*0.85;
+    width: @item-width;
+}
 
-.pk-slider-mask, .pk-slider-bar {
+.pk-slider-bar {
     position: absolute;
     top: 0;
     left: 0;
@@ -45,7 +55,7 @@
     background-color: darken(@color-background, 30%);
 }
 
-.pk-slider-y .pk-slider-mask, .pk-slider-y .pk-slider-bar {
+.pk-slider-y .pk-slider-bar {
     top: auto;
     bottom: 0;
 }

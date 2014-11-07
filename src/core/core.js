@@ -408,5 +408,5 @@ Gets browser agnostic offset coordinates for applicable mouse events
 		};
 	};
 	
-    pk.addClass(document.body, 'pk-ui');
+    window.onload=function(){pk.addClass(document.body, 'pk-ui');}
 })(pk);

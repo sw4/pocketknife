@@ -369,6 +369,13 @@ Collides two arrays, either replacing one with the other, removing one from anot
         }
         return a1;
     };
+/**
+Returns normalized percentage value
+@method perc
+@param Value {Float} value (amount)
+@param Total {Float} total (out of)
+@return {Float} Returns noramlized percentage value between 1 and 0
+*/ 	
     pk.perc = function(v,t) {
         v=v/t;
 		v = v < 0 ? 0 : v;

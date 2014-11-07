@@ -369,6 +369,12 @@ Collides two arrays, either replacing one with the other, removing one from anot
         }
         return a1;
     };
+    pk.perc = function(v,t) {
+        v=v/t;
+		v = v < 0 ? 0 : v;
+		v = v > 1 ? 1 : v;		
+        return v;
+    };	
 /**
 Gets of sets attribute values, either explicely or impliitely declared
 @method attribute

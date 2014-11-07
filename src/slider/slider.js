@@ -42,20 +42,75 @@ Javascript:
             inputValue = opt.value || el.getAttribute('value') || 0,
             inputDisabled = (opt.disabled || el.getAttribute('disabled')) ? 'disabled' : '',
             inputName = opt.name || el.getAttribute('name') || 'pk-slider-' + pk.getRand(1, 999),
-            inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0;
+            inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0,
+			circle = opt.circle || false;
+			circle=false;
+			if(circle){			
+				circle={
+					stroke:circle.stroke || 20
+				}
+			}
 
         if (!axis || !(axis.indexOf("x") < 0 || axis.indexOf("y") < 0)) {
             axis = "x";
         }
 
-        var tpl = "<div class='pk-slider pk-slider-" + axis + " " + (inputDisabled ? 'pk-disabled' : '') + "' tabindex='" + inputTabIndex + "'>\
+        var tpl = "<div class='pk-slider pk-slider-" + axis + " " + (inputDisabled ? 'pk-disabled' : '') + " " +(circle ? 'pk-slider-circle': '') + "' tabindex='" + inputTabIndex + "'>\
             <input type='hidden' name='" + inputName + "' " + inputDisabled + " value='" + inputValue + "'/>\
-            <div class='pk-slider-bar pk-animated'>\
-                <span class='pk-slider-value'></span><span class='pk-slider-units'></span>\
-            </div>\
-            <div class='pk-slider-mask'></div>\
         </div>";
+		
+		/*
+		var tpl = "<div class='pk-slider pk-slider-" + axis + " " + (inputDisabled ? 'pk-disabled' : '') + "' tabindex='" + inputTabIndex + "'>\
+            <input type='hidden' name='" + inputName + "' " + inputDisabled + " value='" + inputValue + "'/>\            
+        </div>";
+		*/
         el = pk.replaceEl(el, tpl);
+		var l=pk.layout(el);
+		var d = l.height > l.width ? l.height : l.width;
+				
+		function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+		  var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
+		  return {
+			x: centerX + (radius * Math.cos(angleInRadians)),
+			y: centerY + (radius * Math.sin(angleInRadians))
+		  };
+		}
+
+		function describeArc(x, y, radius, startAngle, endAngle){
+			endAngle = endAngle == 360 || endAngle > 360 ? 359.9 : endAngle ;
+			var start = polarToCartesian(x, y, radius, endAngle);
+			var end = polarToCartesian(x, y, radius, startAngle);
+
+			var arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
+
+			var d = [
+				"M", start.x, start.y, 
+				"A", radius, radius, 0, arcSweep, 0, end.x, end.y
+			].join(" ");
+
+			return d;       
+		}
+		
+		var innerTpl='';
+		if(circle){			
+			innerTpl="<svg height='"+d+"' width='"+d+"' xmlns='http://www.w3.org/2000/svg' version='1.1'>\
+			   <circle class='pk-slider-circle' cx='"+d/2+"' cy='"+d/2+"' r='"+((d-circle.stroke)/2)+"' stroke='black' stroke-width='"+circle.stroke+"' fill='none' />\
+			   <path x='"+d/2+"' y='"+d/2+"' fill='none' stroke='red' d='' stroke-width='10'/>\
+			</svg>";
+			el.appendChild(pk.createEl(innerTpl));
+			
+		}else{
+			// get biggest dimension
+			innerTpl="<div class='pk-slider-bar pk-animated'>\
+                <span class='pk-slider-value'></span><span class='pk-slider-units'></span>\
+            </div>";
+			el.appendChild(pk.createEl(innerTpl));
+		}
+		
+		var pathEl = el.children[1].children[1]; 
+		pk.attribute(pathEl, 'd', describeArc(d/2, d/2, (d-circle.stroke)/2, 0, 360));
+		
+
         var maskEl = el.children[2],
             barEl = el.children[1],
             inputEl = el.children[0],
@@ -84,7 +139,7 @@ Javascript:
         */
         pk.bindListeners(listeners, inputEl);
         pk.drag({
-            element: maskEl,
+            element: el,
             contain: {
                 element: el
             },
@@ -122,11 +177,12 @@ Javascript:
                 }
             }
         });
-        pk.bindEvent('click', maskEl, function(e) {
+		
+        pk.bindEvent('click', el, function(e) {
             if (obj.disabled()) {
                 return false;
             }
-            var perc = axis === "x" ? ((e.clientX - maskEl.getBoundingClientRect().left) / pk.layout(el).width) : 1 - ((e.clientY - maskEl.getBoundingClientRect().top) / pk.layout(el).height);
+            var perc = axis === "x" ? ((e.clientX - el.getBoundingClientRect().left) / pk.layout(el).width) : 1 - ((e.clientY - el.getBoundingClientRect().top) / pk.layout(el).height);
             obj.val(min + Math.round(perc * range));
         });
         pk.bindEvent("mousewheel", el, function(e) {

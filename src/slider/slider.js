@@ -21,12 +21,15 @@ Javascript:
 @param options {Object}
 @param options.element {Object} DOM element to convert to control
 @param [options.value=0] {Number} Initial value, defaults to the attribute value set on the passed element, or `0`
+@param [options.axis=x] {String} Either `x` (horizontal) or `y` (vertical), ignored if slider is circle
 @param [options.min=0] {Number} Minimum value
 @param [options.max=100] {Number} Maximum value
 @param [options.name=pk-slider-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-slider-RandInt`
 @param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
 @param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or `false`
 @param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
+@param [options.circle=false] {Object} Object array of properties to define circular slider
+@param [options.circle.stroke=20] {Number} Stroke width of slider circle
 @return Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
 @chainable
 */
@@ -37,14 +40,14 @@ Javascript:
             listeners = opt.listeners === undefined ? {} : opt.listeners,
             min = opt.min || 0,
             max = opt.max || 100,
-            axis = opt.axis,
+            axis = opt.axis || "x",
             range = Math.abs(max - min),
             inputValue = opt.value || el.getAttribute('value') || 0,
             inputDisabled = (opt.disabled || el.getAttribute('disabled')) ? 'disabled' : '',
             inputName = opt.name || el.getAttribute('name') || 'pk-slider-' + pk.getRand(1, 999),
             inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0,
 			circle = opt.circle || false;
-			circle=false;
+			// circle=false;
 			if(circle){			
 				circle={
 					stroke:circle.stroke || 20
@@ -65,7 +68,7 @@ Javascript:
         </div>";
 		*/
         el = pk.replaceEl(el, tpl);
-		var l=pk.layout(el);
+		var l=pk.layout(el, true);
 		var d = l.height > l.width ? l.height : l.width;
 				
 		function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
@@ -95,9 +98,10 @@ Javascript:
 		if(circle){			
 			innerTpl="<svg height='"+d+"' width='"+d+"' xmlns='http://www.w3.org/2000/svg' version='1.1'>\
 			   <circle class='pk-slider-circle' cx='"+d/2+"' cy='"+d/2+"' r='"+((d-circle.stroke)/2)+"' stroke='black' stroke-width='"+circle.stroke+"' fill='none' />\
-			   <path x='"+d/2+"' y='"+d/2+"' fill='none' stroke='red' d='' stroke-width='10'/>\
+			   <path x='"+d/2+"' y='"+d/2+"' fill='none' stroke='red' d='' stroke-width='"+circle.stroke+"'/>\
 			</svg>";
 			el.appendChild(pk.createEl(innerTpl));
+			el.appendChild(pk.createEl("<span class='pk-slider-monitor'><span class='pk-slider-value'></span><span class='pk-slider-units'></span></span>"));
 			
 		}else{
 			// get biggest dimension
@@ -111,11 +115,10 @@ Javascript:
 		pk.attribute(pathEl, 'd', describeArc(d/2, d/2, (d-circle.stroke)/2, 0, 360));
 		
 
-        var maskEl = el.children[2],
-            barEl = el.children[1],
+        var indicatorEl = circle ? el.children[1].children[1] : el.children[1],
             inputEl = el.children[0],
-            valueEl = barEl.children[0],
-            unitsEl = barEl.children[1];
+            valueEl = circle ? el.children[2].children[0] : indicatorEl.children[0],
+            unitsEl = circle ? el.children[2].children[1] : indicatorEl.children[1];
 
         /**
         Fired on slide event starting
@@ -149,10 +152,26 @@ Javascript:
                     if (obj.disabled()) {
                         return false;
                     }
-                    var perc = axis === "x" ? (e.dragDist.x + e.dragOffset.x) / pk.layout(el).width : 1 - (e.dragDist.y + e.dragOffset.y) / pk.layout(el).height;
-                    perc = perc < 0 ? 0 : perc;
-                    perc = perc > 1 ? 1 : perc;
-                    obj.val(min + Math.round(perc * range));
+					var perc=0;
+					if(circle){
+						var xPerc=pk.perc(e.dragDist.x + e.dragOffset.x,pk.layout(el).width),
+						origin={
+							x:l.left+(l.width/2),
+							y:l.top+(l.height/2)
+						}
+						if(xPerc >= .5){
+							perc = 90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI;					 
+						}else{					 
+							perc = 180+(90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI);
+						}		
+						perc=perc/360;						
+					}else{
+						perc = axis === "x" ? (e.dragDist.x + e.dragOffset.x) / pk.layout(el).width : 1 - (e.dragDist.y + e.dragOffset.y) / pk.layout(el).height;
+						perc = perc < 0 ? 0 : perc;
+						perc = perc > 1 ? 1 : perc;
+						
+					}
+					obj.val(min + Math.round(perc * range));
                     if (listeners && listeners.sliding) {
                         listeners.sliding(el, e);
                     }
@@ -164,7 +183,7 @@ Javascript:
                     if (listeners && listeners.slidestart) {
                         listeners.slidestart(el, e);
                     }
-                    pk.removeClass(barEl, 'pk-animated');
+                    pk.removeClass(indicatorEl, 'pk-animated');
                 },
                 dragend: function(el, e) {
                     if (obj.disabled()) {
@@ -173,7 +192,7 @@ Javascript:
                     if (listeners && listeners.slideend) {
                         listeners.slideend(el, e);
                     }
-                    pk.addClass(barEl, 'pk-animated');
+                    pk.addClass(indicatorEl, 'pk-animated');
                 }
             }
         });
@@ -213,16 +232,20 @@ Javascript:
             0: el,
             val: function(val, force) {
                 if (val === undefined || (obj.disabled() && !force)) {
-                    return inputEl.value;
+                    return inputEl.value; 
                 }
                 val = val < min ? min : val;
                 val = val > max ? max : val;
                 inputEl.value = val;
-                if (axis === "x") {
-                    barEl.style.width = (val - min) * 100 / range + '%';
-                } else {
-                    barEl.style.height = (val - min) * 100 / range + '%';
-                }
+				if(circle){  
+					pk.attribute(pathEl, 'd', describeArc(d/2, d/2, (d-circle.stroke)/2, 0, (val - min) *360 / range));						
+				}else{
+					if (axis === "x") {
+						indicatorEl.style.width = (val - min) * 100 / range + '%';
+					} else {
+						indicatorEl.style.height = (val - min) * 100 / range + '%';
+					}
+				}
                 valueEl.innerHTML = val;
                 unitsEl.innerHTML = units;
             },

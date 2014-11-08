@@ -317,13 +317,19 @@
         });
         pk.slider({
             element: document.getElementById('slider3'),
+            units: 'deg',
+            value: 33,
+            min:8,
+            max:95,
             circle:true
         });
         pk.slider({
             element: document.getElementById('slider2'),
-            units: '%',
-            axis: 'y',
-            value: 40
+            units: 'mm',
+            axis: 'x',
+            value: 0,
+            min:-444,
+            max:900
         });
         pk.toggle({
             element: document.getElementById('toggle1'),

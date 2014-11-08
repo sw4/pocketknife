@@ -225,7 +225,7 @@ Fetch layout and positioning properties of passed DOM element
 Calculate positioning properties of passed DOM element, optionally augment passed event using `procEvent` for event based positioning
 @method position
 @param element {Object} DOM element
-@param event {Object} Event
+@param [event] {Object} Event
 @return {Object} Returns object consisting of `top`, `right`, `bottom`, `left`, `height` and `width` values as well as sub `offset` and `parent` objects
 */  
 pk.position=function(el, e){

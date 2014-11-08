@@ -802,6 +802,13 @@
                             "optdefault": "100"
                         },
                         {
+                            "name": "decimals",
+                            "description": "Number of decimal places",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
                             "name": "name",
                             "description": "Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-slider-RandInt`",
                             "type": "String",
@@ -1329,7 +1336,8 @@
                 {
                     "name": "event",
                     "description": "Event",
-                    "type": "Object"
+                    "type": "Object",
+                    "optional": true
                 }
             ],
             "return": {
@@ -1818,7 +1826,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 123,
+            "line": 125,
             "description": "Fired on slide event starting",
             "itemtype": "event",
             "name": "slidestart",
@@ -1839,7 +1847,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 130,
+            "line": 132,
             "description": "Fired on during slide event",
             "itemtype": "event",
             "name": "sliding",
@@ -1860,7 +1868,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 137,
+            "line": 139,
             "description": "Fired on slide event ending",
             "itemtype": "event",
             "name": "slideend",
@@ -1881,7 +1889,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 235,
+            "line": 236,
             "description": "Gets or sets control value",
             "itemtype": "method",
             "name": "val",
@@ -1902,7 +1910,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 242,
+            "line": 243,
             "description": "Gets or sets control disabled state",
             "itemtype": "method",
             "name": "disabled",

@@ -38,7 +38,7 @@ Javascript:
     }
     if (typeof angular === 'object') {
         // angular available
-        (
+        ( 
 
             function() {
                 angular.module('pk-scroll', ['ng'])

@@ -24,6 +24,7 @@ Javascript:
 @param [options.axis=x] {String} Either `x` (horizontal) or `y` (vertical), ignored if slider is circle
 @param [options.min=0] {Number} Minimum value
 @param [options.max=100] {Number} Maximum value
+@param [options.decimals=0] {Number} Number of decimal places
 @param [options.name=pk-slider-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-slider-RandInt`
 @param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
 @param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or `false`
@@ -40,6 +41,7 @@ Javascript:
             listeners = opt.listeners === undefined ? {} : opt.listeners,
             min = opt.min || 0,
             max = opt.max || 100,
+            decimals = opt.decimals || 0,
             axis = opt.axis || "x",
             range = Math.abs(max - min),
             inputValue = opt.value || el.getAttribute('value') || 0,
@@ -204,7 +206,6 @@ Javascript:
             }
 			var perc=0;
 			if(circle){			
-
 				var p =pk.position(el,e);
 				var origin={
 					x:p.left+(p.width/2),
@@ -263,7 +264,7 @@ Javascript:
 						indicatorEl.style.height = (val - min) * 100 / range + '%';
 					}
 				}
-                valueEl.innerHTML = val;
+                valueEl.innerHTML = val.toFixed(decimals);
                 unitsEl.innerHTML = units;
             },
             disabled: function(val) {

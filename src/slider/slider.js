@@ -153,10 +153,12 @@ Javascript:
                         return false;
                     }
 					var perc=0;
+
+				    var p =pk.position(el,e);
 					if(circle){
 						var origin={
-							x:l.left+(l.width/2),
-							y:l.top+(l.height/2)
+							x:p.left+(p.width/2),
+							y:p.top+(p.height/2)
 						}
 						if(e.pageX >= origin.x){
 							perc = 90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI;					 
@@ -202,9 +204,11 @@ Javascript:
             }
 			var perc=0;
 			if(circle){			
+
+				var p =pk.position(el,e);
 				var origin={
-					x:l.left+(l.width/2),
-					y:l.top+(l.height/2)
+					x:p.left+(p.width/2),
+					y:p.top+(p.height/2)
 				}
 				if(e.pageX >= origin.x){
 					perc = 90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI;					 

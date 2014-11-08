@@ -344,6 +344,29 @@ Fetch layout and positioning properties of passed DOM element
         };
     };
 /**
+Calculate positioning properties of passed DOM element, optionally augment passed event using &#x60;procEvent&#x60; for event based positioning
+@method position
+@param element {Object} DOM element
+@param event {Object} Event
+@return {Object} Returns object consisting of &#x60;top&#x60;, &#x60;right&#x60;, &#x60;bottom&#x60;, &#x60;left&#x60;, &#x60;height&#x60; and &#x60;width&#x60; values as well as sub &#x60;offset&#x60; and &#x60;parent&#x60; objects
+*/  
+pk.position=function(el, e){
+    if(e){e=pk.procEvent(e);}
+    var p={
+        offset:el.getBoundingClientRect(),
+        parent:{
+            top:el.offsetTop,
+            left:el.offsetLeft
+        },
+        height:el.offsetHeight,
+        width:el.offsetWidth
+    };
+
+    p.top=p.offset.top+document.body.scrollTop;
+    p.left=p.offset.left+document.body.scrollLeft;
+    return p;
+};
+/**
 Apply a series of event listeners to a DOM element
 @method bindListeners
 @param listeners {Object} Consisting of event objects to pass to &#x60;bindEvent&#x60; method
@@ -492,6 +515,19 @@ Collides two arrays, either replacing one with the other, removing one from anot
         return a1;
     };
 /**
+Returns normalized percentage value
+@method perc
+@param Value {Float} value (amount)
+@param Total {Float} total (out of)
+@return {Float} Returns noramlized percentage value between 1 and 0
+*/ 	
+    pk.perc = function(v,t) {
+        v=v/t;
+		v = v &lt; 0 ? 0 : v;
+		v = v &gt; 1 ? 1 : v;		
+        return v;
+    };	
+/**
 Gets of sets attribute values, either explicely or impliitely declared
 @method attribute
 @param element {Object} Related DOM element
@@ -518,6 +554,36 @@ Gets of sets attribute values, either explicely or impliitely declared
         return el;
     };
 /**
+Augments event object with additional X and Y helper coordinates
+@method procEvent
+@param event {Object} Event to normalize
+@return {Object} Returns object with the additional attributes &#x60;posX&#x60;, &#x60;posY&#x60; are normalized absolutes, &#x60;offsetX&#x60;, offsetY&#x60; are normalized parent offsets, &#x60;viewportX&#x60;, &#x60;viewportY&#x60; are normalized viewport offsets
+*/     
+    pk.procEvent=function(e){
+        e.posX = 0;
+        e.posY = 0;
+        if (!e) var e = window.event;
+        if (e.pageX || e.pageY)     {
+            e.posX = e.pageX;
+            e.posY = e.pageY;
+        }
+        else if (e.clientX || e.clientY)    {
+            e.posX = e.clientX + document.body.scrollLeft
+                + document.documentElement.scrollLeft;
+            e.posY = e.clientY + document.body.scrollTop
+                + document.documentElement.scrollTop;
+        }
+        if(e.offsetX===undefined){
+            e.offsetX=e.layerX;
+        }
+        if(e.offsetY===undefined){
+            e.offsetY=e.layerY;
+        }
+        e.viewportY=e.posY-document.body.scrollTop;
+        e.viewportX=e.posX-document.body.scrollLeft;
+        return e;
+    }
+/**
 Gets browser agnostic offset coordinates for applicable mouse events
 @method getEventOffset
 @param event {Object} Event to normalize
@@ -530,7 +596,7 @@ Gets browser agnostic offset coordinates for applicable mouse events
 		};
 	};
 	
-    pk.addClass(document.body, &#x27;pk-ui&#x27;);
+    window.onload=function(){pk.addClass(document.body, &#x27;pk-ui&#x27;);}
 })(pk);
 
     </pre>

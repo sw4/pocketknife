@@ -134,7 +134,7 @@ Javascript:
 		element: document.getElementById(&#x27;slider&#x27;),
 		units: &#x27;mm&#x27;,
 		min: 30,
-		max: 980,
+		max: 980, 
 		value: 133
 	});
 	
@@ -143,12 +143,15 @@ Javascript:
 @param options {Object}
 @param options.element {Object} DOM element to convert to control
 @param [options.value=0] {Number} Initial value, defaults to the attribute value set on the passed element, or &#x60;0&#x60;
+@param [options.axis=x] {String} Either &#x60;x&#x60; (horizontal) or &#x60;y&#x60; (vertical), ignored if slider is circle
 @param [options.min=0] {Number} Minimum value
 @param [options.max=100] {Number} Maximum value
 @param [options.name=pk-slider-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or &#x60;pk-slider-RandInt&#x60;
 @param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or &#x60;0&#x60;
 @param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or &#x60;false&#x60;
 @param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
+@param [options.circle=false] {Object} Object array of properties to define circular slider
+@param [options.circle.stroke=20] {Number} Stroke width of slider circle
 @return Object {Object} Consisting of original DOM element (item &#x60;0&#x60;) and class methods (see below)
 @chainable
 */
@@ -159,30 +162,85 @@ Javascript:
             listeners = opt.listeners === undefined ? {} : opt.listeners,
             min = opt.min || 0,
             max = opt.max || 100,
-            axis = opt.axis,
+            axis = opt.axis || &quot;x&quot;,
             range = Math.abs(max - min),
             inputValue = opt.value || el.getAttribute(&#x27;value&#x27;) || 0,
             inputDisabled = (opt.disabled || el.getAttribute(&#x27;disabled&#x27;)) ? &#x27;disabled&#x27; : &#x27;&#x27;,
             inputName = opt.name || el.getAttribute(&#x27;name&#x27;) || &#x27;pk-slider-&#x27; + pk.getRand(1, 999),
-            inputTabIndex = opt.tabindex || el.getAttribute(&#x27;tabindex&#x27;) || 0;
+            inputTabIndex = opt.tabindex || el.getAttribute(&#x27;tabindex&#x27;) || 0,
+			circle = opt.circle || false;
+			// circle=false;
+			if(circle){			
+				circle={
+					stroke:circle.stroke || 20
+				}
+			}
 
         if (!axis || !(axis.indexOf(&quot;x&quot;) &lt; 0 || axis.indexOf(&quot;y&quot;) &lt; 0)) {
             axis = &quot;x&quot;;
         }
 
-        var tpl = &quot;&lt;div class=&#x27;pk-slider pk-slider-&quot; + axis + &quot; &quot; + (inputDisabled ? &#x27;pk-disabled&#x27; : &#x27;&#x27;) + &quot;&#x27; tabindex=&#x27;&quot; + inputTabIndex + &quot;&#x27;&gt;\
+        var tpl = &quot;&lt;div class=&#x27;pk-slider pk-slider-&quot; + axis + &quot; &quot; + (inputDisabled ? &#x27;pk-disabled&#x27; : &#x27;&#x27;) + &quot; &quot; +(circle ? &#x27;pk-slider-circle&#x27;: &#x27;&#x27;) + &quot;&#x27; tabindex=&#x27;&quot; + inputTabIndex + &quot;&#x27;&gt;\
             &lt;input type=&#x27;hidden&#x27; name=&#x27;&quot; + inputName + &quot;&#x27; &quot; + inputDisabled + &quot; value=&#x27;&quot; + inputValue + &quot;&#x27;/&gt;\
-            &lt;div class=&#x27;pk-slider-bar pk-animated&#x27;&gt;\
-                &lt;span class=&#x27;pk-slider-value&#x27;&gt;&lt;/span&gt;&lt;span class=&#x27;pk-slider-units&#x27;&gt;&lt;/span&gt;\
-            &lt;/div&gt;\
-            &lt;div class=&#x27;pk-slider-mask&#x27;&gt;&lt;/div&gt;\
         &lt;/div&gt;&quot;;
+		
+		/*
+		var tpl = &quot;&lt;div class=&#x27;pk-slider pk-slider-&quot; + axis + &quot; &quot; + (inputDisabled ? &#x27;pk-disabled&#x27; : &#x27;&#x27;) + &quot;&#x27; tabindex=&#x27;&quot; + inputTabIndex + &quot;&#x27;&gt;\
+            &lt;input type=&#x27;hidden&#x27; name=&#x27;&quot; + inputName + &quot;&#x27; &quot; + inputDisabled + &quot; value=&#x27;&quot; + inputValue + &quot;&#x27;/&gt;\            
+        &lt;/div&gt;&quot;;
+		*/
         el = pk.replaceEl(el, tpl);
-        var maskEl = el.children[2],
-            barEl = el.children[1],
+		var l=pk.layout(el, true);
+		var d = l.height &gt; l.width ? l.height : l.width;
+				
+		function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+		  var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
+		  return {
+			x: centerX + (radius * Math.cos(angleInRadians)),
+			y: centerY + (radius * Math.sin(angleInRadians))
+		  };
+		}
+
+		function describeArc(x, y, radius, startAngle, endAngle){
+			endAngle = endAngle == 360 || endAngle &gt; 360 ? 359.9 : endAngle ;
+			var start = polarToCartesian(x, y, radius, endAngle);
+			var end = polarToCartesian(x, y, radius, startAngle);
+
+			var arcSweep = endAngle - startAngle &lt;= 180 ? &quot;0&quot; : &quot;1&quot;;
+
+			var d = [
+				&quot;M&quot;, start.x, start.y, 
+				&quot;A&quot;, radius, radius, 0, arcSweep, 0, end.x, end.y
+			].join(&quot; &quot;);
+
+			return d;       
+		}
+		
+		var innerTpl=&#x27;&#x27;;
+		if(circle){			
+			innerTpl=&quot;&lt;svg height=&#x27;&quot;+d+&quot;&#x27; width=&#x27;&quot;+d+&quot;&#x27; xmlns=&#x27;http://www.w3.org/2000/svg&#x27; version=&#x27;1.1&#x27;&gt;\
+			   &lt;circle class=&#x27;pk-slider-circle&#x27; cx=&#x27;&quot;+d/2+&quot;&#x27; cy=&#x27;&quot;+d/2+&quot;&#x27; r=&#x27;&quot;+((d-circle.stroke)/2)+&quot;&#x27; stroke=&#x27;black&#x27; stroke-width=&#x27;&quot;+circle.stroke+&quot;&#x27; fill=&#x27;none&#x27; /&gt;\
+			   &lt;path x=&#x27;&quot;+d/2+&quot;&#x27; y=&#x27;&quot;+d/2+&quot;&#x27; fill=&#x27;none&#x27; stroke=&#x27;red&#x27; d=&#x27;&#x27; stroke-width=&#x27;&quot;+circle.stroke+&quot;&#x27;/&gt;\
+			&lt;/svg&gt;&quot;;
+			el.appendChild(pk.createEl(innerTpl));
+			el.appendChild(pk.createEl(&quot;&lt;span class=&#x27;pk-slider-monitor&#x27;&gt;&lt;span class=&#x27;pk-slider-value&#x27;&gt;&lt;/span&gt;&lt;span class=&#x27;pk-slider-units&#x27;&gt;&lt;/span&gt;&lt;/span&gt;&quot;));
+			
+		}else{
+			// get biggest dimension
+			innerTpl=&quot;&lt;div class=&#x27;pk-slider-bar pk-animated&#x27;&gt;\
+                &lt;span class=&#x27;pk-slider-value&#x27;&gt;&lt;/span&gt;&lt;span class=&#x27;pk-slider-units&#x27;&gt;&lt;/span&gt;\
+            &lt;/div&gt;&quot;;
+			el.appendChild(pk.createEl(innerTpl));
+		}
+		
+		var pathEl = el.children[1].children[1]; 
+		pk.attribute(pathEl, &#x27;d&#x27;, describeArc(d/2, d/2, (d-circle.stroke)/2, 0, 360));
+		
+
+        var indicatorEl = circle ? el.children[1].children[1] : el.children[1],
             inputEl = el.children[0],
-            valueEl = barEl.children[0],
-            unitsEl = barEl.children[1];
+            valueEl = circle ? el.children[2].children[0] : indicatorEl.children[0],
+            unitsEl = circle ? el.children[2].children[1] : indicatorEl.children[1];
 
         /**
         Fired on slide event starting
@@ -206,7 +264,7 @@ Javascript:
         */
         pk.bindListeners(listeners, inputEl);
         pk.drag({
-            element: maskEl,
+            element: el,
             contain: {
                 element: el
             },
@@ -216,10 +274,27 @@ Javascript:
                     if (obj.disabled()) {
                         return false;
                     }
-                    var perc = axis === &quot;x&quot; ? (e.dragDist.x + e.dragOffset.x) / pk.layout(el).width : 1 - (e.dragDist.y + e.dragOffset.y) / pk.layout(el).height;
-                    perc = perc &lt; 0 ? 0 : perc;
-                    perc = perc &gt; 1 ? 1 : perc;
-                    obj.val(min + Math.round(perc * range));
+					var perc=0;
+
+				    var p =pk.position(el,e);
+					if(circle){
+						var origin={
+							x:p.left+(p.width/2),
+							y:p.top+(p.height/2)
+						}
+						if(e.pageX &gt;= origin.x){
+							perc = 90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI;					 
+						}else{					 
+							perc = 180+(90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI);
+						}		
+						perc=perc/360;						
+					}else{
+						perc = axis === &quot;x&quot; ? (e.dragDist.x + e.dragOffset.x) / pk.layout(el).width : 1 - (e.dragDist.y + e.dragOffset.y) / pk.layout(el).height;
+						perc = perc &lt; 0 ? 0 : perc;
+						perc = perc &gt; 1 ? 1 : perc;
+						
+					}
+					obj.val(min + Math.round(perc * range));
                     if (listeners &amp;&amp; listeners.sliding) {
                         listeners.sliding(el, e);
                     }
@@ -231,7 +306,7 @@ Javascript:
                     if (listeners &amp;&amp; listeners.slidestart) {
                         listeners.slidestart(el, e);
                     }
-                    pk.removeClass(barEl, &#x27;pk-animated&#x27;);
+                    pk.removeClass(indicatorEl, &#x27;pk-animated&#x27;);
                 },
                 dragend: function(el, e) {
                     if (obj.disabled()) {
@@ -240,15 +315,32 @@ Javascript:
                     if (listeners &amp;&amp; listeners.slideend) {
                         listeners.slideend(el, e);
                     }
-                    pk.addClass(barEl, &#x27;pk-animated&#x27;);
+                    pk.addClass(indicatorEl, &#x27;pk-animated&#x27;);
                 }
             }
         });
-        pk.bindEvent(&#x27;click&#x27;, maskEl, function(e) {
+		
+        pk.bindEvent(&#x27;click&#x27;, el, function(e) {
             if (obj.disabled()) {
                 return false;
             }
-            var perc = axis === &quot;x&quot; ? ((e.clientX - maskEl.getBoundingClientRect().left) / pk.layout(el).width) : 1 - ((e.clientY - maskEl.getBoundingClientRect().top) / pk.layout(el).height);
+			var perc=0;
+			if(circle){			
+
+				var p =pk.position(el,e);
+				var origin={
+					x:p.left+(p.width/2),
+					y:p.top+(p.height/2)
+				}
+				if(e.pageX &gt;= origin.x){
+					perc = 90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI;					 
+				}else{					 
+					perc = 180+(90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI);
+				}		
+				perc=perc/360;					
+			}else{
+				perc = axis === &quot;x&quot; ? ((e.clientX - el.getBoundingClientRect().left) / pk.layout(el).width) : 1 - ((e.clientY - el.getBoundingClientRect().top) / pk.layout(el).height);
+			}
             obj.val(min + Math.round(perc * range));
         });
         pk.bindEvent(&quot;mousewheel&quot;, el, function(e) {
@@ -279,16 +371,20 @@ Javascript:
             0: el,
             val: function(val, force) {
                 if (val === undefined || (obj.disabled() &amp;&amp; !force)) {
-                    return inputEl.value;
+                    return inputEl.value; 
                 }
                 val = val &lt; min ? min : val;
                 val = val &gt; max ? max : val;
                 inputEl.value = val;
-                if (axis === &quot;x&quot;) {
-                    barEl.style.width = (val - min) * 100 / range + &#x27;%&#x27;;
-                } else {
-                    barEl.style.height = (val - min) * 100 / range + &#x27;%&#x27;;
-                }
+				if(circle){  
+					pk.attribute(pathEl, &#x27;d&#x27;, describeArc(d/2, d/2, (d-circle.stroke)/2, 0, (val - min) *360 / range));						
+				}else{
+					if (axis === &quot;x&quot;) {
+						indicatorEl.style.width = (val - min) * 100 / range + &#x27;%&#x27;;
+					} else {
+						indicatorEl.style.height = (val - min) * 100 / range + &#x27;%&#x27;;
+					}
+				}
                 valueEl.innerHTML = val;
                 unitsEl.innerHTML = units;
             },

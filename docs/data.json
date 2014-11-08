@@ -760,7 +760,7 @@
             "namespace": "",
             "file": "src/slider/slider.js",
             "line": 2,
-            "description": "Create a new slider control\n\nHTML:\n\n\t<input id='slider' />\n\t\nJavascript:\n\n\tpk.slider({\n\t\telement: document.getElementById('slider'),\n\t\tunits: 'mm',\n\t\tmin: 30,\n\t\tmax: 980,\n\t\tvalue: 133\n\t});",
+            "description": "Create a new slider control\n\nHTML:\n\n\t<input id='slider' />\n\t\nJavascript:\n\n\tpk.slider({\n\t\telement: document.getElementById('slider'),\n\t\tunits: 'mm',\n\t\tmin: 30,\n\t\tmax: 980, \n\t\tvalue: 133\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -779,6 +779,13 @@
                             "type": "Number",
                             "optional": true,
                             "optdefault": "0"
+                        },
+                        {
+                            "name": "axis",
+                            "description": "Either `x` (horizontal) or `y` (vertical), ignored if slider is circle",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "x"
                         },
                         {
                             "name": "min",
@@ -820,6 +827,22 @@
                             "description": "Object array of event listeners to bind to underlying input(s)",
                             "type": "Object",
                             "optional": true
+                        },
+                        {
+                            "name": "circle",
+                            "description": "Object array of properties to define circular slider",
+                            "type": "Object",
+                            "optional": true,
+                            "optdefault": "false",
+                            "props": [
+                                {
+                                    "name": "stroke",
+                                    "description": "Stroke width of slider circle",
+                                    "type": "Number",
+                                    "optional": true,
+                                    "optdefault": "20"
+                                }
+                            ]
                         }
                     ]
                 }
@@ -1294,6 +1317,31 @@
         {
             "file": "src/core/core.js",
             "line": 224,
+            "description": "Calculate positioning properties of passed DOM element, optionally augment passed event using `procEvent` for event based positioning",
+            "itemtype": "method",
+            "name": "position",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "DOM element",
+                    "type": "Object"
+                },
+                {
+                    "name": "event",
+                    "description": "Event",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Returns object consisting of `top`, `right`, `bottom`, `left`, `height` and `width` values as well as sub `offset` and `parent` objects",
+                "type": "Object"
+            },
+            "class": "pk",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 247,
             "description": "Apply a series of event listeners to a DOM element",
             "itemtype": "method",
             "name": "bindListeners",
@@ -1319,7 +1367,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 240,
+            "line": 263,
             "description": "Generate a random number between the passed `min` and `max` values",
             "itemtype": "method",
             "name": "getRand",
@@ -1344,7 +1392,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 250,
+            "line": 273,
             "description": "Extract unit type from passed string",
             "itemtype": "method",
             "name": "getUnits",
@@ -1364,7 +1412,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 259,
+            "line": 282,
             "description": "Wrap the passed DOM element in a new DOM node created from the `wrapper` string",
             "itemtype": "method",
             "name": "wrapEl",
@@ -1390,7 +1438,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 273,
+            "line": 296,
             "description": "Create a new DOM element from the passed `HTML` string",
             "itemtype": "method",
             "name": "createEl",
@@ -1411,7 +1459,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 285,
+            "line": 308,
             "description": "Get the index of the passed DOM node within the immediate parent",
             "itemtype": "method",
             "name": "getIndex",
@@ -1431,7 +1479,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 302,
+            "line": 325,
             "description": "Replace the passed DOM element with a new element created from the passed string, inclusive of all original attributes",
             "itemtype": "method",
             "name": "replaceEl",
@@ -1457,7 +1505,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 321,
+            "line": 344,
             "description": "Forces the passed variable into an array, xploding comma seperated strings, keeping existing arrys, collapsing objects and or converting strings as necessary",
             "itemtype": "method",
             "name": "toArr",
@@ -1477,7 +1525,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 340,
+            "line": 363,
             "description": "Collides two arrays, either replacing one with the other, removing one from another, adding one to another or toggling the values of one in another",
             "itemtype": "method",
             "name": "collide",
@@ -1509,7 +1557,32 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 372,
+            "line": 395,
+            "description": "Returns normalized percentage value",
+            "itemtype": "method",
+            "name": "perc",
+            "params": [
+                {
+                    "name": "Value",
+                    "description": "value (amount)",
+                    "type": "Float"
+                },
+                {
+                    "name": "Total",
+                    "description": "total (out of)",
+                    "type": "Float"
+                }
+            ],
+            "return": {
+                "description": "Returns noramlized percentage value between 1 and 0",
+                "type": "Float"
+            },
+            "class": "pk",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 408,
             "description": "Gets of sets attribute values, either explicely or impliitely declared",
             "itemtype": "method",
             "name": "attribute",
@@ -1540,7 +1613,27 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 398,
+            "line": 434,
+            "description": "Augments event object with additional X and Y helper coordinates",
+            "itemtype": "method",
+            "name": "procEvent",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "Event to normalize",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Returns object with the additional attributes `posX`, `posY` are normalized absolutes, `offsetX`, offsetY` are normalized parent offsets, `viewportX`, `viewportY` are normalized viewport offsets",
+                "type": "Object"
+            },
+            "class": "pk",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 464,
             "description": "Gets browser agnostic offset coordinates for applicable mouse events",
             "itemtype": "method",
             "name": "getEventOffset",
@@ -1725,7 +1818,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 65,
+            "line": 123,
             "description": "Fired on slide event starting",
             "itemtype": "event",
             "name": "slidestart",
@@ -1746,7 +1839,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 72,
+            "line": 130,
             "description": "Fired on during slide event",
             "itemtype": "event",
             "name": "sliding",
@@ -1767,7 +1860,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 79,
+            "line": 137,
             "description": "Fired on slide event ending",
             "itemtype": "event",
             "name": "slideend",
@@ -1788,7 +1881,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 143,
+            "line": 235,
             "description": "Gets or sets control value",
             "itemtype": "method",
             "name": "val",
@@ -1809,7 +1902,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 150,
+            "line": 242,
             "description": "Gets or sets control disabled state",
             "itemtype": "method",
             "name": "disabled",

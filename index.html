@@ -114,6 +114,9 @@
     <span id='slider2'></span>
     <br>
     <br>
+    <span id='slider3'></span>
+    <br>
+    <br>
 
     <h1>Toggle Input</h1>
 
@@ -313,13 +316,15 @@
             value: 40
         });
         pk.slider({
-            element: document.getElementById('slider2'),
-            units: 'mm',
-            min: 30,
-            max: 980,
-            value: 133
+            element: document.getElementById('slider3'),
+            circle:true
         });
-
+        pk.slider({
+            element: document.getElementById('slider2'),
+            units: '%',
+            axis: 'y',
+            value: 40
+        });
         pk.toggle({
             element: document.getElementById('toggle1'),
             options: [{

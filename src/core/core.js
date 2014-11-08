@@ -222,6 +222,29 @@ Fetch layout and positioning properties of passed DOM element
         };
     };
 /**
+Calculate positioning properties of passed DOM element, optionally augment passed event using `procEvent` for event based positioning
+@method position
+@param element {Object} DOM element
+@param event {Object} Event
+@return {Object} Returns object consisting of `top`, `right`, `bottom`, `left`, `height` and `width` values as well as sub `offset` and `parent` objects
+*/  
+pk.position=function(el, e){
+    if(e){e=pk.procEvent(e);}
+    var p={
+        offset:el.getBoundingClientRect(),
+        parent:{
+            top:el.offsetTop,
+            left:el.offsetLeft
+        },
+        height:el.offsetHeight,
+        width:el.offsetWidth
+    };
+
+    p.top=p.offset.top+document.body.scrollTop;
+    p.left=p.offset.left+document.body.scrollLeft;
+    return p;
+};
+/**
 Apply a series of event listeners to a DOM element
 @method bindListeners
 @param listeners {Object} Consisting of event objects to pass to `bindEvent` method
@@ -408,6 +431,36 @@ Gets of sets attribute values, either explicely or impliitely declared
         }
         return el;
     };
+/**
+Augments event object with additional X and Y helper coordinates
+@method procEvent
+@param event {Object} Event to normalize
+@return {Object} Returns object with the additional attributes `posX`, `posY` are normalized absolutes, `offsetX`, offsetY` are normalized parent offsets, `viewportX`, `viewportY` are normalized viewport offsets
+*/     
+    pk.procEvent=function(e){
+        e.posX = 0;
+        e.posY = 0;
+        if (!e) var e = window.event;
+        if (e.pageX || e.pageY)     {
+            e.posX = e.pageX;
+            e.posY = e.pageY;
+        }
+        else if (e.clientX || e.clientY)    {
+            e.posX = e.clientX + document.body.scrollLeft
+                + document.documentElement.scrollLeft;
+            e.posY = e.clientY + document.body.scrollTop
+                + document.documentElement.scrollTop;
+        }
+        if(e.offsetX===undefined){
+            e.offsetX=e.layerX;
+        }
+        if(e.offsetY===undefined){
+            e.offsetY=e.layerY;
+        }
+        e.viewportY=e.posY-document.body.scrollTop;
+        e.viewportX=e.posX-document.body.scrollLeft;
+        return e;
+    }
 /**
 Gets browser agnostic offset coordinates for applicable mouse events
 @method getEventOffset

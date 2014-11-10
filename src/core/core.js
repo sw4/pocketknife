@@ -200,35 +200,15 @@ Unbind an element handler from a DOM node
 		}
         return el;
 	};
-/**
-Fetch layout and positioning properties of passed DOM element
-@method layout
-@param element {Object} DOM element
-@param offset {Boolean} Calculate values relative to parent or viewport `<html />`
-@return {Object} Returns object consisting of `top`, `right`, `bottom`, `left`, `height` and `width` values
-*/  
-    pk.layout = function(el, offsetEl) {
-        var t = offsetEl ? el.getBoundingClientRect().top : el.offsetTop,
-            l = offsetEl ? el.getBoundingClientRect().left : el.offsetLeft,
-            h = el.offsetHeight,
-            w = el.offsetWidth;
-        return {
-            top: t,
-            left: l,
-            right: l + w,
-            bottom: t + h,
-            height: h,
-            width: w
-        };
-    };
+
 /**
 Calculate positioning properties of passed DOM element, optionally augment passed event using `procEvent` for event based positioning
-@method position
+@method layout
 @param element {Object} DOM element
 @param [event] {Object} Event
 @return {Object} Returns object consisting of `top`, `right`, `bottom`, `left`, `height` and `width` values as well as sub `offset` and `parent` objects
 */  
-pk.position=function(el, e){
+pk.layout=function(el, e){
     if(e){e=pk.procEvent(e);}
     var p={
         offset:el.getBoundingClientRect(),

@@ -67,7 +67,7 @@ Javascript:
 
                 e.dragStart = dragStart;
                 e.dragOffset = startOffset;
-
+ 
                 e.dragEnd = {
                     x: e.clientX,
                     y: e.clientY

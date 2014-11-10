@@ -459,7 +459,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
             var color=pk.color.percentage(50);
 			
         @method percentage
-        @param perc {Number} Percentage between first and second colors to generate color point from
+        @param perc {Number} Percentage between first and second colors to generate color point from expressed as value between zero and one
 		@param [hex1=#ff0000] {String} Starting color HEX value defaults to `#ff0000` red so 0% is red
 		@param [hex2=#1ae500] {String} Starting color HEX value defaults to `#1ae500` green so 100% is green
         @return {String} Returns resulting HEX color

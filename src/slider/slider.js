@@ -52,7 +52,9 @@ Javascript:
 			// circle=false;
 			if(circle){			
 				circle={
-					stroke:circle.stroke || 20
+					stroke:circle.stroke || 20,
+					start:circle.start || 0,
+					length:!circle.length || circle.length===360 ? null : circle.length
 				}
 			}
 
@@ -82,6 +84,12 @@ Javascript:
 
 		function describeArc(x, y, radius, startAngle, endAngle){
 			endAngle = endAngle == 360 || endAngle > 360 ? 359.9 : endAngle ;
+			
+			if(circle.length){
+				startAngle=endAngle-(circle.length / 2);
+				endAngle=endAngle+(circle.length / 2);
+			}
+			
 			var start = polarToCartesian(x, y, radius, endAngle);
 			var end = polarToCartesian(x, y, radius, startAngle);
 

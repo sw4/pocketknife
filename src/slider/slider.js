@@ -66,11 +66,6 @@ Javascript:
             <input type='hidden' name='" + inputName + "' " + inputDisabled + " value='" + inputValue + "'/>\
         </div>";
 		
-		/*
-		var tpl = "<div class='pk-slider pk-slider-" + axis + " " + (inputDisabled ? 'pk-disabled' : '') + "' tabindex='" + inputTabIndex + "'>\
-            <input type='hidden' name='" + inputName + "' " + inputDisabled + " value='" + inputValue + "'/>\            
-        </div>";
-		*/
         el = pk.replaceEl(el, tpl);
 		var l=pk.layout(el);
 		var d = l.height > l.width ? l.height : l.width;
@@ -271,6 +266,9 @@ Javascript:
 				}
                 valueEl.innerHTML = val.toFixed(decimals);
                 unitsEl.innerHTML = units;
+				if (listeners && listeners.change) {
+					listeners.change(el, val, inputEl);
+				}
             },
             disabled: function(val) {
                 if (val !== undefined) {

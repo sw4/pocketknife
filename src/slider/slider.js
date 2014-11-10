@@ -31,6 +31,8 @@ Javascript:
 @param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
 @param [options.circle=false] {Object} Object array of properties to define circular slider
 @param [options.circle.stroke=20] {Number} Stroke width of slider circle
+@param [options.circle.stroke.inner=options.circle.stroke.outer] {Number} Stroke width of inner slider circle
+@param [options.circle.stroke.outer=options.circle.stroke.inner] {Number} Stroke width of outer slider circle
 @return Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
 @chainable
 */
@@ -55,7 +57,11 @@ Javascript:
 					stroke:circle.stroke || 20,
 					start:circle.start || 0,
 					length:!circle.length || circle.length===360 ? null : circle.length
-				}
+				};
+				circle.stroke = {
+					inner:circle.stroke.inner || circle.stroke.outer || circle.stroke,
+					outer: circle.stroke.outer || circle.stroke.inner || circle.stroke
+				};
 			}
 
         if (!axis || !(axis.indexOf("x") < 0 || axis.indexOf("y") < 0)) {
@@ -101,14 +107,14 @@ Javascript:
 		var innerTpl='';
 		if(circle){			
 			innerTpl="<svg height='"+d+"' width='"+d+"' xmlns='http://www.w3.org/2000/svg' version='1.1'>\
-			   <circle class='pk-slider-circle' cx='"+d/2+"' cy='"+d/2+"' r='"+((d-circle.stroke)/2)+"' stroke='black' stroke-width='"+circle.stroke+"' fill='none' />\
-			   <path x='"+d/2+"' y='"+d/2+"' fill='none' stroke='red' d='' stroke-width='"+circle.stroke+"'/>\
+			   <circle class='pk-slider-circle' cx='"+d/2+"' cy='"+d/2+"' r='"+((d-Math.max(circle.stroke.inner, circle.stroke.outer))/2)+"' stroke='black' stroke-width='"+circle.stroke.outer+"' fill='none' />\
+			   <path x='"+d/2+"' y='"+d/2+"' fill='none' d='' stroke-width='"+circle.stroke.inner+"'/>\
 			</svg>";
 			el.appendChild(pk.createEl(innerTpl));
 			el.appendChild(pk.createEl("<span class='pk-slider-monitor'><span class='pk-slider-value'></span><span class='pk-slider-units'></span></span>"));
 			
 			pathEl = el.children[1].childNodes[3]; 
-			pk.attribute(pathEl, 'd', describeArc(d/2, d/2, (d-circle.stroke)/2, 0, 360));	
+			pk.attribute(pathEl, 'd', describeArc(d/2, d/2, (d-Math.max(circle.stroke.inner, circle.stroke.outer))/2, 0, 360));	
 		}else{
 			// get biggest dimension
 			innerTpl="<div class='pk-slider-bar pk-animated'>\
@@ -256,7 +262,7 @@ Javascript:
                 val = val > max ? max : val;
                 inputEl.value = val;
 				if(circle){  
-					pk.attribute(pathEl, 'd', describeArc(d/2, d/2, (d-circle.stroke)/2, 0, (val - min) *360 / range));						
+					pk.attribute(pathEl, 'd', describeArc(d/2, d/2, (d-Math.max(circle.stroke.inner, circle.stroke.outer))/2, 0, (val - min) *360 / range));						
 				}else{
 					if (axis === "x") {
 						indicatorEl.style.width = (val - min) * 100 / range + '%';

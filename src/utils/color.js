@@ -481,10 +481,10 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
         algorithmic: function(opt) {
 			if(!opt.hex){return;}
 			var hex=opt.hex,
-				count = opt.count && typeof parseInt(opt.count,0) === 'number' ? parseInt(opt.count,0) : 3,
-				type = opt.type && typeof opt.type === 'string' ? opt.type : 'hue',
-				scope = opt.scope && typeof parseInt(opt.scope,0) === 'number' ? parseInt(opt.scope,0) : 360,
-				rotation = opt.rotation && typeof parseInt(opt.rotation,0) === 'number' ? parseInt(opt.rotation,0) : 0,
+				count = typeof opt.count === 'undefined' ? 3: opt.count,
+				type = typeof opt.type === 'undefined' ? 'hue' : opt.type,
+				scope = typeof opt.scope === 'undefined' ? 360 : opt.scope,
+				rotation = typeof opt.rotation === 'undefined' ? 0 : opt.rotation,
                 hsv = this.hex2hsv(hex),
                 h = hsv[0],
                 s = hsv[1],
@@ -494,8 +494,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
             // if scope is 360, the start and end point are the same color, so should be avoided, otherwise enlargen the steps
             steps = (type === "hue" && (scope === 360 || scope === 0)) ? scope / count : scope / (count - 1);
             // if scope is 360, start on the current color
-            origin = (scope === 360) ? 0 : this.degrees(this.degrees(h, rotation), -1 * scope / 2);
-
+            origin = (scope === 360) ? h : this.degrees(this.degrees(h, rotation), -1 * scope / 2);
             for (i = 0; i < count; i += 1) {
                 offset = steps * i;
                 switch (type) {

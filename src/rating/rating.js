@@ -17,6 +17,7 @@ Javascript:
 @constructor
 @param options {Object}
 @param options.element {Object} DOM element to convert to control
+@param options.count {Number} Number of items
 @param [options.value=0] {String} Value of initially selected option, defaults to the attribute value set on the passed element, or `0`
 @param [options.name=pk-toggle-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-toggle-RandInt`
 @param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
@@ -33,23 +34,20 @@ Javascript:
             inputDisabled = (opt.disabled || el.getAttribute('disabled')) ? 'disabled' : '',
             inputName = opt.name || el.getAttribute('name') || 'pk-rating-' + pk.getRand(1, 999),
             inputTabIndex = opt.tabindex || el.getAttribute('tabindex') || 0,
-            lastVal = inputValue;
+            lastVal = inputValue,
+			count=opt.count || 5;
 
         /*jshint multistr:true */
-        var str = "<div class='pk-rating'>\
-            <fieldset>\
-                <input type='radio' id='" + inputName + "_5' name='" + inputName + "' value='5' tabindex='" + inputTabIndex + "'/>\
-                <label for='" + inputName + "_5'></label>\
-                <input type='radio' id='" + inputName + "_4' name='" + inputName + "' value='4' />\
-                <label for='" + inputName + "_4'></label>\
-                <input type='radio' id='" + inputName + "_3' name='" + inputName + "' value='3' />\
-                <label for='" + inputName + "_3'></label>\
-                <input type='radio' id='" + inputName + "_2' name='" + inputName + "' value='2' />\
-                <label for='" + inputName + "_2'></label>\
-                <input type='radio' id='" + inputName + "_1' name='" + inputName + "' value='1' />\
-                <label for='" + inputName + "_1'></label>\
-            </fieldset>\
-        </div>";
+        var str = "<div class='pk-rating'><fieldset>";
+
+
+			for(var o = count; o > 0; o--){
+			
+			str+="<input type='radio' id='" + inputName + "_"+o+"' name='" + inputName + "' value='"+o+"'/><label for='" + inputName + "_"+o+"' data-value='"+o+"'></label>";
+			
+			}
+				
+            str+="</fieldset></div>";
         el = pk.replaceEl(el, str);
 
         var rEl = [];

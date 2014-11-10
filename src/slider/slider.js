@@ -94,7 +94,7 @@ Javascript:
 
 			return d;       
 		}
-		
+		var pathEl='';
 		var innerTpl='';
 		if(circle){			
 			innerTpl="<svg height='"+d+"' width='"+d+"' xmlns='http://www.w3.org/2000/svg' version='1.1'>\
@@ -104,6 +104,8 @@ Javascript:
 			el.appendChild(pk.createEl(innerTpl));
 			el.appendChild(pk.createEl("<span class='pk-slider-monitor'><span class='pk-slider-value'></span><span class='pk-slider-units'></span></span>"));
 			
+			pathEl = el.children[1].childNodes[3]; 
+			pk.attribute(pathEl, 'd', describeArc(d/2, d/2, (d-circle.stroke)/2, 0, 360));	
 		}else{
 			// get biggest dimension
 			innerTpl="<div class='pk-slider-bar pk-animated'>\
@@ -112,11 +114,7 @@ Javascript:
 			el.appendChild(pk.createEl(innerTpl));
 		}
 		
-		var pathEl = el.children[1].children[1]; 
-		pk.attribute(pathEl, 'd', describeArc(d/2, d/2, (d-circle.stroke)/2, 0, 360));
-		
-
-        var indicatorEl = circle ? el.children[1].children[1] : el.children[1],
+        var indicatorEl = circle ? el.children[1].childNodes[1] : el.children[1],
             inputEl = el.children[0],
             valueEl = circle ? el.children[2].children[0] : indicatorEl.children[0],
             unitsEl = circle ? el.children[2].children[1] : indicatorEl.children[1];

@@ -220,8 +220,8 @@ pk.layout=function(el, e){
         width:el.offsetWidth
     };
 
-    p.top=p.offset.top+document.body.scrollTop;
-    p.left=p.offset.left+document.body.scrollLeft;
+    p.top=p.offset.top+(document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+    p.left=p.offset.left+(document.documentElement && document.documentElement.scrollLeft) || document.body.scrollLeft;
     return p;
 };
 /**

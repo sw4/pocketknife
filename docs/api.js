@@ -14,6 +14,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "pk.scroll",
         "pk.select",
         "pk.slider",
+        "pk.stages",
         "pk.toggle"
     ],
     "modules": [

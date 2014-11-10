@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/accordian/accordian.js - Pocketknife UI</title>
+    <title>pk.stages - Pocketknife UI</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -118,112 +118,137 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/accordian/accordian.js</h1>
+                        <h1>pk.stages Class</h1>
+<div class="box meta">
+    
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-var pk = pk || {};
-/**
-Create a new accordian component from an unordered list element &#x60;&lt;ul&gt;&#x60; with the below structure:
+    
 
-HTML:
+    
+        <div class="foundat">
+            Defined in: <a href="../files/src_rating_rating.js.html#l4"><code>src&#x2F;rating&#x2F;rating.js:4</code></a>
+        </div>
+    
 
-	&lt;ul id=&#x27;accordian&#x27;&gt;
-        &lt;li&gt;
-            &lt;h3 class=&#x27;pk-content-header&#x27;&gt;Content header&lt;/h3&gt;
-            &lt;div class=&#x27;pk-content&#x27;&gt;
-				Content to collapse
-			&lt;/div&gt;
-        &lt;/li&gt;
-        &lt;li&gt;
-            &lt;h3 class=&#x27;pk-content-header&#x27;&gt;Content header&lt;/h3&gt;
-            &lt;div class=&#x27;pk-content&#x27;&gt;
-				Content to collapse
-			&lt;/div&gt;
-        &lt;/li&gt;
-        &lt;li&gt;
-            &lt;h3 class=&#x27;pk-content-header&#x27;&gt;Content header&lt;/h3&gt;
-            &lt;div class=&#x27;pk-content&#x27;&gt;
-				Content to collapse
-			&lt;/div&gt;
-        &lt;/li&gt;		
-    &lt;/ul&gt;
+    
+        
+            Module: <a href="../modules/pocketknife.html">pocketknife</a>
+        
+    
 
-Javascript:
+    
+</div>
 
-	pk.accordian({
-		element: document.getElementById(&#x27;accordian&#x27;),
-		animate: true,
-		multiple: true
-	});		
-		
-@class pk.accordian
-@constructor
-@param options {Object}
-@param options.element {Object} DOM element to convert to component
-@param [options.animate=true] {Boolean} Animate expand/collapse actions
-@param [options.multiple=true] {Boolean} Allow multiple sections to be expanded simultaneously
-@return Object {Object} Consisting of original DOM element (item &#x60;0&#x60;)
-@chainable
-*/
 
-(function(pk) {
-    pk.accordian = function(opt) {
-        var el = opt.element,
-            anim = opt.animate === false ? false : opt.animate || true,
-            multiple = opt.multiple === false ? false : opt.multiple || true;
 
-		pk.addClass(el, &#x27;pk-accordian&#x27;);
-		
-        function animHeight(tEl) {
-            tEl.style.height = &#x27;auto&#x27;;
-            var h = pk.layout(tEl).height;
-            tEl.style.height = &#x27;0&#x27;;
-            setTimeout(function() {
-                tEl.style.height = h + &#x27;px&#x27;;
-            }, 10);
-        }
+<div class="box intro">
+    <p>Create a new stages control</p>
+<div class='info-well'>
+See entry for <code>pk.rating</code>, for which <code>pk.stages</code> is an augmented psuedonym 
+</div>
 
-        function doLayout(tEl) {
-            for (var a = 0; a &lt; el.children.length; a++) {
-                // loop through each....
+<p>HTML:</p>
+<pre class="code prettyprint"><code>&lt;input id=&#39;stages&#39; /&gt;</code></pre>
+<p>Javascript:</p>
+<pre class="code prettyprint"><code>pk.rating({
+    element: document.getElementById(&#39;stages&#39;),
+    value: 6
+});</code></pre>
 
-                var content = el.children[a].children[1];
-                // if multiple set to false and node passed, hide all other nodes
-                if (tEl &amp;&amp; el.children[a] !== tEl &amp;&amp; multiple === false) {
-                    pk.removeClass(el.children[a], &#x27;pk-show&#x27;);
-                }
-                if (pk.hasClass(el.children[a], &#x27;pk-show&#x27;)) {
-                    // show...if not already shown
-                    if (parseInt(content.style.height, 0) === 0 || !content.style.height) {
-                        if (anim) {
-                            animHeight(content);
-                        } else {
-                            content.style.height = &#x27;auto&#x27;;
-                        }
-                    }
-                } else {
-                    // hide
-                    content.style.height = &#x27;0&#x27;;
-                }
-            }
-        }
-        pk.bindEvent(&#x27;click&#x27;, el, function(e) {
-            if (!pk.hasClass(e.target, &#x27;pk-content-header&#x27;)) {
-                return;
-            }
-            pk.toggleClass(e.target.parentNode, &#x27;pk-show&#x27;);
-            doLayout(e.target.parentNode);
-        });
-        doLayout();
-        return {
-            0: el
-        };
-    };
-    return pk;
-})(pk);
+</div>
 
-    </pre>
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_pk.stages" class="method item">
+    <h3 class="name"><code>pk.stages</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_rating_rating.js.html#l4"><code>src&#x2F;rating&#x2F;rating.js:4</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+    </div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+
+            
+
+            
+
+            
+        </div>
+
+        
+
+        
+
+        
+
+        
+    </div>
 </div>
 
                     </div>

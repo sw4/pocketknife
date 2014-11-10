@@ -73,6 +73,8 @@
             
                 <li><a href="../classes/pk.slider.html">pk.slider</a></li>
             
+                <li><a href="../classes/pk.stages.html">pk.stages</a></li>
+            
                 <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
             
             </ul>
@@ -153,6 +155,8 @@ Javascript:
 @param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
 @param [options.circle=false] {Object} Object array of properties to define circular slider
 @param [options.circle.stroke=20] {Number} Stroke width of slider circle
+@param [options.circle.stroke.inner=options.circle.stroke.outer] {Number} Stroke width of inner slider circle
+@param [options.circle.stroke.outer=options.circle.stroke.inner] {Number} Stroke width of outer slider circle
 @return Object {Object} Consisting of original DOM element (item &#x60;0&#x60;) and class methods (see below)
 @chainable
 */
@@ -174,8 +178,14 @@ Javascript:
 			// circle=false;
 			if(circle){			
 				circle={
-					stroke:circle.stroke || 20
-				}
+					stroke:circle.stroke || 20,
+					start:circle.start || 0,
+					length:!circle.length || circle.length===360 ? null : circle.length
+				};
+				circle.stroke = {
+					inner:circle.stroke.inner || circle.stroke.outer || circle.stroke,
+					outer: circle.stroke.outer || circle.stroke.inner || circle.stroke
+				};
 			}
 
         if (!axis || !(axis.indexOf(&quot;x&quot;) &lt; 0 || axis.indexOf(&quot;y&quot;) &lt; 0)) {
@@ -186,15 +196,9 @@ Javascript:
             &lt;input type=&#x27;hidden&#x27; name=&#x27;&quot; + inputName + &quot;&#x27; &quot; + inputDisabled + &quot; value=&#x27;&quot; + inputValue + &quot;&#x27;/&gt;\
         &lt;/div&gt;&quot;;
 		
-		/*
-		var tpl = &quot;&lt;div class=&#x27;pk-slider pk-slider-&quot; + axis + &quot; &quot; + (inputDisabled ? &#x27;pk-disabled&#x27; : &#x27;&#x27;) + &quot;&#x27; tabindex=&#x27;&quot; + inputTabIndex + &quot;&#x27;&gt;\
-            &lt;input type=&#x27;hidden&#x27; name=&#x27;&quot; + inputName + &quot;&#x27; &quot; + inputDisabled + &quot; value=&#x27;&quot; + inputValue + &quot;&#x27;/&gt;\            
-        &lt;/div&gt;&quot;;
-		*/
         el = pk.replaceEl(el, tpl);
-		var l=pk.layout(el, true);
+		var l=pk.layout(el);
 		var d = l.height &gt; l.width ? l.height : l.width;
-				
 		function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
 		  var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
 		  return {
@@ -205,6 +209,12 @@ Javascript:
 
 		function describeArc(x, y, radius, startAngle, endAngle){
 			endAngle = endAngle == 360 || endAngle &gt; 360 ? 359.9 : endAngle ;
+			
+			if(circle.length){
+				startAngle=endAngle-(circle.length / 2);
+				endAngle=endAngle+(circle.length / 2);
+			}
+			
 			var start = polarToCartesian(x, y, radius, endAngle);
 			var end = polarToCartesian(x, y, radius, startAngle);
 
@@ -217,16 +227,18 @@ Javascript:
 
 			return d;       
 		}
-		
+		var pathEl=&#x27;&#x27;;
 		var innerTpl=&#x27;&#x27;;
 		if(circle){			
 			innerTpl=&quot;&lt;svg height=&#x27;&quot;+d+&quot;&#x27; width=&#x27;&quot;+d+&quot;&#x27; xmlns=&#x27;http://www.w3.org/2000/svg&#x27; version=&#x27;1.1&#x27;&gt;\
-			   &lt;circle class=&#x27;pk-slider-circle&#x27; cx=&#x27;&quot;+d/2+&quot;&#x27; cy=&#x27;&quot;+d/2+&quot;&#x27; r=&#x27;&quot;+((d-circle.stroke)/2)+&quot;&#x27; stroke=&#x27;black&#x27; stroke-width=&#x27;&quot;+circle.stroke+&quot;&#x27; fill=&#x27;none&#x27; /&gt;\
-			   &lt;path x=&#x27;&quot;+d/2+&quot;&#x27; y=&#x27;&quot;+d/2+&quot;&#x27; fill=&#x27;none&#x27; stroke=&#x27;red&#x27; d=&#x27;&#x27; stroke-width=&#x27;&quot;+circle.stroke+&quot;&#x27;/&gt;\
+			   &lt;circle class=&#x27;pk-slider-circle&#x27; cx=&#x27;&quot;+d/2+&quot;&#x27; cy=&#x27;&quot;+d/2+&quot;&#x27; r=&#x27;&quot;+((d-Math.max(circle.stroke.inner, circle.stroke.outer))/2)+&quot;&#x27; stroke=&#x27;black&#x27; stroke-width=&#x27;&quot;+circle.stroke.outer+&quot;&#x27; fill=&#x27;none&#x27; /&gt;\
+			   &lt;path x=&#x27;&quot;+d/2+&quot;&#x27; y=&#x27;&quot;+d/2+&quot;&#x27; fill=&#x27;none&#x27; d=&#x27;&#x27; stroke-width=&#x27;&quot;+circle.stroke.inner+&quot;&#x27;/&gt;\
 			&lt;/svg&gt;&quot;;
 			el.appendChild(pk.createEl(innerTpl));
 			el.appendChild(pk.createEl(&quot;&lt;span class=&#x27;pk-slider-monitor&#x27;&gt;&lt;span class=&#x27;pk-slider-value&#x27;&gt;&lt;/span&gt;&lt;span class=&#x27;pk-slider-units&#x27;&gt;&lt;/span&gt;&lt;/span&gt;&quot;));
 			
+			pathEl = el.children[1].childNodes[3]; 
+			pk.attribute(pathEl, &#x27;d&#x27;, describeArc(d/2, d/2, (d-Math.max(circle.stroke.inner, circle.stroke.outer))/2, 0, 360));	
 		}else{
 			// get biggest dimension
 			innerTpl=&quot;&lt;div class=&#x27;pk-slider-bar pk-animated&#x27;&gt;\
@@ -235,11 +247,7 @@ Javascript:
 			el.appendChild(pk.createEl(innerTpl));
 		}
 		
-		var pathEl = el.children[1].children[1]; 
-		pk.attribute(pathEl, &#x27;d&#x27;, describeArc(d/2, d/2, (d-circle.stroke)/2, 0, 360));
-		
-
-        var indicatorEl = circle ? el.children[1].children[1] : el.children[1],
+        var indicatorEl = circle ? el.children[1].childNodes[1] : el.children[1],
             inputEl = el.children[0],
             valueEl = circle ? el.children[2].children[0] : indicatorEl.children[0],
             unitsEl = circle ? el.children[2].children[1] : indicatorEl.children[1];
@@ -275,10 +283,9 @@ Javascript:
                 dragging: function(el, e) {
                     if (obj.disabled()) {
                         return false;
-                    }
+                    }			
 					var perc=0;
-
-				    var p =pk.position(el,e);
+				    var p =pk.layout(el,e);
 					if(circle){
 						var origin={
 							x:p.left+(p.width/2),
@@ -302,6 +309,7 @@ Javascript:
                     }
                 },
                 dragstart: function(el, e) {
+				
                     if (obj.disabled()) {
                         return false;
                     }
@@ -328,7 +336,7 @@ Javascript:
             }
 			var perc=0;
 			if(circle){			
-				var p =pk.position(el,e);
+				var p =pk.layout(el,e);
 				var origin={
 					x:p.left+(p.width/2),
 					y:p.top+(p.height/2)
@@ -378,7 +386,7 @@ Javascript:
                 val = val &gt; max ? max : val;
                 inputEl.value = val;
 				if(circle){  
-					pk.attribute(pathEl, &#x27;d&#x27;, describeArc(d/2, d/2, (d-circle.stroke)/2, 0, (val - min) *360 / range));						
+					pk.attribute(pathEl, &#x27;d&#x27;, describeArc(d/2, d/2, (d-Math.max(circle.stroke.inner, circle.stroke.outer))/2, 0, (val - min) *360 / range));						
 				}else{
 					if (axis === &quot;x&quot;) {
 						indicatorEl.style.width = (val - min) * 100 / range + &#x27;%&#x27;;
@@ -388,6 +396,9 @@ Javascript:
 				}
                 valueEl.innerHTML = val.toFixed(decimals);
                 unitsEl.innerHTML = units;
+				if (listeners &amp;&amp; listeners.change) {
+					listeners.change(el, val, inputEl);
+				}
             },
             disabled: function(val) {
                 if (val !== undefined) {

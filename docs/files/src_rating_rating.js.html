@@ -73,6 +73,8 @@
             
                 <li><a href="../classes/pk.slider.html">pk.slider</a></li>
             
+                <li><a href="../classes/pk.stages.html">pk.stages</a></li>
+            
                 <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
             
             </ul>
@@ -121,6 +123,32 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 var pk = pk || {};
+
+
+/**
+Create a new stages control
+
+&lt;div class=&#x27;info-well&#x27;&gt;
+See entry for &#x60;pk.rating&#x60;, for which &#x60;pk.stages&#x60; is an augmented psuedonym 
+&lt;/div&gt;
+
+HTML:
+
+	&lt;input id=&#x27;stages&#x27; /&gt;
+	
+Javascript:
+
+	pk.rating({
+		element: document.getElementById(&#x27;stages&#x27;),
+		value: 6
+	});
+
+@class pk.stages 
+@constructor
+@chainable
+*/
+
+
 /**
 Create a new rating control
 
@@ -135,10 +163,11 @@ Javascript:
 		value: 3
 	});
 
-@class pk.rating
+@class pk.rating 
 @constructor
 @param options {Object}
 @param options.element {Object} DOM element to convert to control
+@param options.count {Number} Number of items
 @param [options.value=0] {String} Value of initially selected option, defaults to the attribute value set on the passed element, or &#x60;0&#x60;
 @param [options.name=pk-toggle-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or &#x60;pk-toggle-RandInt&#x60;
 @param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or &#x60;0&#x60;
@@ -155,23 +184,21 @@ Javascript:
             inputDisabled = (opt.disabled || el.getAttribute(&#x27;disabled&#x27;)) ? &#x27;disabled&#x27; : &#x27;&#x27;,
             inputName = opt.name || el.getAttribute(&#x27;name&#x27;) || &#x27;pk-rating-&#x27; + pk.getRand(1, 999),
             inputTabIndex = opt.tabindex || el.getAttribute(&#x27;tabindex&#x27;) || 0,
-            lastVal = inputValue;
+            lastVal = inputValue,
+			count=opt.count || 5;
 
+
+			
         /*jshint multistr:true */
-        var str = &quot;&lt;div class=&#x27;pk-rating&#x27;&gt;\
-            &lt;fieldset&gt;\
-                &lt;input type=&#x27;radio&#x27; id=&#x27;&quot; + inputName + &quot;_5&#x27; name=&#x27;&quot; + inputName + &quot;&#x27; value=&#x27;5&#x27; tabindex=&#x27;&quot; + inputTabIndex + &quot;&#x27;/&gt;\
-                &lt;label for=&#x27;&quot; + inputName + &quot;_5&#x27;&gt;&lt;/label&gt;\
-                &lt;input type=&#x27;radio&#x27; id=&#x27;&quot; + inputName + &quot;_4&#x27; name=&#x27;&quot; + inputName + &quot;&#x27; value=&#x27;4&#x27; /&gt;\
-                &lt;label for=&#x27;&quot; + inputName + &quot;_4&#x27;&gt;&lt;/label&gt;\
-                &lt;input type=&#x27;radio&#x27; id=&#x27;&quot; + inputName + &quot;_3&#x27; name=&#x27;&quot; + inputName + &quot;&#x27; value=&#x27;3&#x27; /&gt;\
-                &lt;label for=&#x27;&quot; + inputName + &quot;_3&#x27;&gt;&lt;/label&gt;\
-                &lt;input type=&#x27;radio&#x27; id=&#x27;&quot; + inputName + &quot;_2&#x27; name=&#x27;&quot; + inputName + &quot;&#x27; value=&#x27;2&#x27; /&gt;\
-                &lt;label for=&#x27;&quot; + inputName + &quot;_2&#x27;&gt;&lt;/label&gt;\
-                &lt;input type=&#x27;radio&#x27; id=&#x27;&quot; + inputName + &quot;_1&#x27; name=&#x27;&quot; + inputName + &quot;&#x27; value=&#x27;1&#x27; /&gt;\
-                &lt;label for=&#x27;&quot; + inputName + &quot;_1&#x27;&gt;&lt;/label&gt;\
-            &lt;/fieldset&gt;\
-        &lt;/div&gt;&quot;;
+        var str = &quot;&lt;div class=&#x27;&quot;+ (opt.stages ? &#x27;pk-stages&#x27; : &#x27;pk-rating&#x27;) +&quot;&#x27;&gt;&lt;fieldset tabindex=&#x27;&quot;+inputTabIndex+&quot;&#x27;&gt;&quot;;
+			for(var o = count; o &gt; 0; o--){			 
+				var style=&#x27;&#x27;;
+				if(opt.stages){
+					style=&quot;style=&#x27;width:&quot;+(100/count)+&quot;%;z-index:&quot;+(count-o)+&quot;&#x27;&quot;;
+				}
+				str+=&quot;&lt;input type=&#x27;radio&#x27; id=&#x27;&quot; + inputName + &quot;_&quot;+o+&quot;&#x27; name=&#x27;&quot; + inputName + &quot;&#x27; value=&#x27;&quot;+o+&quot;&#x27;/&gt;&lt;label for=&#x27;&quot; + inputName + &quot;_&quot;+o+&quot;&#x27; data-label=&#x27;&quot;+o+&quot;&#x27; &quot;+style+&quot;&gt;&lt;/label&gt;&quot;;			
+			}				
+            str+=&quot;&lt;/fieldset&gt;&lt;/div&gt;&quot;;
         el = pk.replaceEl(el, str);
 
         var rEl = [];
@@ -254,8 +281,13 @@ Javascript:
             obj.disabled(true);
         }
         return obj;
-    };
+    }; 
+	pk.stages = function(opt) {
+		opt.stages=true;
+		return pk.rating(opt);
+	};	
     return pk;
+	
 })(pk);
 
     </pre>

@@ -84,6 +84,7 @@
             "name": "src/rating/rating.js",
             "modules": {},
             "classes": {
+                "pk.stages": 1,
                 "pk.rating": 1
             },
             "fors": {},
@@ -148,6 +149,7 @@
                 "pk.drag": 1,
                 "pk.modal": 1,
                 "pk.notify": 1,
+                "pk.stages": 1,
                 "pk.rating": 1,
                 "pk.scroll": 1,
                 "pk.select": 1,
@@ -534,6 +536,22 @@
             "description": "Class used for notification management\n\nHTML\n\n    <button onclick=\"showNotification();\">Show Notification</button>\n\nJavascript:\n\n\tfunction showNotification(){\n\t\tpk.notify.push({\n\t\t\tcontent:'Default message'\n\t\t});\n\t}",
             "static": 1
         },
+        "pk.stages": {
+            "name": "pk.stages",
+            "shortname": "pk.stages",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/rating/rating.js",
+            "line": 4,
+            "description": "Create a new stages control\n\n<div class='info-well'>\nSee entry for `pk.rating`, for which `pk.stages` is an augmented psuedonym \n</div>\n\nHTML:\n\n\t<input id='stages' />\n\t\nJavascript:\n\n\tpk.rating({\n\t\telement: document.getElementById('stages'),\n\t\tvalue: 6\n\t});",
+            "is_constructor": 1,
+            "chainable": 1
+        },
         "pk.rating": {
             "name": "pk.rating",
             "shortname": "pk.rating",
@@ -545,7 +563,7 @@
             "module": "pocketknife",
             "namespace": "",
             "file": "src/rating/rating.js",
-            "line": 2,
+            "line": 28,
             "description": "Create a new rating control\n\nHTML:\n\n\t<input id='rating' />\n\t\nJavascript:\n\n\tpk.rating({\n\t\telement: document.getElementById('rating'),\n\t\tvalue: 3\n\t});",
             "is_constructor": 1,
             "params": [
@@ -558,6 +576,11 @@
                             "name": "element",
                             "description": "DOM element to convert to control",
                             "type": "Object"
+                        },
+                        {
+                            "name": "count",
+                            "description": "Number of items",
+                            "type": "Number"
                         },
                         {
                             "name": "value",
@@ -848,6 +871,20 @@
                                     "type": "Number",
                                     "optional": true,
                                     "optdefault": "20"
+                                },
+                                {
+                                    "name": "stroke.inner",
+                                    "description": "Stroke width of inner slider circle",
+                                    "type": "Number",
+                                    "optional": true,
+                                    "optdefault": "options.circle.stroke.outer"
+                                },
+                                {
+                                    "name": "stroke.outer",
+                                    "description": "Stroke width of outer slider circle",
+                                    "type": "Number",
+                                    "optional": true,
+                                    "optdefault": "options.circle.stroke.inner"
                                 }
                             ]
                         }
@@ -1298,35 +1335,10 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 203,
-            "description": "Fetch layout and positioning properties of passed DOM element",
-            "itemtype": "method",
-            "name": "layout",
-            "params": [
-                {
-                    "name": "element",
-                    "description": "DOM element",
-                    "type": "Object"
-                },
-                {
-                    "name": "offset",
-                    "description": "Calculate values relative to parent or viewport `<html />`",
-                    "type": "Boolean"
-                }
-            ],
-            "return": {
-                "description": "Returns object consisting of `top`, `right`, `bottom`, `left`, `height` and `width` values",
-                "type": "Object"
-            },
-            "class": "pk",
-            "module": "pocketknife"
-        },
-        {
-            "file": "src/core/core.js",
-            "line": 224,
+            "line": 204,
             "description": "Calculate positioning properties of passed DOM element, optionally augment passed event using `procEvent` for event based positioning",
             "itemtype": "method",
-            "name": "position",
+            "name": "layout",
             "params": [
                 {
                     "name": "element",
@@ -1349,7 +1361,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 247,
+            "line": 227,
             "description": "Apply a series of event listeners to a DOM element",
             "itemtype": "method",
             "name": "bindListeners",
@@ -1375,7 +1387,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 263,
+            "line": 243,
             "description": "Generate a random number between the passed `min` and `max` values",
             "itemtype": "method",
             "name": "getRand",
@@ -1400,7 +1412,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 273,
+            "line": 253,
             "description": "Extract unit type from passed string",
             "itemtype": "method",
             "name": "getUnits",
@@ -1420,7 +1432,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 282,
+            "line": 262,
             "description": "Wrap the passed DOM element in a new DOM node created from the `wrapper` string",
             "itemtype": "method",
             "name": "wrapEl",
@@ -1446,7 +1458,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 296,
+            "line": 276,
             "description": "Create a new DOM element from the passed `HTML` string",
             "itemtype": "method",
             "name": "createEl",
@@ -1467,7 +1479,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 308,
+            "line": 288,
             "description": "Get the index of the passed DOM node within the immediate parent",
             "itemtype": "method",
             "name": "getIndex",
@@ -1487,7 +1499,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 325,
+            "line": 305,
             "description": "Replace the passed DOM element with a new element created from the passed string, inclusive of all original attributes",
             "itemtype": "method",
             "name": "replaceEl",
@@ -1513,7 +1525,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 344,
+            "line": 324,
             "description": "Forces the passed variable into an array, xploding comma seperated strings, keeping existing arrys, collapsing objects and or converting strings as necessary",
             "itemtype": "method",
             "name": "toArr",
@@ -1533,7 +1545,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 363,
+            "line": 343,
             "description": "Collides two arrays, either replacing one with the other, removing one from another, adding one to another or toggling the values of one in another",
             "itemtype": "method",
             "name": "collide",
@@ -1565,7 +1577,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 395,
+            "line": 375,
             "description": "Returns normalized percentage value",
             "itemtype": "method",
             "name": "perc",
@@ -1590,7 +1602,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 408,
+            "line": 388,
             "description": "Gets of sets attribute values, either explicely or impliitely declared",
             "itemtype": "method",
             "name": "attribute",
@@ -1621,7 +1633,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 434,
+            "line": 414,
             "description": "Augments event object with additional X and Y helper coordinates",
             "itemtype": "method",
             "name": "procEvent",
@@ -1641,7 +1653,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 464,
+            "line": 444,
             "description": "Gets browser agnostic offset coordinates for applicable mouse events",
             "itemtype": "method",
             "name": "getEventOffset",
@@ -1661,7 +1673,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 87,
+            "line": 85,
             "description": "Fired on drag event starting",
             "itemtype": "event",
             "name": "dragstart",
@@ -1682,7 +1694,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 94,
+            "line": 92,
             "description": "Fired on during drag event",
             "itemtype": "event",
             "name": "dragging",
@@ -1703,7 +1715,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 101,
+            "line": 99,
             "description": "Fired on drag event ending",
             "itemtype": "event",
             "name": "dragend",
@@ -1784,7 +1796,7 @@
         },
         {
             "file": "src/rating/rating.js",
-            "line": 85,
+            "line": 110,
             "description": "Gets or sets control value",
             "itemtype": "method",
             "name": "val",
@@ -1805,7 +1817,7 @@
         },
         {
             "file": "src/rating/rating.js",
-            "line": 92,
+            "line": 117,
             "description": "Gets or sets control disabled state",
             "itemtype": "method",
             "name": "disabled",
@@ -1826,7 +1838,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 125,
+            "line": 131,
             "description": "Fired on slide event starting",
             "itemtype": "event",
             "name": "slidestart",
@@ -1847,7 +1859,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 132,
+            "line": 138,
             "description": "Fired on during slide event",
             "itemtype": "event",
             "name": "sliding",
@@ -1868,7 +1880,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 139,
+            "line": 145,
             "description": "Fired on slide event ending",
             "itemtype": "event",
             "name": "slideend",
@@ -1889,7 +1901,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 236,
+            "line": 242,
             "description": "Gets or sets control value",
             "itemtype": "method",
             "name": "val",
@@ -1910,7 +1922,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 243,
+            "line": 249,
             "description": "Gets or sets control disabled state",
             "itemtype": "method",
             "name": "disabled",
@@ -2320,6 +2332,40 @@
         {
             "file": "src/utils/color.js",
             "line": 456,
+            "description": "Generate a color from a percentage point between two colors\n\t\t\n    var color=pk.color.percentage(0.5);\n    // color = \"#f2e600\";",
+            "itemtype": "method",
+            "name": "percentage",
+            "params": [
+                {
+                    "name": "perc",
+                    "description": "Percentage between first and second colors to generate color point from expressed as value between zero and one",
+                    "type": "Number"
+                },
+                {
+                    "name": "hex1",
+                    "description": "Starting color HEX value defaults to `#ff0000` red so 0% is red",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "#ff0000"
+                },
+                {
+                    "name": "hex2",
+                    "description": "Starting color HEX value defaults to `#1ae500` green so 100% is green",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "#1ae500"
+                }
+            ],
+            "return": {
+                "description": "Returns resulting HEX color",
+                "type": "String"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 475,
             "description": "Generate algorithmic color palette\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000'});\n    // palette = [\"#ff0000\", \"#00ff00\", \"#0000ff\"] \t\t\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000', count: 5});\n    // palette = [\"#ff0000\", \"#ccff00\", \"#00ff66\", \"#0066ff\", \"#cc00ff\"]  \t\t\t\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000', scope: 100, count:4});\n    // palette = [\"#ff00d4\", \"#ff0047\", \"#ff4700\", \"#ffd500\"]\n\n    var palette=pk.color.algorithmic ({hex:'#FF0000', type:'saturation', scope:50});\n    // palette = [\"#ffffff\", \"#ffbfbf\", \"#ff8080\"]",
             "itemtype": "method",
             "name": "algorithmic",

@@ -73,6 +73,8 @@
             
                 <li><a href="../classes/pk.slider.html">pk.slider</a></li>
             
+                <li><a href="../classes/pk.stages.html">pk.stages</a></li>
+            
                 <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
             
             </ul>
@@ -255,6 +257,13 @@ For color conversion methods, where the expected parameter is an array e.g <code
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_percentage">percentage</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_random">random</a>
 
                                 
@@ -358,7 +367,7 @@ For color conversion methods, where the expected parameter is an array e.g <code
             
         
         
-        <a href="../files/src_utils_color.js.html#l456"><code>src&#x2F;utils&#x2F;color.js:456</code></a>
+        <a href="../files/src_utils_color.js.html#l475"><code>src&#x2F;utils&#x2F;color.js:475</code></a>
         
         </p>
 
@@ -1723,6 +1732,161 @@ var palette=pk.color.complement(&#39;#FF0000&#39;, &#39;double&#39;);
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>:
                     
                     <p>Returns array of HEX color strings</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_percentage" class="method item">
+    <h3 class="name"><code>percentage</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>perc</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[hex1=#ff0000]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[hex2=#1ae500]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_utils_color.js.html#l456"><code>src&#x2F;utils&#x2F;color.js:456</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Generate a color from a percentage point between two colors</p>
+<pre class="code prettyprint"><code>var color=pk.color.percentage(0.5);
+// color = &quot;#f2e600&quot;;</code></pre>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">perc</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Percentage between first and second colors to generate color point from expressed as value between zero and one</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[hex1=#ff0000]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Starting color HEX value defaults to <code>#ff0000</code> red so 0% is red</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[hex2=#1ae500]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Starting color HEX value defaults to <code>#1ae500</code> green so 100% is green</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>:
+                    
+                    <p>Returns resulting HEX color</p>
 
                 
             </div>

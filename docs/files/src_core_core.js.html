@@ -73,6 +73,8 @@
             
                 <li><a href="../classes/pk.slider.html">pk.slider</a></li>
             
+                <li><a href="../classes/pk.stages.html">pk.stages</a></li>
+            
                 <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
             
             </ul>
@@ -322,48 +324,28 @@ Unbind an element handler from a DOM node
 		}
         return el;
 	};
-/**
-Fetch layout and positioning properties of passed DOM element
-@method layout
-@param element {Object} DOM element
-@param offset {Boolean} Calculate values relative to parent or viewport &#x60;&lt;html /&gt;&#x60;
-@return {Object} Returns object consisting of &#x60;top&#x60;, &#x60;right&#x60;, &#x60;bottom&#x60;, &#x60;left&#x60;, &#x60;height&#x60; and &#x60;width&#x60; values
-*/  
-    pk.layout = function(el, offsetEl) {
-        var t = offsetEl ? el.getBoundingClientRect().top : el.offsetTop,
-            l = offsetEl ? el.getBoundingClientRect().left : el.offsetLeft,
-            h = el.offsetHeight,
-            w = el.offsetWidth;
-        return {
-            top: t,
-            left: l,
-            right: l + w,
-            bottom: t + h,
-            height: h,
-            width: w
-        };
-    };
+
 /**
 Calculate positioning properties of passed DOM element, optionally augment passed event using &#x60;procEvent&#x60; for event based positioning
-@method position
+@method layout
 @param element {Object} DOM element
 @param [event] {Object} Event
 @return {Object} Returns object consisting of &#x60;top&#x60;, &#x60;right&#x60;, &#x60;bottom&#x60;, &#x60;left&#x60;, &#x60;height&#x60; and &#x60;width&#x60; values as well as sub &#x60;offset&#x60; and &#x60;parent&#x60; objects
 */  
-pk.position=function(el, e){
+pk.layout=function(el, e){
     if(e){e=pk.procEvent(e);}
     var p={
         offset:el.getBoundingClientRect(),
-        parent:{
+        parent:{ 
             top:el.offsetTop,
             left:el.offsetLeft
         },
         height:el.offsetHeight,
         width:el.offsetWidth
     };
-
-    p.top=p.offset.top+document.body.scrollTop;
-    p.left=p.offset.left+document.body.scrollLeft;
+ 
+    p.top=p.offset.top+(document.documentElement &amp;&amp; document.documentElement.scrollTop!==0 ? document.documentElement.scrollTop :  document.body.scrollTop);
+    p.left=p.offset.left+(document.documentElement &amp;&amp; document.documentElement.scrollLeft!==0 ? document.documentElement.scrollLeft :  document.body.scrollLeft);
     return p;
 };
 /**

@@ -456,7 +456,8 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
         /**
         Generate a color from a percentage point between two colors
 		
-            var color=pk.color.percentage(50);
+            var color=pk.color.percentage(0.5);
+			// color = "#f2e600";
 			
         @method percentage
         @param perc {Number} Percentage between first and second colors to generate color point from expressed as value between zero and one

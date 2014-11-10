@@ -53,7 +53,7 @@ Javascript:
 		
         function animHeight(tEl) {
             tEl.style.height = 'auto';
-            var h = pk.layout(tEl).height;
+            var h = pk.position(tEl).height;
             tEl.style.height = '0';
             setTimeout(function() {
                 tEl.style.height = h + 'px';

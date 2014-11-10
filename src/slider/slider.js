@@ -205,7 +205,7 @@ Javascript:
             }
 			var perc=0;
 			if(circle){			
-				var p =pk.position(el,e);
+				var p =pk.layout(el,e);
 				var origin={
 					x:p.left+(p.width/2),
 					y:p.top+(p.height/2)

@@ -70,3 +70,109 @@
 		}
 	}
 }
+
+.pk-stages {
+	fieldset {
+		float: left;
+		border: none;
+		width:50%;
+		padding:0;
+		margin:0;
+		position:relative;
+	}
+	input{
+		display: none;
+		&:checked{
+			& ~ label:before {
+				border: 2px solid @color-highlight;				
+				background:  fade(@color-highlight, 30%);
+				color:@color-highlight;
+				padding:0;
+			}
+			& ~ label:after {
+				border-top-color:@color-highlight;
+			}			
+		}
+	}
+	label {
+		float: right;
+		white-space: nowrap;
+		box-sizing:border-box;
+		cursor: pointer;
+		font-size: 200%;
+		line-height: 1.2;
+		position:relative;
+		display:inline-block;
+		color: darken(@color-background, 10%);
+		transition: all 100ms ease-in;
+		&:before{
+			content: attr(data-label);
+			position:relative;
+			width:@item-height;
+			height:@item-height;
+			background:@color-background;
+			font-size:.7em;
+			color:@color-highlight;
+			border: 2px solid @color-highlight;		
+			border-radius:100%;
+			display:inline-block;
+			text-align:center;
+			line-height:@item-height;
+			transition: all 100ms ease-in;
+		}	
+		:not(:last-of-type)&:after{
+			content:'';
+			width:calc(~"100% - " @item-height);
+			position:absolute;
+			right:98%;
+			border-top:2px solid fade(@color-highlight, 30%);
+			top:@item-height/1.8;
+			transition: all 100ms ease-in;
+		}			
+		&:active{
+		    position: relative;
+		}
+	}
+	&.pk-disabled{
+		label:before, label ~ label:before {
+			background: darken(@color-background, 20%);
+		}
+		input:checked + label,
+		input:checked + label ~ label,
+		input:checked ~ label,
+		input:checked ~ label ~ label,
+		label ~ input:checked ~ label:before{
+			background: darken(@color-background, 40%);
+		}
+	}
+	&:not(.pk-disabled){
+		input{
+			&:checked{
+				& + label:hover:before,
+				& + label:hover ~ label:before,
+				& ~ label:hover:before,
+				& ~ label:hover ~ label:before{
+					background:fade(@color-highlight, 30%);
+				}
+				& + label:hover:after,
+				& + label:hover ~ label:after,
+				& ~ label:hover:after,
+				& ~ label:hover ~ label:after{	
+					border-top-color:@color-highlight;
+				}
+				
+			}
+		}		
+		label{
+			&:hover:before, &:hover ~ label:before {
+				background: fade(@color-highlight, 30%);
+			}
+			&:hover:after, &:hover ~ label:after {
+				border-top-color:@color-highlight;
+			}			
+			&:hover ~ input:checked ~ label:before {
+			//	background: @color-highlight;
+			}
+		}
+	}
+}

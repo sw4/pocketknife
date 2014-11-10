@@ -62,8 +62,6 @@ Javascript:
         var dragging = false;
         var dragStart = {};
         var startOffset;
-        var containerD = {};
-        var elD = {};
 
         function augmentEvent(e) {
 
@@ -79,8 +77,8 @@ Javascript:
                     y: e.dragEnd.y - e.dragStart.y
                 };
                 e.dragPerc = {
-                    x: (e.dragDist.x + e.dragOffset.x) / pk.layout(container.element).width,
-                    y: (e.dragDist.y + e.dragOffset.y) / pk.layout(container.element).height
+                    x: ( e.dragDist.x + e.dragOffset.x) / pk.layout(container.element).width,
+                    y: ( e.dragDist.y + e.dragOffset.y) / pk.layout(container.element).height
                 };
                 return e;
             }
@@ -120,8 +118,6 @@ Javascript:
             document.onselectstart = function() {
                 return false;
             };
-            containerD = pk.layout(container.element);
-            elD = pk.layout(el);
             if (fn && fn.dragstart) {
                 fn.dragstart(el, e);
             }

@@ -212,16 +212,16 @@ pk.layout=function(el, e){
     if(e){e=pk.procEvent(e);}
     var p={
         offset:el.getBoundingClientRect(),
-        parent:{
+        parent:{ 
             top:el.offsetTop,
             left:el.offsetLeft
         },
         height:el.offsetHeight,
         width:el.offsetWidth
     };
-
-    p.top=p.offset.top+(document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-    p.left=p.offset.left+(document.documentElement && document.documentElement.scrollLeft) || document.body.scrollLeft;
+ 
+    p.top=p.offset.top+(document.documentElement && document.documentElement.scrollTop!==0 ? document.documentElement.scrollTop :  document.body.scrollTop);
+    p.left=p.offset.left+(document.documentElement && document.documentElement.scrollLeft!==0 ? document.documentElement.scrollLeft :  document.body.scrollLeft);
     return p;
 };
 /**

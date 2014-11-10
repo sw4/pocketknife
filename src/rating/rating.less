@@ -83,10 +83,9 @@
 	input{
 		display: none;
 		&:checked{
-			& ~ label:before {
-				border: 2px solid @color-highlight;				
-				background:  fade(@color-highlight, 30%);
-				color:@color-highlight;
+			& ~ label:before {		
+				background:  @color-highlight;
+				color:@color-background;
 				padding:0;
 			}
 			& ~ label:after {
@@ -110,10 +109,9 @@
 			position:relative;
 			width:@item-height;
 			height:@item-height;
-			background:@color-background;
+			background:darken(@color-background, 5%);
 			font-size:.7em;
-			color:@color-highlight;
-			border: 2px solid @color-highlight;		
+			color:darken(@color-background, 50%);
 			border-radius:100%;
 			display:inline-block;
 			text-align:center;
@@ -125,7 +123,7 @@
 			width:calc(~"100% - " @item-height);
 			position:absolute;
 			right:98%;
-			border-top:2px solid fade(@color-highlight, 30%);
+			border-top:2px dotted darken(@color-background, 15%);
 			top:@item-height/1.8;
 			transition: all 100ms ease-in;
 		}			
@@ -152,7 +150,8 @@
 				& + label:hover ~ label:before,
 				& ~ label:hover:before,
 				& ~ label:hover ~ label:before{
-					background:fade(@color-highlight, 30%);
+					background:darken(@color-background, 20%);
+					color:red;
 				}
 				& + label:hover:after,
 				& + label:hover ~ label:after,
@@ -165,13 +164,15 @@
 		}		
 		label{
 			&:hover:before, &:hover ~ label:before {
-				background: fade(@color-highlight, 30%);
+				background:darken(@color-background, 20%);
+					color:red;
 			}
 			&:hover:after, &:hover ~ label:after {
 				border-top-color:@color-highlight;
 			}			
 			&:hover ~ input:checked ~ label:before {
 			//	background: @color-highlight;
+			//		color:red;
 			}
 		}
 	}

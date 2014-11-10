@@ -1,4 +1,30 @@
 var pk = pk || {};
+
+
+/**
+Create a new stages control
+
+<div class='info-well'>
+See entry for `pk.rating`, for which `pk.stages` is an augmented psuedonym 
+</div>
+
+HTML:
+
+	<input id='stages' />
+	
+Javascript:
+
+	pk.rating({
+		element: document.getElementById('stages'),
+		value: 6
+	});
+
+@class pk.stages 
+@constructor
+@chainable
+*/
+
+
 /**
 Create a new rating control
 
@@ -13,7 +39,7 @@ Javascript:
 		value: 3
 	});
 
-@class pk.rating
+@class pk.rating 
 @constructor
 @param options {Object}
 @param options.element {Object} DOM element to convert to control
@@ -37,16 +63,17 @@ Javascript:
             lastVal = inputValue,
 			count=opt.count || 5;
 
+
+			
         /*jshint multistr:true */
-        var str = "<div class='pk-rating'><fieldset>";
-
-
-			for(var o = count; o > 0; o--){
-			
-			str+="<input type='radio' id='" + inputName + "_"+o+"' name='" + inputName + "' value='"+o+"'/><label for='" + inputName + "_"+o+"' data-value='"+o+"'></label>";
-			
-			}
-				
+        var str = "<div class='"+ (opt.stages ? 'pk-stages' : 'pk-rating') +"'><fieldset tabindex='"+inputTabIndex+"'>";
+			for(var o = count; o > 0; o--){			 
+				var style='';
+				if(opt.stages){
+					style="style='width:"+(100/count)+"%;z-index:"+(count-o)+"'";
+				}
+				str+="<input type='radio' id='" + inputName + "_"+o+"' name='" + inputName + "' value='"+o+"'/><label for='" + inputName + "_"+o+"' data-label='"+o+"' "+style+"></label>";			
+			}				
             str+="</fieldset></div>";
         el = pk.replaceEl(el, str);
 
@@ -130,6 +157,11 @@ Javascript:
             obj.disabled(true);
         }
         return obj;
-    };
+    }; 
+	pk.stages = function(opt) {
+		opt.stages=true;
+		return pk.rating(opt);
+	};	
     return pk;
+	
 })(pk);

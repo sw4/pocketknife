@@ -454,6 +454,24 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
             return degrees;
         },
         /**
+        Generate a color from a percentage point between two colors
+		
+            var color=pk.color.percentage(50);
+			
+        @method percentage
+        @param perc {Number} Percentage between first and second colors to generate color point from
+		@param [hex1=#ff0000] {String} Starting color HEX value defaults to `#ff0000` red so 0% is red
+		@param [hex2=#1ae500] {String} Starting color HEX value defaults to `#1ae500` green so 100% is green
+        @return {String} Returns resulting HEX color
+        */		
+		percentage:function(perc, hex1, hex2){
+			hex1=hex1 || '#ff0000';
+			hex2=hex2 || '#1ae500';	
+			var hsv1=pk.color.hex2hsv(hex1),
+				hsv2=pk.color.hex2hsv(hex2);				
+			return pk.color.hsv2hex([Math.round(hsv1[0]+perc*(hsv2[0]-hsv1[0])),Math.round(hsv1[1]+perc*(hsv2[1]-hsv1[1])),Math.round(hsv1[2]+perc*(hsv2[2]-hsv1[2]))]);
+		},		
+        /**
         Generate algorithmic color palette
 		
             var palette=pk.color.algorithmic ({hex:'#FF0000'});

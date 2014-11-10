@@ -120,10 +120,10 @@ Javascript:
             var x = c.x,
                 y = c.y,
                 pEl = rEl.parentNode,
-                pH = pk.position(pEl).height,
-                pW = pk.position(pEl).width,
-                h = pk.position(rEl).height,
-                w = pk.position(rEl).width,
+                pH = pk.layout(pEl).height,
+                pW = pk.layout(pEl).width,
+                h = pk.layout(rEl).height,
+                w = pk.layout(rEl).width,
                 prevCol = color;
 
             if (x) {
@@ -171,11 +171,11 @@ Javascript:
         }
         pk.bindEvent('click', lightnessEl.parentNode, function(e) {
             if (e.target === lightnessEl) {
-                return; 
+                return;
             }
             resolvePos(lightnessEl, {
-                x: (pk.getEventOffset(e).x - pk.position(lightnessEl).width / 2) / pk.position(lightnessEl.parentNode).width,
-                y: (pk.getEventOffset(e).y - pk.position(lightnessEl).height / 2) / pk.position(lightnessEl.parentNode).width
+                x: (pk.getEventOffset(e).x - pk.layout(lightnessEl).width / 2) / pk.layout(lightnessEl.parentNode).width,
+                y: (pk.getEventOffset(e).y - pk.layout(lightnessEl).height / 2) / pk.layout(lightnessEl.parentNode).width
             });
         });
         pk.bindEvent('click', hueEl.parentNode, function(e) {
@@ -184,7 +184,7 @@ Javascript:
             }
             resolvePos(hueEl, {
                 x: false,
-                y: pk.getEventOffset(e).y / pk.position(hueEl.parentNode).height
+                y: pk.getEventOffset(e).y / pk.layout(hueEl.parentNode).height
             });
         });
         pk.drag({

@@ -150,7 +150,7 @@ Javascript:
                 dragging: function(el, e) {
                     if (obj.disabled()) {
                         return false;
-                    }
+                    }			
 					var perc=0;
 				    var p =pk.layout(el,e);
 					if(circle){

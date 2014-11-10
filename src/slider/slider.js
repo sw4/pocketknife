@@ -70,9 +70,8 @@ Javascript:
         </div>";
 		*/
         el = pk.replaceEl(el, tpl);
-		var l=pk.layout(el, true);
+		var l=pk.layout(el);
 		var d = l.height > l.width ? l.height : l.width;
-				
 		function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
 		  var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
 		  return {
@@ -155,8 +154,7 @@ Javascript:
                         return false;
                     }
 					var perc=0;
-
-				    var p =pk.position(el,e);
+				    var p =pk.layout(el,e);
 					if(circle){
 						var origin={
 							x:p.left+(p.width/2),
@@ -180,6 +178,7 @@ Javascript:
                     }
                 },
                 dragstart: function(el, e) {
+				
                     if (obj.disabled()) {
                         return false;
                     }

@@ -342,6 +342,14 @@
             max:2477,
             circle:{
 				length:30
+			},
+			listeners:{
+				change:function(e, v, i){
+					var col=pk.color.percentage(v/2477);
+					e.children[2].style.color=col;
+					e.children[1].childNodes[1].style.stroke=col;				
+					e.children[1].childNodes[3].style.stroke=col;
+				}
 			}
         });
         pk.toggle({

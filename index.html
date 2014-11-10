@@ -117,6 +117,9 @@
     <span id='slider3'></span>
     <br>
     <br>
+    <span id='slider4'></span>
+    <br>
+    <br>
 
     <h1>Toggle Input</h1>
 
@@ -316,20 +319,30 @@
             value: 40
         });
         pk.slider({
-            element: document.getElementById('slider3'),
-            units: 'deg',
-            value: 33,
-            min:8,
-            max:95,
-            circle:true
-        });
-        pk.slider({
             element: document.getElementById('slider2'),
             units: 'mm',
             axis: 'x',
             value: 0,
             min:-444,
             max:900
+        });
+        pk.slider({
+            element: document.getElementById('slider3'),
+            units: 'deg',
+            value: 50,
+            min:0,
+            max:100,
+            circle:true
+        });
+        pk.slider({
+            element: document.getElementById('slider4'),
+            units: 'nm',
+            value: 336,
+            min:0,
+            max:2477,
+            circle:{
+				length:30
+			}
         });
         pk.toggle({
             element: document.getElementById('toggle1'),

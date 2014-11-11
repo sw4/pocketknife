@@ -20,7 +20,7 @@ Javascript:
 
 /**
 Create a new notification
-@method push
+@method add
 @param options {Object}
 @param [options.content] {String} Notification content (`HTML` allowed)
 @param [options.delay=8000] {Number} Time in `ms` for notificaiton to display for
@@ -29,14 +29,14 @@ Create a new notification
 
 /**
 Remove a notification
-@method close
+@method remove
 @param element {Object} Notification element to remove
 */
 (function(pk) {
     var nEl = pk.createEl("<ul class='pk-notify'></ul>");
     document.body.appendChild(nEl);
     pk.notify = {
-        push: function(opt) {
+        add: function(opt) {
             var mEl = pk.createEl("<li tabindex='" + pk.getRand(1, 999) + "'>" + opt.content + "</li>"),
                 delay = opt.delay || 8000;
             nEl.appendChild(mEl);
@@ -55,7 +55,7 @@ Remove a notification
                 0: mEl
             };
         },
-        dismiss: function(dEl) {
+        remove: function(dEl) {
             if (!pk.hasClass(dEl, 'pk-show')) {
                 return;
             }

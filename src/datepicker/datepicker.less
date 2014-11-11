@@ -1,0 +1,56 @@
+.pk-datepicker{
+	border:1px solid darken(@color-background, 30%);
+	position:absolute;
+	width:@item-width;
+	overflow:hidden;
+	padding:0 10px 10px;
+	ul,li{
+		list-style:none;
+		padding:0;
+		margin:0;
+	}
+	ul{
+		display:100%;
+		border-bottom:1px solid darken(@color-background, 10%);
+		padding:2px 0;
+		margin-bottom:10px;
+	}
+	li{
+		width:calc(100% / 12);
+		display:inline-block;
+		font-size:.7em;
+		box-sizing:border-box;
+		padding:0 5px;
+	}
+	table{
+		border-collapse:collapse;	
+		font-family:arial;
+		box-sizing:border-box;
+		width:100%;
+		th{
+			font-weight:500;
+			font-size:.8em;
+			color:@color-foreground;
+			text-transform:uppercase;
+			color:@color-highlight;
+			width:@item-height*.8;
+		}
+		td{
+			line-height:@item-height*.7;
+			font-size:.9em;
+			text-align:center;
+			cursor:default;
+			position:relative;
+			font-weight:400;
+			&:hover{
+				color:@color-highlight;
+			}
+			&.pk-prev, &.pk-next{
+				color:darken(@color-background, 20%);
+				&:hover{
+					color:darken(@color-background, 30%);	
+				}
+			}
+		}
+	}
+}

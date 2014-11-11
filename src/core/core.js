@@ -398,17 +398,18 @@ Gets of sets attribute values, either explicely or impliitely declared
         if (typeof el !== "object") {
             return false;
         }
-        attr = el.hasAttribute(attr) ? attr : el.hasAttribute('data-' + attr) ? 'data-' + attr : attr;
-        if (val === undefined) {
-            return (attr === 'selected' || attr === 'disabled' || attr === 'checked') ? (el.hasAttribute(attr) ? true : el[attr]) : el.getAttribute(attr);
-        }
-        if (val === false && (attr === 'selected' || attr === 'disabled' || attr === 'checked')) {
-            el.removeAttribute(attr);
-            el[attr] = false;
-        } else {
-            el.setAttribute(attr, val);
-            el[attr] = true;
-        }
+        attr = el.hasAttribute(attr) ? attr : el.hasAttribute('data-' + attr) ? 'data-' + attr : attr;	
+		if (val === undefined && (attr === 'selected' || attr === 'disabled' || attr === 'checked')) {		
+			el.removeAttribute(attr);
+			return el[attr];
+		}else if(val === undefined){
+			return el.getAttribute(attr);
+		}else if(attr === 'selected' || attr === 'disabled' || attr === 'checked'){
+			el.removeAttribute(attr);
+			el[attr]=val;
+		}else{
+			el.setAttribute(attr, val);
+		}
         return el;
     };
 /**

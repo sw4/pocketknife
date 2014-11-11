@@ -190,7 +190,7 @@ Javascript:
         pk.bindEvent(&quot;mousewheel&quot;, el, function(e) {
             pk.preventBubble(e);
             var offset = 1;
-            if (e.wheelDelta &gt; 0 || e.detail &lt; 0) {
+            if (e.wheelDelta &lt; 0 || e.detail &gt; 0) {
                 offset = -1;
             }
             obj.val(obj.val() + offset);

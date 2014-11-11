@@ -45,11 +45,11 @@ Remove a notification
             }, 10);
             var scope = this;
             setTimeout(function() {
-                scope.dismiss(mEl);
+                scope.remove(mEl);
             }, delay);
 
             pk.bindEvent('click', mEl, function() {
-                scope.dismiss(mEl);
+                scope.remove(mEl);
             });
             return {
                 0: mEl

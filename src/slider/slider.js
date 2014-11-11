@@ -234,7 +234,7 @@ Javascript:
                 return false;
             }
             var offset = 0.1;
-            if (e.wheelDelta > 0 || e.detail < 0) {
+            if (e.wheelDelta < 0 || e.detail > 0) {
                 offset = offset * -1;
             }
             obj.val(range * offset + parseInt(obj.val(), 0));

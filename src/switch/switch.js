@@ -49,9 +49,9 @@ Javascript:
 		pk.bindEvent("mousewheel", el, function(e) { 
 		 	pk.preventBubble(e); 
 			if (e.wheelDelta > 0 || e.detail < 0) {
-                obj.val(false);
+                obj.val(true);
             }else{
-				obj.val(true);
+				obj.val(false);
 			}
         });
         /**

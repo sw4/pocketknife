@@ -16,7 +16,7 @@
 		border-style: solid;
 	}	
 	&.pk-top{
-		margin-top:-1 * (@item-height);
+		margin-top:-1 * (@item-height/2);
 		&:before{
 			border-width: 7px 7px 0 7px;
 			border-color: @color-foreground transparent transparent transparent;
@@ -26,6 +26,7 @@
 	}
 	&.pk-right{
 		margin-left:@item-height/2; 
+		margin-top:-3.5px;
 		&:before{	
 			border-width: 7px 7px 7px 0;
 			border-color: transparent @color-foreground transparent transparent;
@@ -43,7 +44,8 @@
 		}
 	}	
 	&.pk-left{
-		margin-right:@item-height/2;
+		margin-left:-1*(@item-height/2); 
+		margin-top:-3.5px;
 		&:before{
 			border-width: 7px 0 7px 7px;
 			border-color: transparent transparent transparent @color-foreground;

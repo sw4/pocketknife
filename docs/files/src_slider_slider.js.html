@@ -358,7 +358,7 @@ Javascript:
                 return false;
             }
             var offset = 0.1;
-            if (e.wheelDelta &gt; 0 || e.detail &lt; 0) {
+            if (e.wheelDelta &lt; 0 || e.detail &gt; 0) {
                 offset = offset * -1;
             }
             obj.val(range * offset + parseInt(obj.val(), 0));

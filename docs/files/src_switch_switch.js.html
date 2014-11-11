@@ -173,9 +173,9 @@ Javascript:
 		pk.bindEvent(&quot;mousewheel&quot;, el, function(e) { 
 		 	pk.preventBubble(e); 
 			if (e.wheelDelta &gt; 0 || e.detail &lt; 0) {
-                obj.val(false);
+                obj.val(true);
             }else{
-				obj.val(true);
+				obj.val(false);
 			}
         });
         /**

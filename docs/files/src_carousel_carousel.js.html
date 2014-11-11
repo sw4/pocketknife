@@ -192,7 +192,7 @@ Javascript:
 
         pk.bindEvent(&quot;mousewheel&quot;, el, function(e) {
             pk.preventBubble(e);
-            obj.val((e.wheelDelta &gt; 0 || e.detail &lt; 0) ? &#x27;-1&#x27; : &#x27;+1&#x27;);
+            obj.val((e.wheelDelta &lt; 0 || e.detail &gt; 0) ? &#x27;-1&#x27; : &#x27;+1&#x27;);
         });
 
         pk.bindEvent(&#x27;keydown&#x27;, el, function(e) {

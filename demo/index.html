@@ -12,7 +12,45 @@
 
         <link rel="stylesheet" href="lib/bootstrap.min.css">
         <link rel="stylesheet" href="../dist/pocketknife.min.css">
-
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #carousel1 {
+            position: relative;
+            height: 200px;
+        }
+        #carousel1 li {
+            color: white;
+            font-size: 2em;
+        }
+        #carousel1 li:nth-child(1) {
+            background: #0CC09F;
+        }
+        #carousel1 li:nth-child(2) {
+            background: #0dcecb;
+        }
+        #carousel1 li:nth-child(3) {
+            background: #2980B9;
+        }
+        #scroll1 {
+            position: relative;
+            height: 50%;
+            box-sizing: border-box;
+            display: inline-block;
+            position: relative;
+            text-align: left;
+        }
+        .item{
+          float:left;
+          margin-right:50px;
+          height:90px;
+        }
+    </style>
         <!--[if lt IE 9]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
             <script>window.html5 || document.write('<script src="lib/html5shiv.js"><\/script>')</script>
@@ -27,9 +65,9 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
+        <h1>pocketknife.js</h1>
+        <p>Beautiful UI Components written in lean, clean Javascript with no dependancies</p>
+        <p><a href='../docs/index.html' target='_new'>View API Docs</a></p>
       </div>
     </div>
 
@@ -38,20 +76,53 @@
       <div class="row">
         <div class="col-md-6">
 
-
+<div class='item'>
 <h1>Checkbox</h1>
 
     <span id='checkbox1'></span>
-    <br />
-    <br />
+</div>
+
+    <div class='item'>
+    <h1>Notification</h1>
+
+
+    <button onclick="event.preventDefault();pk.notify.add({content:'Default message'});">Notify me!
+    </button>
+</div>
+<div class='item'>
     <h1>Switch</h1>
 
     <span id='switch1'></span>
-    <br />
-    <br />
+</div>
+<div class='item'>
     <h1>Rating</h1>
 
     <span id='rating1'></span>
+</div>
+
+
+
+<div class='item'>
+    <h1>Toggle</h1>
+
+    
+    <span id='toggle1'></span>
+    </div>
+
+    <div class='item'>
+    <h1>Modal</h1>
+    <button onclick="event.preventDefault();pk.modal({header:'Look, its a modal!',content:'Any content, including HTML can go here', draggable:true});">Click me!
+    </button>
+</div>
+
+
+    <div class='item'>
+    <h1>Tooltips</h1>
+    <a href='#' id='tooltip1' onclick="event.preventDefault();">Top</a>, 
+  <a href='#' id='tooltip2' onclick="event.preventDefault();">Right</a>, 
+  <a href='#' id='tooltip3' onclick="event.preventDefault();">Bottom</a>, 
+  <a href='#' id='tooltip4' onclick="event.preventDefault();">Left</a>
+</div>
 
         </div>
         <div class="col-md-6" style='text-align:justify;'>
@@ -69,59 +140,57 @@
       </div>
  <div class="row">
         <div class="col-md-6">
-
-<h1>Accordian</h1>
-    <ul id='accordian1' class='pk-accordian'>
-        <li>
-            <h3 class='pk-content-header'>Title Content</h3>
-            <div class='pk-content'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
-                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet
-                risus elementum, faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis
-                massa sodales, at pulvinar sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
-            </div>
-        </li>
-        <li>
-            <h3 class='pk-content-header'>Title Content</h3>
-            <div class='pk-content'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
-                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet
-                risus elementum, faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis
-                massa sodales, at pulvinar sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
-            </div>
-        </li>
-        <li>
-            <h3 class='pk-content-header'>Title Content</h3>
-            <div class='pk-content'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
-                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet
-                risus elementum, faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis
-                massa sodales, at pulvinar sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
-            </div>
-        </li>
+    <h1>Carousel</h1>
+    <ul id='carousel1'>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
     </ul>
 
         </div>
         <div class="col-md-6" style='text-align:justify;'>
 
 
+<h1>Accordian</h1>
+    <ul id='accordian1' class='pk-accordian'>
+        <li class='pk-show'>
+            <h3 class='pk-content-header'>Title Content</h3>
+            <div class='pk-content'>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
+                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna.
+            </div>
+        </li>
+        <li>
+            <h3 class='pk-content-header'>Title Content</h3>
+            <div class='pk-content'>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
+                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna.
+            </div>
+        </li>
+        <li>
+            <h3 class='pk-content-header'>Title Content</h3>
+            <div class='pk-content'>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
+                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna.
+            </div>
+        </li>
+    </ul>
 
         </div>
       </div>
       <hr>
 
       <footer>
-        <p>&copy; Company 2014</p>
+        <p>&copy; Pocketknife Ltd. 2014</p>
       </footer>
     </div>
 
-        <script src="lib/bootstrap.min.js"></script>
         <script src="../dist/pocketknife.min.js"></script>
         <script>
         pk.accordian({
             element: document.getElementById('accordian1'),
             animate: true,
-            multiple: true
+            multiple: false
         });
 
         pk.slider({
@@ -183,6 +252,20 @@
                 }
             }
         });   
+        pk.toggle({
+            element: document.getElementById('toggle1'),
+            options: [{
+                value: true,
+                name: 'yes'
+            }, {
+                value: false,
+                name: 'no'
+            }, {
+                value: 'other',
+                name: 'other'
+            }],
+            value: false
+        });        
         pk.checkbox({
             element: document.getElementById('checkbox1'),
             label: 'check',
@@ -196,6 +279,13 @@
             element: document.getElementById('rating1'),
             value: 3
         });
-        </script>
+        pk.carousel({
+            element: document.getElementById('carousel1')
+        });        
+        pk.tooltip({element:document.getElementById('tooltip1'),content:'Content on top', position:'top'});
+        pk.tooltip({element:document.getElementById('tooltip2'),content:'Content to the right', position:'right'});
+        pk.tooltip({element:document.getElementById('tooltip3'),content:'Content below', position:'bottom'});
+        pk.tooltip({element:document.getElementById('tooltip4'),content:'Content to the left', position:'left'});
+      </script>
     </body>
 </html>

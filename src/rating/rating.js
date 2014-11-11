@@ -66,7 +66,7 @@ Javascript:
         pk.bindEvent("mousewheel", el, function(e) {
             pk.preventBubble(e);
             var offset = 1;
-            if (e.wheelDelta > 0 || e.detail < 0) {
+            if (e.wheelDelta < 0 || e.detail > 0) {
                 offset = -1;
             }
             obj.val(obj.val() + offset);

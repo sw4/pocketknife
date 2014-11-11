@@ -1,30 +1,4 @@
 var pk = pk || {};
-
-
-/**
-Create a new stages control
-
-<div class='info-well'>
-See entry for `pk.rating`, for which `pk.stages` is an augmented psuedonym 
-</div>
-
-HTML:
-
-	<input id='stages' />
-	
-Javascript:
-
-	pk.rating({
-		element: document.getElementById('stages'),
-		value: 6
-	});
-
-@class pk.stages 
-@constructor
-@chainable
-*/
-
-
 /**
 Create a new rating control
 
@@ -158,10 +132,6 @@ Javascript:
         }
         return obj;
     }; 
-	pk.stages = function(opt) {
-		opt.stages=true;
-		return pk.rating(opt);
-	};	
     return pk;
 	
 })(pk);

@@ -6,12 +6,12 @@ var pk = pk || {};
 			ttEl=pk.createEl("<div class='pk-tooltip'></div>");
 			document.body.appendChild(ttEl);
 		}
-		pk.bindEvent('mouseover', opt.element,function(e){
+		pk.bindEvent('mouseover', opt.element,function(){
 			ttEl.innerHTML=opt.content;
-			ttEl.style.display='block';
-			tl=pk.layout(ttEl);
+			ttEl.style.display='block';			
 			ttEl.style.display='';
-			var pl=pk.layout(opt.element),
+			var tl=pk.layout(ttEl),
+          pl=pk.layout(opt.element),
 				t=0,l=0;
 				opt.position=opt.position || 'right';
 			switch(opt.position){
@@ -43,6 +43,6 @@ var pk = pk || {};
 			pk.removeClass(ttEl, 'pk-show');			
 			pk.removeClass(ttEl, 'pk-'+opt.position);		
 		});
-	}	
+	};
     return pk;
 })(pk);

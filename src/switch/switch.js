@@ -29,7 +29,7 @@ Javascript:
     pk.switch = function(opt) {
         var el = opt.element,
             //    listeners = opt.listeners === undefined ? {} : opt.listeners,
-            inputValue = opt.value || el.getAttribute('value') || 0,
+            inputValue = opt.value || el.getAttribute('value') || true,
             inputLabel = opt.label || el.getAttribute('label') || el.innerHTML,
             inputDisabled = (opt.disabled || el.getAttribute('disabled')) ? 'disabled' : '',
             inputName = opt.name || el.getAttribute('name') || 'pk-switch-' + pk.getRand(1, 999),
@@ -38,13 +38,22 @@ Javascript:
 
         /*jshint multistr:true */
         var str = "<label class='pk-switch' for='" + inputName + "'>\
-			<input type = 'checkbox'  id = '" + inputName + "'  name = '" + inputName + "'  value = '" + inputValue + "'  tabindex = '" + inputTabIndex + "' / >\
+			<input type = 'checkbox'  id = '" + inputName + "'  name = '" + inputName + "' tabindex = '" + inputTabIndex + "' / >\
             <span class = 'pk-label' > " + inputLabel + " </span>\
 			<span class = 'pk-indicator' > " + inputLabel + " </span>\
 		</label>";
 		
         el.innerHTML = '';
         el = pk.replaceEl(el, str);
+		
+		pk.bindEvent("mousewheel", el, function(e) { 
+		 	pk.preventBubble(e); 
+			if (e.wheelDelta > 0 || e.detail < 0) {
+                obj.val(false);
+            }else{
+				obj.val(true);
+			}
+        });
         /**
         Gets or sets control value
         @method val
@@ -62,7 +71,7 @@ Javascript:
             0: el,
             val: function(val) {
                 if (val === undefined) {
-                    return inputValue;
+                    return pk.attribute(el.children[0], 'checked');
                 }
                 pk.attribute(el.children[0], 'checked', Boolean(val));
             },

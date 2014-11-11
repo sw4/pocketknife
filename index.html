@@ -98,6 +98,17 @@
     <h1>Checkbox</h1>
 
     <div id='checkbox1'></div>
+    <br />
+    <br />
+    <h1>Switch</h1>
+
+    <div id='switch1'></div>
+
+    <br>
+    <br>
+    <h1>Datepicker</h1>
+
+    <div id='datepicker1'></div>
 
     <br>
     <br>
@@ -315,7 +326,12 @@
         pk.carousel({
             element: document.getElementById('carousel1')
         });
-        // pk.datepicker();
+                pk.switch({
+            element: document.getElementById('switch1')
+        });
+        pk.datepicker({
+            element: document.getElementById('datepicker1')
+        });
         pk.rating({
             element: document.getElementById('rating1'),
             value: 3

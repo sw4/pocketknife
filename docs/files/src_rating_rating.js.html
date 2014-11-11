@@ -73,7 +73,7 @@
             
                 <li><a href="../classes/pk.slider.html">pk.slider</a></li>
             
-                <li><a href="../classes/pk.stages.html">pk.stages</a></li>
+                <li><a href="../classes/pk.switch.html">pk.switch</a></li>
             
                 <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
             
@@ -123,32 +123,6 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 var pk = pk || {};
-
-
-/**
-Create a new stages control
-
-&lt;div class=&#x27;info-well&#x27;&gt;
-See entry for &#x60;pk.rating&#x60;, for which &#x60;pk.stages&#x60; is an augmented psuedonym 
-&lt;/div&gt;
-
-HTML:
-
-	&lt;input id=&#x27;stages&#x27; /&gt;
-	
-Javascript:
-
-	pk.rating({
-		element: document.getElementById(&#x27;stages&#x27;),
-		value: 6
-	});
-
-@class pk.stages 
-@constructor
-@chainable
-*/
-
-
 /**
 Create a new rating control
 
@@ -282,10 +256,6 @@ Javascript:
         }
         return obj;
     }; 
-	pk.stages = function(opt) {
-		opt.stages=true;
-		return pk.rating(opt);
-	};	
     return pk;
 	
 })(pk);

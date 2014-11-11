@@ -84,7 +84,6 @@
             "name": "src/rating/rating.js",
             "modules": {},
             "classes": {
-                "pk.stages": 1,
                 "pk.rating": 1
             },
             "fors": {},
@@ -113,6 +112,15 @@
             "modules": {},
             "classes": {
                 "pk.slider": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/switch/switch.js": {
+            "name": "src/switch/switch.js",
+            "modules": {},
+            "classes": {
+                "pk.switch": 1
             },
             "fors": {},
             "namespaces": {}
@@ -149,11 +157,11 @@
                 "pk.drag": 1,
                 "pk.modal": 1,
                 "pk.notify": 1,
-                "pk.stages": 1,
                 "pk.rating": 1,
                 "pk.scroll": 1,
                 "pk.select": 1,
                 "pk.slider": 1,
+                "pk.switch": 1,
                 "pk.toggle": 1,
                 "pk.color": 1
             },
@@ -536,22 +544,6 @@
             "description": "Class used for notification management\n\nHTML\n\n    <button onclick=\"showNotification();\">Show Notification</button>\n\nJavascript:\n\n\tfunction showNotification(){\n\t\tpk.notify.push({\n\t\t\tcontent:'Default message'\n\t\t});\n\t}",
             "static": 1
         },
-        "pk.stages": {
-            "name": "pk.stages",
-            "shortname": "pk.stages",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "pocketknife",
-            "namespace": "",
-            "file": "src/rating/rating.js",
-            "line": 4,
-            "description": "Create a new stages control\n\n<div class='info-well'>\nSee entry for `pk.rating`, for which `pk.stages` is an augmented psuedonym \n</div>\n\nHTML:\n\n\t<input id='stages' />\n\t\nJavascript:\n\n\tpk.rating({\n\t\telement: document.getElementById('stages'),\n\t\tvalue: 6\n\t});",
-            "is_constructor": 1,
-            "chainable": 1
-        },
         "pk.rating": {
             "name": "pk.rating",
             "shortname": "pk.rating",
@@ -563,7 +555,7 @@
             "module": "pocketknife",
             "namespace": "",
             "file": "src/rating/rating.js",
-            "line": 28,
+            "line": 2,
             "description": "Create a new rating control\n\nHTML:\n\n\t<input id='rating' />\n\t\nJavascript:\n\n\tpk.rating({\n\t\telement: document.getElementById('rating'),\n\t\tvalue: 3\n\t});",
             "is_constructor": 1,
             "params": [
@@ -887,6 +879,73 @@
                                     "optdefault": "options.circle.stroke.inner"
                                 }
                             ]
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
+                "type": "Object"
+            },
+            "chainable": 1
+        },
+        "pk.switch": {
+            "name": "pk.switch",
+            "shortname": "pk.switch",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/switch/switch.js",
+            "line": 3,
+            "description": "Create a new switch control\n\nHTML: \n\n\t<input type='switch' id='switch' />\n\nJavascript:\n\t\n\tpk.switch({\n\t\telement: document.getElementById('switch')\n\t});",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to control",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "value",
+                            "description": "Initial value",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
+                            "name": "name",
+                            "description": "Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-switch-RandInt`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "pk-switch-RandInt"
+                        },
+                        {
+                            "name": "tabindex",
+                            "description": "Tabindex of control, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "disabled",
+                            "description": "Disabled state of control, defaults to the attribute value set on the passed element, or `false`",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "listeners",
+                            "description": "Object array of event listeners to bind to underlying input(s)",
+                            "type": "Object",
+                            "optional": true
                         }
                     ]
                 }
@@ -1633,7 +1692,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 414,
+            "line": 415,
             "description": "Augments event object with additional X and Y helper coordinates",
             "itemtype": "method",
             "name": "procEvent",
@@ -1653,7 +1712,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 444,
+            "line": 445,
             "description": "Gets browser agnostic offset coordinates for applicable mouse events",
             "itemtype": "method",
             "name": "getEventOffset",
@@ -1748,7 +1807,7 @@
             "line": 21,
             "description": "Create a new notification",
             "itemtype": "method",
-            "name": "push",
+            "name": "add",
             "params": [
                 {
                     "name": "options",
@@ -1783,7 +1842,7 @@
             "line": 30,
             "description": "Remove a notification",
             "itemtype": "method",
-            "name": "close",
+            "name": "remove",
             "params": [
                 {
                     "name": "element",
@@ -1796,7 +1855,7 @@
         },
         {
             "file": "src/rating/rating.js",
-            "line": 110,
+            "line": 84,
             "description": "Gets or sets control value",
             "itemtype": "method",
             "name": "val",
@@ -1817,7 +1876,7 @@
         },
         {
             "file": "src/rating/rating.js",
-            "line": 117,
+            "line": 91,
             "description": "Gets or sets control disabled state",
             "itemtype": "method",
             "name": "disabled",
@@ -1939,6 +1998,48 @@
                 "type": "Boolean"
             },
             "class": "pk.slider",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/switch/switch.js",
+            "line": 57,
+            "description": "Gets or sets control value",
+            "itemtype": "method",
+            "name": "val",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "Value to set",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns current value",
+                "type": "String"
+            },
+            "class": "pk.switch",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/switch/switch.js",
+            "line": 64,
+            "description": "Gets or sets control disabled state",
+            "itemtype": "method",
+            "name": "disabled",
+            "params": [
+                {
+                    "name": "boolean",
+                    "description": "Disabled state",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns disabled state",
+                "type": "Boolean"
+            },
+            "class": "pk.switch",
             "module": "pocketknife"
         },
         {

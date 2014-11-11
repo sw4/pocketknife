@@ -74,7 +74,7 @@ Javascript:
 		
         el = pk.replaceEl(el, tpl);
 		var l=pk.layout(el);
-		var d = l.height > l.width ? l.height : l.width;
+		var d = l.height > l.width ? l.width : l.height;
 		function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
 		  var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
 		  return {

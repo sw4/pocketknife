@@ -73,7 +73,7 @@
             
                 <li><a href="../classes/pk.slider.html">pk.slider</a></li>
             
-                <li><a href="../classes/pk.stages.html">pk.stages</a></li>
+                <li><a href="../classes/pk.switch.html">pk.switch</a></li>
             
                 <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
             
@@ -144,7 +144,7 @@ Javascript:
 
 /**
 Create a new notification
-@method push
+@method add
 @param options {Object}
 @param [options.content] {String} Notification content (&#x60;HTML&#x60; allowed)
 @param [options.delay=8000] {Number} Time in &#x60;ms&#x60; for notificaiton to display for
@@ -153,14 +153,14 @@ Create a new notification
 
 /**
 Remove a notification
-@method close
+@method remove
 @param element {Object} Notification element to remove
 */
 (function(pk) {
     var nEl = pk.createEl(&quot;&lt;ul class=&#x27;pk-notify&#x27;&gt;&lt;/ul&gt;&quot;);
     document.body.appendChild(nEl);
     pk.notify = {
-        push: function(opt) {
+        add: function(opt) {
             var mEl = pk.createEl(&quot;&lt;li tabindex=&#x27;&quot; + pk.getRand(1, 999) + &quot;&#x27;&gt;&quot; + opt.content + &quot;&lt;/li&gt;&quot;),
                 delay = opt.delay || 8000;
             nEl.appendChild(mEl);
@@ -179,7 +179,7 @@ Remove a notification
                 0: mEl
             };
         },
-        dismiss: function(dEl) {
+        remove: function(dEl) {
             if (!pk.hasClass(dEl, &#x27;pk-show&#x27;)) {
                 return;
             }

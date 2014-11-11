@@ -73,7 +73,7 @@
             
                 <li><a href="../classes/pk.slider.html">pk.slider</a></li>
             
-                <li><a href="../classes/pk.stages.html">pk.stages</a></li>
+                <li><a href="../classes/pk.switch.html">pk.switch</a></li>
             
                 <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
             
@@ -522,17 +522,18 @@ Gets of sets attribute values, either explicely or impliitely declared
         if (typeof el !== &quot;object&quot;) {
             return false;
         }
-        attr = el.hasAttribute(attr) ? attr : el.hasAttribute(&#x27;data-&#x27; + attr) ? &#x27;data-&#x27; + attr : attr;
-        if (val === undefined) {
-            return (attr === &#x27;selected&#x27; || attr === &#x27;disabled&#x27; || attr === &#x27;checked&#x27;) ? (el.hasAttribute(attr) ? true : el[attr]) : el.getAttribute(attr);
-        }
-        if (val === false &amp;&amp; (attr === &#x27;selected&#x27; || attr === &#x27;disabled&#x27; || attr === &#x27;checked&#x27;)) {
-            el.removeAttribute(attr);
-            el[attr] = false;
-        } else {
-            el.setAttribute(attr, val);
-            el[attr] = true;
-        }
+        attr = el.hasAttribute(attr) ? attr : el.hasAttribute(&#x27;data-&#x27; + attr) ? &#x27;data-&#x27; + attr : attr;	
+		if (val === undefined &amp;&amp; (attr === &#x27;selected&#x27; || attr === &#x27;disabled&#x27; || attr === &#x27;checked&#x27;)) {		
+			el.removeAttribute(attr);
+			return el[attr];
+		}else if(val === undefined){
+			return el.getAttribute(attr);
+		}else if(attr === &#x27;selected&#x27; || attr === &#x27;disabled&#x27; || attr === &#x27;checked&#x27;){
+			el.removeAttribute(attr);
+			el[attr]=val;
+		}else{
+			el.setAttribute(attr, val);
+		}
         return el;
     };
 /**

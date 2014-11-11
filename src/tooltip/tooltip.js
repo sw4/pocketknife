@@ -11,7 +11,7 @@ var pk = pk || {};
 			ttEl.style.display='block';			
 			ttEl.style.display='';
 			var tl=pk.layout(ttEl),
-          pl=pk.layout(opt.element),
+				pl=pk.layout(opt.element),
 				t=0,l=0;
 				opt.position=opt.position || 'right';
 			switch(opt.position){

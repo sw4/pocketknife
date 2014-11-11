@@ -46,6 +46,9 @@
 </head>
 
 <body>
+
+
+
     <h1>Accordian</h1>
     <ul id='accordian1' class='pk-accordian'>
         <li>
@@ -78,6 +81,13 @@
     </ul>
     <br />
     <br />
+    <h1>Tooltips</h1>
+    <a href='#' id='tooltip1' onclick="event.preventDefault();">Tooltip Top</a>
+	<a href='#' id='tooltip2' onclick="event.preventDefault();">Tooltip Right</a>
+	<a href='#' id='tooltip3' onclick="event.preventDefault();">Tooltip Bottom</a>
+	<a href='#' id='tooltip4' onclick="event.preventDefault();">Tooltip Left</a>
+	<br>
+    <br>
     <h1>Form Elements</h1>
     <input type='text' id='masked1' />
     <br />
@@ -425,7 +435,10 @@
             multiple: true
         });
 
-
+		pk.tooltip({element:document.getElementById('tooltip1'),content:'Content', position:'top'});
+		pk.tooltip({element:document.getElementById('tooltip2'),content:'Content', position:'right'});
+		pk.tooltip({element:document.getElementById('tooltip3'),content:'Content', position:'bottom'});
+		pk.tooltip({element:document.getElementById('tooltip4'),content:'Content', position:'left'});
 
         pk.colorpicker({
             element: document.getElementById('colorpicker1'),

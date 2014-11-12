@@ -1,4 +1,29 @@
 var pk = pk || {};
+/**
+Create a new datepicker control
+
+HTML
+
+    <div id='datepicker'></div>
+
+Javascript
+
+	pk.datepicker({
+		element: document.getElementById('datepicker')
+	});	
+			
+	
+@class pk.datepicker
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to control
+@param [options.value=0] {String} Value of initially selected option, defaults to the attribute value set on the passed element, or `0`
+@param [options.name=pk-select-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-select-RandInt`
+@param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`
+@param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or `false`
+@return Object {Object} Consisting of original DOM element (item `0`) and class methods (see below)
+@chainable
+*/
 (function(pk) {
     pk.datepicker = function(opt) {
 		var y = opt.year || 2014,
@@ -224,7 +249,9 @@ var pk = pk || {};
 			}
 			setMeta();
         });
-
+		return {
+			0:el		
+		}
 		
     };
     return pk;

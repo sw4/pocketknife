@@ -1,39 +1,76 @@
 .pk-datepicker{
-	border:1px solid darken(@color-background, 30%);
+	border:1px solid @color-highlight;
 	position:relative;
-	width:@item-width;
 	overflow:hidden;
-	padding:0 10px 10px;
-	ul,li{
+	display:inline-block;
+	background:@color-highlight;
+	width:@item-width;
+	.pk-datepicker-year{
+		text-align:right;
+		font-size:2em;
+		margin:20px 5px 10px 5px;
+		color:@color-background;
+		font-weight:100;
+	}
+	.pk-datepicker-month{
+		padding:2px 0 0 0;
+		margin:0 5px;
 		list-style:none;
-		padding:0;
-		margin:0;
+		color:@color-background;
+		li{
+			width:8.33%;
+			display:inline-block;
+			font-size:.7em;
+			box-sizing:border-box;
+			padding:0;
+			text-align:center;
+			cursor:default;
+			position:relative;	
+			&:after{
+				content:'';
+				position:absolute;
+				width:100%;
+				left:0;
+				text-align:center;
+				top:calc(~"100% - 7px");
+				font-size:2em;
+			}
+			&:hover{
+				color:@color-background;
+				background:lighten(@color-highlight, 50%);
+			}
+			&.selected{
+				color:@color-highlight;
+				background:@color-background;
+			}
+		}
 	}
-	ul{
-		display:100%;
-		border-bottom:1px solid darken(@color-background, 10%);
-		padding:2px 0;
-		margin-bottom:10px;
-	}
-	li{
-		width:calc(100% / 12);
-		display:inline-block;
-		font-size:.7em;
-		box-sizing:border-box;
-		padding:0 5px;
-	}
-	table{
+	.pk-datepicker-day{
+		background:@color-background;
 		border-collapse:collapse;	
-		font-family:arial;
 		box-sizing:border-box;
 		width:100%;
+		tr:first-of-type{
+			th{
+				padding-top:10px;
+				&:first-of-type{
+					padding-left:5px;
+				}
+				&:last-of-type{
+					padding-right:5px;
+				}
+			}
+		}
+		tr:last-of-type td{
+			padding-bottom:10px;
+		}
 		th{
 			font-weight:500;
 			font-size:.8em;
 			color:@color-foreground;
 			text-transform:uppercase;
 			color:@color-highlight;
-			width:@item-height*.8;
+			width:@item-height*.8;			
 		}
 		td{
 			line-height:@item-height*.7;
@@ -43,12 +80,18 @@
 			position:relative;
 			font-weight:400;
 			&:hover{
+				background:lighten(@color-green, 50%);
 				color:@color-highlight;
+			}
+			&.selected{
+				background:@color-green;
+				color:@color-background;			
 			}
 			&.pk-prev, &.pk-next{
 				color:darken(@color-background, 20%);
 				&:hover{
-					color:darken(@color-background, 30%);	
+					background:lighten(@color-highlight, 70%);					
+					color:@color-highlight;
 				}
 			}
 		}

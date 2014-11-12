@@ -119,7 +119,7 @@ var pk = pk || {};
 				}		
 			}
 		}				
-		function resolveDate(e){
+		function resolveClick(e){
 			var tEl=e.target;
 			if(pk.attribute(tEl, 'year')!==null){ 			
 				y=parseInt(pk.attribute(tEl, 'year'),0);	
@@ -135,8 +135,17 @@ var pk = pk || {};
 			}
 			setMeta();
 		}
-		pk.bindEvent('click', el, resolveDate);	
-		
+		pk.bindEvent('click', el, resolveClick);	
+
+		pk.bindEvent("mousewheel", yearEl, function(e) { 
+			if (e.wheelDelta > 0 || e.detail < 0) {
+				y++
+            }else{ 
+				y--; 
+			}
+			setYear();
+			setMeta();
+		});		
 		pk.bindEvent("mousewheel", monthEl, function(e) { 
 			if (e.wheelDelta > 0 || e.detail < 0) {
 				d=d > parseDate().nextend ? parseDate().nextend : d;
@@ -156,6 +165,7 @@ var pk = pk || {};
 				}
 			}
 			setYear();
+			setMeta();
 		});
 		pk.bindEvent("mousewheel", daysEl, function(e) { 
 		 	pk.preventBubble(e); 
@@ -190,6 +200,7 @@ var pk = pk || {};
 					setDay();
 				}
 			}
+			setMeta();
         });
 
 		

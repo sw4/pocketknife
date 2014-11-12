@@ -11,6 +11,9 @@ var gulp = require('gulp'),
 	  ' * @link <%= pkg.homepage %>',  
 	  ' * @copyright (c)<%= new Date().getFullYear() %> <%= pkg.author.name %>',  
 	  ' * @license <%= pkg.licenses[0].type %> (<%= pkg.licenses[0].url %>)',
+	  ' */',
+	  ''].join('\n');
+/*
 	  ' *  ',
 	  ' * The MIT License (MIT)',
 	  ' *  ',
@@ -33,8 +36,7 @@ var gulp = require('gulp'),
 	  ' * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,',
 	  ' * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN',
 	  ' * THE SOFTWARE.',
-	  ' */',
-	  ''].join('\n');
+*/
 
 gulp.task('build:scroll', function() {
 

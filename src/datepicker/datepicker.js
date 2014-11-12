@@ -15,6 +15,7 @@ var pk = pk || {};
 			tpl="<div class='pk-datepicker'></div>",			
 			el=opt.element,
 			yearEl=null,
+			yearsEl=null,
 			monthEl=null,
 			daysEl=null,
 			sD=0,
@@ -70,6 +71,22 @@ var pk = pk || {};
 			daysEl.innerHTML=tpl;
 			setDay();			
 		}
+		
+		
+		function createYears(){
+		
+			for(i=0;i<55;i++){
+				if(i%5 === 0){
+					tpl+="<tr>";					
+				}
+				tpl+="<td>"+(y+i)+"</td>";	 
+				if(i%5 === 4){
+					tpl+="</tr>";				
+				}
+			}		
+			yearsEl.innerHTML=tpl;
+		}
+		
 		metaEl=pk.createEl("<div class='pk-datepicker-meta'>"+666+"</div>");
 		el.appendChild(metaEl);			
 		yearEl=pk.createEl("<div class='pk-datepicker-year'>"+y+"</div>");
@@ -87,6 +104,11 @@ var pk = pk || {};
 		tpl="<table class='pk-datepicker-day'></table>";
 		daysEl=pk.createEl(tpl);
 		el.appendChild(daysEl);		
+		
+			
+		yearsEl=pk.createEl("<table class='pk-datepicker-years'></table>");
+		el.appendChild(yearsEl); 
+		createYears();
 		
 		setMeta();
 		setYear();

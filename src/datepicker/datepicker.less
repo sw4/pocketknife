@@ -5,6 +5,14 @@
 	display:inline-block;
 	background:@color-highlight;
 	width:@item-width;
+	.pk-noselect;
+	.pk-datepicker-meta{
+		float: left;
+		position: relative;
+		top: 23px;
+		left: 10px;
+		color:lighten(@color-highlight, 25%);
+	}
 	.pk-datepicker-year{
 		text-align:right;
 		font-size:2em;
@@ -26,6 +34,7 @@
 			text-align:center;
 			cursor:default;
 			position:relative;	
+			transition:background 80ms ease-in;
 			&:after{
 				content:'';
 				position:absolute;
@@ -79,6 +88,7 @@
 			cursor:default;
 			position:relative;
 			font-weight:400;
+			transition:all 50ms ease-in;
 			&:hover{
 				background:lighten(@color-prominent, 50%);
 				color:@color-highlight;

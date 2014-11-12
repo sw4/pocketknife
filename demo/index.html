@@ -57,136 +57,198 @@
         <![endif]-->
     </head>
     <body>
-        <!--[if lt IE 7]>
+    <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-   
-
     <!-- Main jumbotron for a primary marketing message or call to action -->
+
     <div class="jumbotron">
-      <div class="container">
-        <h1>pocketknife.js</h1>
-        <p>Beautiful UI Components written in lean, clean Javascript with no dependancies</p>
-        <p><a href='../docs/index.html' target='_new'>View API Docs</a></p>
-      </div>
+        <div class="container">
+		
+			<!--
+            <h1>pocketknife.js</h1>
+
+            <p>Beautiful UI Components written in lean, clean Javascript with
+            no dependancies</p>
+			-->
+            <p><a href='../docs/index.html' target='_new'>View API Docs</a></p>
+        </div>
     </div>
 
     <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-6">
+        <!-- Example row of columns -->
 
-<div class='item'>
-<h1>Checkbox</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class='item'>
+                    <h1>Checkbox</h1><span id='checkbox1'></span>
+                </div>
 
-    <span id='checkbox1'></span>
-</div>
+                <div class='item'>
+                    <h1>Notification</h1><button onclick=
+                    "event.preventDefault();pk.notify.add({content:'Default message'});">Notify
+                    me!</button>
+                </div>
 
-    <div class='item'>
-    <h1>Notification</h1>
+                <div class='item'>
+                    <h1>Switch</h1><span id='switch1'></span>
+                </div>
 
+                <div class='item'>
+                    <h1>Rating</h1><span id='rating1'></span>
+                </div>
 
-    <button onclick="event.preventDefault();pk.notify.add({content:'Default message'});">Notify me!
-    </button>
-</div>
-<div class='item'>
-    <h1>Switch</h1>
+                <div class='item'>
+                    <h1>Toggle</h1><span id='toggle1'></span>
+                </div>
 
-    <span id='switch1'></span>
-</div>
-<div class='item'>
-    <h1>Rating</h1>
+                <div class='item'>
+                    <h1>Modal</h1><button onclick=
+                    "event.preventDefault();pk.modal({header:'Look, its a modal!',content:'Any content, including HTML can go here', draggable:true});">Click
+                    me!</button>
+                </div>
 
-    <span id='rating1'></span>
-</div>
-
-
-
-<div class='item'>
-    <h1>Toggle</h1>
-
-    
-    <span id='toggle1'></span>
-    </div>
-
-    <div class='item'>
-    <h1>Modal</h1>
-    <button onclick="event.preventDefault();pk.modal({header:'Look, its a modal!',content:'Any content, including HTML can go here', draggable:true});">Click me!
-    </button>
-</div>
-
-
-    <div class='item'>
-    <h1>Tooltips</h1>
-    <a href='#' id='tooltip1' onclick="event.preventDefault();">Top</a>, 
-  <a href='#' id='tooltip2' onclick="event.preventDefault();">Right</a>, 
-  <a href='#' id='tooltip3' onclick="event.preventDefault();">Bottom</a>, 
-  <a href='#' id='tooltip4' onclick="event.preventDefault();">Left</a>
-</div>
-
-        </div>
-        <div class="col-md-6" style='text-align:justify;'>
-
-<h1>Sliders</h1>
-    <span id='slider1' style='float:right;height:205px;'></span>
-    <span id='slider3' style='width:calc(33% - 10px);'></span>
-    <span id='slider4' style='width:calc(33% - 10px);'></span>
-    <span id='slider5' style='width:calc(33% - 10px);'></span>
-    <br /><br />
-    <span id='slider2' style='width:calc(100% - 35px);'></span>
-
-
-        </div>
-      </div>
- <div class="row">
-        <div class="col-md-6">
-    <h1>Carousel</h1>
-    <ul id='carousel1'>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-    </ul>
-
-        </div>
-        <div class="col-md-6" style='text-align:justify;'>
-
-
-<h1>Accordian</h1>
-    <ul id='accordian1' class='pk-accordian'>
-        <li class='pk-show'>
-            <h3 class='pk-content-header'>Title Content</h3>
-            <div class='pk-content'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
-                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna.
+                <div class='item'>
+                    <h1>Tooltips</h1><a href='#' id='tooltip1' onclick=
+                    "event.preventDefault();">Top</a>, <a href='#' id=
+                    'tooltip2' onclick="event.preventDefault();">Right</a>,
+                    <a href='#' id='tooltip3' onclick=
+                    "event.preventDefault();">Bottom</a>, <a href='#' id=
+                    'tooltip4' onclick="event.preventDefault();">Left</a>
+                </div>
             </div>
-        </li>
-        <li>
-            <h3 class='pk-content-header'>Title Content</h3>
-            <div class='pk-content'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
-                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna.
-            </div>
-        </li>
-        <li>
-            <h3 class='pk-content-header'>Title Content</h3>
-            <div class='pk-content'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
-                id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna.
-            </div>
-        </li>
-    </ul>
 
+            <div class="col-md-6" style='text-align:justify;'>
+                <h1>Sliders</h1><span id='slider1' style=
+                'float:right;height:205px;'></span> <span id='slider3' style=
+                'width:calc(33% - 10px);'></span> <span id='slider4' style=
+                'width:calc(33% - 10px);'></span> <span id='slider5' style=
+                'width:calc(33% - 10px);'></span><br>
+                <br>
+                <span id='slider2' style='width:calc(100% - 35px);'></span>
+            </div>
         </div>
-      </div>
-      <hr>
+		<div class="row">
+            <div class="col-md-4">
+				<h1>Datepicker</h1><span id='datepicker1'></span>
+            </div>
+			<div class="col-md-3">
+				<h1>Colorpicker</h1><span id='colorpicker1'></span>
+            </div>
+			<div class="col-md-5">
+				<h1>Color Utility Methods</h1><span id='colorpicker1'></span>
+			    <div id='colorOutput' style='line-height:40px;-webkit-column-count:3;column-width:33%;'>
+					Complement:<div data-color='complement'></div>
+					Complement (split):<div data-color='complement' data-type='split'></div>
+					Complement (double):<div data-color='complement' data-type='double'></div>
+					Triadic:<div data-color='triadic'></div>
+					Tetradic:<div data-color='tetradic'></div>
+					Pentadic:<div data-color='pentadic'></div>
+				</div>
+            </div>
+		</div>
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Carousel</h1>
 
-      <footer>
-        <p>&copy; Pocketknife Ltd. 2014</p>
-      </footer>
+                <ul id='carousel1'>
+                    <li>1</li>
+
+                    <li>2</li>
+
+                    <li>3</li>
+                </ul>
+            </div>
+
+            <div class="col-md-6" style='text-align:justify;'>
+                <h1>Accordian</h1>
+
+                <ul class='pk-accordian' id='accordian1'>
+                    <li class='pk-show'>
+                        <h3 class='pk-content-header'>Title Content</h3>
+
+                        <div class='pk-content'>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Pellentesque a fermentum turpis, a vulputate
+                            est. Praesent nunc mi, elementum et eleifend in,
+                            semper quis lacus. Duis velit neque, feugiat eget
+                            sodales eget, blandit in lacus. Morbi a varius
+                            urna, id eleifend est. Maecenas varius erat id
+                            augue ullamcorper, at sodales quam condimentum.
+                            Fusce et finibus metus. Sed sed lacinia magna.
+                        </div>
+                    </li>
+
+                    <li>
+                        <h3 class='pk-content-header'>Title Content</h3>
+
+                        <div class='pk-content'>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Pellentesque a fermentum turpis, a vulputate
+                            est. Praesent nunc mi, elementum et eleifend in,
+                            semper quis lacus. Duis velit neque, feugiat eget
+                            sodales eget, blandit in lacus. Morbi a varius
+                            urna, id eleifend est. Maecenas varius erat id
+                            augue ullamcorper, at sodales quam condimentum.
+                            Fusce et finibus metus. Sed sed lacinia magna.
+                        </div>
+                    </li>
+
+                    <li>
+                        <h3 class='pk-content-header'>Title Content</h3>
+
+                        <div class='pk-content'>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Pellentesque a fermentum turpis, a vulputate
+                            est. Praesent nunc mi, elementum et eleifend in,
+                            semper quis lacus. Duis velit neque, feugiat eget
+                            sodales eget, blandit in lacus. Morbi a varius
+                            urna, id eleifend est. Maecenas varius erat id
+                            augue ullamcorper, at sodales quam condimentum.
+                            Fusce et finibus metus. Sed sed lacinia magna.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+
+        <footer>
+            <p>&copy; Pocketknife Ltd. 2014</p>
+        </footer>
     </div>
 
         <script src="../dist/pocketknife.min.js"></script>
         <script>
+		
+        pk.colorpicker({
+            element: document.getElementById('colorpicker1'),
+			value:'#49A3DF',
+            listeners:{
+				change:function(oldCol,newCol){
+					var outputEl = document.getElementById('colorOutput');	 
+					for(var u=0;u<outputEl.children.length;u++){
+						if(pk.attribute(outputEl.children[u],'data-color')){
+							outputEl.children[u].innerHTML='';
+							if(pk.attribute(outputEl.children[u],'data-color')==='complement' && pk.attribute(outputEl.children[u],'data-type')){
+								var cols = pk.color[pk.attribute(outputEl.children[u],'data-color')](newCol, pk.attribute(outputEl.children[u],'data-type'));	
+							}else{
+								var cols = pk.color[pk.attribute(outputEl.children[u],'data-color')](newCol);							
+							}
+							for(var c=0;c<cols.length;c++){ 
+								var cEl=pk.createEl("<span style='display:inline-block;height:25px;width:25px;background:"+cols[c]+";'></span>");
+								outputEl.children[u].appendChild(cEl);
+							}		
+						}	
+					}
+				}
+            }
+        });
+		
+        pk.datepicker({
+            element: document.getElementById('datepicker1')
+        });
+		
         pk.accordian({
             element: document.getElementById('accordian1'),
             animate: true,

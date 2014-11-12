@@ -6,6 +6,7 @@ var pk = pk || {};
 			ttEl=pk.createEl("<div class='pk-tooltip'></div>");
 			document.body.appendChild(ttEl);
 		}
+		var delay=opt.delay || 500, timer=null;
 		pk.bindEvent('mouseover', opt.element,function(){
 			ttEl.innerHTML=opt.content;
 			ttEl.style.display='block';	
@@ -35,11 +36,23 @@ var pk = pk || {};
 			}
 			ttEl.style.top=t+'px';
 			ttEl.style.left=l+'px';
-			pk.addClass(ttEl, 'pk-show');
-			pk.addClass(ttEl, 'pk-'+opt.position);			
+			pk.addClass(ttEl, 'pk-'+opt.position);		
+			
+			if(!timer){
+				timer = setTimeout(function(){				
+					pk.addClass(ttEl, 'pk-show');	
+					clearTimeout(timer);
+					timer=null;
+				},delay);
+			}
+			
 		});
 		pk.bindEvent('mouseout', opt.element,function(){
 			ttEl.innerHTML='';
+			if(timer){	
+				clearTimeout(timer);
+				timer=null;
+			}
 			pk.removeClass(ttEl, 'pk-show');			
 			pk.removeClass(ttEl, 'pk-'+opt.position);		
 		});

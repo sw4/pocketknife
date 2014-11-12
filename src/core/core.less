@@ -5,11 +5,23 @@
 @item-height:@font-size*2.4;
 @item-width:@item-height*10;
 @item-rounding:6px; 
+// Should be the lightest color desired (e.g. white)
 @color-background:hsl(0, 0%, 100%);
+// Should be the darkest color desired (e.g. black)
 @color-foreground:hsl(0, 0%, 0%);
-@color-highlight:hsl(204, 70%, 58%);
-@color-secondary:hsl(179, 88%, 43%);
-@color-tertiary:hsl(204, 64%, 44%);
+// Should be the base theme color
+@color-highlight:hsl(211, 28%, 25%);
+// Should be the base theme color for focussed / selected etc items
+@color-prominent:hsl(146, 64%, 42%);
+
+//@color-secondary:hsl(179, 88%, 43%);
+//@color-tertiary:hsl(204, 64%, 44%);
+
+// Classic Blue - hsl(204, 70%, 58%)
+// Dark Blue - hsl(211, 28%, 25%)
+// Green - hsl(146, 64%, 42%)
+
+
 @transition-duration:100ms;
 .pk-overlay {
     position: fixed;

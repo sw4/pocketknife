@@ -17,9 +17,9 @@ var pk = pk || {};
 			yearEl=null,
 			monthEl=null,
 			daysEl=null,
-			s=0,
-			e=0,
-			p=0;
+			sD=0,
+			eD=0,
+			pD=0;
 		el=pk.replaceEl(el, tpl);		
 		function parseDate(){
 			function normalizeDay(v){
@@ -33,18 +33,20 @@ var pk = pk || {};
 				weekday:normalizeDay(new Date(y, m-1, d).getDay()),
 				startday:normalizeDay(new Date(y, m-1, 1).getDay()),
 				endday:new Date(y, m, 0).getDate(),
-				prevend:new Date(y, m-1, 0).getDate()
+				prevend:new Date(y, m-1, 0).getDate(),
+				nextend:new Date(y, (m===11 ? 0 : m+1), 0).getDate(),
+				date:new Date(y, m-1, d)
 			}
 			return obj; 
 		}
 		
 		function createDays(){
-			s=parseDate().startday,
-			e=parseDate().endday, 
-			p=parseDate().prevend; 	
+			sD=parseDate().startday,
+			eD=parseDate().endday, 
+			pD=parseDate().prevend; 	
 				
-			s = s == 0 ? s = 7 : s;
-			tpl="<table class='pk-datepicker-day'><thead><tr>";
+			sD = sD == 0 ? sD = 7 : sD;
+			tpl="<thead><tr>";
 			for(var w=0;w<7;w++){		
 				tpl+="<th>"+weekday.m[w]+"</th>";
 			}
@@ -53,28 +55,23 @@ var pk = pk || {};
 				if(c%7 === 0){
 					tpl+="<tr>";
 				}
-				if(c>=s && c<=e+s-1){
-					tpl+="<td data-day='"+(c-s+1)+"'>"+(c-s+1)+"</td>";
-				}else if(c<s){
-					tpl+="<td class='pk-prev' data-day='"+(p-(s-c-1))+"' data-month='"+(m-2 < 0 ? 11 : m-2)+"' "+(m-2 < 0 ? "data-year='"+(y-1)+"'": '')+">"+(p-(s-c-1))+"</td>"; 
+				if(c>=sD && c<=eD+sD-1){
+					tpl+="<td data-day='"+(c-sD+1)+"'>"+(c-sD+1)+"</td>";
+				}else if(c<sD){
+					tpl+="<td class='pk-prev' data-day='"+(pD-(sD-c-1))+"' data-month='"+(m-2 < 0 ? 11 : m-2)+"' "+(m-2 < 0 ? "data-year='"+(y-1)+"'": '')+">"+(pD-(sD-c-1))+"</td>"; 
 				}else{
-					tpl+="<td class='pk-next' data-day='"+(c-s-e+1)+"' data-month='"+(m===12 ? 0 : m)+"' "+(m===12 ? "data-year='"+(y+1)+"'": '')+">"+(c-s-e+1)+"</td>"; 
+					tpl+="<td class='pk-next' data-day='"+(c-sD-eD+1)+"' data-month='"+(m===12 ? 0 : m)+"' "+(m===12 ? "data-year='"+(y+1)+"'": '')+">"+(c-sD-eD+1)+"</td>"; 
 				}
 				if(c%7 === 6){
 					tpl+="</tr>";
 				}
 			}
-			tpl+="</tbody></table>"; 					
-			if(daysEl){
-				daysEl.innerHTML='';
-				daysEl=pk.replaceEl(daysEl, tpl);
-			}else{			
-				daysEl=pk.createEl(tpl);
-				el.appendChild(daysEl);		
-			}
+			tpl+="</tbody>"; 	
+			daysEl.innerHTML=tpl;
 			setDay();			
 		}
-			
+		metaEl=pk.createEl("<div class='pk-datepicker-meta'>"+666+"</div>");
+		el.appendChild(metaEl);			
 		yearEl=pk.createEl("<div class='pk-datepicker-year'>"+y+"</div>");
 		el.appendChild(yearEl);
 		
@@ -86,7 +83,19 @@ var pk = pk || {};
 		monthEl=pk.createEl(tpl);
 		el.appendChild(monthEl);	
 		
-		setYear(); 
+		
+		tpl="<table class='pk-datepicker-day'></table>";
+		daysEl=pk.createEl(tpl);
+		el.appendChild(daysEl);		
+		
+		setMeta();
+		setYear();
+		
+		function setMeta(){
+			function getSuffix(n) {return n + (n < 11 || n > 13 ? ['st', 'nd', 'rd', 'th'][Math.min((n - 1) % 10, 3)] : 'th');}
+			var mDate=parseDate();
+			metaEl.innerHTML=weekday.l[mDate.weekday]+" "+getSuffix(mDate.date.getDate())+" "+month.m[mDate.date.getMonth()]+" "+mDate.date.getFullYear();
+		}
 		function setYear(){		
 			yearEl.innerHTML=y;
 			setMonth();
@@ -104,7 +113,7 @@ var pk = pk || {};
 				for(c=0;c<7;c++){
 					i++;	 				
 					pk.removeClass(daysEl.children[1].children[w].children[c], 'selected');
-					if(i===s+d){
+					if(i===sD+d){
 						pk.addClass(daysEl.children[1].children[w].children[c], 'selected');
 					}
 				}		
@@ -124,8 +133,65 @@ var pk = pk || {};
 				d=parseInt(pk.attribute(tEl, 'day'),0);		
 				setDay();
 			}
+			setMeta();
 		}
 		pk.bindEvent('click', el, resolveDate);	
+		
+		pk.bindEvent("mousewheel", monthEl, function(e) { 
+			if (e.wheelDelta > 0 || e.detail < 0) {
+				d=d > parseDate().nextend ? parseDate().nextend : d;
+				if(m===12){
+					m=1;
+					y++;
+				}else{
+					m++;
+				}
+            }else{
+				d=d > parseDate().prevend ? parseDate().prevend : d;
+				if(m===1){
+					m=12;
+					y--;
+				}else{
+					m--;
+				}
+			}
+			setYear();
+		});
+		pk.bindEvent("mousewheel", daysEl, function(e) { 
+		 	pk.preventBubble(e); 
+			if (e.wheelDelta > 0 || e.detail < 0) {
+				if(d===eD){				
+					d=1;
+					if(m===12){
+						m=1;
+						y++;
+						setYear();
+					}else{
+						m++;
+						setMonth();
+					}
+				}else{
+					d++;
+					setDay();
+				}
+            }else{
+				if(d===1){				
+					d=parseDate().prevend;
+					if(m===1){
+						m=12;
+						y--;
+						setYear();
+					}else{
+						m--;
+						setMonth();
+					}
+				}else{
+					d--;
+					setDay();
+				}
+			}
+        });
+
 		
     };
     return pk;

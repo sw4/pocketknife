@@ -12,4 +12,4 @@ For further information see the `docs/` and `demo/` folders
 License
 ----
 
-Pockeknife.js is open source for *non commercial use*, and available under the [CC BY-NC-SA 4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+Pockeknife.js is open source for *non commercial use*, and available under the [CC BY-NC-SA 4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/) license.

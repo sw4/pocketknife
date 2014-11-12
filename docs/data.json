@@ -1145,7 +1145,7 @@
                     "props": [
                         {
                             "name": "element",
-                            "description": "DOM element to convert to control",
+                            "description": "DOM element to apply tooltip to",
                             "type": "Object"
                         },
                         {
@@ -1153,6 +1153,13 @@
                             "description": "Tooltip content (`HTML` allowed)",
                             "type": "String",
                             "optional": true
+                        },
+                        {
+                            "name": "position",
+                            "description": "Tooltip position (`top`, `right`, `bottom` or `left`)",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "right"
                         },
                         {
                             "name": "delay",
@@ -1165,7 +1172,7 @@
                 }
             ],
             "return": {
-                "description": "Object  Returns originating tooltip element (item `0`)",
+                "description": "Object  Returns target element (item `0`)",
                 "type": "Object"
             },
             "chainable": 1

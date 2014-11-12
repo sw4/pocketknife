@@ -145,10 +145,11 @@ Javascript:
 @class pk.tooltip
 @constructor
 @param options {Object}
-@param options.element {Object} DOM element to convert to control
+@param options.element {Object} DOM element to apply tooltip to
 @param [options.content] {String} Tooltip content (&#x60;HTML&#x60; allowed)
+@param [options.position=right] {String} Tooltip position (&#x60;top&#x60;, &#x60;right&#x60;, &#x60;bottom&#x60; or &#x60;left&#x60;)
 @param [options.delay=500] {Number} Time in &#x60;ms&#x60; before tooltip is shown
-@return Object {Object} Returns originating tooltip element (item &#x60;0&#x60;)
+@return Object {Object} Returns target element (item &#x60;0&#x60;)
 @chainable
 */
 

@@ -1,4 +1,28 @@
 var pk = pk || {};
+/**
+Class used for creating tooltips
+
+HTML
+
+    <span id='tooltip'>Show Tooltip</span>
+
+Javascript:
+
+	pk.tooltip({
+		element:document.getElementById('tooltip'),
+		content:'Tooltip content',
+		position:'left'
+	});
+
+@class pk.tooltip
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to control
+@param [options.content] {String} Tooltip content (`HTML` allowed)
+@param [options.delay=500] {Number} Time in `ms` before tooltip is shown
+@return Object {Object} Returns notification element (item `0`)
+*/
+
 (function(pk) {
 	var ttEl=null;
 	pk.tooltip=function(opt){
@@ -56,6 +80,9 @@ var pk = pk || {};
 			pk.removeClass(ttEl, 'pk-show');			
 			pk.removeClass(ttEl, 'pk-'+opt.position);		
 		});
+		return {
+			0:el
+		};
 	};
     return pk;
 })(pk);

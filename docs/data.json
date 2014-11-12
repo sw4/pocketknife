@@ -53,6 +53,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/datepicker/datepicker.js": {
+            "name": "src/datepicker/datepicker.js",
+            "modules": {},
+            "classes": {
+                "pk.datepicker": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/drag/drag.js": {
             "name": "src/drag/drag.js",
             "modules": {},
@@ -134,6 +143,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/tooltip/tooltip.js": {
+            "name": "src/tooltip/tooltip.js",
+            "modules": {},
+            "classes": {
+                "pk.tooltip": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/utils/color.js": {
             "name": "src/utils/color.js",
             "modules": {},
@@ -154,6 +172,7 @@
                 "pk.checkbox": 1,
                 "pk.colorpicker": 1,
                 "pk": 1,
+                "pk.datepicker": 1,
                 "pk.drag": 1,
                 "pk.modal": 1,
                 "pk.notify": 1,
@@ -163,6 +182,7 @@
                 "pk.slider": 1,
                 "pk.switch": 1,
                 "pk.toggle": 1,
+                "pk.tooltip": 1,
                 "pk.color": 1
             },
             "fors": {},
@@ -407,6 +427,68 @@
             "file": "src/core/core.js",
             "line": 47,
             "static": 1
+        },
+        "pk.datepicker": {
+            "name": "pk.datepicker",
+            "shortname": "pk.datepicker",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/datepicker/datepicker.js",
+            "line": 2,
+            "description": "Create a new datepicker control\n\nHTML\n\n    <div id='datepicker'></div>\n\nJavascript\n\n\tpk.datepicker({\n\t\telement: document.getElementById('datepicker')\n\t});",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to control",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "value",
+                            "description": "Value of initially selected option, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-select-RandInt`",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "pk-select-RandInt"
+                        },
+                        {
+                            "name": "tabindex",
+                            "description": "Tabindex of control, defaults to the attribute value set on the passed element, or `0`",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "disabled",
+                            "description": "Disabled state of control, defaults to the attribute value set on the passed element, or `false`",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
+                "type": "Object"
+            },
+            "chainable": 1
         },
         "pk.drag": {
             "name": "pk.drag",
@@ -1037,6 +1119,53 @@
             ],
             "return": {
                 "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
+                "type": "Object"
+            },
+            "chainable": 1
+        },
+        "pk.tooltip": {
+            "name": "pk.tooltip",
+            "shortname": "pk.tooltip",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/tooltip/tooltip.js",
+            "line": 2,
+            "description": "Class used for creating tooltips\n\nHTML\n\n    <span id='tooltip'>Show Tooltip</span>\n\nJavascript:\n\n\tpk.tooltip({\n\t\telement:document.getElementById('tooltip'),\n\t\tcontent:'Tooltip content',\n\t\tposition:'left'\n\t});",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "element",
+                            "description": "DOM element to convert to control",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "content",
+                            "description": "Tooltip content (`HTML` allowed)",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "delay",
+                            "description": "Time in `ms` before tooltip is shown",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "500"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Object  Returns originating tooltip element (item `0`)",
                 "type": "Object"
             },
             "chainable": 1
@@ -2454,7 +2583,7 @@
                     "description": "Starting color HEX value defaults to `#1ae500` green so 100% is green",
                     "type": "String",
                     "optional": true,
-                    "optdefault": "#1ae500"
+                    "optdefault": "#27ae62"
                 }
             ],
             "return": {

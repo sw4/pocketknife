@@ -7,6 +7,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "pk.checkbox",
         "pk.color",
         "pk.colorpicker",
+        "pk.datepicker",
         "pk.drag",
         "pk.modal",
         "pk.notify",
@@ -15,7 +16,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "pk.select",
         "pk.slider",
         "pk.switch",
-        "pk.toggle"
+        "pk.toggle",
+        "pk.tooltip"
     ],
     "modules": [
         "pocketknife"

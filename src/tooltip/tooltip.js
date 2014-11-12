@@ -20,7 +20,8 @@ Javascript:
 @param options.element {Object} DOM element to convert to control
 @param [options.content] {String} Tooltip content (`HTML` allowed)
 @param [options.delay=500] {Number} Time in `ms` before tooltip is shown
-@return Object {Object} Returns notification element (item `0`)
+@return Object {Object} Returns originating tooltip element (item `0`)
+@chainable
 */
 
 (function(pk) {
@@ -81,7 +82,7 @@ Javascript:
 			pk.removeClass(ttEl, 'pk-'+opt.position);		
 		});
 		return {
-			0:el
+			0:opt.element
 		};
 	};
     return pk;

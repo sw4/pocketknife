@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>pocketknife - Pocketknife UI</title>
+    <title>src/tooltip/tooltip.js - Pocketknife UI</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -122,145 +122,101 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>pocketknife Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/tooltip/tooltip.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+var pk = pk || {};
+/**
+Class used for creating tooltips
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src_utils_color.js.html#l2"><code>src&#x2F;utils&#x2F;color.js:2</code></a>
-        </div>
-    
+HTML
 
-    
-</div>
+    &lt;span id=&#x27;tooltip&#x27;&gt;Show Tooltip&lt;/span&gt;
 
+Javascript:
 
+	pk.tooltip({
+		element:document.getElementById(&#x27;tooltip&#x27;),
+		content:&#x27;Tooltip content&#x27;,
+		position:&#x27;left&#x27;
+	});
 
-<div class="box intro">
-    
-</div>
+@class pk.tooltip
+@constructor
+@param options {Object}
+@param options.element {Object} DOM element to convert to control
+@param [options.content] {String} Tooltip content (&#x60;HTML&#x60; allowed)
+@param [options.delay=500] {Number} Time in &#x60;ms&#x60; before tooltip is shown
+@return Object {Object} Returns originating tooltip element (item &#x60;0&#x60;)
+@chainable
+*/
 
+(function(pk) {
+	var ttEl=null;
+	pk.tooltip=function(opt){
+		if(!ttEl){
+			ttEl=pk.createEl(&quot;&lt;div class=&#x27;pk-tooltip&#x27;&gt;&lt;/div&gt;&quot;);
+			document.body.appendChild(ttEl);
+		}
+		var delay=opt.delay || 500, timer=null;
+		pk.bindEvent(&#x27;mouseover&#x27;, opt.element,function(){
+			ttEl.innerHTML=opt.content;
+			ttEl.style.display=&#x27;block&#x27;;	
+			var tl=pk.layout(ttEl),
+				pl=pk.layout(opt.element),
+				t=0,l=0;
+				opt.position=opt.position || &#x27;right&#x27;;		
+			ttEl.style.display=&#x27;&#x27;;
+			switch(opt.position){
+				case &quot;top&quot;:
+					t=pl.top-tl.height;
+					l=pl.left;
+				break;
+				case &quot;bottom&quot;:
+					t=pl.top+pl.height;
+					l=pl.left;
+				break;
+				default:
+				case &quot;right&quot;:
+					t=pl.top;
+					l=pl.left + pl.width;
+				break;				
+				case &quot;left&quot;: 
+					t=pl.top;
+					l=pl.left - tl.width;
+				break;
+			}
+			ttEl.style.top=t+&#x27;px&#x27;;
+			ttEl.style.left=l+&#x27;px&#x27;;
+			pk.addClass(ttEl, &#x27;pk-&#x27;+opt.position);		
+			
+			if(!timer){
+				timer = setTimeout(function(){				
+					pk.addClass(ttEl, &#x27;pk-show&#x27;);	
+					clearTimeout(timer);
+					timer=null;
+				},delay);
+			}
+			
+		});
+		pk.bindEvent(&#x27;mouseout&#x27;, opt.element,function(){
+			ttEl.innerHTML=&#x27;&#x27;;
+			if(timer){	
+				clearTimeout(timer);
+				timer=null;
+			}
+			pk.removeClass(ttEl, &#x27;pk-show&#x27;);			
+			pk.removeClass(ttEl, &#x27;pk-&#x27;+opt.position);		
+		});
+		return {
+			0:opt.element
+		};
+	};
+    return pk;
+})(pk);
 
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/pk.html">
-                        pk
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.accordian.html">
-                        pk.accordian
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.carousel.html">
-                        pk.carousel
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.checkbox.html">
-                        pk.checkbox
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.color.html">
-                        pk.color
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.colorpicker.html">
-                        pk.colorpicker
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.datepicker.html">
-                        pk.datepicker
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.drag.html">
-                        pk.drag
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.modal.html">
-                        pk.modal
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.notify.html">
-                        pk.notify
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.rating.html">
-                        pk.rating
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.scroll.html">
-                        pk.scroll
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.select.html">
-                        pk.select
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.slider.html">
-                        pk.slider
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.switch.html">
-                        pk.switch
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.toggle.html">
-                        pk.toggle
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/pk.tooltip.html">
-                        pk.tooltip
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+    </pre>
 </div>
 
                     </div>

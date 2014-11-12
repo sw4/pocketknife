@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>pk.modal - Pocketknife UI</title>
+    <title>pk.datepicker - Pocketknife UI</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -122,7 +122,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>pk.modal Class</h1>
+                        <h1>pk.datepicker Class</h1>
 <div class="box meta">
     
 
@@ -130,7 +130,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_modal_modal.js.html#l3"><code>src&#x2F;modal&#x2F;modal.js:3</code></a>
+            Defined in: <a href="../files/src_datepicker_datepicker.js.html#l2"><code>src&#x2F;datepicker&#x2F;datepicker.js:2</code></a>
         </div>
     
 
@@ -146,25 +146,21 @@
 
 
 <div class="box intro">
-    <p>Create a new modal component</p>
-<p>HTML:</p>
-<pre class="code prettyprint"><code>&lt;button onclick=&quot;showModal();&quot;&gt;Show Modal&lt;/button&gt;</code></pre>
-<p>Javascript: </p>
-<pre class="code prettyprint"><code>function showModal(){
-    pk.modal({
-        header:&#39;Modal header&#39;,
-        content:&#39;Modal content&#39;, 
-        draggable:true
-    });
-}</code></pre>
+    <p>Create a new datepicker control</p>
+<p>HTML</p>
+<pre class="code prettyprint"><code>&lt;div id=&#39;datepicker&#39;&gt;&lt;/div&gt;</code></pre>
+<p>Javascript</p>
+<pre class="code prettyprint"><code>pk.datepicker({
+    element: document.getElementById(&#39;datepicker&#39;)
+});</code></pre>
 
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_pk.modal" class="method item">
-    <h3 class="name"><code>pk.modal</code></h3>
+        <div id="method_pk.datepicker" class="method item">
+    <h3 class="name"><code>pk.datepicker</code></h3>
 
     
         <div class="args">
@@ -211,7 +207,7 @@
             
         
         
-        <a href="../files/src_modal_modal.js.html#l3"><code>src&#x2F;modal&#x2F;modal.js:3</code></a>
+        <a href="../files/src_datepicker_datepicker.js.html#l2"><code>src&#x2F;datepicker&#x2F;datepicker.js:2</code></a>
         
         </p>
 
@@ -253,7 +249,7 @@
                                 
 
                                 <div class="param-description">
-                                    <p>DOM element to convert to component</p>
+                                    <p>DOM element to convert to control</p>
 
                                 </div>
 
@@ -262,13 +258,13 @@
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[header]</code>
+                                    <code class="param-name optional">[value=0]</code>
                                     <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
                                 <div class="param-description">
-                                    <p>Modal header content (<code>HTML</code> allowed)</p>
+                                    <p>Value of initially selected option, defaults to the attribute value set on the passed element, or <code>0</code></p>
 
                                 </div>
 
@@ -277,13 +273,13 @@
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[content]</code>
+                                    <code class="param-name optional">[name=pk-select-RandInt]</code>
                                     <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
                                 <div class="param-description">
-                                    <p>Modal body content (<code>HTML</code> allowed)</p>
+                                    <p>Name of underlying input control, defaults to the attribute value set on the passed element, or <code>pk-select-RandInt</code></p>
 
                                 </div>
 
@@ -292,13 +288,28 @@
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[draggable]</code>
+                                    <code class="param-name optional">[tabindex=0]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Tabindex of control, defaults to the attribute value set on the passed element, or <code>0</code></p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[disabled=false]</code>
                                     <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
                                 
 
                                 <div class="param-description">
-                                    <p>Whether to allow modal dragging</p>
+                                    <p>Disabled state of control, defaults to the attribute value set on the passed element, or <code>false</code></p>
 
                                 </div>
 
@@ -340,8 +351,6 @@
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
         
-            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
-        
         
         
         
@@ -352,21 +361,6 @@
             <h2 class="off-left">Item Index</h2>
 
             
-                <div class="index-section methods">
-                    <h3>Methods</h3>
-
-                    <ul class="index-list methods">
-                        
-                            <li class="index-item method">
-                                <a href="#method_close">close</a>
-
-                                
-                                
-                            </li>
-                        
-                    </ul>
-                </div>
-            
 
             
 
@@ -375,67 +369,6 @@
             
         </div>
 
-        
-            <div id="methods" class="api-class-tabpanel">
-                <h2 class="off-left">Methods</h2>
-
-                
-                    <div id="method_close" class="method item">
-    <h3 class="name"><code>close</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_modal_modal.js.html#l99"><code>src&#x2F;modal&#x2F;modal.js:99</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Closes modal and removes from DOM</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-            </div>
         
 
         

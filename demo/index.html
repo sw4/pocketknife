@@ -223,25 +223,25 @@
 		
         pk.colorpicker({
             element: document.getElementById('colorpicker1'),
-			value:'#49A3DF',
+			      value:'#49A3DF',
             listeners:{
-				change:function(oldCol,newCol){
-					var outputEl = document.getElementById('colorOutput');	 
-					for(var u=0;u<outputEl.children.length;u++){
-						if(pk.attribute(outputEl.children[u],'data-color')){
-							outputEl.children[u].innerHTML='';
-							if(pk.attribute(outputEl.children[u],'data-color')==='complement' && pk.attribute(outputEl.children[u],'data-type')){
-								var cols = pk.color[pk.attribute(outputEl.children[u],'data-color')](newCol, pk.attribute(outputEl.children[u],'data-type'));	
-							}else{
-								var cols = pk.color[pk.attribute(outputEl.children[u],'data-color')](newCol);							
-							}
-							for(var c=0;c<cols.length;c++){ 
-								var cEl=pk.createEl("<span style='display:inline-block;height:25px;width:25px;background:"+cols[c]+";'></span>");
-								outputEl.children[u].appendChild(cEl);
-							}		
-						}	
-					}
-				}
+      				change:function(oldCol,newCol){
+      					var outputEl = document.getElementById('colorOutput');	 
+      					for(var u=0;u<outputEl.children.length;u++){
+      						if(pk.attribute(outputEl.children[u],'data-color')){
+      							outputEl.children[u].innerHTML='';
+      							if(pk.attribute(outputEl.children[u],'data-color')==='complement' && pk.attribute(outputEl.children[u],'data-type')){
+      								var cols = pk.color[pk.attribute(outputEl.children[u],'data-color')](newCol, pk.attribute(outputEl.children[u],'data-type'));	
+      							}else{
+      								var cols = pk.color[pk.attribute(outputEl.children[u],'data-color')](newCol);							
+      							}
+      							for(var c=0;c<cols.length;c++){ 
+      								var cEl=pk.createEl("<span style='display:inline-block;height:25px;width:25px;background:"+cols[c]+";'></span>");
+      								outputEl.children[u].appendChild(cEl);
+      							}		
+      						}	
+      					}
+      				}
             }
         });
 		
@@ -267,7 +267,13 @@
             axis: 'x',
             value: 0,
             min:-444,
-            max:900
+            max:900,
+            listeners:{
+              change:function(e, v, i){
+                var col=pk.color.percentage(Math.abs(v)/900,'#0061a3');
+                e.children[1].style.backgroundColor=col;
+              }
+            }
         });
         pk.slider({
             element: document.getElementById('slider3'),

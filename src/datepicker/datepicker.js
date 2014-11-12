@@ -185,6 +185,7 @@ Javascript
 		pk.bindEvent('click', el, resolveClick);	
 
 		pk.bindEvent("mousewheel", yearEl, function(e) { 
+			pk.preventBubble(e);
 			if (e.wheelDelta > 0 || e.detail < 0) {
 				y++
             }else{ 
@@ -194,6 +195,7 @@ Javascript
 			setMeta();
 		});		
 		pk.bindEvent("mousewheel", monthEl, function(e) { 
+			pk.preventBubble(e);
 			if (e.wheelDelta > 0 || e.detail < 0) {
 				d=d > parseDate().nextend ? parseDate().nextend : d;
 				if(m===12){

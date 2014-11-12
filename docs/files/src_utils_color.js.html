@@ -59,6 +59,8 @@
             
                 <li><a href="../classes/pk.colorpicker.html">pk.colorpicker</a></li>
             
+                <li><a href="../classes/pk.datepicker.html">pk.datepicker</a></li>
+            
                 <li><a href="../classes/pk.drag.html">pk.drag</a></li>
             
                 <li><a href="../classes/pk.modal.html">pk.modal</a></li>
@@ -76,6 +78,8 @@
                 <li><a href="../classes/pk.switch.html">pk.switch</a></li>
             
                 <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
+            
+                <li><a href="../classes/pk.tooltip.html">pk.tooltip</a></li>
             
             </ul>
 
@@ -586,12 +590,12 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
         @method percentage
         @param perc {Number} Percentage between first and second colors to generate color point from expressed as value between zero and one
 		@param [hex1=#ff0000] {String} Starting color HEX value defaults to &#x60;#ff0000&#x60; red so 0% is red
-		@param [hex2=#1ae500] {String} Starting color HEX value defaults to &#x60;#1ae500&#x60; green so 100% is green
+		@param [hex2=#27ae62] {String} Starting color HEX value defaults to &#x60;#1ae500&#x60; green so 100% is green
         @return {String} Returns resulting HEX color
         */		
 		percentage:function(perc, hex1, hex2){
 			hex1=hex1 || &#x27;#ff0000&#x27;;
-			hex2=hex2 || &#x27;#1ae500&#x27;;	
+			hex2=hex2 || &#x27;#27ae62&#x27;;	
 			var hsv1=pk.color.hex2hsv(hex1),
 				hsv2=pk.color.hex2hsv(hex2);				
 			return pk.color.hsv2hex([Math.round(hsv1[0]+perc*(hsv2[0]-hsv1[0])),Math.round(hsv1[1]+perc*(hsv2[1]-hsv1[1])),Math.round(hsv1[2]+perc*(hsv2[2]-hsv1[2]))]);

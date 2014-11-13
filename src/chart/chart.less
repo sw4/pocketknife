@@ -2,4 +2,23 @@
 	position:relative;
 	height:@item-width;
 	width:@item-width;
+	.pk-legend{
+		display:table;
+		// visibility:hidden;
+		position:absolute;
+		right:0;
+		top:0;
+		background:fade(@color-background, 50%);
+		>.pk-legend-entry{
+			display:table-row;
+			>div{
+				display:table-cell;
+				padding:2px 5px;
+			}
+			>.pk-legend-series{
+				border-left:4px solid;
+			}
+		}
+		
+	}
 }

@@ -160,6 +160,15 @@
             },
             "fors": {},
             "namespaces": {}
+        },
+        "src/utils/svg.js": {
+            "name": "src/utils/svg.js",
+            "modules": {},
+            "classes": {
+                "pk.svg": 1
+            },
+            "fors": {},
+            "namespaces": {}
         }
     },
     "modules": {
@@ -183,12 +192,13 @@
                 "pk.switch": 1,
                 "pk.toggle": 1,
                 "pk.tooltip": 1,
-                "pk.color": 1
+                "pk.color": 1,
+                "pk.svg": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "src/utils/color.js",
+            "file": "src/utils/svg.js",
             "line": 2
         }
     },
@@ -1190,6 +1200,20 @@
             "file": "src/utils/color.js",
             "line": 2,
             "description": "Utility class for converting color types and generating color schemes. \n\n<div class='info-well'>\nFor color conversion methods, where the expected parameter is an array e.g `[0,0,0]`, the method can also be passed a comma separated value string, e.g. `'0,0,0'`, from which an array will automatically be extrapolated.\n</div>"
+        },
+        "pk.svg": {
+            "name": "pk.svg",
+            "shortname": "pk.svg",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "namespace": "",
+            "file": "src/utils/svg.js",
+            "line": 2,
+            "description": "Utility class for SVG helpers"
         }
     },
     "classitems": [
@@ -1654,7 +1678,7 @@
         {
             "file": "src/core/core.js",
             "line": 276,
-            "description": "Create a new DOM element from the passed `HTML` string",
+            "description": "Create a new DOM element from the passed `HTML` string (SVG agnostic)",
             "itemtype": "method",
             "name": "createEl",
             "params": [
@@ -1674,7 +1698,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 288,
+            "line": 295,
             "description": "Get the index of the passed DOM node within the immediate parent",
             "itemtype": "method",
             "name": "getIndex",
@@ -1694,7 +1718,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 305,
+            "line": 312,
             "description": "Replace the passed DOM element with a new element created from the passed string, inclusive of all original attributes",
             "itemtype": "method",
             "name": "replaceEl",
@@ -1720,7 +1744,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 324,
+            "line": 331,
             "description": "Forces the passed variable into an array, xploding comma seperated strings, keeping existing arrys, collapsing objects and or converting strings as necessary",
             "itemtype": "method",
             "name": "toArr",
@@ -1740,7 +1764,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 343,
+            "line": 350,
             "description": "Collides two arrays, either replacing one with the other, removing one from another, adding one to another or toggling the values of one in another",
             "itemtype": "method",
             "name": "collide",
@@ -1772,7 +1796,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 375,
+            "line": 382,
             "description": "Returns normalized percentage value",
             "itemtype": "method",
             "name": "perc",
@@ -1797,8 +1821,8 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 388,
-            "description": "Gets of sets attribute values, either explicely or impliitely declared",
+            "line": 395,
+            "description": "Gets of sets attribute values, either explicitly or implicitly declared",
             "itemtype": "method",
             "name": "attribute",
             "params": [
@@ -1809,13 +1833,14 @@
                 },
                 {
                     "name": "attribute",
-                    "description": "Attribute name",
+                    "description": "Attribute name to get/set for single attribute, or `Array` of attribute:value Objects to set multiple attributes",
                     "type": "String"
                 },
                 {
                     "name": "value",
-                    "description": "Optional to get, or value of type specific to attribute",
-                    "type": "String"
+                    "description": "Optional to get, or value of type specific to attribute if single attribute being set",
+                    "type": "String",
+                    "optional": true
                 }
             ],
             "return": {
@@ -1828,7 +1853,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 415,
+            "line": 436,
             "description": "Augments event object with additional X and Y helper coordinates",
             "itemtype": "method",
             "name": "procEvent",
@@ -1848,7 +1873,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 445,
+            "line": 466,
             "description": "Gets browser agnostic offset coordinates for applicable mouse events",
             "itemtype": "method",
             "name": "getEventOffset",
@@ -2033,7 +2058,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 131,
+            "line": 119,
             "description": "Fired on slide event starting",
             "itemtype": "event",
             "name": "slidestart",
@@ -2054,7 +2079,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 138,
+            "line": 126,
             "description": "Fired on during slide event",
             "itemtype": "event",
             "name": "sliding",
@@ -2075,7 +2100,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 145,
+            "line": 133,
             "description": "Fired on slide event ending",
             "itemtype": "event",
             "name": "slideend",
@@ -2096,7 +2121,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 242,
+            "line": 230,
             "description": "Gets or sets control value",
             "itemtype": "method",
             "name": "val",
@@ -2117,7 +2142,7 @@
         },
         {
             "file": "src/slider/slider.js",
-            "line": 249,
+            "line": 237,
             "description": "Gets or sets control disabled state",
             "itemtype": "method",
             "name": "disabled",
@@ -2603,6 +2628,172 @@
         {
             "file": "src/utils/color.js",
             "line": 475,
+            "description": "Scale either hue, saturation or value of a color by a percentage amount\n\t\t\n    var scale=pk.scale.percentage(0.5);\n    // color = \"#f2e600\";",
+            "itemtype": "method",
+            "name": "scale",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                },
+                {
+                    "name": "perc",
+                    "description": "Percentage to adjust color by",
+                    "type": "Number"
+                },
+                {
+                    "name": "type",
+                    "description": "String, scale to adjust, either `hue`, `saturation` or `value`",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "hue"
+                },
+                {
+                    "name": "abs",
+                    "description": "Define percentage as absolute value from base to max, defaults to relative value between current and max",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Returns resulting HEX color",
+                "type": "String"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 497,
+            "description": "Lighten a color by a percentage amount\n\t\t\n    var color=pk.color.lighten('#840000', 70);\n    // color = \"#da0000\";",
+            "itemtype": "method",
+            "name": "lighten",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                },
+                {
+                    "name": "perc",
+                    "description": "Percentage to lighten color by",
+                    "type": "Number"
+                },
+                {
+                    "name": "abs",
+                    "description": "Define percentage lightness as absolute value, defaults to relative",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "lightness"
+                }
+            ],
+            "return": {
+                "description": "Returns resulting HEX color",
+                "type": "String"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 513,
+            "description": "Darken a color by a percentage amount\n\t\t\n    var color=pk.color.darken('#840000', 70);\n    // color = \"#da0000\";",
+            "itemtype": "method",
+            "name": "darken",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                },
+                {
+                    "name": "perc",
+                    "description": "Percentage to darken color by",
+                    "type": "Number"
+                },
+                {
+                    "name": "abs",
+                    "description": "Define percentage lightness as absolute value, defaults to relative",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "lightness"
+                }
+            ],
+            "return": {
+                "description": "Returns resulting HEX color",
+                "type": "String"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 529,
+            "description": "Saturate a color by a percentage amount\n\t\t\n    var color=pk.color.saturate('#840000', 70);\n    // color = \"#820000\";",
+            "itemtype": "method",
+            "name": "saturate",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                },
+                {
+                    "name": "perc",
+                    "description": "Percentage to saturate color by",
+                    "type": "Number"
+                },
+                {
+                    "name": "abs",
+                    "description": "Define percentage saturation as absolute value, defaults to relative",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "lightness"
+                }
+            ],
+            "return": {
+                "description": "Returns resulting HEX color",
+                "type": "String"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 545,
+            "description": "Desaturate a color by a percentage amount\n\t\t\n    var color=pk.color.desaturate('#840000', 70);\n    // color = \"#820000\";",
+            "itemtype": "method",
+            "name": "saturate",
+            "params": [
+                {
+                    "name": "hex",
+                    "description": "HEX color string",
+                    "type": "String"
+                },
+                {
+                    "name": "perc",
+                    "description": "Percentage to saturate color by",
+                    "type": "Number"
+                },
+                {
+                    "name": "abs",
+                    "description": "Define percentage desaturation as absolute value, defaults to relative",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "lightness"
+                }
+            ],
+            "return": {
+                "description": "Returns resulting HEX color",
+                "type": "String"
+            },
+            "class": "pk.color",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/utils/color.js",
+            "line": 561,
             "description": "Generate algorithmic color palette\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000'});\n    // palette = [\"#ff0000\", \"#00ff00\", \"#0000ff\"] \t\t\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000', count: 5});\n    // palette = [\"#ff0000\", \"#ccff00\", \"#00ff66\", \"#0066ff\", \"#cc00ff\"]  \t\t\t\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000', scope: 100, count:4});\n    // palette = [\"#ff00d4\", \"#ff0047\", \"#ff4700\", \"#ffd500\"]\n\n    var palette=pk.color.algorithmic ({hex:'#FF0000', type:'saturation', scope:50});\n    // palette = [\"#ffffff\", \"#ffbfbf\", \"#ff8080\"]",
             "itemtype": "method",
             "name": "algorithmic",

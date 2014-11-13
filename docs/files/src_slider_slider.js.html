@@ -75,6 +75,8 @@
             
                 <li><a href="../classes/pk.slider.html">pk.slider</a></li>
             
+                <li><a href="../classes/pk.svg.html">pk.svg</a></li>
+            
                 <li><a href="../classes/pk.switch.html">pk.switch</a></li>
             
                 <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
@@ -212,24 +214,12 @@ Javascript:
 		}
 
 		function describeArc(x, y, radius, startAngle, endAngle){
-			endAngle = endAngle == 360 || endAngle &gt; 360 ? 359.9 : endAngle ;
-			
+			endAngle = endAngle == 360 || endAngle &gt; 360 ? 359.9 : endAngle;			
 			if(circle.length){
 				startAngle=endAngle-(circle.length / 2);
 				endAngle=endAngle+(circle.length / 2);
 			}
-			
-			var start = polarToCartesian(x, y, radius, endAngle);
-			var end = polarToCartesian(x, y, radius, startAngle);
-
-			var arcSweep = endAngle - startAngle &lt;= 180 ? &quot;0&quot; : &quot;1&quot;;
-
-			var d = [
-				&quot;M&quot;, start.x, start.y, 
-				&quot;A&quot;, radius, radius, 0, arcSweep, 0, end.x, end.y
-			].join(&quot; &quot;);
-
-			return d;       
+			return pk.svg.arcPath(x, y, radius, startAngle, endAngle);       
 		}
 		var pathEl=&#x27;&#x27;;
 		var innerTpl=&#x27;&#x27;;

@@ -78,8 +78,7 @@ Javascript:
 			if(timer){	
 				clearTimeout(timer);
 				timer=null;
-			}
-			pk.removeClass(ttEl, 'pk-show');			
+			}	
 			pk.removeClass(ttEl, 'pk-'+opt.position);		
 		});
 		return {

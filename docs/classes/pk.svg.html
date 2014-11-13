@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/switch/switch.js - Pocketknife UI</title>
+    <title>pk.svg - Pocketknife UI</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -124,106 +124,67 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/switch/switch.js</h1>
+                        <h1>pk.svg Class</h1>
+<div class="box meta">
+    
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-var pk = pk || {};
+    
 
-/**
-Create a new switch control
+    
+        <div class="foundat">
+            Defined in: <a href="../files/src_utils_svg.js.html#l2"><code>src&#x2F;utils&#x2F;svg.js:2</code></a>
+        </div>
+    
 
-HTML: 
+    
+        
+            Module: <a href="../modules/pocketknife.html">pocketknife</a>
+        
+    
 
-	&lt;input type=&#x27;switch&#x27; id=&#x27;switch&#x27; /&gt;
+    
+</div>
 
-Javascript:
-	
-	pk.switch({
-		element: document.getElementById(&#x27;switch&#x27;)
-	});
-	
-@class pk.switch
-@constructor
-@param options {Object}
-@param options.element {Object} DOM element to convert to control
-@param [options.value] {Boolean} Initial value
-@param [options.name=pk-switch-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or &#x60;pk-switch-RandInt&#x60;
-@param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or &#x60;0&#x60;
-@param [options.disabled=false] {Boolean} Disabled state of control, defaults to the attribute value set on the passed element, or &#x60;false&#x60;
-@param [options.listeners] {Object} Object array of event listeners to bind to underlying input(s)
-@return Object {Object} Consisting of original DOM element (item &#x60;0&#x60;) and class methods (see below)
-@chainable
-*/
-(function(pk) {
-    pk.switch = function(opt) {
-        var el = opt.element,
-            //    listeners = opt.listeners === undefined ? {} : opt.listeners,
-            inputValue = opt.value || el.getAttribute(&#x27;value&#x27;) || true,
-            inputLabel = opt.label || el.getAttribute(&#x27;label&#x27;) || el.innerHTML,
-            inputDisabled = (opt.disabled || el.getAttribute(&#x27;disabled&#x27;)) ? &#x27;disabled&#x27; : &#x27;&#x27;,
-            inputName = opt.name || el.getAttribute(&#x27;name&#x27;) || &#x27;pk-switch-&#x27; + pk.getRand(1, 999),
-            listeners = opt.listeners === undefined ? {} : opt.listeners,
-            inputTabIndex = opt.tabindex || el.getAttribute(&#x27;tabindex&#x27;) || 0;
 
-        /*jshint multistr:true */
-        var str = &quot;&lt;label class=&#x27;pk-switch&#x27; for=&#x27;&quot; + inputName + &quot;&#x27;&gt;\
-			&lt;input type = &#x27;checkbox&#x27;  id = &#x27;&quot; + inputName + &quot;&#x27;  name = &#x27;&quot; + inputName + &quot;&#x27; tabindex = &#x27;&quot; + inputTabIndex + &quot;&#x27; / &gt;\
-            &lt;span class = &#x27;pk-label&#x27; &gt; &quot; + inputLabel + &quot; &lt;/span&gt;\
-			&lt;span class = &#x27;pk-indicator&#x27; &gt; &quot; + inputLabel + &quot; &lt;/span&gt;\
-		&lt;/label&gt;&quot;;
-		
-        el.innerHTML = &#x27;&#x27;;
-        el = pk.replaceEl(el, str);
-		
-		pk.bindEvent(&quot;mousewheel&quot;, el, function(e) { 
-		 	pk.preventBubble(e); 
-			if (e.wheelDelta &gt; 0 || e.detail &lt; 0) {
-                obj.val(true);
-            }else{
-				obj.val(false);
-			}
-        });
-        /**
-        Gets or sets control value
-        @method val
-        @param [value] {String} Value to set
-        @return {String} Returns current value
-        */
 
-        /**
-        Gets or sets control disabled state
-        @method disabled
-        @param [boolean] {Boolean} Disabled state
-        @return {Boolean} Returns disabled state
-        */
-        var obj = {
-            0: el,
-            val: function(val) {
-                if (val === undefined) {
-                    return pk.attribute(el.children[0], &#x27;checked&#x27;);
-                }
-                pk.attribute(el.children[0], &#x27;checked&#x27;, Boolean(val));
-            },
-            disabled: function(val) {
-                if (val !== undefined) {
-                    pk.toggleClass(el, &#x27;pk-disabled&#x27;, Boolean(val));
-                    pk.attribute(el.children[0], &#x27;disabled&#x27;, Boolean(val));
-                }
-                return pk.attribute(el.children[0], &#x27;disabled&#x27;);
-            }
-        };
-        obj.val(inputValue);
-        if (inputDisabled) {
-            obj.disabled(true);
-        }
-        pk.bindListeners(listeners, el.children[0]);
-        return obj;
-    };
-    return pk;
-})(pk);
+<div class="box intro">
+    <p>Utility class for SVG helpers</p>
 
-    </pre>
+</div>
+
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+
+            
+
+            
+
+            
+        </div>
+
+        
+
+        
+
+        
+
+        
+    </div>
 </div>
 
                     </div>

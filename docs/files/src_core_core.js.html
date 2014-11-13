@@ -75,6 +75,8 @@
             
                 <li><a href="../classes/pk.slider.html">pk.slider</a></li>
             
+                <li><a href="../classes/pk.svg.html">pk.svg</a></li>
+            
                 <li><a href="../classes/pk.switch.html">pk.switch</a></li>
             
                 <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
@@ -402,15 +404,22 @@ Wrap the passed DOM element in a new DOM node created from the &#x60;wrapper&#x6
         return helperEl;
     };
 /**
-Create a new DOM element from the passed &#x60;HTML&#x60; string
+Create a new DOM element from the passed &#x60;HTML&#x60; string (SVG agnostic)
 @method createEl
 @param HTML {String} HTML string representing the new DOM element
 @return {Object} Returns newly created DOM element
 @chainable
 */  
-    pk.createEl = function(str) {
+    pk.createEl = function(str, attr) {
         var el = document.createElement(&#x27;div&#x27;);
-        el.innerHTML = str;
+        el.innerHTML = str;		
+		if([&#x27;svg&#x27;, &#x27;path&#x27;, &#x27;line&#x27;, &#x27;circle&#x27;, &#x27;rect&#x27;].indexOf(el.children[0].tagName.toLowerCase())&gt;=0){
+			el = document.createElementNS(&#x27;http://www.w3.org/2000/svg&#x27;, &#x27;div&#x27;);
+			el.innerHTML = str;
+			if(el.children[0].tagName.toLowerCase()===&quot;svg&quot;){
+				pk.attribute(el.children[0], {xmlns:&#x27;http://www.w3.org/2000/svg&#x27;, version:&#x27;1.1&#x27;});
+			}
+		}		
         return el.children[0];
     };
 /**
@@ -514,11 +523,11 @@ Returns normalized percentage value
         return v;
     };	
 /**
-Gets of sets attribute values, either explicely or impliitely declared
+Gets of sets attribute values, either explicitly or implicitly declared
 @method attribute
 @param element {Object} Related DOM element
-@param attribute {String} Attribute name
-@param value {String} Optional to get, or value of type specific to attribute 
+@param attribute {String} Attribute name to get/set for single attribute, or &#x60;Array&#x60; of attribute:value Objects to set multiple attributes
+@param [value] {String} Optional to get, or value of type specific to attribute if single attribute being set
 @return {Object} Returns &#x60;element&#x60;
 @chainable
 */ 
@@ -526,19 +535,33 @@ Gets of sets attribute values, either explicely or impliitely declared
         if (typeof el !== &quot;object&quot;) {
             return false;
         }
-        attr = el.hasAttribute(attr) ? attr : el.hasAttribute(&#x27;data-&#x27; + attr) ? &#x27;data-&#x27; + attr : attr;	
-		if (val === undefined &amp;&amp; (attr === &#x27;selected&#x27; || attr === &#x27;disabled&#x27; || attr === &#x27;checked&#x27;)) {		
-			el.removeAttribute(attr);
-			return el[attr];
-		}else if(val === undefined){
-			return el.getAttribute(attr);
-		}else if(attr === &#x27;selected&#x27; || attr === &#x27;disabled&#x27; || attr === &#x27;checked&#x27;){
-			el.removeAttribute(attr);
-			el[attr]=val;
+		// get value
+        if(typeof attr == &quot;string&quot; &amp;&amp; val===undefined){
+			attr = el.hasAttribute(attr) ? attr : el.hasAttribute(&#x27;data-&#x27; + attr) ? &#x27;data-&#x27; + attr : attr;	
+			if (attr === &#x27;selected&#x27; || attr === &#x27;disabled&#x27; || attr === &#x27;checked&#x27;) {		
+				el.removeAttribute(attr);
+				return el[attr];
+			}else{
+				return el.getAttribute(attr);
+			}		
 		}else{
-			el.setAttribute(attr, val);
-		}
-        return el;
+			// set value	
+			if(typeof attr !== &quot;object&quot;){
+				var tmp=attr;
+				attr={}
+				attr[tmp]=val;
+			}
+			for(var a in attr){
+				a = el.hasAttribute(a) ? a : el.hasAttribute(&#x27;data-&#x27; + a) ? &#x27;data-&#x27; + a : a;	
+				if(a === &#x27;selected&#x27; || a === &#x27;disabled&#x27; || a === &#x27;checked&#x27;){
+					el.removeAttribute(a);
+					el[a]=attr[a];
+				}else{
+					el.setAttribute(a, attr[a]);
+				}					
+			}		
+			return el;	
+		}		
     };
 /**
 Augments event object with additional X and Y helper coordinates

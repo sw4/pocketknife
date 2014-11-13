@@ -1,3 +1,17 @@
+// Hello.
+//
+// This is JSHint, a tool that helps to detect errors and potential
+// problems in your JavaScript code.
+//
+// To start, simply enter some JavaScript anywhere on this page. Your
+// report will appear on the right side.
+//
+// Additionally, you can toggle specific options in the Configure
+// menu.
+
+function main() {
+  return 'Hello, World!';
+}
 var pk = pk || {};
 
 (function(pk) {
@@ -13,17 +27,39 @@ var pk = pk || {};
 			d = l.height > l.width ? l.width : l.height,
 			stroke= opt.center ? (d/2)-(d*((opt.center/2) /100)) : d/2,
 			colors=opt.colors || {},
-			tooltip = opt.tooltip || true ;		
+			tooltip = opt.tooltip || true,
+			legend=typeof opt.legend==='function'?opt.legend:!opt.legend ? false : function(mInf){
+				var lTpl="<div class='pk-legend'>";
+				for(var c in mInf){
+					lTpl+="<div class='pk-legend-entry'><div class='pk-legend-category'>"+c+":</div>";
+					console.log(mInf[c]);
+					for(var s in mInf[c]){
+						lTpl+="<div class='pk-legend-series' style='border-color: "+mInf[c][s].color+";'>"+(Object.keys(mInf[c]).length > 0 ? s+": ": "")+mInf[c][s].value+" ("+mInf[c][s].percentage+"%)</div>";
+					}
+					lTpl+="</div>";	
+				}
+				lTpl+="</div>";	
+				el.appendChild(pk.createEl(lTpl));
+			};		
+
+			console.log(legend);
 		if(data.length===0){return;}		
-		
 		function showTooltip(c, v, p, o){
 			var tContent=typeof tooltip === 'function' ? tooltip(c, v, p) : c+": "+v+" ("+p+"%)";
 			pk.tooltip({element:pathEl, content:tContent, position:'bottom', offset:o});
 		} 
-	
+		/*
+		if(legend===true){
+			legend=function(lMeta){
+				legendEl=pk.createEl("<ul class='pk-legend' />");
+console.log(lMeta);
+
+			}
+			
+		}*/
 		pk.attribute(svgEl, {height:d, width:d});
 		for(var s in series){		
-			seriesMeta[series[s]]={}
+			seriesMeta[series[s]]={};
 			seriesMeta[series[s]].data=[];		
 			seriesMeta[series[s]].sum=0; 
 			for(var i=0;i<data.length;i++){			
@@ -38,6 +74,7 @@ var pk = pk || {};
 			seriesMeta[series[s]].range=Math.abs(seriesMeta[series[s]].max-seriesMeta[series[s]].min);
 		}
 		var sIndex=0;
+		var metaObj={};
 		for(s in seriesMeta){
 			// seriesMeta[s].data.sort();
 			var ttlArc=0;
@@ -50,6 +87,18 @@ var pk = pk || {};
 				r = sIndex > 0 ? r+2: r;
 				pk.attribute(pathEl, {'d':pk.svg.arcPath(d/2, d/2,  r, ttlArc, ttlArc+arc), 'data-saturation':pk.color.hex2hsv(pathCol)[1]});  
 				
+				if(typeof legend === 'function'){
+					if(!metaObj[data[i][axis.x]]){
+						metaObj[data[i][axis.x]]={};
+					}
+					if(!metaObj[data[i][axis.x]][s]){
+						metaObj[data[i][axis.x]][s]={
+							value:data[i][s],
+							percentage:Math.round(arc*100/360),
+							color:pathCol
+						};
+					}
+				}
 				if(tooltip && pk.tooltip){ 
 				   /*
 					// var midDegrees=ttlArc+(arc/2),
@@ -77,8 +126,11 @@ var pk = pk || {};
 			}	
 			sIndex++;			
 		}		
-		
+		if(typeof legend === 'function'){
+			legend(metaObj);
+		}
 		el.appendChild(svgEl);
+		
 		// (val - min) * 100 / range +
 
 
@@ -86,3 +138,5 @@ var pk = pk || {};
     };
     return pk;
 })(pk);
+
+main();

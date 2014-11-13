@@ -75,6 +75,8 @@
             
                 <li><a href="../classes/pk.slider.html">pk.slider</a></li>
             
+                <li><a href="../classes/pk.svg.html">pk.svg</a></li>
+            
                 <li><a href="../classes/pk.switch.html">pk.switch</a></li>
             
                 <li><a href="../classes/pk.toggle.html">pk.toggle</a></li>
@@ -599,6 +601,92 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
 			var hsv1=pk.color.hex2hsv(hex1),
 				hsv2=pk.color.hex2hsv(hex2);				
 			return pk.color.hsv2hex([Math.round(hsv1[0]+perc*(hsv2[0]-hsv1[0])),Math.round(hsv1[1]+perc*(hsv2[1]-hsv1[1])),Math.round(hsv1[2]+perc*(hsv2[2]-hsv1[2]))]);
+		},		
+		/**
+        Scale either hue, saturation or value of a color by a percentage amount
+		
+            var scale=pk.scale.percentage(0.5);
+            // color = &quot;#f2e600&quot;;
+			
+        @method scale
+		@param hex {String} HEX color string
+        @param perc {Number} Percentage to adjust color by
+		@param [type=hue] {String} String, scale to adjust, either &#x60;hue&#x60;, &#x60;saturation&#x60; or &#x60;value&#x60;
+		@param [abs] {Boolean} Define percentage as absolute value from base to max, defaults to relative value between current and max
+        @return {String} Returns resulting HEX color
+        */		
+		scale:function(hex, perc, type, abs){ 
+			type=type||&#x27;hue&#x27;;			
+			
+			var hsv=this.hex2hsv(hex),
+				adj=type===&#x27;hue&#x27; ? hsv[0] : type===&#x27;saturation&#x27; ? hsv[1] : hsv[2];
+			perc = Math.abs(perc) &gt; 1 ? perc/100 : perc;
+			perc = abs===true ? perc*100 : adj+((type===&#x27;hue&#x27; ? 360 : 100)-adj)*perc;		
+			return this.hsv2hex([type===&quot;hue&quot; ? adj : hsv[0], type===&quot;saturation&quot; ? perc : hsv[1], type===&quot;value&quot; ? perc : hsv[2]]);  
+		},	
+		/**
+        Lighten a color by a percentage amount
+		
+            var color=pk.color.lighten(&#x27;#840000&#x27;, 70);
+            // color = &quot;#da0000&quot;;
+			
+        @method lighten
+		@param hex {String} HEX color string
+        @param perc {Number} Percentage to lighten color by
+		@param [abs=lightness] {Boolean} Define percentage lightness as absolute value, defaults to relative
+        @return {String} Returns resulting HEX color
+        */		
+		lighten:function(hex, perc, abs){ 
+			perc = perc &gt; 0 ? perc : -1*perc;
+			return this.scale(hex, perc, &#x27;value&#x27;, abs); 
+		},
+		/**
+        Darken a color by a percentage amount
+		
+            var color=pk.color.darken(&#x27;#840000&#x27;, 70);
+            // color = &quot;#da0000&quot;;
+			
+        @method darken
+		@param hex {String} HEX color string
+        @param perc {Number} Percentage to darken color by
+		@param [abs=lightness] {Boolean} Define percentage lightness as absolute value, defaults to relative
+        @return {String} Returns resulting HEX color
+        */		
+		darken:function(hex, perc, abs){  
+			perc = perc &lt; 0 ? perc : -1*perc;
+			return this.scale(hex, perc, &#x27;value&#x27;, abs); 
+		},	
+		/**
+        Saturate a color by a percentage amount
+		
+            var color=pk.color.saturate(&#x27;#840000&#x27;, 70);
+            // color = &quot;#820000&quot;;
+			
+        @method saturate
+		@param hex {String} HEX color string
+        @param perc {Number} Percentage to saturate color by
+		@param [abs=lightness] {Boolean} Define percentage saturation as absolute value, defaults to relative
+        @return {String} Returns resulting HEX color
+        */		
+		saturate:function(hex, perc, abs){ 
+			perc = perc &gt; 0 ? perc : -1*perc;
+			return this.scale(hex, perc, &#x27;saturation&#x27;, abs); 
+		},	
+		/**
+        Desaturate a color by a percentage amount
+		
+            var color=pk.color.desaturate(&#x27;#840000&#x27;, 70);
+            // color = &quot;#820000&quot;;
+			
+        @method saturate
+		@param hex {String} HEX color string
+        @param perc {Number} Percentage to saturate color by
+		@param [abs=lightness] {Boolean} Define percentage desaturation as absolute value, defaults to relative
+        @return {String} Returns resulting HEX color
+        */		
+		desaturate:function(hex, perc, abs){ 
+			perc = perc &gt; 0 ? perc : -1*perc;
+			return this.scale(hex, perc, &#x27;saturation&#x27;, abs); 
 		},		
         /**
         Generate algorithmic color palette

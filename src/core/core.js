@@ -386,11 +386,11 @@ Returns normalized percentage value
         return v;
     };	
 /**
-Gets of sets attribute values, either explicely or impliitely declared
+Gets of sets attribute values, either explicitly or implicitly declared
 @method attribute
 @param element {Object} Related DOM element
-@param attribute {String} Attribute name
-@param value {String} Optional to get, or value of type specific to attribute 
+@param attribute {String} Attribute name to get/set for single attribute, or `Array` of attribute:value Objects to set multiple attributes
+@param [value] {String} Optional to get, or value of type specific to attribute if single attribute being set
 @return {Object} Returns `element`
 @chainable
 */ 
@@ -398,19 +398,35 @@ Gets of sets attribute values, either explicely or impliitely declared
         if (typeof el !== "object") {
             return false;
         }
-        attr = el.hasAttribute(attr) ? attr : el.hasAttribute('data-' + attr) ? 'data-' + attr : attr;	
-		if (val === undefined && (attr === 'selected' || attr === 'disabled' || attr === 'checked')) {		
-			el.removeAttribute(attr);
-			return el[attr];
-		}else if(val === undefined){
-			return el.getAttribute(attr);
-		}else if(attr === 'selected' || attr === 'disabled' || attr === 'checked'){
-			el.removeAttribute(attr);
-			el[attr]=val;
+		// get value
+        if(typeof attr == "string" && val===undefined){
+			attr = el.hasAttribute(attr) ? attr : el.hasAttribute('data-' + attr) ? 'data-' + attr : attr;	
+			if (attr === 'selected' || attr === 'disabled' || attr === 'checked') {		
+				el.removeAttribute(attr);
+				return el[attr];
+			}else{
+				return el.getAttribute(attr);
+			}		
 		}else{
-			el.setAttribute(attr, val);
-		}
-        return el;
+			// set value	
+			if(typeof attr !== "object"){
+				var obj={}
+				obj[attr]=val;
+				attr=[]; 
+				attr.push(obj);
+			}
+			for(var a in attr){
+				var cAttr=Object.keys(attr[a])[0], cVal=attr[a][cAttr];				
+				cAttr = el.hasAttribute(cAttr) ? cAttr : el.hasAttribute('data-' + cAttr) ? 'data-' + cAttr : cAttr;	
+				if(cAttr === 'selected' || cAttr === 'disabled' || cAttr === 'checked'){
+					el.removeAttribute(cAttr);
+					el[cAttr]=cVal;
+				}else{
+					el.setAttribute(cAttr, cVal);
+				}			
+			}		
+			return el;	
+		}		
     };
 /**
 Augments event object with additional X and Y helper coordinates

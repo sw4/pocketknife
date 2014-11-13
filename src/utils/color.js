@@ -524,6 +524,38 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
 		darken:function(hex, perc, abs){  
 			perc = perc < 0 ? perc : -1*perc;
 			return this.scale(hex, perc, 'value'); 
+		},	
+		/**
+        Saturate a color by a percentage amount
+		
+            var color=pk.color.saturate('#840000', 70);
+            // color = "#820000";
+			
+        @method saturate
+		@param hex {String} HEX color string
+        @param perc {Number} Percentage to saturate color by
+		@param [abs=lightness] {Boolean} Define percentage saturation as absolute value, defaults to relative
+        @return {String} Returns resulting HEX color
+        */		
+		saturate:function(hex, perc, abs){ 
+			perc = perc > 0 ? perc : -1*perc;
+			return this.scale(hex, perc, 'saturation'); 
+		},	
+		/**
+        Desaturate a color by a percentage amount
+		
+            var color=pk.color.desaturate('#840000', 70);
+            // color = "#820000";
+			
+        @method saturate
+		@param hex {String} HEX color string
+        @param perc {Number} Percentage to saturate color by
+		@param [abs=lightness] {Boolean} Define percentage desaturation as absolute value, defaults to relative
+        @return {String} Returns resulting HEX color
+        */		
+		desaturate:function(hex, perc, abs){ 
+			perc = perc > 0 ? perc : -1*perc;
+			return this.scale(hex, perc, 'saturation'); 
 		},		
         /**
         Generate algorithmic color palette

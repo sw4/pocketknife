@@ -489,7 +489,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
 			type=type||'hue';			
 			var hsv=this.hex2hsv(hex),
 				adj=type==='hue' ? hsv[0] : type==='saturation' ? hsv[1] : hsv[2];
-			perc = perc > 1 ? perc/100 : perc;
+			perc = Math.abs(perc) > 1 ? perc/100 : perc;
 			perc = abs===true ? perc : adj+((type==='hue' ? 360 : 100)-adj)*perc;			
 			return this.hsv2hex([type==="hue" ? adj : hsv[0], type==="saturation" ? perc : hsv[1], type==="value" ? perc : hsv[2]]);  
 		},	
@@ -506,9 +506,9 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
         @return {String} Returns resulting HEX color
         */		
 		lighten:function(hex, perc, abs){ 
-			perc = perc > 0 perc : -1*perc;
+			perc = perc > 0 ? perc : -1*perc;
 			return this.scale(hex, perc, 'value'); 
-		},	,	
+		},
 		/**
         Darken a color by a percentage amount
 		
@@ -521,8 +521,8 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
 		@param [abs=lightness] {Boolean} Define percentage lightness as absolute value, defaults to relative
         @return {String} Returns resulting HEX color
         */		
-		darken:function(hex, perc, abs){ 
-			perc = perc < 0 perc : -1*perc;
+		darken:function(hex, perc, abs){  
+			perc = perc < 0 ? perc : -1*perc;
 			return this.scale(hex, perc, 'value'); 
 		},		
         /**

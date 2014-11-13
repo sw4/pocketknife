@@ -28,6 +28,15 @@ Utility class for SVG helpers
 			].join(" ");
 
 			return d;       
+		},
+		arcPoint:function(degrees, r){		
+			var a= degrees * Math.PI / 180,
+			y=Math.cos(a) * r, 
+			x=Math.sin(a) * r;
+			return{
+				x:x,
+				y:y
+			};			
 		}
     };
     return pk;

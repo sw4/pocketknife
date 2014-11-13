@@ -65,18 +65,17 @@
     <div class="jumbotron">
         <div class="container">
 		
-			<!--
+			
             <h1>pocketknife.js</h1>
 
             <p>Beautiful UI Components written in lean, clean Javascript with
             no dependancies</p>
-			-->
+			
             <p><a href='../docs/index.html' target='_new'>View API Docs</a></p>
         </div>
     </div>
 
     <div class="container">
-        <!-- Example row of columns -->
 
         <div class="row">
             <div class="col-md-6">
@@ -371,20 +370,20 @@
         pk.chart({
             element: document.getElementById('chart1'),
             data: [
-                {category:"cat",y:8, y2:2},
-                {category:"pig",y:2, y2:6},
-                {category:"cow",y:9, y2:9},
-                {category:"bird",y:5, y2:2},
-                {category:"dog",y:2, y2:7},
-                {category:"emu",y:6, y2:3},
-                {category:"hamster",y:2, y2:3}
+                {category:"cat",series1:8, series2:2},
+                {category:"pig",series1:2, series2:6},
+                {category:"cow",series1:9, series2:9},
+                {category:"bird",series1:5, series2:2},
+                {category:"dog",series1:2, series2:7},
+                {category:"emu",series1:6, series2:3},
+                {category:"hamster",series1:2, series2:3}
             ],
             center:20,
             legend:true,
             axis:{
                 x:'category'
             },
-            series: ['y', 'y2']
+            series: ['series1', 'series2']
         });
       </script>
     </body>

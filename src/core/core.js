@@ -410,20 +410,18 @@ Gets of sets attribute values, either explicitly or implicitly declared
 		}else{
 			// set value	
 			if(typeof attr !== "object"){
-				var obj={}
-				obj[attr]=val;
-				attr=[]; 
-				attr.push(obj);
+				var tmp=attr;
+				attr={}
+				attr[tmp]=val;
 			}
 			for(var a in attr){
-				var cAttr=Object.keys(attr[a])[0], cVal=attr[a][cAttr];				
-				cAttr = el.hasAttribute(cAttr) ? cAttr : el.hasAttribute('data-' + cAttr) ? 'data-' + cAttr : cAttr;	
-				if(cAttr === 'selected' || cAttr === 'disabled' || cAttr === 'checked'){
-					el.removeAttribute(cAttr);
-					el[cAttr]=cVal;
+				a = el.hasAttribute(a) ? a : el.hasAttribute('data-' + a) ? 'data-' + a : a;	
+				if(a === 'selected' || a === 'disabled' || a === 'checked'){
+					el.removeAttribute(a);
+					el[a]=attr[a];
 				}else{
-					el.setAttribute(cAttr, cVal);
-				}			
+					el.setAttribute(a, attr[a]);
+				}					
 			}		
 			return el;	
 		}		

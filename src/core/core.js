@@ -274,7 +274,7 @@ Wrap the passed DOM element in a new DOM node created from the `wrapper` string
         return helperEl;
     };
 /**
-Create a new DOM element from the passed `HTML` string
+Create a new DOM element from the passed `HTML` string (SVG agnostic)
 @method createEl
 @param HTML {String} HTML string representing the new DOM element
 @return {Object} Returns newly created DOM element
@@ -282,10 +282,14 @@ Create a new DOM element from the passed `HTML` string
 */  
     pk.createEl = function(str, attr) {
         var el = document.createElement('div');
-        el.innerHTML = str;
-		if(el.children[0].tagName.toLowerCase()==="svg"){
-			pk.attribute(el.children[0], {xmlns:'http://www.w3.org/2000/svg', version:'1.1'});
-		}
+        el.innerHTML = str;		
+		if(['svg', 'path', 'line', 'circle', 'rect'].indexOf(el.children[0].tagName.toLowerCase())>=0){
+			el = document.createElementNS('http://www.w3.org/2000/svg', 'div');
+			el.innerHTML = str;
+			if(el.children[0].tagName.toLowerCase()==="svg"){
+				pk.attribute(el.children[0], {xmlns:'http://www.w3.org/2000/svg', version:'1.1'});
+			}
+		}		
         return el.children[0];
     };
 /**

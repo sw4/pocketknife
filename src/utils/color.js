@@ -487,10 +487,11 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
         */		
 		scale:function(hex, perc, type, abs){ 
 			type=type||'hue';			
+			
 			var hsv=this.hex2hsv(hex),
 				adj=type==='hue' ? hsv[0] : type==='saturation' ? hsv[1] : hsv[2];
 			perc = Math.abs(perc) > 1 ? perc/100 : perc;
-			perc = abs===true ? perc : adj+((type==='hue' ? 360 : 100)-adj)*perc;			
+			perc = abs===true ? perc*100 : adj+((type==='hue' ? 360 : 100)-adj)*perc;		
 			return this.hsv2hex([type==="hue" ? adj : hsv[0], type==="saturation" ? perc : hsv[1], type==="value" ? perc : hsv[2]]);  
 		},	
 		/**
@@ -507,7 +508,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
         */		
 		lighten:function(hex, perc, abs){ 
 			perc = perc > 0 ? perc : -1*perc;
-			return this.scale(hex, perc, 'value'); 
+			return this.scale(hex, perc, 'value', abs); 
 		},
 		/**
         Darken a color by a percentage amount
@@ -523,7 +524,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
         */		
 		darken:function(hex, perc, abs){  
 			perc = perc < 0 ? perc : -1*perc;
-			return this.scale(hex, perc, 'value'); 
+			return this.scale(hex, perc, 'value', abs); 
 		},	
 		/**
         Saturate a color by a percentage amount
@@ -539,7 +540,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
         */		
 		saturate:function(hex, perc, abs){ 
 			perc = perc > 0 ? perc : -1*perc;
-			return this.scale(hex, perc, 'saturation'); 
+			return this.scale(hex, perc, 'saturation', abs); 
 		},	
 		/**
         Desaturate a color by a percentage amount
@@ -555,7 +556,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
         */		
 		desaturate:function(hex, perc, abs){ 
 			perc = perc > 0 ? perc : -1*perc;
-			return this.scale(hex, perc, 'saturation'); 
+			return this.scale(hex, perc, 'saturation', abs); 
 		},		
         /**
         Generate algorithmic color palette

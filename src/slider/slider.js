@@ -84,24 +84,12 @@ Javascript:
 		}
 
 		function describeArc(x, y, radius, startAngle, endAngle){
-			endAngle = endAngle == 360 || endAngle > 360 ? 359.9 : endAngle ;
-			
+			endAngle = endAngle == 360 || endAngle > 360 ? 359.9 : endAngle;			
 			if(circle.length){
 				startAngle=endAngle-(circle.length / 2);
 				endAngle=endAngle+(circle.length / 2);
 			}
-			
-			var start = polarToCartesian(x, y, radius, endAngle);
-			var end = polarToCartesian(x, y, radius, startAngle);
-
-			var arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
-
-			var d = [
-				"M", start.x, start.y, 
-				"A", radius, radius, 0, arcSweep, 0, end.x, end.y
-			].join(" ");
-
-			return d;       
+			return pk.svg.arcPath(x, y, radius, startAngle, endAngle);       
 		}
 		var pathEl='';
 		var innerTpl='';

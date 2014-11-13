@@ -472,6 +472,59 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
 				hsv2=pk.color.hex2hsv(hex2);				
 			return pk.color.hsv2hex([Math.round(hsv1[0]+perc*(hsv2[0]-hsv1[0])),Math.round(hsv1[1]+perc*(hsv2[1]-hsv1[1])),Math.round(hsv1[2]+perc*(hsv2[2]-hsv1[2]))]);
 		},		
+		/**
+        Scale either hue, saturation or value of a color by a percentage amount
+		
+            var scale=pk.scale.percentage(0.5);
+            // color = "#f2e600";
+			
+        @method scale
+		@param hex {String} HEX color string
+        @param perc {Number} Percentage to adjust color by
+		@param [type=hue] {String} String, scale to adjust, either `hue`, `saturation` or `value`
+		@param [abs] {Boolean} Define percentage as absolute value from base to max, defaults to relative value between current and max
+        @return {String} Returns resulting HEX color
+        */		
+		scale:function(hex, perc, type, abs){ 
+			type=type||'hue';			
+			var hsv=this.hex2hsv(hex),
+				adj=type==='hue' ? hsv[0] : type==='saturation' ? hsv[1] : hsv[2];
+			perc = perc > 1 ? perc/100 : perc;
+			perc = abs===true ? perc : adj+((type==='hue' ? 360 : 100)-adj)*perc;			
+			return this.hsv2hex([type==="hue" ? adj : hsv[0], type==="saturation" ? perc : hsv[1], type==="value" ? perc : hsv[2]]);  
+		},	
+		/**
+        Lighten a color by a percentage amount
+		
+            var color=pk.color.lighten('#840000', 70);
+            // color = "#da0000";
+			
+        @method lighten
+		@param hex {String} HEX color string
+        @param perc {Number} Percentage to lighten color by
+		@param [abs=lightness] {Boolean} Define percentage lightness as absolute value, defaults to relative
+        @return {String} Returns resulting HEX color
+        */		
+		lighten:function(hex, perc, abs){ 
+			perc = perc > 0 perc : -1*perc;
+			return this.scale(hex, perc, 'value'); 
+		},	,	
+		/**
+        Darken a color by a percentage amount
+		
+            var color=pk.color.darken('#840000', 70);
+            // color = "#da0000";
+			
+        @method darken
+		@param hex {String} HEX color string
+        @param perc {Number} Percentage to darken color by
+		@param [abs=lightness] {Boolean} Define percentage lightness as absolute value, defaults to relative
+        @return {String} Returns resulting HEX color
+        */		
+		darken:function(hex, perc, abs){ 
+			perc = perc < 0 perc : -1*perc;
+			return this.scale(hex, perc, 'value'); 
+		},		
         /**
         Generate algorithmic color palette
 		

@@ -3,7 +3,7 @@ pocketknife
 
 [![Build Status](https://travis-ci.org/sw4/pocketknife.svg)](https://travis-ci.org/sw4/pocketknife)
 [![Dev Dependancies](https://david-dm.org/sw4/pocketknife.png)](https://david-dm.org/sw4/pocketknife)
-[![devDependency Status](https://david-dm.org/sw4/pocketknife/dev-status.svg)](https://david-dm.org/sw4/pocketknife#info=devDependencies)
+[![devDependency Status](https://david-dm.org/sw4/pocketknife/dev-status.svg)](https://david-dm.org/sw4/pocketknife#info=devDependencies) [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](https://github.com/sw4/pocketknife/)
 
 Beautiful UI Components written in lean, clean Javascript with no dependancies
 

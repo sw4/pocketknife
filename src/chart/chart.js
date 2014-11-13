@@ -21,7 +21,7 @@ var pk = pk || {};
 			seriesMeta[series[s]]={}
 			seriesMeta[series[s]].data=[];		
 			seriesMeta[series[s]].sum=0; 
-			for(var i=0;i<data.length;i++){
+			for(var i=0;i<data.length;i++){			
 				seriesMeta[series[s]].data.push(data[i][series[s]]);
 				seriesMeta[series[s]].sum+=Math.abs(parseInt(data[i][series[s]],0));
 				if(!colors[data[i][axis.x]]){
@@ -31,13 +31,14 @@ var pk = pk || {};
 			seriesMeta[series[s]].min=Math.min.apply(Math, seriesMeta[series[s]].data);
 			seriesMeta[series[s]].max=Math.max.apply(Math, seriesMeta[series[s]].data);
 			seriesMeta[series[s]].range=Math.abs(seriesMeta[series[s]].max-seriesMeta[series[s]].min);
+
 		}
 		var sIndex=0;
 		for(s in seriesMeta){
 			seriesMeta[s].data.sort();
 			var ttlArc=0;
-			for(var i=0;i<seriesMeta[s].data.length;i++){			
-				var pathEl=pk.createEl("<path x='"+d/2+"' y='"+d/2+"' fill='none' stroke='"+colors[data[i][axis.x]]+"' d='' stroke-width='"+(stroke/series.length)+"'/>");
+			for(var i=0;i<seriesMeta[s].data.length;i++){	
+				var pathEl=pk.createEl("<path x='"+d/2+"' y='"+d/2+"' fill='none' stroke='"+pk.color.darken(colors[data[i][axis.x]], sIndex*(50/series.length))+"' d='' stroke-width='"+(stroke/series.length)+"'/>");
 				svgEl.appendChild(pathEl);
 				var arc = Math.round((Math.abs(seriesMeta[s].data[i])/seriesMeta[s].sum)*360);
 				var r=((d-stroke/2)/2) - (stroke/2*sIndex);

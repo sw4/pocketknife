@@ -280,9 +280,12 @@ Create a new DOM element from the passed `HTML` string
 @return {Object} Returns newly created DOM element
 @chainable
 */  
-    pk.createEl = function(str) {
+    pk.createEl = function(str, attr) {
         var el = document.createElement('div');
         el.innerHTML = str;
+		if(el.children[0].tagName.toLowerCase()==="svg"){
+			pk.attribute(el.children[0], {xmlns:'http://www.w3.org/2000/svg', version:'1.1'});
+		}
         return el.children[0];
     };
 /**

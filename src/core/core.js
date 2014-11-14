@@ -208,22 +208,22 @@ Calculate positioning properties of passed DOM element, optionally augment passe
 @param [event] {Object} Event
 @return {Object} Returns object consisting of `top`, `right`, `bottom`, `left`, `height` and `width` values as well as sub `offset` and `parent` objects
 */  
-pk.layout=function(el, e){
-    if(e){e=pk.procEvent(e);}
-    var p={
-        offset:el.getBoundingClientRect(),
-        parent:{ 
-            top:el.offsetTop,
-            left:el.offsetLeft
-        },
-        height:el.offsetHeight,
-        width:el.offsetWidth
-    };
- 
-    p.top=p.offset.top+(document.documentElement && document.documentElement.scrollTop!==0 ? document.documentElement.scrollTop :  document.body.scrollTop);
-    p.left=p.offset.left+(document.documentElement && document.documentElement.scrollLeft!==0 ? document.documentElement.scrollLeft :  document.body.scrollLeft);
-    return p;
-};
+	pk.layout=function(el, e){
+		if(e){e=pk.procEvent(e);}
+		var p={
+			offset:el.getBoundingClientRect(),
+			parent:{ 
+				top:el.offsetTop,
+				left:el.offsetLeft
+			},
+			height:el.offsetHeight,
+			width:el.offsetWidth
+		};
+	 
+		p.top=p.offset.top+(document.documentElement && document.documentElement.scrollTop!==0 ? document.documentElement.scrollTop :  document.body.scrollTop);
+		p.left=p.offset.left+(document.documentElement && document.documentElement.scrollLeft!==0 ? document.documentElement.scrollLeft :  document.body.scrollLeft);
+		return p;
+	};
 /**
 Apply a series of event listeners to a DOM element
 @method bindListeners
@@ -259,6 +259,59 @@ Extract unit type from passed string
     pk.getUnits = function(str) {
         return str.replace(/\d+/, '');
     };
+	
+/**
+Finds matching DOM elements within passed DOM element
+@method findEl
+@param element {Object} DOM element to search within
+@param opt {Object} Object of find parameters
+@param [opt.type] {String} Element type to filter
+@param [opt.class] {String} Class type to filter
+@param [opt.attribute] {Object} Attribute to filter
+@param [opt.attribute.name] {String} Attribute name to filter
+@param [opt.attribute.value] {String} Attribute value to filter
+@return {Array} Returns matching DOM elements
+*/     
+    pk.findEl = function(el, opt) {		
+	
+	 var nodes=[],
+		 nType=opt.type || null,
+		 nAttr=opt.attribute || null,
+		 nClass=opt.class || null;
+
+		var nodes=[],
+			treeWalker = document.createTreeWalker(el, NodeFilter.SHOW_ALL, {
+				acceptNode: function (node) {
+					return NodeFilter.FILTER_ACCEPT;
+				}
+			}, false);
+
+		do {
+			
+			if(treeWalker.currentNode.tagName!==undefined){
+				var match=true; 				
+				if(nType && treeWalker.currentNode.tagName.toLowerCase()!==nType.toLowerCase()){
+					match=false;
+				}
+				if(nClass && !pk.hasClass(treeWalker.currentNode, nClass)){
+					match=false;
+				}
+				if(
+					(nAttr && !treeWalker.currentNode.hasAttribute(nAttr.name)) 
+					||
+					(nAttr && treeWalker.currentNode.hasAttribute(nAttr.name) && treeWalker.currentNode.getAttribute(nAttr.name) !== nAttr.value)){
+					match=false;
+				}
+				if(match){
+					nodes.push(treeWalker.currentNode);
+				}
+			}
+			
+		} while (treeWalker.nextNode());
+		return nodes;
+	
+    };	
+	
 /**
 Wrap the passed DOM element in a new DOM node created from the `wrapper` string
 @method wrapEl

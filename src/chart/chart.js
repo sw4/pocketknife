@@ -28,35 +28,41 @@ var pk = pk || {};
 			stroke= opt.center ? (d/2)-(d*((opt.center/2) /100)) : d/2,
 			colors=opt.colors || {},
 			tooltip = opt.tooltip || true,
+			legendEl=pk.createEl("<table class='pk-legend'><thead /><tbody /></table>"), 
 			legend=typeof opt.legend==='function'?opt.legend:!opt.legend ? false : function(mInf){
-				var lTpl="<div class='pk-legend'>";
-				for(var c in mInf){
-					lTpl+="<div class='pk-legend-entry'><div class='pk-legend-category'>"+c+":</div>";
-					console.log(mInf[c]);
-					for(var s in mInf[c]){
-						lTpl+="<div class='pk-legend-series' style='border-color: "+mInf[c][s].color+";'>"+(Object.keys(mInf[c]).length > 0 ? s+": ": "")+mInf[c][s].value+" ("+mInf[c][s].percentage+"%)</div>";
+				legendEl.children[0].innerHTML='';
+				legendEl.children[1].innerHTML='';				
+				if(series.length > 1){
+					var hTpl="<tr><th class='pk-legend-category'></th>";
+					for(var e=0;e<series.length;e++){
+						hTpl+="<th class='pk-legend-series'>"+series[e]+"</th>";
 					}
-					lTpl+="</div>";	
+					legendEl.children[0].innerHTML=hTpl+"</tr>";
+				}				 
+				for(var c in mInf){
+					var sI=0;
+					var lTpl="<tr class='pk-legend-entry'>";
+					
+					if(series.length > 1){
+						lTpl+="<td class='pk-legend-category'>"+c+":</td>";
+					}
+					for(var s in mInf[c]){ 
+						lTpl+="<td class='pk-legend-series'><span class='pk-indicator' style='background-color:"+mInf[c][s].color+";'></span>"+mInf[c][s].percentage+"%"+"</td>";
+						sI++;
+					}  
+					if(series.length === 1){
+						lTpl+="<td class='pk-legend-category'>"+c+"</td>";
+					}
+					lTpl+="</tr>";
+					legendEl.children[1].innerHTML+=lTpl;					
 				}
-				lTpl+="</div>";	
-				el.appendChild(pk.createEl(lTpl));
 			};		
-
-			console.log(legend);
 		if(data.length===0){return;}		
 		function showTooltip(c, v, p, o){
 			var tContent=typeof tooltip === 'function' ? tooltip(c, v, p) : c+": "+v+" ("+p+"%)";
 			pk.tooltip({element:pathEl, content:tContent, position:'bottom', offset:o});
 		} 
-		/*
-		if(legend===true){
-			legend=function(lMeta){
-				legendEl=pk.createEl("<ul class='pk-legend' />");
-console.log(lMeta);
-
-			}
-			
-		}*/
+		
 		pk.attribute(svgEl, {height:d, width:d});
 		for(var s in series){		
 			seriesMeta[series[s]]={};
@@ -80,11 +86,12 @@ console.log(lMeta);
 			var ttlArc=0;
 			for(var i=0;i<seriesMeta[s].data.length;i++){	
 				var pathCol=pk.color.darken(colors[data[i][axis.x]], sIndex*(50/series.length));
-				var pathEl=pk.createEl("<path x='"+d/2+"' y='"+d/2+"' fill='none' stroke='"+pathCol+"' d='' stroke-width='"+(stroke/series.length)+"'/>");
+				var pathEl=pk.createEl("<path x='"+d/2+"' y='"+d/2+"' fill='none' stroke='"+pathCol+"' d='' stroke-width='"+(stroke/series.length+1)+"'/>");
+				
 				svgEl.appendChild(pathEl);
 				var arc = Math.round((Math.abs(seriesMeta[s].data[i])/seriesMeta[s].sum)*360);
 				var r=((d-stroke/2)/2) - (stroke/2*sIndex);
-				r = sIndex > 0 ? r+2: r;
+				r = series.length>1 ? r : (d/2)-stroke/2;				
 				pk.attribute(pathEl, {'d':pk.svg.arcPath(d/2, d/2,  r, ttlArc, ttlArc+arc), 'data-saturation':pk.color.hex2hsv(pathCol)[1]});  
 				
 				if(typeof legend === 'function'){
@@ -130,7 +137,7 @@ console.log(lMeta);
 			legend(metaObj);
 		}
 		el.appendChild(svgEl);
-		
+		el.appendChild(legendEl);
 		// (val - min) * 100 / range +
 
 

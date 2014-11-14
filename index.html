@@ -48,40 +48,34 @@
 <body>
 
 
+<div id='pie'></div>
 
 
-<div id='chart'></div>
     <script src="dist/pocketknife.min.js"></script>
     <script>
 	
+	
         pk.chart({
-            element: document.getElementById('chart'),ype:"bar",// (string) (optional if set on directive element) - chart type (bar/column)
-        title:'chart',// (string) (optional if set on directive element) - chart title
-        data: [//(object array) (required)
-            {category:"cat",y:8, y2:2},
-            {category:"pig",y:2, y2:6},
-            {category:"cow",y:9, y2:9},
-            {category:"bird",y:5, y2:2},
-            {category:"dog",y:2, y2:7},
-            {category:"emu",y:6, y2:3},
-            {category:"hamster",y:2, y2:3}
-        ],
-        center:20,
-        tick:{ // (object) (optional) tick configuration
-            interval:9 // how many ticks to place on value axis, if not specified- calculated automatically given available space
-        },
-        margin: 60,// (number/object) (optional if set on directive element) - chart margins, can be number or object (top, right, bottom, left)
-        resize:false,// (bool) (optional if set on directive element) - chart automatically resize on parent element resize,
-        /*legend:function(l){
-            console.log(l); 
-        },*/
-        legend:true,
-        axis:{
-            x:'category'
-        },
-        series: ['y', 'y2']
-
+            element: document.getElementById('pie'),
+            data: [
+                {category:"Invoices",'This Month':8, 'Last Month':2},
+                {category:"Petrol",'This Month':2, 'Last Month':6},
+                {category:"Entertainment",'This Month':9, 'Last Month':9},
+                {category:"Mobile",'This Month':5, 'Last Month':2},
+                {category:"Equipment",'This Month':2, 'Last Month':7},
+                {category:"Communications",'This Month':6, 'Last Month':3},
+                {category:"Services",'This Month':2, 'Last Month':3}
+            ],
+            // center:50,
+            legend:true,
+            axis:{
+                x:'category'
+            },
+            series: ['This Month','Last Month']
+			// series: ['This Month']
+			
         });
+	
     </script>
 </body>
 

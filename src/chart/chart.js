@@ -12,7 +12,6 @@ var pk = pk || {};
 			d = l.height > l.width ? l.width : l.height,
 			stroke= opt.center ? (d/2)-(d*((opt.center/2) /100)) : d/2,
 			colors=opt.colors || {},
-			tooltip = opt.tooltip || true,
 			legendEl=pk.createEl("<table class='pk-legend'><thead /><tbody /></table>"), 
 			legend=typeof opt.legend==='function'?opt.legend:!opt.legend ? false : function(mInf){
 				legendEl.children[0].innerHTML='';
@@ -31,24 +30,40 @@ var pk = pk || {};
 						lTpl+="<td class='pk-legend-category'>"+c+":</td>";
 					}
 					for(var s in mInf[c]){ 
-						lTpl+="<td class='pk-legend-series'><span class='pk-indicator' style='background-color:"+mInf[c][s].color+";'></span>"+mInf[c][s].percentage+"%"+"</td>";
+						lTpl+="<td class='pk-legend-series' data-rel='"+('rel'+s+c).replace(' ' ,'')+"'><span class='pk-indicator' style='background-color:"+mInf[c][s].color+";'></span>"+mInf[c][s].percentage+"%"+"</td>";
 						sI++;
 					}  
 					if(series.length === 1){
 						lTpl+="<td class='pk-legend-category'>"+c+"</td>";
 					}
 					lTpl+="</tr>";
-					legendEl.children[1].innerHTML+=lTpl;					
+					legendEl.children[1].innerHTML+=lTpl;	
+				}				
+				var cIt=pk.findEl(legendEl, {type:'td', class:'pk-legend-series'});	
+				for(t=0;t<cIt.length;t++){
+					bindHover(cIt[t]);
 				}
 			};		
 			pk.addClass(el, (l.height >= l.width ? "pk-legend-bottom" : "pk-legend-right")); 
 			
 			
 		if(data.length===0){return;}		
-		function showTooltip(c, v, p, o){
-			var tContent=typeof tooltip === 'function' ? tooltip(c, v, p) : c+": "+v+" ("+p+"%)";
-			pk.tooltip({element:pathEl, content:tContent, position:'bottom', offset:o});
-		} 
+		
+		function bindHover(hEl){		
+			pk.bindEvent('mouseover', hEl, function(e){		
+				var hIt=pk.findEl(el, {attribute:{name:'data-rel', value:pk.attribute(e.target, 'data-rel')}});	
+				for(h=0;h<hIt.length;h++){							
+					pk.addClass(hIt[h], 'selected'); 
+				}					
+			});			 	
+			pk.bindEvent('mouseout', hEl, function(e){
+				var hIt=pk.findEl(el, {attribute:{name:'data-rel', value:pk.attribute(e.target, 'data-rel')}});	
+				for(h=0;h<hIt.length;h++){							
+					pk.removeClass(hIt[h], 'selected'); 
+				}	
+			});		
+		}
+		
 		
 		pk.attribute(svgEl, {height:d, width:d});
 		for(var s in series){		
@@ -71,15 +86,15 @@ var pk = pk || {};
 		for(s in seriesMeta){
 			var ttlArc=0;
 			for(var i=0;i<seriesMeta[s].data.length;i++){	
+			
 				var pathCol=pk.color.darken(colors[data[i][axis.x]], sIndex*(50/series.length));
 				var pathEl=pk.createEl("<path x='"+d/2+"' y='"+d/2+"' fill='none' stroke='"+pathCol+"' d='' stroke-width='"+(stroke/series.length+1)+"'/>");
 				
 				svgEl.appendChild(pathEl);
 				var arc = Math.round((Math.abs(seriesMeta[s].data[i])/seriesMeta[s].sum)*360);
 				var r=((d-stroke/2)/2) - (stroke/2*sIndex);
-				r = series.length>1 ? r : (d/2)-stroke/2;				
-				pk.attribute(pathEl, {'d':pk.svg.arcPath(d/2, d/2,  r, ttlArc, ttlArc+arc), 'data-saturation':pk.color.hex2hsv(pathCol)[1]});  
-				
+				r = series.length>1 ? r : (d/2)-stroke/2;
+				pk.attribute(pathEl, {'d':pk.svg.arcPath(d/2, d/2,  r, ttlArc, ttlArc+arc), 'data-rel':('rel'+s+data[i][axis.x]).replace(' ' ,'')});  
 				if(typeof legend === 'function'){
 					if(!metaObj[data[i][axis.x]]){
 						metaObj[data[i][axis.x]]={};
@@ -88,33 +103,14 @@ var pk = pk || {};
 						metaObj[data[i][axis.x]][s]={
 							value:data[i][s],
 							percentage:Math.round(arc*100/360),
-							color:pathCol
+							color:pathCol,
+							relEl:pathEl
 						};
 					}
 				}
-				if(tooltip && pk.tooltip){ 
-				   /*
-					// var midDegrees=ttlArc+(arc/2),
-					// oY=
-
-					offset=pk.svg.arcPoint(ttlArc+(arc/2), r);
-					// var sX=Math.cos() 
-					
-					showTooltip(data[i][axis.x],data[i][s],Math.round(arc*100/360), function(pEl, ttEl){
-						var pL=pk.layout(pEl.parentNode);
-						console.log((offset.x));
-						ttEl.style.top=pL.top+(pL.height/2) + (-1*offset.y)+'px';
-						ttEl.style.left=pL.left+(pL.width/2) + offset.x+'px';
-						console.log(ttEl);
-					}); 
-					*/
-				}
-				pk.bindEvent('mouseover', pathEl, function(e){
-					pk.attribute(e.target, {'stroke':pk.color.saturate(pk.attribute(e.target, 'stroke'), 60, true)});
-				});			 	
-				pk.bindEvent('mouseout', pathEl, function(e){
-					pk.attribute(e.target, 'stroke', pk.color.saturate(pk.attribute(e.target, 'stroke'), pk.attribute(e.target, 'data-saturation')));
-				});
+				
+				bindHover(pathEl);
+				
 				ttlArc+=arc;
 			}	
 			sIndex++;			

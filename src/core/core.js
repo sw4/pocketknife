@@ -345,6 +345,20 @@ Create a new DOM element from the passed `HTML` string (SVG agnostic)
 		}		
         return el.children[0];
     };
+	/*
+	
+		createEl = function(str, attr) {
+		var el = document.createElement('div');    
+		if (['<path', '<line', '<circle', '<rect'].some(function(v) { return str.indexOf(v) >= 0; })) {    
+			el.innerHTML = '<svg>' + str + '</svg>';
+			return el.firstChild.firstChild;    
+		}else{
+			el.innerHTML = str;
+			return el.firstChild;  
+		}
+	};
+
+	*/
 /**
 Get the index of the passed DOM node within the immediate parent
 @method getIndex

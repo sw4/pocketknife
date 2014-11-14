@@ -2,8 +2,7 @@ var pk = pk || {};
 
 (function(pk) {
     pk.chart = function(opt) {
-        var tpl="<div class='pk-chart'></div>",
-			el=pk.replaceEl(opt.element, tpl),
+        var el=pk.replaceEl(opt.element, "<div class='pk-chart'></div>"),
 			l=pk.layout(el),
 			svgEl=pk.createEl("<svg />"),
 			data=opt.data || [],
@@ -27,8 +26,7 @@ var pk = pk || {};
 				}				 
 				for(var c in mInf){
 					var sI=0;
-					var lTpl="<tr class='pk-legend-entry'>";
-					
+					var lTpl="<tr class='pk-legend-entry'>";					
 					if(series.length > 1){
 						lTpl+="<td class='pk-legend-category'>"+c+":</td>";
 					}
@@ -43,6 +41,9 @@ var pk = pk || {};
 					legendEl.children[1].innerHTML+=lTpl;					
 				}
 			};		
+			pk.addClass(el, (l.height >= l.width ? "pk-legend-bottom" : "pk-legend-right")); 
+			
+			
 		if(data.length===0){return;}		
 		function showTooltip(c, v, p, o){
 			var tContent=typeof tooltip === 'function' ? tooltip(c, v, p) : c+": "+v+" ("+p+"%)";
@@ -68,7 +69,6 @@ var pk = pk || {};
 		var sIndex=0;
 		var metaObj={};
 		for(s in seriesMeta){
-			// seriesMeta[s].data.sort();
 			var ttlArc=0;
 			for(var i=0;i<seriesMeta[s].data.length;i++){	
 				var pathCol=pk.color.darken(colors[data[i][axis.x]], sIndex*(50/series.length));
@@ -124,7 +124,6 @@ var pk = pk || {};
 		}
 		el.appendChild(svgEl);
 		el.appendChild(legendEl);
-		// (val - min) * 100 / range +
 
 
 		

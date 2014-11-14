@@ -333,7 +333,7 @@ Create a new DOM element from the passed `HTML` string (SVG agnostic)
 @return {Object} Returns newly created DOM element
 @chainable
 */  
-
+/*
     pk.createEl = function(str, attr) {
         var el = document.createElement('div');
         el.innerHTML = str;		
@@ -346,9 +346,10 @@ Create a new DOM element from the passed `HTML` string (SVG agnostic)
 		}		
         return el.children[0];
     };
-	/*
+	*/
 	
-		createEl = function(str, attr) {
+	
+	pk.createEl = function(str, attr) {
 		var el = document.createElement('div');    
 		if (['<path', '<line', '<circle', '<rect'].some(function(v) { return str.indexOf(v) >= 0; })) {    
 			el.innerHTML = '<svg>' + str + '</svg>';
@@ -359,7 +360,7 @@ Create a new DOM element from the passed `HTML` string (SVG agnostic)
 		}
 	};
 
-	*/
+	
 /**
 Get the index of the passed DOM node within the immediate parent
 @method getIndex

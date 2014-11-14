@@ -333,6 +333,7 @@ Create a new DOM element from the passed `HTML` string (SVG agnostic)
 @return {Object} Returns newly created DOM element
 @chainable
 */  
+
     pk.createEl = function(str, attr) {
         var el = document.createElement('div');
         el.innerHTML = str;		

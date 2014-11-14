@@ -1,11 +1,17 @@
 .pk-chart{
 	position:relative;
 	height:@item-width;
-	width:@item-width;
-	text-align:center;
+	width:@item-width*2;
+	&.pk-legend-right{
+		text-align:left;
+		.pk-legend{
+			position:absolute;
+			right:0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
 	.pk-legend{
-		right:0;
-		top:0;
 		background:fade(@color-background, 50%);
 		border-collapse:collapse;
 		border-spacing:0;

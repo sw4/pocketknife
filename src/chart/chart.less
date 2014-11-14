@@ -16,19 +16,12 @@
 		border-collapse:collapse;
 		border-spacing:0;
 		margin:0 auto;
-		th, td{
+		.pk-cell{
 			vertical-align:bottom;
 			position:relative;
-		}
-		td{
 			padding:2px 5px;
 			font-size:1.2em;
 			font-weight:300;
-		}
-		th{
-			font-weight:400;
-			text-transform: uppercase;
-			font-size: .8em;
 		}
 		&.pk-bottom{
 			width:100%;
@@ -43,6 +36,7 @@
 			text-align:center;
 			padding-left:20px;
 			cursor:default;
+			position:relative;
 			&.selected{
 				background:fade(@color-prominent,10%);
 			}

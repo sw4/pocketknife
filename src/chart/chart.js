@@ -14,17 +14,15 @@ var pk = pk || {};
 			colors=opt.colors || {},
 			legendEl=pk.createEl("<div class='pk-table pk-legend'></div>"), 
 			legend=typeof opt.legend==='function'?opt.legend:!opt.legend ? false : function(mInf){
-			//	legendEl.children[0].innerHTML='';
-			//	legendEl.children[1].innerHTML='';	
-/*				
+
 				if(series.length > 1){
-					var hTpl="<div class='pk-row''><div class='pk-legend-category pk-cell'></div>";
+					var hTpl="<div class='pk-row pk-legend-header'><div class='pk-legend-category pk-cell'></div>";
 					for(var e=0;e<series.length;e++){
 						hTpl+="<div class='pk-cell pk-legend-series'>"+series[e]+"</div>";
 					}
-					legendEl.children[0].innerHTML=hTpl+"</div>";
+					legendEl.innerHTML+=hTpl+"</div>";
 				}			
-*/				
+				
 				for(var c in mInf){
 					var sI=0;
 					var lTpl="<div class='pk-row pk-legend-entry'>";					
@@ -41,10 +39,10 @@ var pk = pk || {};
 					lTpl+="</div>"; 
 					legendEl.innerHTML+=lTpl;	
 				}				
-			//	var cIt=pk.findEl(legendEl, {class:'pk-legend-series'});	
-			//	for(t=0;t<cIt.length;t++){
-			//		bindHover(cIt[t]);
-			//	}
+				var cIt=pk.findEl(legendEl, {class:'pk-legend-series'});	
+				for(t=0;t<cIt.length;t++){
+					bindHover(cIt[t]);
+				}
 			};		
 			pk.addClass(el, (l.height >= l.width ? "pk-legend-bottom" : "pk-legend-right")); 
 			
@@ -122,7 +120,6 @@ var pk = pk || {};
 		}
 		el.appendChild(svgEl);
 		el.appendChild(legendEl);
-
 
 		
     };

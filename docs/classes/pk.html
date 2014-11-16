@@ -225,6 +225,13 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_findEl">findEl</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_getEventOffset">getEventOffset</a>
 
                                 
@@ -543,7 +550,7 @@
             
         
         
-        <a href="../files/src_core_core.js.html#l395"><code>src&#x2F;core&#x2F;core.js:395</code></a>
+        <a href="../files/src_core_core.js.html#l464"><code>src&#x2F;core&#x2F;core.js:464</code></a>
         
         </p>
 
@@ -1088,7 +1095,7 @@
             
         
         
-        <a href="../files/src_core_core.js.html#l350"><code>src&#x2F;core&#x2F;core.js:350</code></a>
+        <a href="../files/src_core_core.js.html#l419"><code>src&#x2F;core&#x2F;core.js:419</code></a>
         
         </p>
 
@@ -1230,7 +1237,7 @@
             
         
         
-        <a href="../files/src_core_core.js.html#l276"><code>src&#x2F;core&#x2F;core.js:276</code></a>
+        <a href="../files/src_core_core.js.html#l329"><code>src&#x2F;core&#x2F;core.js:329</code></a>
         
         </p>
 
@@ -1291,6 +1298,212 @@
 </div>
 
                 
+                    <div id="method_findEl" class="method item">
+    <h3 class="name"><code>findEl</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>element</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>opt</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_core.js.html#l263"><code>src&#x2F;core&#x2F;core.js:263</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Finds matching DOM elements within passed DOM element</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">element</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>DOM element to search within</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">opt</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Object of find parameters</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[type]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Element type to filter</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[class]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Class type to filter</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[attribute]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Attribute to filter</p>
+
+                                </div>
+
+                                
+                                    <ul class="params-list">
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[name]</code>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                Attribute name to filter
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[value]</code>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                Attribute value to filter
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>:
+                    
+                    <p>Returns matching DOM elements</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_getEventOffset" class="method item">
     <h3 class="name"><code>getEventOffset</code></h3>
 
@@ -1337,7 +1550,7 @@
             
         
         
-        <a href="../files/src_core_core.js.html#l466"><code>src&#x2F;core&#x2F;core.js:466</code></a>
+        <a href="../files/src_core_core.js.html#l535"><code>src&#x2F;core&#x2F;core.js:535</code></a>
         
         </p>
 
@@ -1444,7 +1657,7 @@
             
         
         
-        <a href="../files/src_core_core.js.html#l295"><code>src&#x2F;core&#x2F;core.js:295</code></a>
+        <a href="../files/src_core_core.js.html#l364"><code>src&#x2F;core&#x2F;core.js:364</code></a>
         
         </p>
 
@@ -2181,7 +2394,7 @@
             
         
         
-        <a href="../files/src_core_core.js.html#l382"><code>src&#x2F;core&#x2F;core.js:382</code></a>
+        <a href="../files/src_core_core.js.html#l451"><code>src&#x2F;core&#x2F;core.js:451</code></a>
         
         </p>
 
@@ -2411,7 +2624,7 @@
             
         
         
-        <a href="../files/src_core_core.js.html#l436"><code>src&#x2F;core&#x2F;core.js:436</code></a>
+        <a href="../files/src_core_core.js.html#l505"><code>src&#x2F;core&#x2F;core.js:505</code></a>
         
         </p>
 
@@ -2657,7 +2870,7 @@
             
         
         
-        <a href="../files/src_core_core.js.html#l312"><code>src&#x2F;core&#x2F;core.js:312</code></a>
+        <a href="../files/src_core_core.js.html#l381"><code>src&#x2F;core&#x2F;core.js:381</code></a>
         
         </p>
 
@@ -2780,7 +2993,7 @@
             
         
         
-        <a href="../files/src_core_core.js.html#l331"><code>src&#x2F;core&#x2F;core.js:331</code></a>
+        <a href="../files/src_core_core.js.html#l400"><code>src&#x2F;core&#x2F;core.js:400</code></a>
         
         </p>
 
@@ -3199,7 +3412,7 @@
             
         
         
-        <a href="../files/src_core_core.js.html#l262"><code>src&#x2F;core&#x2F;core.js:262</code></a>
+        <a href="../files/src_core_core.js.html#l315"><code>src&#x2F;core&#x2F;core.js:315</code></a>
         
         </p>
 

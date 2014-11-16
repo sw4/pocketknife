@@ -1651,7 +1651,66 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 262,
+            "line": 263,
+            "description": "Finds matching DOM elements within passed DOM element",
+            "itemtype": "method",
+            "name": "findEl",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "DOM element to search within",
+                    "type": "Object"
+                },
+                {
+                    "name": "opt",
+                    "description": "Object of find parameters",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "type",
+                            "description": "Element type to filter",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "class",
+                            "description": "Class type to filter",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "attribute",
+                            "description": "Attribute to filter",
+                            "type": "Object",
+                            "optional": true,
+                            "props": [
+                                {
+                                    "name": "name",
+                                    "description": "Attribute name to filter",
+                                    "type": "String",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "value",
+                                    "description": "Attribute value to filter",
+                                    "type": "String",
+                                    "optional": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Returns matching DOM elements",
+                "type": "Array"
+            },
+            "class": "pk",
+            "module": "pocketknife"
+        },
+        {
+            "file": "src/core/core.js",
+            "line": 315,
             "description": "Wrap the passed DOM element in a new DOM node created from the `wrapper` string",
             "itemtype": "method",
             "name": "wrapEl",
@@ -1677,7 +1736,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 276,
+            "line": 329,
             "description": "Create a new DOM element from the passed `HTML` string (SVG agnostic)",
             "itemtype": "method",
             "name": "createEl",
@@ -1698,7 +1757,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 295,
+            "line": 364,
             "description": "Get the index of the passed DOM node within the immediate parent",
             "itemtype": "method",
             "name": "getIndex",
@@ -1718,7 +1777,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 312,
+            "line": 381,
             "description": "Replace the passed DOM element with a new element created from the passed string, inclusive of all original attributes",
             "itemtype": "method",
             "name": "replaceEl",
@@ -1744,7 +1803,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 331,
+            "line": 400,
             "description": "Forces the passed variable into an array, xploding comma seperated strings, keeping existing arrys, collapsing objects and or converting strings as necessary",
             "itemtype": "method",
             "name": "toArr",
@@ -1764,7 +1823,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 350,
+            "line": 419,
             "description": "Collides two arrays, either replacing one with the other, removing one from another, adding one to another or toggling the values of one in another",
             "itemtype": "method",
             "name": "collide",
@@ -1796,7 +1855,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 382,
+            "line": 451,
             "description": "Returns normalized percentage value",
             "itemtype": "method",
             "name": "perc",
@@ -1821,7 +1880,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 395,
+            "line": 464,
             "description": "Gets of sets attribute values, either explicitly or implicitly declared",
             "itemtype": "method",
             "name": "attribute",
@@ -1853,7 +1912,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 436,
+            "line": 505,
             "description": "Augments event object with additional X and Y helper coordinates",
             "itemtype": "method",
             "name": "procEvent",
@@ -1873,7 +1932,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 466,
+            "line": 535,
             "description": "Gets browser agnostic offset coordinates for applicable mouse events",
             "itemtype": "method",
             "name": "getEventOffset",

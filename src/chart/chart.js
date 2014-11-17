@@ -250,7 +250,7 @@ Javascript:
 						svgTpl+="<g class='tick' transform='translate(-5,"+Math.floor(t*yUnit)+")'>\
 							<line x2='5'></line>";  
 							if(t<axesMeta.y.range){svgTpl+="<line class='pk-tick-line' x1='6' x2='"+(5+l.width-margin.x)+"'></line>";}
-							svgTpl+="<text x='-10' y='4'>"+((axesMeta.y.range+axesMeta.y.min)-t)+"</text>\
+							svgTpl+="<text x='-10' y='4' text-anchor='start'>"+((axesMeta.y.range+axesMeta.y.min)-t)+"</text>\
 						</g>";				 	
 					}
 					svgTpl+="</g>\
@@ -262,7 +262,7 @@ Javascript:
 						svgTpl+="<g class='tick' transform='translate("+Math.floor(t*xUnit)+", 0)'>\
 							<line y2='5'></line>";
 							if(t>0){svgTpl+="<line class='pk-tick-line' y2='"+(-1*(l.height-margin.y-1))+"'></line>";}							
-							svgTpl+="<text y='17' x='-4' y='4'>"+(t+axesMeta.x.min)+"</text>\
+							svgTpl+="<text y='17' y='4' text-anchor='middle'>"+(t+axesMeta.x.min)+"</text>\
 						</g>";					
 					}	
 					svgTpl+="</g>\

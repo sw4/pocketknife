@@ -34,21 +34,38 @@
 		}
 		.pk-legend-series{ 
 			text-align:center;
-			padding-left:20px;
+			padding-left:28px;
 			cursor:default;
 			position:relative;
 			&.selected{
-				background:fade(@color-prominent,10%);
+				.pk-indicator:before{
+					opacity:0.2;
+				}
 			}
 		}
 		.pk-indicator{
 			display:inline-block;
+			margin-left:5px;
 			border-radius:100%;
 			height:10px;
 			width:10px;
 			position:absolute;
 			left:5px;
 			top:calc(~"50% - 5px");
+			&:before{
+				content:'';
+				position:absolute;				
+				height:10px;
+				width:10px;
+				border:8px solid;
+				border-color:inherit;
+				top:-8px;
+				left:-8px;
+				border-radius:100%;
+				z-index:0;
+				opacity:0;
+				transition:all 200ms ease-in;
+			}
 		}
 		
 	}
@@ -73,16 +90,28 @@
 		path, circle{
 			transition:all 150ms ease-in;
 		}
+		.pk-tick-line{
+			opacity:0.05;
+		} 
 		circle{
 			stroke-opacity:0;
-			stroke-width:15;
-			&:hover{
+			stroke-width:15;			
+		}
+		.pk-series g{
+			path.selected{
+				stroke-width:2;
+			}
+			circle.selected{
 				stroke-opacity:0.2;
 			}
 		}
-		.pk-series g:hover{
-			path{
-				stroke-width:2;
+		.pk-legend{
+			position:absolute;
+			bottom:0;
+			width:100%;
+			text-align:center;
+			.pk-legend-series{
+				display:inline-block;
 			}
 		}
 	}

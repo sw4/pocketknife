@@ -343,7 +343,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
             return this.rgb2hex(this.hsv2rgb(pk.toArr(hsv)));
         },
         /**
-        Generate a series of randomized HEX color strings
+        Generate a series of color biased (high saturation/lightness) randomized HEX color strings
 
             var palette=pk.color.random(5);
             // palette = ["#efa6a8", "#91abb", "#ebac2c", "#2b561", "#7b4b51"]
@@ -355,12 +355,13 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
         random: function(count) {
             var palette = [],
                 i;
-            count = typeof count !== 'number' ? 1 : count;
+            count = typeof count !== 'number' ? 1 : count; 
             for (i = 0; i < count; i += 1) {
-                palette.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+            //    palette.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+				palette.push(this.hsv2hex([pk.getRand(0,360),100,pk.getRand(75,100)]));
             }
             return palette;
-        },
+        }, 
         /**
         Generate (palette of) complementary color(s) from passed HEX color string
 		

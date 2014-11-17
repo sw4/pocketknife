@@ -278,16 +278,9 @@ Finds matching DOM elements within passed DOM element
 		 nType=opt.type || null,
 		 nAttr=opt.attribute || null,
 		 nClass=opt.class || null;
-
 		var nodes=[],
-			treeWalker = document.createTreeWalker(el, NodeFilter.SHOW_ALL, {
-				acceptNode: function (node) {
-					return NodeFilter.FILTER_ACCEPT;
-				}
-			}, false);
-
-		do {
-			
+			treeWalker = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, null, false);
+		do {			
 			if(treeWalker.currentNode.tagName!==undefined){
 				var match=true; 				
 				if(nType && treeWalker.currentNode.tagName.toLowerCase()!==nType.toLowerCase()){
@@ -308,8 +301,7 @@ Finds matching DOM elements within passed DOM element
 			}
 			
 		} while (treeWalker.nextNode());
-		return nodes;
-	
+		return nodes;	
     };	
 	
 /**

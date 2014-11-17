@@ -90,9 +90,17 @@
 		path, circle{
 			transition:all 150ms ease-in;
 		}
-		.pk-tick-line{
-			opacity:0.05;
-		} 
+		.pk-axes{
+			.pk-tick-line{
+				stroke:darken(@color-background,3%);
+			} 
+			line{
+				stroke:darken(@color-background, 20%);
+			}
+			text{
+				fill:darken(@color-background, 40%);
+			}
+		}
 		circle{
 			stroke-opacity:0;
 			stroke-width:15;			

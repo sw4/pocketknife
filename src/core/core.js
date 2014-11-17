@@ -343,7 +343,7 @@ Create a new DOM element from the passed `HTML` string (SVG agnostic)
 	
 	pk.createEl = function(str, attr) {
 		var el = document.createElement('div');    
-		if (['<path', '<line', '<circle', '<rect'].some(function(v) { return str.indexOf(v) >= 0; })) {    
+		if (['<g', '<path', '<line', '<circle', '<rect'].some(function(v) { return str.indexOf(v) >= 0; })) {    
 			el.innerHTML = '<svg>' + str + '</svg>';
 			return el.firstChild.firstChild;    
 		}else{

@@ -50,6 +50,9 @@
           margin-right:20px;
           height:90px;
         }
+        .pk-select{
+            width:250px;
+        }
     </style>
         <!--[if lt IE 9]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -115,7 +118,7 @@
 
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" style='overflow:hidden;'>
 
 
                 <div class='item'>
@@ -158,6 +161,109 @@
             </div>
         </div>
 
+
+        <div class="row">
+            <div class="col-md-6" style='height:240px;'>
+
+
+                    <h1>Multi and single select</h1>
+                <div class='item'>
+    <select id='select1'>
+        <option value='val1'>
+            option 1
+        </option>
+
+        <option value='val2'>
+            option 2
+        </option>
+
+        <option value='val3'>
+            option 3
+        </option>
+
+        <option selected value='val4'>
+            option 4
+        </option>
+
+        <option value='val5'>
+            option 5
+        </option>
+    </select>
+                </div>
+                <div class='item'>
+        <select id='select2'>
+        <option value='val1'>
+            option 1
+        </option>
+
+        <option value='val2'>
+            option 2
+        </option>
+
+        <option value='val3'>
+            option 3
+        </option>
+
+        <option value='val4'>
+            option 4
+        </option>
+
+        <option value='val5'>
+            option 5
+        </option>
+    </select>
+                </div>
+                </div>
+                <div class="col-md-6" style='height:240px;'>
+
+
+
+                    <h1>...with dropdowns</h1>
+
+         <select id='select3' style='width:100%;'>
+        <option value='val1'>
+            option 1
+        </option>
+
+        <option value='val2'>
+            option 2
+        </option>
+
+        <option value='val3'>
+            option 3
+        </option>
+
+        <option value='val4'>
+            option 4
+        </option>
+
+        <option value='val5'>
+            option 5
+        </option>
+    </select>
+        <select id='select4' style='width:100%;margin-top:20px;'>
+        <option value='val1'>
+            option 1
+        </option>
+
+        <option value='val2'>
+            option 2
+        </option>
+
+        <option value='val3'>
+            option 3
+        </option>
+
+        <option value='val4'>
+            option 4
+        </option>
+
+        <option value='val5'>
+            option 5
+        </option>
+    </select>
+            </div>
+        </div>
 
 
         <div class="row">
@@ -250,6 +356,48 @@
                 </ul>
             </div>
         </div>
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+            <h1>Custom scrollbars</h1>
+            
+    <div id='scroll1' style='width:100%;height:200px;'>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius urna,
+        id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet risus elementum,
+        faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis massa sodales, at pulvinar
+        sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
+        <br />
+        <br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius
+        urna, id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet risus
+        elementum, faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis massa sodales,
+        at pulvinar sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
+        <br />
+        <br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius
+        urna, id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet risus
+        elementum, faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis massa sodales,
+        at pulvinar sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
+        <br />
+        <br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius
+        urna, id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet risus
+        elementum, faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis massa sodales,
+        at pulvinar sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
+        <br />
+        <br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius
+        urna, id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet risus
+        elementum, faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis massa sodales,
+        at pulvinar sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
+        <br />
+        <br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a fermentum turpis, a vulputate est. Praesent nunc mi, elementum et eleifend in, semper quis lacus. Duis velit neque, feugiat eget sodales eget, blandit in lacus. Morbi a varius
+        urna, id eleifend est. Maecenas varius erat id augue ullamcorper, at sodales quam condimentum. Fusce et finibus metus. Sed sed lacinia magna. Nulla vel sem elementum, laoreet tortor ac, porta mauris. Curabitur a nulla velit. Integer sit amet risus
+        elementum, faucibus orci at, iaculis dui. Maecenas id aliquet sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut faucibus varius ipsum vitae vestibulum. Etiam rhoncus lacus quis massa sodales,
+        at pulvinar sapien aliquet. Sed justo metus, finibus non consectetur placerat, lobortis eu justo.
+        <br />
+        <br />
+    </div>
+        </div>
+       <br /><br /><br /><br />
         <hr>
 
         <footer>
@@ -496,6 +644,13 @@ pk.chart({
         'Accommodation':'#00DECF'     
       },
       area:true,
+      margin:{
+        top:40,
+        right:40,
+        bottom:50,
+        left:40
+
+      },
       points:'This Month',
             // center:50,
             legend:true,
@@ -537,7 +692,30 @@ pk.chart({
             series: 'category'
       
         });
+            pk.select({
+            element: document.getElementById('select1'),
+            value: 'val2',
+            multiple: true
+        });
+        pk.select({
+            element: document.getElementById('select4'),
+            value: 'val1',
+            multiple: true,
+            dropdown: true
+        });
+        pk.select({
+            element: document.getElementById('select3'),
+            value: 'val3',
+            dropdown: true
+        });
+        pk.select({
+            element: document.getElementById('select2')
+        });
 
+                pk.scroll({
+            element: document.getElementById('scroll1'),
+            axis: 'xy'
+        });
       </script>
     </body>
 </html>

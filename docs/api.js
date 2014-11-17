@@ -4,6 +4,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "pk",
         "pk.accordian",
         "pk.carousel",
+        "pk.chart",
         "pk.checkbox",
         "pk.color",
         "pk.colorpicker",

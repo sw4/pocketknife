@@ -53,6 +53,8 @@
             
                 <li><a href="../classes/pk.carousel.html">pk.carousel</a></li>
             
+                <li><a href="../classes/pk.chart.html">pk.chart</a></li>
+            
                 <li><a href="../classes/pk.checkbox.html">pk.checkbox</a></li>
             
                 <li><a href="../classes/pk.color.html">pk.color</a></li>
@@ -408,16 +410,9 @@ Finds matching DOM elements within passed DOM element
 		 nType=opt.type || null,
 		 nAttr=opt.attribute || null,
 		 nClass=opt.class || null;
-
 		var nodes=[],
-			treeWalker = document.createTreeWalker(el, NodeFilter.SHOW_ALL, {
-				acceptNode: function (node) {
-					return NodeFilter.FILTER_ACCEPT;
-				}
-			}, false);
-
-		do {
-			
+			treeWalker = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, null, false);
+		do {			
 			if(treeWalker.currentNode.tagName!==undefined){
 				var match=true; 				
 				if(nType &amp;&amp; treeWalker.currentNode.tagName.toLowerCase()!==nType.toLowerCase()){
@@ -438,8 +433,7 @@ Finds matching DOM elements within passed DOM element
 			}
 			
 		} while (treeWalker.nextNode());
-		return nodes;
-	
+		return nodes;	
     };	
 	
 /**
@@ -463,25 +457,10 @@ Create a new DOM element from the passed &#x60;HTML&#x60; string (SVG agnostic)
 @return {Object} Returns newly created DOM element
 @chainable
 */  
-/*
-    pk.createEl = function(str, attr) {
-        var el = document.createElement(&#x27;div&#x27;);
-        el.innerHTML = str;		
-		if([&#x27;svg&#x27;, &#x27;path&#x27;, &#x27;line&#x27;, &#x27;circle&#x27;, &#x27;rect&#x27;].indexOf(el.children[0].tagName.toLowerCase())&gt;=0){
-			el = document.createElementNS(&#x27;http://www.w3.org/2000/svg&#x27;, &#x27;div&#x27;);
-			el.innerHTML = str;
-			if(el.children[0].tagName.toLowerCase()===&quot;svg&quot;){
-				pk.attribute(el.children[0], {xmlns:&#x27;http://www.w3.org/2000/svg&#x27;, version:&#x27;1.1&#x27;});
-			}
-		}		
-        return el.children[0];
-    };
-	*/
-	
 	
 	pk.createEl = function(str, attr) {
 		var el = document.createElement(&#x27;div&#x27;);    
-		if ([&#x27;&lt;path&#x27;, &#x27;&lt;line&#x27;, &#x27;&lt;circle&#x27;, &#x27;&lt;rect&#x27;].some(function(v) { return str.indexOf(v) &gt;= 0; })) {    
+		if ([&#x27;&lt;g&#x27;, &#x27;&lt;path&#x27;, &#x27;&lt;line&#x27;, &#x27;&lt;circle&#x27;, &#x27;&lt;rect&#x27;].some(function(v) { return str.indexOf(v) &gt;= 0; })) {    
 			el.innerHTML = &#x27;&lt;svg&gt;&#x27; + str + &#x27;&lt;/svg&gt;&#x27;;
 			return el.firstChild.firstChild;    
 		}else{

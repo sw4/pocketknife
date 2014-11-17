@@ -79,7 +79,7 @@
 
         <div class="row">
             <div class="col-md-6">
-            <h1>Charts</h1><span id='chart1' style=
+            <h1>Pie and Donut Charts</h1><span id='chart1' style=
                 'width:100%;height:210px'></span> 
             </div>
 
@@ -158,6 +158,21 @@
 
             </div>
         </div>
+
+
+
+        <div class="row">
+            <div class="col-md-4">
+            <h1>Line Charts</h1><span id='chart2' style=
+                'width:100%;height:210px'></span> 
+            </div>
+
+            <div class="col-md-4">
+            <h1>Area Charts</h1><span id='chart3' style=
+                'width:100%;height:210px'></span> 
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-6">
                 <h1>Carousel</h1>
@@ -386,6 +401,68 @@
             },
             series: ['series1', 'series2']
         });
+
+        pk.chart({
+            element: document.getElementById('chart2'),
+      type:'line',
+            data: [
+                {category:"Invoices",'This Month':8, 'Last Month':2},
+                {category:"Petrol",'This Month':2, 'Last Month':6},
+                {category:"Invoices",'This Month':9, 'Last Month':9},
+                {category:"Petrol",'This Month':5, 'Last Month':2},
+                {category:"Invoices",'This Month':2, 'Last Month':7},
+                {category:"Petrol",'This Month':6, 'Last Month':3},
+                {category:"Accommodation",'This Month':1, 'Last Month':7},
+                {category:"Accommodation",'This Month':2, 'Last Month':5},
+                {category:"Accommodation",'This Month':6, 'Last Month':2}     
+            ],
+      colors:{
+        'Petrol':'#F20081',
+        'Invoices':'#EBBC00',
+        'Accommodation':'#00DECF'     
+      },
+            // center:50,
+            legend:true,
+            axis:{
+                x:'Last Month',
+        y:'This Month'
+            },
+            series: 'category'
+      
+        });
+
+
+pk.chart({
+            element: document.getElementById('chart3'),
+      type:'line',
+            data: [
+                {category:"Invoices",'This Month':8, 'Last Month':2},
+                {category:"Petrol",'This Month':3, 'Last Month':0},
+                {category:"Invoices",'This Month':1, 'Last Month':9},
+                {category:"Petrol",'This Month':5, 'Last Month':2},
+                {category:"Invoices",'This Month':2, 'Last Month':0},
+                {category:"Petrol",'This Month':6, 'Last Month':9},
+                {category:"Accommodation",'This Month':1, 'Last Month':9},
+                {category:"Accommodation",'This Month':4, 'Last Month':0},
+                {category:"Accommodation",'This Month':6, 'Last Month':2}     
+            ],
+      colors:{
+        'Petrol':'#F20081',
+        'Invoices':'#EBBC00',
+        'Accommodation':'#00DECF'     
+      },
+      area:true,
+            // center:50,
+            legend:true,
+            axis:{
+                x:'Last Month',
+        y:'This Month'
+            },
+            series: 'category'
+      
+        });
+
+
       </script>
     </body>
 </html>

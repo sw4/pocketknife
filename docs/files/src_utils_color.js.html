@@ -53,6 +53,8 @@
             
                 <li><a href="../classes/pk.carousel.html">pk.carousel</a></li>
             
+                <li><a href="../classes/pk.chart.html">pk.chart</a></li>
+            
                 <li><a href="../classes/pk.checkbox.html">pk.checkbox</a></li>
             
                 <li><a href="../classes/pk.color.html">pk.color</a></li>
@@ -473,7 +475,7 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
             return this.rgb2hex(this.hsv2rgb(pk.toArr(hsv)));
         },
         /**
-        Generate a series of randomized HEX color strings
+        Generate a series of color biased (high saturation/lightness) randomized HEX color strings
 
             var palette=pk.color.random(5);
             // palette = [&quot;#efa6a8&quot;, &quot;#91abb&quot;, &quot;#ebac2c&quot;, &quot;#2b561&quot;, &quot;#7b4b51&quot;]
@@ -485,12 +487,13 @@ For color conversion methods, where the expected parameter is an array e.g &#x60
         random: function(count) {
             var palette = [],
                 i;
-            count = typeof count !== &#x27;number&#x27; ? 1 : count;
+            count = typeof count !== &#x27;number&#x27; ? 1 : count; 
             for (i = 0; i &lt; count; i += 1) {
-                palette.push(&#x27;#&#x27; + Math.floor(Math.random() * 16777215).toString(16));
+            //    palette.push(&#x27;#&#x27; + Math.floor(Math.random() * 16777215).toString(16));
+				palette.push(this.hsv2hex([pk.getRand(0,360),100,pk.getRand(75,100)]));
             }
             return palette;
-        },
+        }, 
         /**
         Generate (palette of) complementary color(s) from passed HEX color string
 		

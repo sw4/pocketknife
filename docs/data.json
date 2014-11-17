@@ -24,6 +24,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/chart/chart.js": {
+            "name": "src/chart/chart.js",
+            "modules": {},
+            "classes": {
+                "pk.chart": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/checkbox/checkbox.js": {
             "name": "src/checkbox/checkbox.js",
             "modules": {},
@@ -178,6 +187,7 @@
             "classes": {
                 "pk.accordian": 1,
                 "pk.carousel": 1,
+                "pk.chart": 1,
                 "pk.checkbox": 1,
                 "pk.colorpicker": 1,
                 "pk": 1,
@@ -302,6 +312,94 @@
                 "description": "Object  Consisting of original DOM element (item `0`) and class methods (see below)",
                 "type": "Object"
             },
+            "chainable": 1
+        },
+        "pk.chart": {
+            "name": "pk.chart",
+            "shortname": "pk.chart",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pocketknife",
+            "file": "src/chart/chart.js",
+            "line": 2,
+            "description": "Create a new chart component\n\nHTML\n\n\t<div id='chart'></div>\n\nJavascript:\n\n\tpk.chart({\n\t\telement: document.getElementById('chart'),\n\t\ttype:'pie',\n\t\tdata: [\n\t\t\t{category:\"cat\",series1:8, series2:2},\n\t\t\t{category:\"pig\",series1:2, series2:6},\n\t\t\t{category:\"cow\",series1:9, series2:9},\n\t\t\t{category:\"bird\",series1:5, series2:2},\n\t\t\t{category:\"dog\",series1:2, series2:7},\n\t\t\t{category:\"emu\",series1:6, series2:3},\n\t\t\t{category:\"hamster\",series1:2, series2:3}\n\t\t],\n\t\tcenter:20,\n\t\tlegend:true,\n\t\taxis:{\n\t\t\tx:'category'\n\t\t},\n\t\tseries: ['series1', 'series2']\n\t});",
+            "is_constructor": 1,
+            "beta": 1,
+            "params": [
+                {
+                    "name": "type",
+                    "description": "Chart type to create, `pi`, or `line`",
+                    "type": "String"
+                },
+                {
+                    "name": "center",
+                    "description": "If chart type `pie`, the inner radius to create a donut chart, expressed as a percentage of diameter (`2*r`)",
+                    "type": "Number",
+                    "optional": true,
+                    "optdefault": "0"
+                },
+                {
+                    "name": "data",
+                    "description": "Object array of data to use for the chart",
+                    "type": "Object"
+                },
+                {
+                    "name": "axis",
+                    "description": "Object keys in data to use for `x` and `y` axes",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "x",
+                            "description": "Object keys in data to use for `x` axis",
+                            "type": "String"
+                        },
+                        {
+                            "name": "y",
+                            "description": "Object keys in data to use for `y` axis, marked optional as not required for `pie` charts",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                },
+                {
+                    "name": "series",
+                    "description": "Object keys in data used for series designation - only an Array for `pie` charts",
+                    "type": "Array"
+                },
+                {
+                    "name": "series",
+                    "description": "Object key in data used for series designation - only a String for `line` charts",
+                    "type": "String"
+                },
+                {
+                    "name": "margin",
+                    "description": "Object of `top`, `right`, `left` and `bottom` margin amounts in pixels. Defaults to `20,20,50,20`",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "area",
+                    "description": "Whether to shade series area",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "colors",
+                    "description": "Object key value pairs where the key is a series name, the value is the value to use",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "legend",
+                    "description": "Custom function responsible for building chart legend, defaults to stock constructor if not passed",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
             "chainable": 1
         },
         "pk.checkbox": {
@@ -1710,7 +1808,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 315,
+            "line": 307,
             "description": "Wrap the passed DOM element in a new DOM node created from the `wrapper` string",
             "itemtype": "method",
             "name": "wrapEl",
@@ -1736,7 +1834,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 329,
+            "line": 321,
             "description": "Create a new DOM element from the passed `HTML` string (SVG agnostic)",
             "itemtype": "method",
             "name": "createEl",
@@ -1757,7 +1855,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 364,
+            "line": 341,
             "description": "Get the index of the passed DOM node within the immediate parent",
             "itemtype": "method",
             "name": "getIndex",
@@ -1777,7 +1875,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 381,
+            "line": 358,
             "description": "Replace the passed DOM element with a new element created from the passed string, inclusive of all original attributes",
             "itemtype": "method",
             "name": "replaceEl",
@@ -1803,7 +1901,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 400,
+            "line": 377,
             "description": "Forces the passed variable into an array, xploding comma seperated strings, keeping existing arrys, collapsing objects and or converting strings as necessary",
             "itemtype": "method",
             "name": "toArr",
@@ -1823,7 +1921,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 419,
+            "line": 396,
             "description": "Collides two arrays, either replacing one with the other, removing one from another, adding one to another or toggling the values of one in another",
             "itemtype": "method",
             "name": "collide",
@@ -1855,7 +1953,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 451,
+            "line": 428,
             "description": "Returns normalized percentage value",
             "itemtype": "method",
             "name": "perc",
@@ -1880,7 +1978,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 464,
+            "line": 441,
             "description": "Gets of sets attribute values, either explicitly or implicitly declared",
             "itemtype": "method",
             "name": "attribute",
@@ -1912,7 +2010,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 505,
+            "line": 482,
             "description": "Augments event object with additional X and Y helper coordinates",
             "itemtype": "method",
             "name": "procEvent",
@@ -1932,7 +2030,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 535,
+            "line": 512,
             "description": "Gets browser agnostic offset coordinates for applicable mouse events",
             "itemtype": "method",
             "name": "getEventOffset",
@@ -2547,7 +2645,7 @@
         {
             "file": "src/utils/color.js",
             "line": 345,
-            "description": "Generate a series of randomized HEX color strings\n\n    var palette=pk.color.random(5);\n    // palette = [\"#efa6a8\", \"#91abb\", \"#ebac2c\", \"#2b561\", \"#7b4b51\"]",
+            "description": "Generate a series of color biased (high saturation/lightness) randomized HEX color strings\n\n    var palette=pk.color.random(5);\n    // palette = [\"#efa6a8\", \"#91abb\", \"#ebac2c\", \"#2b561\", \"#7b4b51\"]",
             "itemtype": "method",
             "name": "random",
             "params": [
@@ -2566,7 +2664,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 364,
+            "line": 365,
             "description": "Generate (palette of) complementary color(s) from passed HEX color string\n\t\t\n    var palette=pk.color.complement('#FF0000', 'split');\n    // palette = [\"#80ff00\", \"#00ffff\", \"#8000ff\"]\n\t\t\t\n    var palette=pk.color.complement('#FF0000', 'double');\n    // palette = [\"#80ff00\", \"#00ff40\", \"#00ffff\", \"#0040ff\", \"#8000ff\"]",
             "itemtype": "method",
             "name": "complement",
@@ -2592,7 +2690,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 401,
+            "line": 402,
             "description": "Generate triadic color palette\n\t\t\n    var palette=pk.color.triadic('#FF0000');\n    // palette = [\"#ff0000\", \"#00ff00\", \"#0000ff\"]",
             "itemtype": "method",
             "name": "triadic",
@@ -2612,7 +2710,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 415,
+            "line": 416,
             "description": "Generate tetradic color palette\n\t\t\n    var palette=pk.color.triadic('#FF0000');\n    // palette = [\"#ff0000\", \"#80ff00\", \"#00ffff\", \"#8000ff\"]",
             "itemtype": "method",
             "name": "tetradic",
@@ -2632,7 +2730,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 431,
+            "line": 432,
             "description": "Generate pentadic color palette\n\t\t\n    var palette=pk.color.triadic('#FF0000');\n    // palette = [\"#ff0000\", \"#ccff00\", \"#00ff66\", \"#0066ff\", \"#cc00ff\"]",
             "itemtype": "method",
             "name": "pentadic",
@@ -2652,7 +2750,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 456,
+            "line": 457,
             "description": "Generate a color from a percentage point between two colors\n\t\t\n    var color=pk.color.percentage(0.5);\n    // color = \"#f2e600\";",
             "itemtype": "method",
             "name": "percentage",
@@ -2686,7 +2784,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 475,
+            "line": 476,
             "description": "Scale either hue, saturation or value of a color by a percentage amount\n\t\t\n    var scale=pk.scale.percentage(0.5);\n    // color = \"#f2e600\";",
             "itemtype": "method",
             "name": "scale",
@@ -2724,7 +2822,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 497,
+            "line": 498,
             "description": "Lighten a color by a percentage amount\n\t\t\n    var color=pk.color.lighten('#840000', 70);\n    // color = \"#da0000\";",
             "itemtype": "method",
             "name": "lighten",
@@ -2756,7 +2854,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 513,
+            "line": 514,
             "description": "Darken a color by a percentage amount\n\t\t\n    var color=pk.color.darken('#840000', 70);\n    // color = \"#da0000\";",
             "itemtype": "method",
             "name": "darken",
@@ -2788,7 +2886,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 529,
+            "line": 530,
             "description": "Saturate a color by a percentage amount\n\t\t\n    var color=pk.color.saturate('#840000', 70);\n    // color = \"#820000\";",
             "itemtype": "method",
             "name": "saturate",
@@ -2820,7 +2918,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 545,
+            "line": 546,
             "description": "Desaturate a color by a percentage amount\n\t\t\n    var color=pk.color.desaturate('#840000', 70);\n    // color = \"#820000\";",
             "itemtype": "method",
             "name": "saturate",
@@ -2852,7 +2950,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 561,
+            "line": 562,
             "description": "Generate algorithmic color palette\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000'});\n    // palette = [\"#ff0000\", \"#00ff00\", \"#0000ff\"] \t\t\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000', count: 5});\n    // palette = [\"#ff0000\", \"#ccff00\", \"#00ff66\", \"#0066ff\", \"#cc00ff\"]  \t\t\t\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000', scope: 100, count:4});\n    // palette = [\"#ff00d4\", \"#ff0047\", \"#ff4700\", \"#ffd500\"]\n\n    var palette=pk.color.algorithmic ({hex:'#FF0000', type:'saturation', scope:50});\n    // palette = [\"#ffffff\", \"#ffbfbf\", \"#ff8080\"]",
             "itemtype": "method",
             "name": "algorithmic",

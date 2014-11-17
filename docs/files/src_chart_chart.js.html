@@ -161,7 +161,7 @@ Javascript:
 	});
 	
 @class pk.chart
-@constructor
+@constructor 
 @beta
 @param type {String} Chart type to create, &#x60;pi&#x60;, or &#x60;line&#x60;
 @param [center=0] {Number} If chart type &#x60;pie&#x60;, the inner radius to create a donut chart, expressed as a percentage of diameter (&#x60;2*r&#x60;)
@@ -172,8 +172,8 @@ Javascript:
 @param series {Array} Object keys in data used for series designation - only an Array for &#x60;pie&#x60; charts
 @param series {String} Object key in data used for series designation - only a String for &#x60;line&#x60; charts
 @param [margin] {Object} Object of &#x60;top&#x60;, &#x60;right&#x60;, &#x60;left&#x60; and &#x60;bottom&#x60; margin amounts in pixels. Defaults to &#x60;20,20,50,20&#x60;
-@param [area=false] {Boolean} Whether to shade series area
 @param [colors] {Object} Object key value pairs where the key is a series name, the value is the value to use
+@param [points=5] {String} Object key in data used to calculate proportionate point size, or number
 @param [legend] {Function} Custom function responsible for building chart legend, defaults to stock constructor if not passed
 
 @chainable
@@ -186,9 +186,8 @@ Javascript:
 			data=opt.data || [],
 			series=opt.series,
 			seriesMeta={},
-			axesMeta={x:{data:[], sum:0},y:{data:[], sum:0}},
-			axis=opt.axis, 
-			area=opt.area || false,
+			axesMeta={x:{data:[], sum:0},y:{data:[], sum:0}, r:{data:[]}},
+			axis=opt.axis,
 			d = l.height &gt; l.width ? l.width : l.height,
 			stroke= opt.center ? (d/2)-(d*((opt.center/2) /100)) : d/2,
 			colors=opt.colors || {},
@@ -232,7 +231,9 @@ Javascript:
 						pk.addClass(el, (l.height &gt;= l.width ? &quot;pk-legend-bottom&quot; : &quot;pk-legend-right&quot;)); 
 		
 					break;
+					case &quot;scatter&quot;:
 					case &quot;line&quot;:
+					case &quot;area&quot;:
 						for(s in mInf){
 							legendEl.innerHTML+= &quot;&lt;div class=&#x27;pk-legend-series&#x27; data-rel=&#x27;&quot;+(&#x27;rel&#x27;+s).replace(&#x27; &#x27; ,&#x27;&#x27;)+&quot;&#x27;&gt;&lt;span class=&#x27;pk-indicator&#x27; style=&#x27;border-color:&quot;+colors[s]+&quot;;background-color:&quot;+colors[s]+&quot;;&#x27; data-rel=&#x27;&quot;+(&#x27;rel&#x27;+s).replace(&#x27; &#x27; ,&#x27;&#x27;)+&quot;&#x27;&gt;&lt;/span&gt;&quot;+s+&quot;&lt;/div&gt;&quot;;						
 						}					
@@ -327,8 +328,10 @@ Javascript:
 				}
 				legend(metaObj); 
 			break;
-			case &quot;line&quot;:
 
+			case &quot;scatter&quot;:
+			case &quot;line&quot;:
+			case &quot;area&quot;:
 				for(var i=0;i&lt;data.length;i++){		
 					seriesMeta[data[i][series]] = seriesMeta[data[i][series]] || {
 						x:{
@@ -338,7 +341,10 @@ Javascript:
 						y:{
 							data:[],
 							sum:0
-						},			
+						},
+						r:{
+							data:[]
+						}		
 					};
 					seriesMeta[data[i][series]].x.data.push(data[i][axis.x]);				
 					seriesMeta[data[i][series]].x.sum+=data[i][axis.x];				
@@ -351,12 +357,17 @@ Javascript:
 					seriesMeta[data[i][series]].x.max = !seriesMeta[data[i][series]].x.max || data[i][axis.x] &gt; seriesMeta[data[i][series]].x.max ? data[i][axis.x] : seriesMeta[data[i][series]].x.max;
 					seriesMeta[data[i][series]].x.range = Math.abs(seriesMeta[data[i][series]].x.max-seriesMeta[data[i][series]].x.min);
 					
+
+					if(opt.points){seriesMeta[data[i][series]].r.data.push(data[i][opt.points]);}
+
+
 					axesMeta.x.data.push(data[i][axis.x]);
 					axesMeta.x.sum+=data[i][axis.x];
 					axesMeta.y.data.push(data[i][axis.y]);
 					axesMeta.y.sum+=data[i][axis.y];
 					
 					
+					if(opt.points){axesMeta.r.data.push(data[i][opt.points]);}
 					
 				}
 				axesMeta.x.min=Math.min.apply(Math, axesMeta.x.data);
@@ -368,7 +379,8 @@ Javascript:
 				axesMeta.y.max=Math.max.apply(Math, axesMeta.y.data);
 				axesMeta.y.range = Math.abs(axesMeta.y.max-axesMeta.y.min);
 				
-				
+				if(opt.points){axesMeta.r.range = Math.abs(Math.max.apply(Math, axesMeta.r.data)-Math.min.apply(Math, axesMeta.r.data));}
+
 				// Get range pixel amounts
 				yUnit= ((l.height-margin.y)/axesMeta.y.range);
 				xUnit= ((l.width-margin.x)/(axesMeta.x.range));
@@ -427,7 +439,7 @@ Javascript:
 							pxY=Math.round(l.height-(margin.bottom + (yUnit * (seriesMeta[s].y.data[i]-axesMeta.y.min))));
 						sPath+=pxX + &quot; &quot; +pxY;
 						
-						if(area){
+						if(type===&#x27;area&#x27;){
 							if(i==0){
 								aPath+=&quot;M&quot;+pxX + &quot; &quot; +(l.height-margin.bottom);
 							}
@@ -436,10 +448,14 @@ Javascript:
 								aPath+=&quot; L &quot;+pxX + &quot; &quot; +(l.height-margin.bottom);
 							}
 						}
-						seriesEl.appendChild(pk.createEl(&quot;&lt;circle cx=&#x27;&quot;+pxX+&quot;&#x27; cy=&#x27;&quot;+pxY+&quot;&#x27; r=&#x27;5&#x27; fill=&#x27;&quot;+colors[s]+&quot;&#x27; stroke=&#x27;&quot;+colors[s]+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27; /&gt;&quot;)); 
-					}  
-					seriesEl.insertBefore(pk.createEl(&quot;&lt;path class=&#x27;pk-line&#x27; fill=&#x27;none&#x27; stroke=&#x27;&quot;+colors[s]+&quot;&#x27; d=&#x27;&quot;+sPath.trim()+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27; /&gt;&quot;),seriesEl.firstChild );
-					if(area){
+						var r=seriesMeta[s].r.data[i] ? (seriesMeta[s].r.data[i]*20 / axesMeta.r.range)  : typeof opt.points === &#x27;number&#x27; ? opt.points : 5;
+						
+						seriesEl.appendChild(pk.createEl(&quot;&lt;circle cx=&#x27;&quot;+pxX+&quot;&#x27; cy=&#x27;&quot;+pxY+&quot;&#x27; r=&#x27;&quot;+r+&quot;&#x27; fill=&#x27;&quot;+colors[s]+&quot;&#x27; stroke=&#x27;&quot;+colors[s]+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27; /&gt;&quot;)); 
+					} 
+					if(type!=&#x27;scatter&#x27;){ 
+						seriesEl.insertBefore(pk.createEl(&quot;&lt;path class=&#x27;pk-line&#x27; fill=&#x27;none&#x27; stroke=&#x27;&quot;+colors[s]+&quot;&#x27; d=&#x27;&quot;+sPath.trim()+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27; /&gt;&quot;),seriesEl.firstChild );
+					}
+					if(type===&#x27;area&#x27;){
 						seriesEl.insertBefore(pk.createEl(&quot;&lt;path class=&#x27;pk-area&#x27; fill=&#x27;&quot;+colors[s]+&quot;&#x27; d=&#x27;&quot;+aPath.trim()+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27; /&gt;&quot;),seriesEl.firstChild );
 					}
 					// console.log();

@@ -90,8 +90,8 @@ gulp.task('build:js',function() {
   return gulp.src('src/**/*.js', {base: './'})
 	.pipe(plugins.plumber())
     .pipe(plugins.concat(pkg.name+'.js'))
-//	.pipe(plugins.jshint())
-//	.pipe(plugins.uglify())
+	.pipe(plugins.jshint())
+	.pipe(plugins.uglify())
 	.pipe(plugins.rename(pkg.name+'.min.js'))
 	.pipe(plugins.header(banner, { pkg : pkg } ))
     .pipe(gulp.dest('dist/'));

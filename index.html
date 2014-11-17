@@ -48,7 +48,7 @@
 <body>
 
 
-<div id='pie'></div>
+<div id='chart'></div>
 
 
     <script src="dist/pocketknife.min.js"></script>
@@ -76,18 +76,18 @@
 	
 	*/
         pk.chart({
-            element: document.getElementById('pie'),
-			type:'line',
+            element: document.getElementById('chart'),
+			type:'scatter',
             data: [
-                {category:"Invoices",'This Month':8, 'Last Month':2},
-                {category:"Petrol",'This Month':2, 'Last Month':6},
-                {category:"Invoices",'This Month':9, 'Last Month':9},
-                {category:"Petrol",'This Month':5, 'Last Month':2},
-                {category:"Invoices",'This Month':2, 'Last Month':7},
-                {category:"Petrol",'This Month':6, 'Last Month':3},
-                {category:"Accommodation",'This Month':1, 'Last Month':7},
-                {category:"Accommodation",'This Month':2, 'Last Month':5},
-                {category:"Accommodation",'This Month':6, 'Last Month':2}			
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':0},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':0},
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':0}			
             ],
 			colors:{
 				'Petrol':'#F20081',
@@ -96,10 +96,11 @@
 			},
             // center:50,
             legend:true,
-            axis:{
+            axis:{ 
                 x:'Last Month',
 				y:'This Month'
             },
+            points:'This Month',
             series: 'category'
 			
         });

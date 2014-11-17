@@ -66,9 +66,8 @@
         <div class="container">
 		
 			
-            <h1>pocketknife.js</h1>
-
-            <p>Beautiful UI Components written in lean, clean Javascript with
+            <h1>Open UI</h1>
+            <p>Beautiful open source UI components written in lean, clean Javascript with
             no dependancies</p>
 			
             <p><a href='../docs/index.html' target='_new'>View API Docs</a></p>
@@ -162,16 +161,30 @@
 
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
             <h1>Line Charts</h1><span id='chart2' style=
                 'width:100%;height:210px'></span> 
             </div>
 
-            <div class="col-md-4">
-            <h1>Area Charts</h1><span id='chart3' style=
+            <div class="col-md-6">
+            <h1>Scatter Charts</h1><span id='chart3' style=
                 'width:100%;height:210px'></span> 
             </div>
         </div>
+
+
+        <div class="row" >
+            <div class="col-md-6">
+            <h1>Bubble Charts</h1><span id='chart4' style=
+                'width:100%;height:210px'></span> 
+            </div>
+
+            <div class="col-md-6">
+            <h1>Area Charts</h1><span id='chart5' style=
+                'width:100%;height:210px'></span> 
+            </div>
+        </div>
+       
 
         <div class="row">
             <div class="col-md-6">
@@ -406,15 +419,15 @@
             element: document.getElementById('chart2'),
       type:'line',
             data: [
-                {category:"Invoices",'This Month':8, 'Last Month':2},
-                {category:"Petrol",'This Month':2, 'Last Month':6},
-                {category:"Invoices",'This Month':9, 'Last Month':9},
-                {category:"Petrol",'This Month':5, 'Last Month':2},
-                {category:"Invoices",'This Month':2, 'Last Month':7},
-                {category:"Petrol",'This Month':6, 'Last Month':3},
-                {category:"Accommodation",'This Month':1, 'Last Month':7},
-                {category:"Accommodation",'This Month':2, 'Last Month':5},
-                {category:"Accommodation",'This Month':6, 'Last Month':2}     
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':0},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':0},
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':0}         
             ],
       colors:{
         'Petrol':'#F20081',
@@ -434,17 +447,17 @@
 
 pk.chart({
             element: document.getElementById('chart3'),
-      type:'line',
+      type:'scatter',
             data: [
-                {category:"Invoices",'This Month':8, 'Last Month':2},
-                {category:"Petrol",'This Month':3, 'Last Month':0},
-                {category:"Invoices",'This Month':1, 'Last Month':9},
-                {category:"Petrol",'This Month':5, 'Last Month':2},
-                {category:"Invoices",'This Month':2, 'Last Month':0},
-                {category:"Petrol",'This Month':6, 'Last Month':9},
-                {category:"Accommodation",'This Month':1, 'Last Month':9},
-                {category:"Accommodation",'This Month':4, 'Last Month':0},
-                {category:"Accommodation",'This Month':6, 'Last Month':2}     
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':0},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':0},
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':0}         
             ],
       colors:{
         'Petrol':'#F20081',
@@ -462,6 +475,68 @@ pk.chart({
       
         });
 
+
+pk.chart({
+            element: document.getElementById('chart4'),
+      type:'scatter',
+            data: [
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':0},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':0},
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':0}         
+            ],
+      colors:{
+        'Petrol':'#F20081',
+        'Invoices':'#EBBC00',
+        'Accommodation':'#00DECF'     
+      },
+      area:true,
+      points:'This Month',
+            // center:50,
+            legend:true,
+            axis:{
+                x:'Last Month',
+        y:'This Month'
+            },
+            series: 'category'
+      
+        });
+
+
+pk.chart({
+            element: document.getElementById('chart5'),
+      type:'area',
+            data: [
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':0},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':0},
+                {category:"Invoices",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Petrol",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':9},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':pk.getRand(1,8)},
+                {category:"Accommodation",'This Month':pk.getRand(0,9), 'Last Month':0}         
+            ],
+      colors:{
+        'Petrol':'#F20081',
+        'Invoices':'#EBBC00',
+        'Accommodation':'#00DECF'     
+      },
+      area:true,
+            // center:50,
+            legend:true,
+            axis:{
+                x:'Last Month',
+        y:'This Month'
+            },
+            series: 'category'
+      
+        });
 
       </script>
     </body>

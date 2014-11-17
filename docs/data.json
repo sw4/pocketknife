@@ -381,17 +381,17 @@
                     "optional": true
                 },
                 {
-                    "name": "area",
-                    "description": "Whether to shade series area",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "false"
-                },
-                {
                     "name": "colors",
                     "description": "Object key value pairs where the key is a series name, the value is the value to use",
                     "type": "Object",
                     "optional": true
+                },
+                {
+                    "name": "points",
+                    "description": "Object key in data used to calculate proportionate point size, or number",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "5"
                 },
                 {
                     "name": "legend",

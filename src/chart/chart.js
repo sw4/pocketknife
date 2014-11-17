@@ -243,23 +243,24 @@ Javascript:
 				
 				
 				// Draw AXES
+				// Series of .5 pt adjustments to create crisp edges in IE
 				var svgTpl="<g class='pk-axes'>\
-					<g class='pk-yAxis' transform='translate("+margin.left+","+margin.top+")'>\
+					<g class='pk-yAxis' transform='translate("+(margin.left-.5)+","+margin.top+")'>\
 						<line y2='"+(l.height-margin.y)+"'></line>";
 					for(var t=0;t<=axesMeta.y.range;t++){
-						svgTpl+="<g class='tick' transform='translate(-5,"+Math.floor(t*yUnit)+")'>\
+						svgTpl+="<g class='tick' transform='translate(-5,"+(Math.floor(t*yUnit)+0.5)+")'>\
 							<line x2='5'></line>";  
 							if(t<axesMeta.y.range){svgTpl+="<line class='pk-tick-line' x1='6' x2='"+(5+l.width-margin.x)+"'></line>";}
 							svgTpl+="<text x='-10' y='4' text-anchor='start'>"+((axesMeta.y.range+axesMeta.y.min)-t)+"</text>\
 						</g>";				 	
 					}
 					svgTpl+="</g>\
-					<g class='pk-xAxis' transform='translate("+margin.left+","+(l.height-margin.bottom)+")'>\
+					<g class='pk-xAxis' transform='translate("+margin.left+","+(l.height-margin.bottom+.5)+")'>\
 						<line x2='"+(l.width-margin.x)+"'></line>";
 						
 		 
 					for(t=0;t<=axesMeta.x.range;t++){
-						svgTpl+="<g class='tick' transform='translate("+Math.floor(t*xUnit)+", 0)'>\
+						svgTpl+="<g class='tick' transform='translate("+(Math.floor(t*xUnit)+0.5)+", 0)'>\
 							<line y2='5'></line>";
 							if(t>0){svgTpl+="<line class='pk-tick-line' y2='"+(-1*(l.height-margin.y-1))+"'></line>";}							
 							svgTpl+="<text y='17' y='4' text-anchor='middle'>"+(t+axesMeta.x.min)+"</text>\

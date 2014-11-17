@@ -1,5 +1,51 @@
 var pk = pk || {};
+/**
+Create a new chart component
 
+HTML
+
+	<div id='chart'></div>
+
+Javascript:
+
+	pk.chart({
+		element: document.getElementById('chart'),
+		type:'pie',
+		data: [
+			{category:"cat",series1:8, series2:2},
+			{category:"pig",series1:2, series2:6},
+			{category:"cow",series1:9, series2:9},
+			{category:"bird",series1:5, series2:2},
+			{category:"dog",series1:2, series2:7},
+			{category:"emu",series1:6, series2:3},
+			{category:"hamster",series1:2, series2:3}
+		],
+		center:20,
+		legend:true,
+		axis:{
+			x:'category'
+		},
+		series: ['series1', 'series2']
+	});
+	
+@class pk.chart
+@constructor
+@beta
+@param type {String} Chart type to create, `pi`, or `line`
+@param [center=0] {Number} If chart type `pie`, the inner radius to create a donut chart, expressed as a percentage of diameter (`2*r`)
+@param data {Object} Object array of data to use for the chart
+@param axis {Object} Object keys in data to use for `x` and `y` axes
+@param axis.x {String} Object keys in data to use for `x` axis
+@param [axis.y] {String} Object keys in data to use for `y` axis, marked optional as not required for `pie` charts
+@param series {Array} Object keys in data used for series designation - only an Array for `pie` charts
+@param series {String} Object key in data used for series designation - only a String for `line` charts
+@param [margin] {Object} Object of `top`, `right`, `left` and `bottom` margin amounts in pixels. Defaults to `20,20,50,20`
+@param [area=false] {Boolean} Whether to shade series area
+@param [colors] {Object} Object key value pairs where the key is a series name, the value is the value to use
+@param [legend] {Function} Custom function responsible for building chart legend, defaults to stock constructor if not passed
+
+@chainable
+*/
 (function(pk) {
     pk.chart = function(opt) {
         var el=pk.replaceEl(opt.element, "<div class='pk-chart'></div>"),
@@ -10,6 +56,7 @@ var pk = pk || {};
 			seriesMeta={},
 			axesMeta={x:{data:[], sum:0},y:{data:[], sum:0}},
 			axis=opt.axis, 
+			area=opt.area || false,
 			d = l.height > l.width ? l.width : l.height,
 			stroke= opt.center ? (d/2)-(d*((opt.center/2) /100)) : d/2,
 			colors=opt.colors || {},
@@ -178,7 +225,6 @@ var pk = pk || {};
 					axesMeta.y.sum+=data[i][axis.y];
 					
 					
-
 					
 				}
 				axesMeta.x.min=Math.min.apply(Math, axesMeta.x.data);
@@ -186,7 +232,7 @@ var pk = pk || {};
 				axesMeta.x.max=Math.max.apply(Math, axesMeta.x.data);
 				axesMeta.x.range = Math.abs(axesMeta.x.max-axesMeta.x.min);
 				axesMeta.y.min=Math.min.apply(Math, axesMeta.y.data);
-				axesMeta.y.min = axesMeta.y.min <= 0 ? axesMeta.y.min : 0;
+				axesMeta.y.min = axesMeta.y.min <= 0 ? axesMeta.y.min : 0; 
 				axesMeta.y.max=Math.max.apply(Math, axesMeta.y.data);
 				axesMeta.y.range = Math.abs(axesMeta.y.max-axesMeta.y.min);
 				
@@ -234,7 +280,7 @@ var pk = pk || {};
 					}
 					
 					var seriesEl=pk.createEl("<g class='pk-series-"+sIndex+"' />");
-					var sPath='';
+					var sPath='', aPath='';
 					for(i=0;i<seriesMeta[s].x.data.length;i++){			
 						if(i==0){
 							sPath+="M";
@@ -244,11 +290,23 @@ var pk = pk || {};
 						var pxX=Math.round(margin.left + (xUnit * (seriesMeta[s].x.data[i]-axesMeta.x.min))),
 							pxY=Math.round(l.height-(margin.bottom + (yUnit * (seriesMeta[s].y.data[i]-axesMeta.y.min))));
 						sPath+=pxX + " " +pxY;
-					
+						
+						if(area){
+							if(i==0){
+								aPath+="M"+pxX + " " +(l.height-margin.bottom);
+							}
+							aPath+=" L "+pxX + " " +pxY;
+							if(i==seriesMeta[s].x.data.length-1){					
+								aPath+=" L "+pxX + " " +(l.height-margin.bottom);
+							}
+						}
 						seriesEl.appendChild(pk.createEl("<circle cx='"+pxX+"' cy='"+pxY+"' r='5' fill='"+colors[s]+"' stroke='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"' />")); 
-					}
+					}  
 					
-					seriesEl.insertBefore(pk.createEl("<path fill='none' stroke='"+colors[s]+"' d='"+sPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
+					seriesEl.insertBefore(pk.createEl("<path class='pk-line' fill='none' stroke='"+colors[s]+"' d='"+sPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
+					if(area){
+						seriesEl.insertBefore(pk.createEl("<path class='pk-area' fill='"+colors[s]+"' d='"+aPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
+					}
 					svgEl.children[1].appendChild(seriesEl);
 				};
 				legend(seriesMeta); 			
@@ -263,12 +321,14 @@ var pk = pk || {};
 		
 
 		
-		if(typeof legend === 'function'){
-			
+		if(typeof legend === 'function'){			
 			el.appendChild(legendEl);
 		}
 		el.appendChild(svgEl);
-		// el.appendChild(legendEl);
+		
+		return {
+			0:el		
+		}
 
 		
     };

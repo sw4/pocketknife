@@ -52,6 +52,9 @@
 		}
 		
 	}
+	line,  rect{
+		shape-rendering: crispEdges;	
+	}
 	path{
 		opacity:1;
 		transition: opacity 100ms ease-in;
@@ -59,4 +62,29 @@
 			opacity:0.6;
 		}
 	}
+	line{
+		stroke:@color-foreground;
+		stroke-width:1px;
+	}
+	text{
+		font-size:.8em;
+	}
+	&.pk-line-chart{
+		path, circle{
+			transition:all 150ms ease-in;
+		}
+		circle{
+			stroke-opacity:0;
+			stroke-width:15;
+			&:hover{
+				stroke-opacity:0.2;
+			}
+		}
+		.pk-series g:hover{
+			path{
+				stroke-width:2;
+			}
+		}
+	}
+
 }

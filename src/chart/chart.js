@@ -266,8 +266,11 @@ Javascript:
 						</g>";					
 					}	
 					svgTpl+="</g>\
-				</g><g class='pk-series'></g>";
-				svgEl.innerHTML=svgTpl;
+				</g>";
+				svgEl.appendChild(pk.createEl(svgTpl));
+				
+				var groupEl=pk.createEl("<g class='pk-series'></g>");
+				svgEl.appendChild(groupEl);
 				/*
 				Draw Series
 				*/
@@ -276,7 +279,7 @@ Javascript:
 					sIndex++;
 					
 					if(!colors[s]){
-						colors[s]=pk.color.random(); 
+						colors[s]=pk.color.random();  
 					}
 					
 					var seriesEl=pk.createEl("<g class='pk-series-"+sIndex+"' />");
@@ -307,7 +310,8 @@ Javascript:
 					if(area){
 						seriesEl.insertBefore(pk.createEl("<path class='pk-area' fill='"+colors[s]+"' d='"+aPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
 					}
-					svgEl.children[1].appendChild(seriesEl);
+					// console.log();
+					groupEl.appendChild(seriesEl);
 				};
 				legend(seriesMeta); 			
 			

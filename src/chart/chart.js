@@ -88,21 +88,21 @@ Javascript:
 								lTpl+="<div class='pk-cell pk-legend-category'>"+c+":</div>";
 							}
 							for(var s in mInf[c]){ 
-								lTpl+="<div class='pk-cell pk-legend-series' data-rel='"+('rel'+s+c).replace(' ' ,'')+"'><span class='pk-indicator' style='border-color:"+mInf[c][s].color+";background-color:"+mInf[c][s].color+";'></span>"+mInf[c][s].percentage+"%"+"</div>";
+								lTpl+="<div class='pk-cell pk-legend-series' data-rel='"+('rel'+s+c).replace(' ' ,'')+"'><span class='pk-indicator' style='border-color:"+mInf[c][s].color+";background-color:"+mInf[c][s].color+";' data-rel='"+('rel'+s).replace(' ' ,'')+"'></span>"+mInf[c][s].percentage+"%"+"</div>";
 								sI++;
 							}   
 							if(series.length === 1){
 								lTpl+="<div class='pk-cell pk-legend-category'>"+c+"</div>";
 							}
 							lTpl+="</div>"; 
-							legendEl.innerHTML+=lTpl;	
+							legendEl.innerHTML+=lTpl;	 
 						}	
 						pk.addClass(el, (l.height >= l.width ? "pk-legend-bottom" : "pk-legend-right")); 
 		
 					break;
 					case "line":
 						for(s in mInf){
-							legendEl.innerHTML+= "<div class='pk-legend-series' data-rel='"+('rel'+s).replace(' ' ,'')+"'><span class='pk-indicator' style='border-color:"+colors[s][0]+";background-color:"+colors[s][0]+";'></span>"+s+"</div>";						
+							legendEl.innerHTML+= "<div class='pk-legend-series' data-rel='"+('rel'+s).replace(' ' ,'')+"'><span class='pk-indicator' style='border-color:"+colors[s][0]+";background-color:"+colors[s][0]+";' data-rel='"+('rel'+s).replace(' ' ,'')+"'></span>"+s+"</div>";						
 						}					
 					break;
 				}
@@ -248,9 +248,9 @@ Javascript:
 						<line y2='"+(l.height-margin.y)+"'></line>";
 					for(var t=0;t<=axesMeta.y.range;t++){
 						svgTpl+="<g class='tick' transform='translate(-5,"+Math.floor(t*yUnit)+")'>\
-							<line x2='5'></line>\
-							<line class='pk-tick-line' x2='"+(5+l.width-margin.x-1)+"'></line>\
-							<text x='-10' y='4'>"+((axesMeta.y.range+axesMeta.y.min)-t)+"</text>\
+							<line x2='5'></line>";  
+							if(t<axesMeta.y.range){svgTpl+="<line class='pk-tick-line' x1='6' x2='"+(5+l.width-margin.x)+"'></line>";}
+							svgTpl+="<text x='-10' y='4'>"+((axesMeta.y.range+axesMeta.y.min)-t)+"</text>\
 						</g>";				 	
 					}
 					svgTpl+="</g>\
@@ -260,9 +260,9 @@ Javascript:
 		 
 					for(t=0;t<=axesMeta.x.range;t++){
 						svgTpl+="<g class='tick' transform='translate("+Math.floor(t*xUnit)+", 0)'>\
-							<line y2='5'></line>\
-							<line class='pk-tick-line' y2='"+(-1*(l.height-margin.y-1))+"'></line>\
-							<text y='17' x='-4' y='4'>"+(t+axesMeta.x.min)+"</text>\
+							<line y2='5'></line>";
+							if(t>0){svgTpl+="<line class='pk-tick-line' y2='"+(-1*(l.height-margin.y-1))+"'></line>";}							
+							svgTpl+="<text y='17' x='-4' y='4'>"+(t+axesMeta.x.min)+"</text>\
 						</g>";					
 					}	
 					svgTpl+="</g>\

@@ -350,15 +350,30 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
 
         @method random
         @param count {Number} Number of random colors to generate
+		@param [hex1] {String} HEX color string to set band to generate random color(s)
+		@param [hex2] {String} HEX color string to set band to generate random color(s)
         @return {Array} Returns Array of HEX color strings
         */
-        random: function(count) {
+        random: function(count, hex1, hex2) {
             var palette = [],
-                i;
+                i, h, s, v
             count = typeof count !== 'number' ? 1 : count; 
+			
+			if(hex1 && hex2){
+			 var hsv1=this.hex2hsv(hex1),
+				 hsv2=this.hex2hsv(hex2);
+				 h=pk.getRand(Math.min.apply(Math, [hsv1[0], hsv2[0]]), Math.max.apply(Math, [hsv1[0], hsv2[0]]));
+				 s=pk.getRand(Math.min.apply(Math, [hsv1[1], hsv2[1]]), Math.max.apply(Math, [hsv1[1], hsv2[1]]));
+				 v=pk.getRand(Math.min.apply(Math, [hsv1[2], hsv2[2]]), Math.max.apply(Math, [hsv1[2], hsv2[2]]));
+			}else{
+				h=pk.getRand(0,360);
+				s=100;
+				v=pk.getRand(75,100);
+			}
+			
             for (i = 0; i < count; i += 1) {
             //    palette.push('#' + Math.floor(Math.random() * 16777215).toString(16));
-				palette.push(this.hsv2hex([pk.getRand(0,360),100,pk.getRand(75,100)]));
+				palette.push(this.hsv2hex([h,s,v]));
             }
             return palette;
         }, 

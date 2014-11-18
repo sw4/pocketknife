@@ -1,5 +1,5 @@
 .pk-modal-mask {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
     /* browsers */
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#4cffffff', endColorstr='#4cffffff');
     /* IE */
@@ -26,11 +26,11 @@
     min-width: 400px;
 	margin-top: -20%; 
 	opacity:0;
-    transition: opacity 200ms ease-in,margin-top 700ms cubic-bezier(0.765, -0.450, 0.425, 1.545); /* custom */
+    transition: opacity 500ms ease-in,margin-top 400ms cubic-bezier(0.765, -0.450, 0.425, 1.545); /* custom */
     transition-timing-function: cubic-bezier(0.765, -0.450, 0.425, 1.545); /* custom */
 		
 	&.pk-animated{
-		transition:opacity 200ms ease-in,margin-top 700ms cubic-bezier(0.765, -0.450, 0.425, 1.545), all 150ms ease-in;
+	//	transition:opacity 200ms ease-in,margin-top 700ms cubic-bezier(0.765, -0.450, 0.425, 1.545), all 150ms ease-in;
 	}
 }
 .pk-modal-mask.pk-show .pk-modal-box{
@@ -72,8 +72,8 @@
 	&:after {
 	    content: '\00d7';
 	    display: inline-block;
-top: -2px;
-position: relative;
+        top: -2px;
+        position: relative;
 	}
 }
 .pk-modal-close:hover{

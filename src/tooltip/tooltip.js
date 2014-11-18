@@ -38,7 +38,7 @@ Javascript:
 			ttEl.style.display='block';	
 			var tl=pk.layout(ttEl),
 				pl=pk.layout(opt.element),
-				t=0,l=0;
+				t=0,l=0, o={x:(opt.offset ? (opt.offset.x ? opt.offset.x : 0) : 0),y:(opt.offset ? (opt.offset.y ? opt.offset.y : 0) : 0)};
 				opt.position=opt.position || 'right';		
 			ttEl.style.display='';
 			switch(opt.position){
@@ -60,8 +60,8 @@ Javascript:
 					l=pl.left - tl.width;
 				break;
 			}
-			ttEl.style.top=t+'px';
-			ttEl.style.left=l+'px';
+			ttEl.style.top=t+o.y+'px';
+			ttEl.style.left=l+o.x+'px';
 			pk.addClass(ttEl, 'pk-'+opt.position);		
 			
 			if(!timer){

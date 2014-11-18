@@ -211,12 +211,8 @@ Javascript:
 				var svgTpl="";
 				if(xy==='x'){
 					svgTpl="<g class='pk-xAxis' transform='translate("+margin.left+","+(l.height-margin.bottom+.5)+")'>\
-							<line x2='"+(l.width-margin.x)+"'></line>";
-						
-						// var xCount= type==='ordinal' ? axesMeta.x.range : axesMeta.x.range;
-						 
+							<line x2='"+(l.width-margin.x)+"'></line>";												 
 						for(t=0;t<=axesMeta.x.range;t++){
-						console.log(axesMeta.x, t, type);
 							svgTpl+="<g class='tick' transform='translate("+(Math.floor((t*axesMeta.x.unit)+(type==='categorical' ? axesMeta.x.unit: 0))+0.5)+", 0)'>\
 								<line y2='5'></line>";
 								if(t>0 || type==='categorical'){svgTpl+="<line class='pk-tick-line' y2='"+(-1*(l.height-margin.y-1))+"'></line>";}							
@@ -314,7 +310,7 @@ Javascript:
 						pxY = pxY;
 						pxX= Math.floor(margin.left+(sIndex*(axesMeta.x.unit/Object.keys(seriesMeta).length)+(axesMeta.x.unit * axesMeta.x.data.indexOf(seriesMeta[s].x.data[i]))));
 						pxY=axesMeta.y.unit * (seriesMeta[s].y.data[i]-axesMeta.y.min);
-						seriesEl.appendChild(pk.createEl("<rect x='"+(pxX-1)+"' y='"+(l.height-margin.bottom-pxY)+"' height='"+pxY+"' width='"+(1+(axesMeta.x.unit/Object.keys(seriesMeta).length))+"' stroke='"+colors[s]+"' fill='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"'/>"));						
+						seriesEl.appendChild(pk.createEl("<rect x='"+(pxX-0)+"' y='"+(l.height-margin.bottom-pxY)+"' height='"+pxY+"' width='"+(0+(axesMeta.x.unit/Object.keys(seriesMeta).length))+"' stroke='"+colors[s]+"' fill='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"'/>"));						
 					}
 					if(['area'].indexOf(type)!==-1){
 						if(i==0){

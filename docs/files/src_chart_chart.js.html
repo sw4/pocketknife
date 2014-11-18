@@ -363,7 +363,7 @@ Javascript:
 							svgTpl+=&quot;&lt;g class=&#x27;tick&#x27; transform=&#x27;translate(-5,&quot;+(Math.floor((t*axesMeta.y.unit))+0.5)+&quot;)&#x27;&gt;\
 								&lt;line x2=&#x27;5&#x27;&gt;&lt;/line&gt;&quot;;  
 								if(t&lt;axesMeta.y.range|| type===&#x27;categorical&#x27;){svgTpl+=&quot;&lt;line class=&#x27;pk-tick-line&#x27; x1=&#x27;6&#x27; x2=&#x27;&quot;+(5+l.width-margin.x)+&quot;&#x27;&gt;&lt;/line&gt;&quot;;}
-								svgTpl+=&quot;&lt;text x=&#x27;&quot;+(-5)+&quot;&#x27; y=&#x27;&quot;+ (type===&#x27;categorical&#x27; ? (axesMeta.x.unit/2)+4 : &quot;4&quot;)+&quot;&#x27; text-anchor=&#x27;end&#x27;&gt;&quot;+(type===&#x27;ordinal&#x27; ? (axesMeta.y.range+axesMeta.y.min)-t : axesMeta.y.data[t])+&quot;&lt;/text&gt;\
+								svgTpl+=&quot;&lt;text x=&#x27;&quot;+(-5)+&quot;&#x27; y=&#x27;&quot;+ (type===&#x27;categorical&#x27; ? (axesMeta.y.unit/2)+2 : &quot;2&quot;)+&quot;&#x27; text-anchor=&#x27;end&#x27;&gt;&quot;+(type===&#x27;ordinal&#x27; ? (axesMeta.y.range+axesMeta.y.min)-t : axesMeta.y.data[t])+&quot;&lt;/text&gt;\
 							&lt;/g&gt;&quot;;				 	 
 						} 
 						svgTpl+=&quot;&lt;/g&gt;&quot;;

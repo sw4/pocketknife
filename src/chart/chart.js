@@ -231,7 +231,7 @@ Javascript:
 							svgTpl+="<g class='tick' transform='translate(-5,"+(Math.floor((t*axesMeta.y.unit))+0.5)+")'>\
 								<line x2='5'></line>";  
 								if(t<axesMeta.y.range|| type==='categorical'){svgTpl+="<line class='pk-tick-line' x1='6' x2='"+(5+l.width-margin.x)+"'></line>";}
-								svgTpl+="<text x='"+(-5)+"' y='"+ (type==='categorical' ? (axesMeta.x.unit/2)+4 : "4")+"' text-anchor='end'>"+(type==='ordinal' ? (axesMeta.y.range+axesMeta.y.min)-t : axesMeta.y.data[t])+"</text>\
+								svgTpl+="<text x='"+(-5)+"' y='"+ (type==='categorical' ? (axesMeta.y.unit/2)+2 : "2")+"' text-anchor='end'>"+(type==='ordinal' ? (axesMeta.y.range+axesMeta.y.min)-t : axesMeta.y.data[t])+"</text>\
 							</g>";				 	 
 						} 
 						svgTpl+="</g>";

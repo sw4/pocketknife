@@ -51,6 +51,7 @@ Javascript:
         var el=pk.replaceEl(opt.element, "<div class='pk-chart'></div>"),
 			l=pk.layout(el),
 			svgEl=pk.createEl("<svg />"),
+			axesEl=pk.createEl("<g class='pk-axes' />"),
 			data=opt.data || [],
 			series=opt.series,
 			seriesMeta={},
@@ -64,49 +65,48 @@ Javascript:
 				top:opt.margin && opt.margin.top || 20,
 				right:opt.margin && opt.margin.right || 20,
 				bottom:opt.margin && opt.margin.bottom || 50,
-				left:opt.margin && opt.margin.left || 20
+				left:opt.margin && opt.margin.left || 20,
+				series:0,
+				category:10
 			},
 			legendEl=pk.createEl("<div class='pk-legend'></div>"), 
 			legend=typeof opt.legend==='function'?opt.legend:!opt.legend ? false : function(mInf){
 
-				switch(type){
-					case "pie":
-						pk.addClass(legendEl, 'pk-table');
-						if(series.length > 1){
-							var hTpl="<div class='pk-row pk-legend-header'><div class='pk-legend-category pk-cell'></div>";
-							for(var e=0;e<series.length;e++){
-								hTpl+="<div class='pk-cell pk-legend-series'>"+series[e]+"</div>";
-							}
-							legendEl.innerHTML+=hTpl+"</div>";
+				
+				if(type==='pie'){
+					pk.addClass(legendEl, 'pk-table');
+					if(series.length > 1){
+						var hTpl="<div class='pk-row pk-legend-header'><div class='pk-legend-category pk-cell'></div>";
+						for(var e=0;e<series.length;e++){
+							hTpl+="<div class='pk-cell pk-legend-series'>"+series[e]+"</div>";
 						}
-						
-						for(var c in mInf){
-							var sI=0;
-							var lTpl="<div class='pk-row pk-legend-entry'>";					
-							if(series.length > 1){
-								lTpl+="<div class='pk-cell pk-legend-category'>"+c+":</div>";
-							}
-							for(var s in mInf[c]){ 
-								lTpl+="<div class='pk-cell pk-legend-series' data-rel='"+('rel'+s+c).replace(' ' ,'')+"'><span class='pk-indicator' style='border-color:"+mInf[c][s].color+";background-color:"+mInf[c][s].color+";' data-rel='"+('rel'+s).replace(' ' ,'')+"'></span>"+mInf[c][s].percentage+"%"+"</div>";
-								sI++;
-							}   
-							if(series.length === 1){
-								lTpl+="<div class='pk-cell pk-legend-category'>"+c+"</div>";
-							}
-							lTpl+="</div>"; 
-							legendEl.innerHTML+=lTpl;	 
-						}	
-						pk.addClass(el, (l.height >= l.width ? "pk-legend-bottom" : "pk-legend-right")); 
-		
-					break;
-					case "scatter":
-					case "line":
-					case "area":
-						for(s in mInf){
-							legendEl.innerHTML+= "<div class='pk-legend-series' data-rel='"+('rel'+s).replace(' ' ,'')+"'><span class='pk-indicator' style='border-color:"+colors[s]+";background-color:"+colors[s]+";' data-rel='"+('rel'+s).replace(' ' ,'')+"'></span>"+s+"</div>";						
-						}					
-					break;
+						legendEl.innerHTML+=hTpl+"</div>";
+					}
+					
+					for(var c in mInf){
+						var sI=0;
+						var lTpl="<div class='pk-row pk-legend-entry'>";					
+						if(series.length > 1){
+							lTpl+="<div class='pk-cell pk-legend-category'>"+c+":</div>";
+						}
+						for(var s in mInf[c]){ 
+							lTpl+="<div class='pk-cell pk-legend-series' data-rel='"+('rel'+s+c).replace(' ' ,'')+"'><span class='pk-indicator' style='border-color:"+mInf[c][s].color+";background-color:"+mInf[c][s].color+";' data-rel='"+('rel'+s).replace(' ' ,'')+"'></span>"+mInf[c][s].percentage+"%"+"</div>";
+							sI++;
+						}   
+						if(series.length === 1){
+							lTpl+="<div class='pk-cell pk-legend-category'>"+c+"</div>";
+						}
+						lTpl+="</div>"; 
+						legendEl.innerHTML+=lTpl;	 
+					}	
+					pk.addClass(el, (l.height >= l.width ? "pk-legend-bottom" : "pk-legend-right")); 
+	
+				}else{
+					for(s in mInf){
+						legendEl.innerHTML+= "<div class='pk-legend-series' data-rel='"+('rel'+s).replace(' ' ,'')+"'><span class='pk-indicator' style='border-color:"+colors[s]+";background-color:"+colors[s]+";' data-rel='"+('rel'+s).replace(' ' ,'')+"'></span>"+s+"</div>";						
+					}					
 				}
+				
 			};		
 
 		
@@ -119,9 +119,7 @@ Javascript:
 		
 		pk.addClass(el, 'pk-'+type+'-chart');
 			
-		data.sort(function(a, b){
-		 return a[axis.x]-b[axis.x];
-		});	
+		data.sort(function(a,b) {return (a[axis.x] > b[axis.x]) ? 1 : ((b[axis.x] > a[axis.x]) ? -1 : 0);} );		
 		
 		pk.bindEvent('mouseover', el, function(e){		
 			if(pk.attribute(e.target, 'data-rel')){
@@ -198,95 +196,127 @@ Javascript:
 				sIndex++;			
 			}
 			legend(metaObj); 
-
-
 		
 		/*
 		START LINE, SCATTER, AREA, BUBBLE, BAR, COLUMN CHART
 		*/
-		
 			
-		}else{
+		}else{	
 	
+			svgEl.appendChild(axesEl);	
+			
+			function drawAxis(xy, type){
+				// Draw AXES
+				// Series of .5 pt adjustments to create crisp edges in IE
+				var svgTpl="";
+				if(xy==='x'){
+					svgTpl="<g class='pk-xAxis' transform='translate("+margin.left+","+(l.height-margin.bottom+.5)+")'>\
+							<line x2='"+(l.width-margin.x)+"'></line>";
+						
+						// var xCount= type==='ordinal' ? axesMeta.x.range : axesMeta.x.range;
+						 
+						for(t=0;t<=axesMeta.x.range;t++){
+						console.log(axesMeta.x, t, type);
+							svgTpl+="<g class='tick' transform='translate("+(Math.floor((t*axesMeta.x.unit)+(type==='categorical' ? axesMeta.x.unit: 0))+0.5)+", 0)'>\
+								<line y2='5'></line>";
+								if(t>0 || type==='categorical'){svgTpl+="<line class='pk-tick-line' y2='"+(-1*(l.height-margin.y-1))+"'></line>";}							
+								svgTpl+="<text "+ (type==='categorical' ? "x='-"+(axesMeta.x.unit/2) : "")+"' y='17' y='4' text-anchor='middle'>"+(type==='ordinal' ? (t+axesMeta.x.min) : axesMeta.x.data[t])+"</text>\
+							</g>";					
+						} 
+						svgTpl+="</g>";
+				}else if(xy==='y'){
+					svgTpl="<g class='pk-yAxis' transform='translate("+(margin.left-.5)+","+margin.top+")'>\
+							<line y2='"+(l.height-margin.y)+"'></line>";
+						for(var t=0;t<=axesMeta.y.range;t++){
+							svgTpl+="<g class='tick' transform='translate(-5,"+(Math.floor(t*axesMeta.y.unit)+0.5)+")'>\
+								<line x2='5'></line>";  
+								if(t<axesMeta.y.range){svgTpl+="<line class='pk-tick-line' x1='6' x2='"+(5+l.width-margin.x)+"'></line>";}
+								svgTpl+="<text x='-10' y='4' text-anchor='start'>"+((axesMeta.y.range+axesMeta.y.min)-t)+"</text>\
+							</g>";				 	
+						}
+						svgTpl+="</g>";
+				}				
+				axesEl.appendChild(pk.createEl(svgTpl));			
+			}	
 	
-			function resolveAxis(xyr){
+			function resolveAxis(xyr, type){
+				
 				for(var i=0;i<data.length;i++){				
 					seriesMeta[data[i][series]] = seriesMeta[data[i][series]] || {};
 					seriesMeta[data[i][series]][xyr] = seriesMeta[data[i][series]][xyr] || {
 						data:[],
 						sum:0
 					};					
-					seriesMeta[data[i][series]][xyr].data.push(data[i][axis[xyr]]);				
-					seriesMeta[data[i][series]][xyr].sum+=data[i][axis[xyr]];	
-					seriesMeta[data[i][series]][xyr].min = !seriesMeta[data[i][series]][xyr].min || data[i][axis[xyr]] < seriesMeta[data[i][series]][xyr].min ? data[i][axis[xyr]] : seriesMeta[data[i][series]][xyr].min;
-					seriesMeta[data[i][series]][xyr].max = !seriesMeta[data[i][series]][xyr].max || data[i][axis[xyr]] > seriesMeta[data[i][series]][xyr].max ? data[i][axis[xyr]] : seriesMeta[data[i][series]][xyr].max;
-					seriesMeta[data[i][series]][xyr].range = Math.abs(seriesMeta[data[i][series]][xyr].max-seriesMeta[data[i][series]][xyr].min);						
-					axesMeta[xyr].data.push(data[i][axis[xyr]]);
-					axesMeta[xyr].sum+=data[i][axis[xyr]];
+					seriesMeta[data[i][series]][xyr].data.push(data[i][axis[xyr]]);	
+					
+					if(type==='ordinal'){						
+						seriesMeta[data[i][series]][xyr].sum+=data[i][axis[xyr]];	
+						seriesMeta[data[i][series]][xyr].min = !seriesMeta[data[i][series]][xyr].min || data[i][axis[xyr]] < seriesMeta[data[i][series]][xyr].min ? data[i][axis[xyr]] : seriesMeta[data[i][series]][xyr].min;
+						seriesMeta[data[i][series]][xyr].max = !seriesMeta[data[i][series]][xyr].max || data[i][axis[xyr]] > seriesMeta[data[i][series]][xyr].max ? data[i][axis[xyr]] : seriesMeta[data[i][series]][xyr].max;
+						seriesMeta[data[i][series]][xyr].range = Math.abs(seriesMeta[data[i][series]][xyr].max-seriesMeta[data[i][series]][xyr].min);
+						axesMeta[xyr].data.push(data[i][axis[xyr]]);	
+						axesMeta[xyr].sum+=data[i][axis[xyr]];
+					}else{					
+						if(axesMeta[xyr].data.indexOf(data[i][axis[xyr]])===-1){axesMeta[xyr].data.push(data[i][axis[xyr]]);}
+					}
 				}
-				axesMeta[xyr].min=Math.min.apply(Math, axesMeta[xyr].data);
-				axesMeta[xyr].min = axesMeta[xyr].min <= 0 ? axesMeta[xyr].min : 0;
-				axesMeta[xyr].max=Math.max.apply(Math, axesMeta[xyr].data);
-				axesMeta[xyr].range = Math.abs(axesMeta[xyr].max-axesMeta[xyr].min);	
+				if(type==='ordinal'){		
+					axesMeta[xyr].min=Math.min.apply(Math, axesMeta[xyr].data);
+					axesMeta[xyr].min = axesMeta[xyr].min <= 0 ? axesMeta[xyr].min : 0;
+					axesMeta[xyr].max=Math.max.apply(Math, axesMeta[xyr].data);
+					axesMeta[xyr].range = Math.abs(axesMeta[xyr].max-axesMeta[xyr].min);
+				}
+				if(xyr==='x' || xyr ==='y'){
+					if(type === 'ordinal'){
+						axesMeta[xyr].unit = ((xyr === 'x' ? l.width : l.height)-margin[xyr])/axesMeta[xyr].range;
+					}else{
+						axesMeta[xyr].unit = ((xyr === 'x' ? l.width : l.height)-margin[xyr]) / axesMeta[xyr].data.length;					
+						axesMeta[xyr].range = axesMeta[xyr].data.length-1;
+					}					
+					drawAxis(xyr, type);
+				} 
+				
 			}
 			
-			
-			resolveAxis('x');
-			resolveAxis('y');
-			
-			// Get range pixel amounts (i.e. 1 axis unit = n px)
-			yUnit= ((l.height-margin.y)/axesMeta.y.range);
-			xUnit= ((l.width-margin.x)/(axesMeta.x.range));
-			
-			// Draw AXES
-			// Series of .5 pt adjustments to create crisp edges in IE
-			var svgTpl="<g class='pk-axes'>\
-				<g class='pk-yAxis' transform='translate("+(margin.left-.5)+","+margin.top+")'>\
-					<line y2='"+(l.height-margin.y)+"'></line>";
-				for(var t=0;t<=axesMeta.y.range;t++){
-					svgTpl+="<g class='tick' transform='translate(-5,"+(Math.floor(t*yUnit)+0.5)+")'>\
-						<line x2='5'></line>";  
-						if(t<axesMeta.y.range){svgTpl+="<line class='pk-tick-line' x1='6' x2='"+(5+l.width-margin.x)+"'></line>";}
-						svgTpl+="<text x='-10' y='4' text-anchor='start'>"+((axesMeta.y.range+axesMeta.y.min)-t)+"</text>\
-					</g>";				 	
-				}
-				svgTpl+="</g>\
-				<g class='pk-xAxis' transform='translate("+margin.left+","+(l.height-margin.bottom+.5)+")'>\
-					<line x2='"+(l.width-margin.x)+"'></line>";		 
-				for(t=0;t<=axesMeta.x.range;t++){
-					svgTpl+="<g class='tick' transform='translate("+(Math.floor(t*xUnit)+0.5)+", 0)'>\
-						<line y2='5'></line>";
-						if(t>0){svgTpl+="<line class='pk-tick-line' y2='"+(-1*(l.height-margin.y-1))+"'></line>";}							
-						svgTpl+="<text y='17' y='4' text-anchor='middle'>"+(t+axesMeta.x.min)+"</text>\
-					</g>";					
-				}	
-				svgTpl+="</g>\
-			</g>";			
-			svgEl.appendChild(pk.createEl(svgTpl));
+			resolveAxis('x',type==='column' ? 'categorical' : 'ordinal');
+			resolveAxis('y','ordinal');	
 			
 			var groupEl=pk.createEl("<g class='pk-series'></g>");
 			svgEl.appendChild(groupEl);
+			
 			/*
 			Draw Series
 			*/
+
 			var sIndex=0;
-			for(var s in seriesMeta){	
-				sIndex++;					
+			for(var s in seriesMeta){				
 				if(!colors[s]){
 					colors[s]=pk.color.random();  
 				}					
 				var seriesEl=pk.createEl("<g class='pk-series-"+sIndex+"' />");
-				var sPath='', aPath='';
-				for(i=0;i<seriesMeta[s].x.data.length;i++){			
-					if(i==0){
-						sPath+="M";
-					}else{
-						sPath+=" L "; 
+				var sPath='', aPath='', sRect='';
+				
+				for(i=0;i<seriesMeta[s].x.data.length;i++){	
+				
+					var pxX=0,
+						pxY=0;
+
+					if(['column'].indexOf(type)===-1){							
+						pxX=Math.round(margin.left + (axesMeta.x.unit * (seriesMeta[s].x.data[i]-axesMeta.x.min)));
+						pxY=Math.round(l.height-(margin.bottom + (axesMeta.y.unit * (seriesMeta[s].y.data[i]-axesMeta.y.min))));
+						if(i==0){
+							sPath+="M";
+						}else{
+							sPath+=" L "; 
+						}
+						sPath+=pxX + " " +pxY;
+					}else{ 
+						pxY = pxY;
+						pxX= Math.floor(margin.left+(sIndex*(axesMeta.x.unit/Object.keys(seriesMeta).length)+(axesMeta.x.unit * axesMeta.x.data.indexOf(seriesMeta[s].x.data[i]))));
+						pxY=axesMeta.y.unit * (seriesMeta[s].y.data[i]-axesMeta.y.min);
+						seriesEl.appendChild(pk.createEl("<rect x='"+(pxX-1)+"' y='"+(l.height-margin.bottom-pxY)+"' height='"+pxY+"' width='"+(1+(axesMeta.x.unit/Object.keys(seriesMeta).length))+"' stroke='"+colors[s]+"' fill='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"'/>"));						
 					}
-					var pxX=Math.round(margin.left + (xUnit * (seriesMeta[s].x.data[i]-axesMeta.x.min))),
-						pxY=Math.round(l.height-(margin.bottom + (yUnit * (seriesMeta[s].y.data[i]-axesMeta.y.min))));
-					sPath+=pxX + " " +pxY;						
-					if(type==='area'){
+					if(['area'].indexOf(type)!==-1){
 						if(i==0){
 							aPath+="M"+pxX + " " +(l.height-margin.bottom);
 						}
@@ -295,10 +325,10 @@ Javascript:
 							aPath+=" L "+pxX + " " +(l.height-margin.bottom);
 						}
 					}
-					if(axis.r){
+					if(axis.r && ['column', 'bar'].indexOf(type)===-1){
 						// draw points
 						if(typeof axis.r === 'string' && data[0][axis.r]!=='undefined'){						
-							resolveAxis('r'); 
+							resolveAxis('r', 'ordinal'); 
 						}else if(typeof axis.r === 'string'){
 							axis.r=5;
 						}
@@ -306,19 +336,18 @@ Javascript:
 						seriesEl.appendChild(pk.createEl("<circle cx='"+pxX+"' cy='"+pxY+"' r='"+r+"' fill='"+colors[s]+"' stroke='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"' />"));
 					}						
 				} 
-				if(type!='scatter'){ 
+				if(['scatter'].indexOf(type)!==-1){ 
 					// draw connecting lines
 					seriesEl.insertBefore(pk.createEl("<path class='pk-line' fill='none' stroke='"+colors[s]+"' d='"+sPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
-				}
-				if(type==='area'){
+				}else if(['area'].indexOf(type)!==-1){
 					// draw fill area
 					seriesEl.insertBefore(pk.createEl("<path class='pk-area' fill='"+colors[s]+"' d='"+aPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
 				}
-				groupEl.appendChild(seriesEl);
+				groupEl.appendChild(seriesEl);  
+				sIndex++;
 			};
-			legend(seriesMeta); 				
-		}
-		
+			legend(seriesMeta); 
+		}	
 		
 		if(legend){			
 			el.appendChild(legendEl);

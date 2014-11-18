@@ -37,11 +37,11 @@ Javascript:
 @param axis {Object} Object keys in data to use for `x` and `y` axes
 @param axis.x {String} Object keys in data to use for `x` axis
 @param [axis.y] {String} Object keys in data to use for `y` axis, marked optional as not required for `pie` charts
+@param [axis.r=false] {String} String denoting object key in data to use for point radius, can be set to number
 @param series {Array} Object keys in data used for series designation - only an Array for `pie` charts
 @param series {String} Object key in data used for series designation - only a String for `line` charts
 @param [margin] {Object} Object of `top`, `right`, `left` and `bottom` margin amounts in pixels. Defaults to `20,20,50,20`
 @param [colors] {Object} Object key value pairs where the key is a series name, the value is the value to use
-@param [points=5] {String} Object key in data used to calculate proportionate point size, or number
 @param [legend] {Function} Custom function responsible for building chart legend, defaults to stock constructor if not passed
 
 @chainable
@@ -54,7 +54,7 @@ Javascript:
 			data=opt.data || [],
 			series=opt.series,
 			seriesMeta={},
-			axesMeta={x:{data:[], sum:0},y:{data:[], sum:0}, r:{data:[]}},
+			axesMeta={x:{data:[], sum:0},y:{data:[], sum:0}, r:{data:[], sum:0}},
 			axis=opt.axis,
 			d = l.height > l.width ? l.width : l.height,
 			stroke= opt.center ? (d/2)-(d*((opt.center/2) /100)) : d/2,
@@ -108,11 +108,14 @@ Javascript:
 					break;
 				}
 			};		
-			
-		margin.x=margin.left+margin.right;
-		margin.y=margin.top+margin.bottom;
+
 		
 		if(data.length===0){return;}	
+
+		
+		// calculate composite margins for ease of use
+		margin.x=margin.left+margin.right;
+		margin.y=margin.top+margin.bottom;
 		
 		pk.addClass(el, 'pk-'+type+'-chart');
 			
@@ -127,7 +130,7 @@ Javascript:
 					pk.addClass(hIt[h], 'selected'); 
 				}	
 			}				
-		});			 	
+		});
 		pk.bindEvent('mouseout', el, function(e){
 			if(pk.attribute(e.target, 'data-rel')){
 				var hIt=pk.findEl(el, {attribute:{name:'data-rel', value:pk.attribute(e.target, 'data-rel')}});	
@@ -137,211 +140,187 @@ Javascript:
 			}
 		});		
 		
+		
 		pk.attribute(svgEl, {height:type==='pie' ? d : l.height, width:type==='pie' ? d : l.width});
 		
 		/*
 		START PIE CHART
 		*/
-		switch(type){
 		
-			case "pie":
+		if(type==='pie'){
 			
-				for(var s in series){
-						seriesMeta[series[s]]={};
-						seriesMeta[series[s]].data=[];		
-						seriesMeta[series[s]].sum=0; 
-						for(var i=0;i<data.length;i++){			
-							seriesMeta[series[s]].data.push(data[i][series[s]]);
-							seriesMeta[series[s]].sum+=Math.abs(parseInt(data[i][series[s]],0));
-							if(!colors[data[i][axis.x]]){
-								colors[data[i][axis.x]]=pk.color.percentage(i/data.length); 
-							}
-						}			
-						seriesMeta[series[s]].min=Math.min.apply(Math, seriesMeta[series[s]].data);
-						seriesMeta[series[s]].max=Math.max.apply(Math, seriesMeta[series[s]].data);
-						seriesMeta[series[s]].range=Math.abs(seriesMeta[series[s]].max-seriesMeta[series[s]].min);			
-				}
-				var sIndex=0;
-				var metaObj={};			
-			
-				for(s in seriesMeta){
-					var ttlArc=0;
-					for(var i=0;i<seriesMeta[s].data.length;i++){	
-					
-						var pathCol=pk.color.darken(colors[data[i][axis.x]], sIndex*(50/series.length));
-						var pathEl=pk.createEl("<path x='"+d/2+"' y='"+d/2+"' fill='none' stroke='"+pathCol+"' d='' stroke-width='"+(stroke/series.length+1)+"'/>");
-						
-						svgEl.appendChild(pathEl);
-						var arc = Math.round((Math.abs(seriesMeta[s].data[i])/seriesMeta[s].sum)*360);
-						var r=((d-stroke/2)/2) - (stroke/2*sIndex);
-						r = series.length>1 ? r : (d/2)-stroke/2;
-						pk.attribute(pathEl, {'d':pk.svg.arcPath(d/2, d/2,  r, ttlArc, ttlArc+arc), 'data-rel':('rel'+s+data[i][axis.x]).replace(' ' ,'')});  
-						if(typeof legend === 'function'){
-							if(!metaObj[data[i][axis.x]]){
-								metaObj[data[i][axis.x]]={};
-							}
-							if(!metaObj[data[i][axis.x]][s]){
-								metaObj[data[i][axis.x]][s]={
-									value:data[i][s],
-									percentage:Math.round(arc*100/360),
-									color:pathCol,
-									relEl:pathEl
-								};
-							}
-						}					
-						
-						ttlArc+=arc;
-					}	
-					sIndex++;			
-				}
-				legend(metaObj); 
-			break;
-
-			case "scatter":
-			case "line":
-			case "area":
-				for(var i=0;i<data.length;i++){		
-					seriesMeta[data[i][series]] = seriesMeta[data[i][series]] || {
-						x:{
-							data:[],
-							sum:0
-						},
-						y:{
-							data:[],
-							sum:0
-						},
-						r:{
-							data:[]
-						}		
-					};
-					seriesMeta[data[i][series]].x.data.push(data[i][axis.x]);				
-					seriesMeta[data[i][series]].x.sum+=data[i][axis.x];				
-					seriesMeta[data[i][series]].y.data.push(data[i][axis.y]);
-					seriesMeta[data[i][series]].y.sum+=data[i][axis.y];
-					seriesMeta[data[i][series]].y.min = !seriesMeta[data[i][series]].y.min || data[i][axis.x] < seriesMeta[data[i][series]].y.min ? data[i][axis.x] : seriesMeta[data[i][series]].y.min;
-					seriesMeta[data[i][series]].y.max = !seriesMeta[data[i][series]].y.max || data[i][axis.x] > seriesMeta[data[i][series]].y.max ? data[i][axis.x] : seriesMeta[data[i][series]].y.max;
-					seriesMeta[data[i][series]].y.range = Math.abs(seriesMeta[data[i][series]].y.max-seriesMeta[data[i][series]].y.min);
-					seriesMeta[data[i][series]].x.min = !seriesMeta[data[i][series]].x.min || data[i][axis.x] < seriesMeta[data[i][series]].x.min ? data[i][axis.x] : seriesMeta[data[i][series]].x.min;
-					seriesMeta[data[i][series]].x.max = !seriesMeta[data[i][series]].x.max || data[i][axis.x] > seriesMeta[data[i][series]].x.max ? data[i][axis.x] : seriesMeta[data[i][series]].x.max;
-					seriesMeta[data[i][series]].x.range = Math.abs(seriesMeta[data[i][series]].x.max-seriesMeta[data[i][series]].x.min);
-					
-
-					if(opt.points){seriesMeta[data[i][series]].r.data.push(data[i][opt.points]);}
-
-
-					axesMeta.x.data.push(data[i][axis.x]);
-					axesMeta.x.sum+=data[i][axis.x];
-					axesMeta.y.data.push(data[i][axis.y]);
-					axesMeta.y.sum+=data[i][axis.y];
-					
-					
-					if(opt.points){axesMeta.r.data.push(data[i][opt.points]);}
-					
-				}
-				axesMeta.x.min=Math.min.apply(Math, axesMeta.x.data);
-				axesMeta.x.min = axesMeta.x.min <= 0 ? axesMeta.x.min : 0;
-				axesMeta.x.max=Math.max.apply(Math, axesMeta.x.data);
-				axesMeta.x.range = Math.abs(axesMeta.x.max-axesMeta.x.min);
-				axesMeta.y.min=Math.min.apply(Math, axesMeta.y.data);
-				axesMeta.y.min = axesMeta.y.min <= 0 ? axesMeta.y.min : 0; 
-				axesMeta.y.max=Math.max.apply(Math, axesMeta.y.data);
-				axesMeta.y.range = Math.abs(axesMeta.y.max-axesMeta.y.min);
-				
-				if(opt.points){axesMeta.r.range = Math.abs(Math.max.apply(Math, axesMeta.r.data)-Math.min.apply(Math, axesMeta.r.data));}
-
-				// Get range pixel amounts
-				yUnit= ((l.height-margin.y)/axesMeta.y.range);
-				xUnit= ((l.width-margin.x)/(axesMeta.x.range));
-				
-				
-				// Draw AXES
-				// Series of .5 pt adjustments to create crisp edges in IE
-				var svgTpl="<g class='pk-axes'>\
-					<g class='pk-yAxis' transform='translate("+(margin.left-.5)+","+margin.top+")'>\
-						<line y2='"+(l.height-margin.y)+"'></line>";
-					for(var t=0;t<=axesMeta.y.range;t++){
-						svgTpl+="<g class='tick' transform='translate(-5,"+(Math.floor(t*yUnit)+0.5)+")'>\
-							<line x2='5'></line>";  
-							if(t<axesMeta.y.range){svgTpl+="<line class='pk-tick-line' x1='6' x2='"+(5+l.width-margin.x)+"'></line>";}
-							svgTpl+="<text x='-10' y='4' text-anchor='start'>"+((axesMeta.y.range+axesMeta.y.min)-t)+"</text>\
-						</g>";				 	
-					}
-					svgTpl+="</g>\
-					<g class='pk-xAxis' transform='translate("+margin.left+","+(l.height-margin.bottom+.5)+")'>\
-						<line x2='"+(l.width-margin.x)+"'></line>";
-						
-		 
-					for(t=0;t<=axesMeta.x.range;t++){
-						svgTpl+="<g class='tick' transform='translate("+(Math.floor(t*xUnit)+0.5)+", 0)'>\
-							<line y2='5'></line>";
-							if(t>0){svgTpl+="<line class='pk-tick-line' y2='"+(-1*(l.height-margin.y-1))+"'></line>";}							
-							svgTpl+="<text y='17' y='4' text-anchor='middle'>"+(t+axesMeta.x.min)+"</text>\
-						</g>";					
-					}	
-					svgTpl+="</g>\
-				</g>";
-				svgEl.appendChild(pk.createEl(svgTpl));
-				
-				var groupEl=pk.createEl("<g class='pk-series'></g>");
-				svgEl.appendChild(groupEl);
-				/*
-				Draw Series
-				*/
-				var sIndex=0;
-				for(var s in seriesMeta){	
-					sIndex++;
-					
-					if(!colors[s]){
-						colors[s]=pk.color.random();  
-					}
-					
-					var seriesEl=pk.createEl("<g class='pk-series-"+sIndex+"' />");
-					var sPath='', aPath='';
-					for(i=0;i<seriesMeta[s].x.data.length;i++){			
-						if(i==0){
-							sPath+="M";
-						}else{
-							sPath+=" L "; 
+			for(var s in series){
+					seriesMeta[series[s]]={};
+					seriesMeta[series[s]].data=[];		
+					seriesMeta[series[s]].sum=0; 
+					for(var i=0;i<data.length;i++){			
+						seriesMeta[series[s]].data.push(data[i][series[s]]);
+						seriesMeta[series[s]].sum+=Math.abs(parseInt(data[i][series[s]],0));
+						if(!colors[data[i][axis.x]]){
+							colors[data[i][axis.x]]=pk.color.percentage(i/data.length); 
 						}
-						var pxX=Math.round(margin.left + (xUnit * (seriesMeta[s].x.data[i]-axesMeta.x.min))),
-							pxY=Math.round(l.height-(margin.bottom + (yUnit * (seriesMeta[s].y.data[i]-axesMeta.y.min))));
-						sPath+=pxX + " " +pxY;
-						
-						if(type==='area'){
-							if(i==0){
-								aPath+="M"+pxX + " " +(l.height-margin.bottom);
-							}
-							aPath+=" L "+pxX + " " +pxY;
-							if(i==seriesMeta[s].x.data.length-1){					
-								aPath+=" L "+pxX + " " +(l.height-margin.bottom);
-							}
+					}			
+					seriesMeta[series[s]].min=Math.min.apply(Math, seriesMeta[series[s]].data);
+					seriesMeta[series[s]].max=Math.max.apply(Math, seriesMeta[series[s]].data);
+					seriesMeta[series[s]].range=Math.abs(seriesMeta[series[s]].max-seriesMeta[series[s]].min);			
+			}
+			var sIndex=0;
+			var metaObj={};			
+		
+			for(s in seriesMeta){
+				var ttlArc=0;
+				for(var i=0;i<seriesMeta[s].data.length;i++){	
+				
+					var pathCol=pk.color.darken(colors[data[i][axis.x]], sIndex*(50/series.length));
+					var pathEl=pk.createEl("<path x='"+d/2+"' y='"+d/2+"' fill='none' stroke='"+pathCol+"' d='' stroke-width='"+(stroke/series.length+1)+"'/>");
+					
+					svgEl.appendChild(pathEl);
+					var arc = Math.round((Math.abs(seriesMeta[s].data[i])/seriesMeta[s].sum)*360);
+					var r=((d-stroke/2)/2) - (stroke/2*sIndex);
+					r = series.length>1 ? r : (d/2)-stroke/2;
+					pk.attribute(pathEl, {'d':pk.svg.arcPath(d/2, d/2,  r, ttlArc, ttlArc+arc), 'data-rel':('rel'+s+data[i][axis.x]).replace(' ' ,'')});  
+					if(typeof legend === 'function'){
+						if(!metaObj[data[i][axis.x]]){
+							metaObj[data[i][axis.x]]={};
 						}
-						var r=seriesMeta[s].r.data[i] ? (seriesMeta[s].r.data[i]*20 / axesMeta.r.range)  : typeof opt.points === 'number' ? opt.points : 5;
-						
-						seriesEl.appendChild(pk.createEl("<circle cx='"+pxX+"' cy='"+pxY+"' r='"+r+"' fill='"+colors[s]+"' stroke='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"' />")); 
-					} 
-					if(type!='scatter'){ 
-						seriesEl.insertBefore(pk.createEl("<path class='pk-line' fill='none' stroke='"+colors[s]+"' d='"+sPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
-					}
-					if(type==='area'){
-						seriesEl.insertBefore(pk.createEl("<path class='pk-area' fill='"+colors[s]+"' d='"+aPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
-					}
-					// console.log();
-					groupEl.appendChild(seriesEl);
-				};
-				legend(seriesMeta); 			
-			
-			
-			break;
-		}
+						if(!metaObj[data[i][axis.x]][s]){
+							metaObj[data[i][axis.x]][s]={
+								value:data[i][s],
+								percentage:Math.round(arc*100/360),
+								color:pathCol,
+								relEl:pathEl
+							};
+						}
+					}					
+					
+					ttlArc+=arc;
+				}	
+				sIndex++;			
+			}
+			legend(metaObj); 
+
+
+		
 		/*
-		END PIE CHART
+		START LINE, SCATTER, AREA, BUBBLE, BAR, COLUMN CHART
 		*/
-
 		
-
+			
+		}else{
+	
+	
+			function resolveAxis(xyr){
+				for(var i=0;i<data.length;i++){				
+					seriesMeta[data[i][series]] = seriesMeta[data[i][series]] || {};
+					seriesMeta[data[i][series]][xyr] = seriesMeta[data[i][series]][xyr] || {
+						data:[],
+						sum:0
+					};					
+					seriesMeta[data[i][series]][xyr].data.push(data[i][axis[xyr]]);				
+					seriesMeta[data[i][series]][xyr].sum+=data[i][axis[xyr]];	
+					seriesMeta[data[i][series]][xyr].min = !seriesMeta[data[i][series]][xyr].min || data[i][axis[xyr]] < seriesMeta[data[i][series]][xyr].min ? data[i][axis[xyr]] : seriesMeta[data[i][series]][xyr].min;
+					seriesMeta[data[i][series]][xyr].max = !seriesMeta[data[i][series]][xyr].max || data[i][axis[xyr]] > seriesMeta[data[i][series]][xyr].max ? data[i][axis[xyr]] : seriesMeta[data[i][series]][xyr].max;
+					seriesMeta[data[i][series]][xyr].range = Math.abs(seriesMeta[data[i][series]][xyr].max-seriesMeta[data[i][series]][xyr].min);						
+					axesMeta[xyr].data.push(data[i][axis[xyr]]);
+					axesMeta[xyr].sum+=data[i][axis[xyr]];
+				}
+				axesMeta[xyr].min=Math.min.apply(Math, axesMeta[xyr].data);
+				axesMeta[xyr].min = axesMeta[xyr].min <= 0 ? axesMeta[xyr].min : 0;
+				axesMeta[xyr].max=Math.max.apply(Math, axesMeta[xyr].data);
+				axesMeta[xyr].range = Math.abs(axesMeta[xyr].max-axesMeta[xyr].min);	
+			}
+			
+			
+			resolveAxis('x');
+			resolveAxis('y');
+			
+			// Get range pixel amounts (i.e. 1 axis unit = n px)
+			yUnit= ((l.height-margin.y)/axesMeta.y.range);
+			xUnit= ((l.width-margin.x)/(axesMeta.x.range));
+			
+			// Draw AXES
+			// Series of .5 pt adjustments to create crisp edges in IE
+			var svgTpl="<g class='pk-axes'>\
+				<g class='pk-yAxis' transform='translate("+(margin.left-.5)+","+margin.top+")'>\
+					<line y2='"+(l.height-margin.y)+"'></line>";
+				for(var t=0;t<=axesMeta.y.range;t++){
+					svgTpl+="<g class='tick' transform='translate(-5,"+(Math.floor(t*yUnit)+0.5)+")'>\
+						<line x2='5'></line>";  
+						if(t<axesMeta.y.range){svgTpl+="<line class='pk-tick-line' x1='6' x2='"+(5+l.width-margin.x)+"'></line>";}
+						svgTpl+="<text x='-10' y='4' text-anchor='start'>"+((axesMeta.y.range+axesMeta.y.min)-t)+"</text>\
+					</g>";				 	
+				}
+				svgTpl+="</g>\
+				<g class='pk-xAxis' transform='translate("+margin.left+","+(l.height-margin.bottom+.5)+")'>\
+					<line x2='"+(l.width-margin.x)+"'></line>";		 
+				for(t=0;t<=axesMeta.x.range;t++){
+					svgTpl+="<g class='tick' transform='translate("+(Math.floor(t*xUnit)+0.5)+", 0)'>\
+						<line y2='5'></line>";
+						if(t>0){svgTpl+="<line class='pk-tick-line' y2='"+(-1*(l.height-margin.y-1))+"'></line>";}							
+						svgTpl+="<text y='17' y='4' text-anchor='middle'>"+(t+axesMeta.x.min)+"</text>\
+					</g>";					
+				}	
+				svgTpl+="</g>\
+			</g>";			
+			svgEl.appendChild(pk.createEl(svgTpl));
+			
+			var groupEl=pk.createEl("<g class='pk-series'></g>");
+			svgEl.appendChild(groupEl);
+			/*
+			Draw Series
+			*/
+			var sIndex=0;
+			for(var s in seriesMeta){	
+				sIndex++;					
+				if(!colors[s]){
+					colors[s]=pk.color.random();  
+				}					
+				var seriesEl=pk.createEl("<g class='pk-series-"+sIndex+"' />");
+				var sPath='', aPath='';
+				for(i=0;i<seriesMeta[s].x.data.length;i++){			
+					if(i==0){
+						sPath+="M";
+					}else{
+						sPath+=" L "; 
+					}
+					var pxX=Math.round(margin.left + (xUnit * (seriesMeta[s].x.data[i]-axesMeta.x.min))),
+						pxY=Math.round(l.height-(margin.bottom + (yUnit * (seriesMeta[s].y.data[i]-axesMeta.y.min))));
+					sPath+=pxX + " " +pxY;						
+					if(type==='area'){
+						if(i==0){
+							aPath+="M"+pxX + " " +(l.height-margin.bottom);
+						}
+						aPath+=" L "+pxX + " " +pxY;
+						if(i==seriesMeta[s].x.data.length-1){					
+							aPath+=" L "+pxX + " " +(l.height-margin.bottom);
+						}
+					}
+					if(axis.r){
+						// draw points
+						if(typeof axis.r === 'string' && data[0][axis.r]!=='undefined'){						
+							resolveAxis('r'); 
+						}else if(typeof axis.r === 'string'){
+							axis.r=5;
+						}
+						var r=seriesMeta[s].r.data[i] ? (seriesMeta[s].r.data[i]*20 / axesMeta.r.range)  : typeof axis.r === 'number' ? axis.r : 5;						
+						seriesEl.appendChild(pk.createEl("<circle cx='"+pxX+"' cy='"+pxY+"' r='"+r+"' fill='"+colors[s]+"' stroke='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"' />"));
+					}						
+				} 
+				if(type!='scatter'){ 
+					// draw connecting lines
+					seriesEl.insertBefore(pk.createEl("<path class='pk-line' fill='none' stroke='"+colors[s]+"' d='"+sPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
+				}
+				if(type==='area'){
+					// draw fill area
+					seriesEl.insertBefore(pk.createEl("<path class='pk-area' fill='"+colors[s]+"' d='"+aPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
+				}
+				groupEl.appendChild(seriesEl);
+			};
+			legend(seriesMeta); 				
+		}
 		
-		if(typeof legend === 'function'){			
+		
+		if(legend){			
 			el.appendChild(legendEl);
 		}
 		el.appendChild(svgEl);

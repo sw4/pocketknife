@@ -86,8 +86,8 @@
 	text{
 		font-size:.8em;
 	}
-	&.pk-line-chart,&.pk-area-chart,&.pk-scatter-chart{
-		path, circle{
+	&:not(.pk-pie-chart){
+		path, circle, rect{
 			transition:all 150ms ease-in;
 		}
 		.pk-axes{
@@ -104,6 +104,13 @@
 		circle{
 			stroke-opacity:0;
 			stroke-width:15;			
+		}
+		rect{
+			fill-opacity:0.2;
+			stroke-opacity:0;
+		}
+		rect.selected{
+			fill-opacity:.5;
 		}
 		.pk-series g{
 			path.selected{

@@ -107,9 +107,12 @@ Javascript:
 					}					
 				}
 				
-			};		
+			},
+			tooltip = typeof opt.tooltip === 'function' ? opt.tooltip : function(tEl, tInf, tO){
+				pk.tooltip({element:tEl, content:tInf.series + ', '+tInf.values.x + ': '+tInf.values.y, position:'top',offset:{x:tO.x}});
+			};
 
-		
+		 
 		if(data.length===0){return;}	
 
 		
@@ -295,8 +298,9 @@ Javascript:
 				for(i=0;i<seriesMeta[s].x.data.length;i++){	
 				
 					var pxX=0,
-						pxY=0;
-
+						pxY=0,
+						svgItemEl=null;
+						
 					if(['column'].indexOf(type)===-1){							
 						pxX=Math.round(margin.left + (axesMeta.x.unit * (seriesMeta[s].x.data[i]-axesMeta.x.min)));
 						pxY=Math.round(l.height-(margin.bottom + (axesMeta.y.unit * (seriesMeta[s].y.data[i]-axesMeta.y.min))));
@@ -310,7 +314,10 @@ Javascript:
 						pxY = pxY;
 						pxX= Math.floor(margin.left+(sIndex*(axesMeta.x.unit/Object.keys(seriesMeta).length)+(axesMeta.x.unit * axesMeta.x.data.indexOf(seriesMeta[s].x.data[i]))));
 						pxY=axesMeta.y.unit * (seriesMeta[s].y.data[i]-axesMeta.y.min);
-						seriesEl.appendChild(pk.createEl("<rect x='"+(pxX-0)+"' y='"+(l.height-margin.bottom-pxY)+"' height='"+pxY+"' width='"+(0+(axesMeta.x.unit/Object.keys(seriesMeta).length))+"' stroke='"+colors[s]+"' fill='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"'/>"));						
+						svgItemEl=pk.createEl("<rect x='"+(pxX-0)+"' y='"+(l.height-margin.bottom-pxY)+"' height='"+pxY+"' width='"+(0+(axesMeta.x.unit/Object.keys(seriesMeta).length))+"' stroke='"+colors[s]+"' fill='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"'/>");						
+						seriesEl.appendChild(svgItemEl);
+						tooltip(svgItemEl, {series:s, values:{x:seriesMeta[s].x.data[i], y:seriesMeta[s].y.data[i], r:seriesMeta[s].r ? seriesMeta[s].r.data[i] : 0}}, {x:-1*((axesMeta.x.unit/Object.keys(seriesMeta).length)/2), y:0}); 					
+										
 					}
 					if(['area'].indexOf(type)!==-1){
 						if(i==0){
@@ -329,10 +336,13 @@ Javascript:
 							axis.r=5;
 						}
 						var r=seriesMeta[s].r.data[i] ? (seriesMeta[s].r.data[i]*20 / axesMeta.r.range)  : typeof axis.r === 'number' ? axis.r : 5;						
-						seriesEl.appendChild(pk.createEl("<circle cx='"+pxX+"' cy='"+pxY+"' r='"+r+"' fill='"+colors[s]+"' stroke='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"' />"));
-					}						
-				} 
-				if(['scatter'].indexOf(type)!==-1){ 
+						svgItemEl=pk.createEl("<circle cx='"+pxX+"' cy='"+pxY+"' r='"+r+"' fill='"+colors[s]+"' stroke='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"' />");
+						seriesEl.appendChild(svgItemEl);
+						tooltip(svgItemEl, {series:s, values:{x:seriesMeta[s].x.data[i], y:seriesMeta[s].y.data[i], r:seriesMeta[s].r ? seriesMeta[s].r.data[i] : 0}}, {x:0, y:0}); 					
+						 
+					}
+				}  
+				if(['scatter', 'column', 'bar'].indexOf(type)===-1){ 
 					// draw connecting lines
 					seriesEl.insertBefore(pk.createEl("<path class='pk-line' fill='none' stroke='"+colors[s]+"' d='"+sPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
 				}else if(['area'].indexOf(type)!==-1){

@@ -331,7 +331,7 @@
             "params": [
                 {
                     "name": "type",
-                    "description": "Chart type to create, `pi`, or `line`",
+                    "description": "Chart type to create, `pie` (use to create donut charts), `line`, `scatter` (use to create bubble charts), `area`, `column` or `bar`",
                     "type": "String"
                 },
                 {
@@ -361,6 +361,13 @@
                             "description": "Object keys in data to use for `y` axis, marked optional as not required for `pie` charts",
                             "type": "String",
                             "optional": true
+                        },
+                        {
+                            "name": "r",
+                            "description": "String denoting object key in data to use for point radius, can be set to number",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "false"
                         }
                     ]
                 },
@@ -387,17 +394,17 @@
                     "optional": true
                 },
                 {
-                    "name": "points",
-                    "description": "Object key in data used to calculate proportionate point size, or number",
-                    "type": "String",
-                    "optional": true,
-                    "optdefault": "5"
-                },
-                {
                     "name": "legend",
-                    "description": "Custom function responsible for building chart legend, defaults to stock constructor if not passed",
+                    "description": "Custom function responsible for building chart legend, defaults to default constructor if not passed",
                     "type": "Function",
                     "optional": true
+                },
+                {
+                    "name": "tooltip",
+                    "description": "Custom function responsible for building chart legend, defaults to default constructor if not passed",
+                    "type": "Function",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
             "chainable": 1
@@ -2653,6 +2660,18 @@
                     "name": "count",
                     "description": "Number of random colors to generate",
                     "type": "Number"
+                },
+                {
+                    "name": "hex1",
+                    "description": "HEX color string to set band to generate random color(s)",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "hex2",
+                    "description": "HEX color string to set band to generate random color(s)",
+                    "type": "String",
+                    "optional": true
                 }
             ],
             "return": {
@@ -2664,7 +2683,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 365,
+            "line": 380,
             "description": "Generate (palette of) complementary color(s) from passed HEX color string\n\t\t\n    var palette=pk.color.complement('#FF0000', 'split');\n    // palette = [\"#80ff00\", \"#00ffff\", \"#8000ff\"]\n\t\t\t\n    var palette=pk.color.complement('#FF0000', 'double');\n    // palette = [\"#80ff00\", \"#00ff40\", \"#00ffff\", \"#0040ff\", \"#8000ff\"]",
             "itemtype": "method",
             "name": "complement",
@@ -2690,7 +2709,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 402,
+            "line": 417,
             "description": "Generate triadic color palette\n\t\t\n    var palette=pk.color.triadic('#FF0000');\n    // palette = [\"#ff0000\", \"#00ff00\", \"#0000ff\"]",
             "itemtype": "method",
             "name": "triadic",
@@ -2710,7 +2729,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 416,
+            "line": 431,
             "description": "Generate tetradic color palette\n\t\t\n    var palette=pk.color.triadic('#FF0000');\n    // palette = [\"#ff0000\", \"#80ff00\", \"#00ffff\", \"#8000ff\"]",
             "itemtype": "method",
             "name": "tetradic",
@@ -2730,7 +2749,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 432,
+            "line": 447,
             "description": "Generate pentadic color palette\n\t\t\n    var palette=pk.color.triadic('#FF0000');\n    // palette = [\"#ff0000\", \"#ccff00\", \"#00ff66\", \"#0066ff\", \"#cc00ff\"]",
             "itemtype": "method",
             "name": "pentadic",
@@ -2750,7 +2769,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 457,
+            "line": 472,
             "description": "Generate a color from a percentage point between two colors\n\t\t\n    var color=pk.color.percentage(0.5);\n    // color = \"#f2e600\";",
             "itemtype": "method",
             "name": "percentage",
@@ -2784,7 +2803,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 476,
+            "line": 491,
             "description": "Scale either hue, saturation or value of a color by a percentage amount\n\t\t\n    var scale=pk.scale.percentage(0.5);\n    // color = \"#f2e600\";",
             "itemtype": "method",
             "name": "scale",
@@ -2822,7 +2841,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 498,
+            "line": 513,
             "description": "Lighten a color by a percentage amount\n\t\t\n    var color=pk.color.lighten('#840000', 70);\n    // color = \"#da0000\";",
             "itemtype": "method",
             "name": "lighten",
@@ -2854,7 +2873,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 514,
+            "line": 529,
             "description": "Darken a color by a percentage amount\n\t\t\n    var color=pk.color.darken('#840000', 70);\n    // color = \"#da0000\";",
             "itemtype": "method",
             "name": "darken",
@@ -2886,7 +2905,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 530,
+            "line": 545,
             "description": "Saturate a color by a percentage amount\n\t\t\n    var color=pk.color.saturate('#840000', 70);\n    // color = \"#820000\";",
             "itemtype": "method",
             "name": "saturate",
@@ -2918,7 +2937,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 546,
+            "line": 561,
             "description": "Desaturate a color by a percentage amount\n\t\t\n    var color=pk.color.desaturate('#840000', 70);\n    // color = \"#820000\";",
             "itemtype": "method",
             "name": "saturate",
@@ -2950,7 +2969,7 @@
         },
         {
             "file": "src/utils/color.js",
-            "line": 562,
+            "line": 577,
             "description": "Generate algorithmic color palette\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000'});\n    // palette = [\"#ff0000\", \"#00ff00\", \"#0000ff\"] \t\t\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000', count: 5});\n    // palette = [\"#ff0000\", \"#ccff00\", \"#00ff66\", \"#0066ff\", \"#cc00ff\"]  \t\t\t\n\t\t\n    var palette=pk.color.algorithmic ({hex:'#FF0000', scope: 100, count:4});\n    // palette = [\"#ff00d4\", \"#ff0047\", \"#ff4700\", \"#ffd500\"]\n\n    var palette=pk.color.algorithmic ({hex:'#FF0000', type:'saturation', scope:50});\n    // palette = [\"#ffffff\", \"#ffbfbf\", \"#ff8080\"]",
             "itemtype": "method",
             "name": "algorithmic",

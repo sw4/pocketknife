@@ -236,13 +236,13 @@
             
                 <li class="arg">
                     
-                        <code class="optional">[points=5]</code>
+                        <code class="optional">[legend]</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code class="optional">[legend]</code>
+                        <code class="optional">[tooltip=false]</code>
                     
                 </li>
             
@@ -306,7 +306,7 @@
                     
 
                     <div class="param-description">
-                        <p>Chart type to create, <code>pi</code>, or <code>line</code></p>
+                        <p>Chart type to create, <code>pie</code> (use to create donut charts), <code>line</code>, <code>scatter</code> (use to create bubble charts), <code>area</code>, <code>column</code> or <code>bar</code></p>
 
                     </div>
 
@@ -391,6 +391,21 @@
                                 
                             </li>
                             
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[r=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>String denoting object key in data to use for point radius, can be set to number</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
                         </ul>
                     
                 </li>
@@ -463,23 +478,6 @@
             
                 <li class="param">
                     
-                        <code class="param-name optional">[points=5]</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Object key in data used to calculate proportionate point size, or number</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
                         <code class="param-name optional">[legend]</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
                         <span class="flag optional" title="This parameter is optional.">optional</span>
@@ -488,7 +486,24 @@
                     
 
                     <div class="param-description">
-                        <p>Custom function responsible for building chart legend, defaults to stock constructor if not passed</p>
+                        <p>Custom function responsible for building chart legend, defaults to default constructor if not passed</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[tooltip=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Custom function responsible for building chart legend, defaults to default constructor if not passed</p>
 
                     </div>
 

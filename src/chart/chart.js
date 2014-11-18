@@ -231,7 +231,7 @@ Javascript:
 							svgTpl+="<g class='tick' transform='translate(-5,"+(Math.floor((t*axesMeta.y.unit))+0.5)+")'>\
 								<line x2='5'></line>";  
 								if(t<axesMeta.y.range|| type==='categorical'){svgTpl+="<line class='pk-tick-line' x1='6' x2='"+(5+l.width-margin.x)+"'></line>";}
-								svgTpl+="<text x='"+(-1*(margin.left-10))+"' y='"+ (type==='categorical' ? (axesMeta.x.unit/2)+4 : "4")+"' text-anchor='start'>"+(type==='ordinal' ? (axesMeta.y.range+axesMeta.y.min)-t : axesMeta.y.data[t])+"</text>\
+								svgTpl+="<text x='"+(-5)+"' y='"+ (type==='categorical' ? (axesMeta.x.unit/2)+4 : "4")+"' text-anchor='end'>"+(type==='ordinal' ? (axesMeta.y.range+axesMeta.y.min)-t : axesMeta.y.data[t])+"</text>\
 							</g>";				 	 
 						} 
 						svgTpl+="</g>";
@@ -280,7 +280,9 @@ Javascript:
 			
 			resolveAxis('x',type==='column' ? 'categorical' : 'ordinal');
 			resolveAxis('y',type==='bar' ? 'categorical' : 'ordinal');
-			
+			if(['column', 'bar'].indexOf(type)===-1 && typeof axis.r === 'string' && data[0][axis.r]!=='undefined'){	
+				resolveAxis('r', 'ordinal'); 
+			}
 			var groupEl=pk.createEl("<g class='pk-series'></g>");
 			svgEl.appendChild(groupEl);
 		
@@ -301,7 +303,7 @@ Javascript:
 					var pxX=0,
 						pxY=0,
 						svgItemEl=null;
-						
+						 
 					if(['column', 'bar'].indexOf(type)===-1){							
 						pxX=Math.round(margin.left + (axesMeta.x.unit * (seriesMeta[s].x.data[i]-axesMeta.x.min)));
 						pxY=Math.round(l.height-(margin.bottom + (axesMeta.y.unit * (seriesMeta[s].y.data[i]-axesMeta.y.min))));
@@ -319,7 +321,6 @@ Javascript:
 					}else if(['bar'].indexOf(type)!==-1){		
 						pxX= Math.round(margin.left + (axesMeta.x.unit * (seriesMeta[s].x.data[i]-axesMeta.x.min)));
 						pxY= Math.floor(margin.top+(sIndex*(axesMeta.y.unit/Object.keys(seriesMeta).length)+(axesMeta.y.unit * axesMeta.y.data.indexOf(seriesMeta[s].y.data[i]))));
-						console.log(pxY, pxX);
 						svgItemEl=pk.createEl("<rect x='"+margin.left+"' y='"+pxY+"' height='"+(0+(axesMeta.y.unit/Object.keys(seriesMeta).length))+"' width='"+(pxX-margin.left)+"' stroke='"+colors[s]+"' fill='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"'/>");						
 						seriesEl.appendChild(svgItemEl);					
 					}
@@ -332,14 +333,9 @@ Javascript:
 							aPath+=" L "+pxX + " " +(l.height-margin.bottom);
 						}
 					}
-					if(axis.r && ['column', 'bar'].indexOf(type)===-1){
-						// draw points
-						if(typeof axis.r === 'string' && data[0][axis.r]!=='undefined'){						
-							resolveAxis('r', 'ordinal'); 
-						}else if(typeof axis.r === 'string'){
-							axis.r=5;
-						}
-						var r=seriesMeta[s].r.data[i] ? (seriesMeta[s].r.data[i]*20 / axesMeta.r.range)  : typeof axis.r === 'number' ? axis.r : 5;						
+					if(['column', 'bar'].indexOf(type)===-1){
+						// draw points				
+						var r=seriesMeta[s].r && seriesMeta[s].r.data[i] ? (seriesMeta[s].r.data[i]*20 / axesMeta.r.range)  : typeof axis.r === 'number' ? axis.r : 5;						
 						svgItemEl=pk.createEl("<circle cx='"+pxX+"' cy='"+pxY+"' r='"+r+"' fill='"+colors[s]+"' stroke='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"' />");
 						seriesEl.appendChild(svgItemEl);  		
 					}
@@ -350,7 +346,8 @@ Javascript:
 				if(['scatter', 'column', 'bar'].indexOf(type)===-1){ 
 					// draw connecting lines
 					seriesEl.insertBefore(pk.createEl("<path class='pk-line' fill='none' stroke='"+colors[s]+"' d='"+sPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
-				}else if(['area'].indexOf(type)!==-1){
+				}
+				if(['area'].indexOf(type)!==-1){
 					// draw fill area
 					seriesEl.insertBefore(pk.createEl("<path class='pk-area' fill='"+colors[s]+"' d='"+aPath.trim()+"' data-rel='rel"+s.replace(' ','')+"' />"),seriesEl.firstChild );
 				}

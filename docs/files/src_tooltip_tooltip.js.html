@@ -170,7 +170,7 @@ Javascript:
 			ttEl.style.display=&#x27;block&#x27;;	
 			var tl=pk.layout(ttEl),
 				pl=pk.layout(opt.element),
-				t=0,l=0;
+				t=0,l=0, o={x:(opt.offset ? (opt.offset.x ? opt.offset.x : 0) : 0),y:(opt.offset ? (opt.offset.y ? opt.offset.y : 0) : 0)};
 				opt.position=opt.position || &#x27;right&#x27;;		
 			ttEl.style.display=&#x27;&#x27;;
 			switch(opt.position){
@@ -192,8 +192,8 @@ Javascript:
 					l=pl.left - tl.width;
 				break;
 			}
-			ttEl.style.top=t+&#x27;px&#x27;;
-			ttEl.style.left=l+&#x27;px&#x27;;
+			ttEl.style.top=t+o.y+&#x27;px&#x27;;
+			ttEl.style.left=l+o.x+&#x27;px&#x27;;
 			pk.addClass(ttEl, &#x27;pk-&#x27;+opt.position);		
 			
 			if(!timer){

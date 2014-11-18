@@ -163,18 +163,19 @@ Javascript:
 @class pk.chart
 @constructor 
 @beta
-@param type {String} Chart type to create, &#x60;pi&#x60;, or &#x60;line&#x60;
+@param type {String} Chart type to create, &#x60;pie&#x60; (use to create donut charts), &#x60;line&#x60;, &#x60;scatter&#x60; (use to create bubble charts), &#x60;area&#x60;, &#x60;column&#x60; or &#x60;bar&#x60;
 @param [center=0] {Number} If chart type &#x60;pie&#x60;, the inner radius to create a donut chart, expressed as a percentage of diameter (&#x60;2*r&#x60;)
 @param data {Object} Object array of data to use for the chart
 @param axis {Object} Object keys in data to use for &#x60;x&#x60; and &#x60;y&#x60; axes
 @param axis.x {String} Object keys in data to use for &#x60;x&#x60; axis
 @param [axis.y] {String} Object keys in data to use for &#x60;y&#x60; axis, marked optional as not required for &#x60;pie&#x60; charts
+@param [axis.r=false] {String} String denoting object key in data to use for point radius, can be set to number
 @param series {Array} Object keys in data used for series designation - only an Array for &#x60;pie&#x60; charts
 @param series {String} Object key in data used for series designation - only a String for &#x60;line&#x60; charts
 @param [margin] {Object} Object of &#x60;top&#x60;, &#x60;right&#x60;, &#x60;left&#x60; and &#x60;bottom&#x60; margin amounts in pixels. Defaults to &#x60;20,20,50,20&#x60;
 @param [colors] {Object} Object key value pairs where the key is a series name, the value is the value to use
-@param [points=5] {String} Object key in data used to calculate proportionate point size, or number
-@param [legend] {Function} Custom function responsible for building chart legend, defaults to stock constructor if not passed
+@param [legend] {Function} Custom function responsible for building chart legend, defaults to default constructor if not passed
+@param [tooltip=false] {Function} Custom function responsible for building chart legend, defaults to default constructor if not passed
 
 @chainable
 */
@@ -183,10 +184,11 @@ Javascript:
         var el=pk.replaceEl(opt.element, &quot;&lt;div class=&#x27;pk-chart&#x27;&gt;&lt;/div&gt;&quot;),
 			l=pk.layout(el),
 			svgEl=pk.createEl(&quot;&lt;svg /&gt;&quot;),
+			axesEl=pk.createEl(&quot;&lt;g class=&#x27;pk-axes&#x27; /&gt;&quot;),
 			data=opt.data || [],
 			series=opt.series,
 			seriesMeta={},
-			axesMeta={x:{data:[], sum:0},y:{data:[], sum:0}, r:{data:[]}},
+			axesMeta={x:{data:[], sum:0},y:{data:[], sum:0}, r:{data:[], sum:0}},
 			axis=opt.axis,
 			d = l.height &gt; l.width ? l.width : l.height,
 			stroke= opt.center ? (d/2)-(d*((opt.center/2) /100)) : d/2,
@@ -196,61 +198,64 @@ Javascript:
 				top:opt.margin &amp;&amp; opt.margin.top || 20,
 				right:opt.margin &amp;&amp; opt.margin.right || 20,
 				bottom:opt.margin &amp;&amp; opt.margin.bottom || 50,
-				left:opt.margin &amp;&amp; opt.margin.left || 20
+				left:opt.margin &amp;&amp; opt.margin.left || 20,
+				series:0,
+				category:10
 			},
 			legendEl=pk.createEl(&quot;&lt;div class=&#x27;pk-legend&#x27;&gt;&lt;/div&gt;&quot;), 
 			legend=typeof opt.legend===&#x27;function&#x27;?opt.legend:!opt.legend ? false : function(mInf){
 
-				switch(type){
-					case &quot;pie&quot;:
-						pk.addClass(legendEl, &#x27;pk-table&#x27;);
-						if(series.length &gt; 1){
-							var hTpl=&quot;&lt;div class=&#x27;pk-row pk-legend-header&#x27;&gt;&lt;div class=&#x27;pk-legend-category pk-cell&#x27;&gt;&lt;/div&gt;&quot;;
-							for(var e=0;e&lt;series.length;e++){
-								hTpl+=&quot;&lt;div class=&#x27;pk-cell pk-legend-series&#x27;&gt;&quot;+series[e]+&quot;&lt;/div&gt;&quot;;
-							}
-							legendEl.innerHTML+=hTpl+&quot;&lt;/div&gt;&quot;;
+				
+				if(type===&#x27;pie&#x27;){
+					pk.addClass(legendEl, &#x27;pk-table&#x27;);
+					if(series.length &gt; 1){
+						var hTpl=&quot;&lt;div class=&#x27;pk-row pk-legend-header&#x27;&gt;&lt;div class=&#x27;pk-legend-category pk-cell&#x27;&gt;&lt;/div&gt;&quot;;
+						for(var e=0;e&lt;series.length;e++){
+							hTpl+=&quot;&lt;div class=&#x27;pk-cell pk-legend-series&#x27;&gt;&quot;+series[e]+&quot;&lt;/div&gt;&quot;;
 						}
-						
-						for(var c in mInf){
-							var sI=0;
-							var lTpl=&quot;&lt;div class=&#x27;pk-row pk-legend-entry&#x27;&gt;&quot;;					
-							if(series.length &gt; 1){
-								lTpl+=&quot;&lt;div class=&#x27;pk-cell pk-legend-category&#x27;&gt;&quot;+c+&quot;:&lt;/div&gt;&quot;;
-							}
-							for(var s in mInf[c]){ 
-								lTpl+=&quot;&lt;div class=&#x27;pk-cell pk-legend-series&#x27; data-rel=&#x27;&quot;+(&#x27;rel&#x27;+s+c).replace(&#x27; &#x27; ,&#x27;&#x27;)+&quot;&#x27;&gt;&lt;span class=&#x27;pk-indicator&#x27; style=&#x27;border-color:&quot;+mInf[c][s].color+&quot;;background-color:&quot;+mInf[c][s].color+&quot;;&#x27; data-rel=&#x27;&quot;+(&#x27;rel&#x27;+s).replace(&#x27; &#x27; ,&#x27;&#x27;)+&quot;&#x27;&gt;&lt;/span&gt;&quot;+mInf[c][s].percentage+&quot;%&quot;+&quot;&lt;/div&gt;&quot;;
-								sI++;
-							}   
-							if(series.length === 1){
-								lTpl+=&quot;&lt;div class=&#x27;pk-cell pk-legend-category&#x27;&gt;&quot;+c+&quot;&lt;/div&gt;&quot;;
-							}
-							lTpl+=&quot;&lt;/div&gt;&quot;; 
-							legendEl.innerHTML+=lTpl;	 
-						}	
-						pk.addClass(el, (l.height &gt;= l.width ? &quot;pk-legend-bottom&quot; : &quot;pk-legend-right&quot;)); 
-		
-					break;
-					case &quot;scatter&quot;:
-					case &quot;line&quot;:
-					case &quot;area&quot;:
-						for(s in mInf){
-							legendEl.innerHTML+= &quot;&lt;div class=&#x27;pk-legend-series&#x27; data-rel=&#x27;&quot;+(&#x27;rel&#x27;+s).replace(&#x27; &#x27; ,&#x27;&#x27;)+&quot;&#x27;&gt;&lt;span class=&#x27;pk-indicator&#x27; style=&#x27;border-color:&quot;+colors[s]+&quot;;background-color:&quot;+colors[s]+&quot;;&#x27; data-rel=&#x27;&quot;+(&#x27;rel&#x27;+s).replace(&#x27; &#x27; ,&#x27;&#x27;)+&quot;&#x27;&gt;&lt;/span&gt;&quot;+s+&quot;&lt;/div&gt;&quot;;						
-						}					
-					break;
+						legendEl.innerHTML+=hTpl+&quot;&lt;/div&gt;&quot;;
+					}
+					
+					for(var c in mInf){
+						var sI=0;
+						var lTpl=&quot;&lt;div class=&#x27;pk-row pk-legend-entry&#x27;&gt;&quot;;					
+						if(series.length &gt; 1){
+							lTpl+=&quot;&lt;div class=&#x27;pk-cell pk-legend-category&#x27;&gt;&quot;+c+&quot;:&lt;/div&gt;&quot;;
+						}
+						for(var s in mInf[c]){ 
+							lTpl+=&quot;&lt;div class=&#x27;pk-cell pk-legend-series&#x27; data-rel=&#x27;&quot;+(&#x27;rel&#x27;+s+c).replace(&#x27; &#x27; ,&#x27;&#x27;)+&quot;&#x27;&gt;&lt;span class=&#x27;pk-indicator&#x27; style=&#x27;border-color:&quot;+mInf[c][s].color+&quot;;background-color:&quot;+mInf[c][s].color+&quot;;&#x27; data-rel=&#x27;&quot;+(&#x27;rel&#x27;+s).replace(&#x27; &#x27; ,&#x27;&#x27;)+&quot;&#x27;&gt;&lt;/span&gt;&quot;+mInf[c][s].percentage+&quot;%&quot;+&quot;&lt;/div&gt;&quot;;
+							sI++;
+						}   
+						if(series.length === 1){
+							lTpl+=&quot;&lt;div class=&#x27;pk-cell pk-legend-category&#x27;&gt;&quot;+c+&quot;&lt;/div&gt;&quot;;
+						}
+						lTpl+=&quot;&lt;/div&gt;&quot;; 
+						legendEl.innerHTML+=lTpl;	 
+					}	
+					pk.addClass(el, (l.height &gt;= l.width ? &quot;pk-legend-bottom&quot; : &quot;pk-legend-right&quot;)); 
+	
+				}else{
+					for(s in mInf){
+						legendEl.innerHTML+= &quot;&lt;div class=&#x27;pk-legend-series&#x27; data-rel=&#x27;&quot;+(&#x27;rel&#x27;+s).replace(&#x27; &#x27; ,&#x27;&#x27;)+&quot;&#x27;&gt;&lt;span class=&#x27;pk-indicator&#x27; style=&#x27;border-color:&quot;+colors[s]+&quot;;background-color:&quot;+colors[s]+&quot;;&#x27; data-rel=&#x27;&quot;+(&#x27;rel&#x27;+s).replace(&#x27; &#x27; ,&#x27;&#x27;)+&quot;&#x27;&gt;&lt;/span&gt;&quot;+s+&quot;&lt;/div&gt;&quot;;						
+					}					
 				}
-			};		
-			
+				
+			},
+			tooltip=typeof opt.tooltip===&#x27;function&#x27;?opt.tooltip:!opt.tooltip ? false : function(tEl, tInf, tO){
+				pk.tooltip({element:tEl, content:tInf.series + &#x27;, &#x27;+tInf.values.x + &#x27;: &#x27;+tInf.values.y, position:&#x27;top&#x27;,offset:{x:tO.x}});
+			};
+
+		 
+		if(data.length===0){return;}	
+
+		
+		// calculate composite margins for ease of use
 		margin.x=margin.left+margin.right;
 		margin.y=margin.top+margin.bottom;
 		
-		if(data.length===0){return;}	
-		
 		pk.addClass(el, &#x27;pk-&#x27;+type+&#x27;-chart&#x27;);
 			
-		data.sort(function(a, b){
-		 return a[axis.x]-b[axis.x];
-		});	
+		data.sort(function(a,b) {return (a[axis.x] &gt; b[axis.x]) ? 1 : ((b[axis.x] &gt; a[axis.x]) ? -1 : 0);} );		
 		
 		pk.bindEvent(&#x27;mouseover&#x27;, el, function(e){		
 			if(pk.attribute(e.target, &#x27;data-rel&#x27;)){
@@ -259,7 +264,7 @@ Javascript:
 					pk.addClass(hIt[h], &#x27;selected&#x27;); 
 				}	
 			}				
-		});			 	
+		});
 		pk.bindEvent(&#x27;mouseout&#x27;, el, function(e){
 			if(pk.attribute(e.target, &#x27;data-rel&#x27;)){
 				var hIt=pk.findEl(el, {attribute:{name:&#x27;data-rel&#x27;, value:pk.attribute(e.target, &#x27;data-rel&#x27;)}});	
@@ -269,211 +274,222 @@ Javascript:
 			}
 		});		
 		
+		
 		pk.attribute(svgEl, {height:type===&#x27;pie&#x27; ? d : l.height, width:type===&#x27;pie&#x27; ? d : l.width});
 		
 		/*
 		START PIE CHART
 		*/
-		switch(type){
 		
-			case &quot;pie&quot;:
+		if(type===&#x27;pie&#x27;){
 			
-				for(var s in series){
-						seriesMeta[series[s]]={};
-						seriesMeta[series[s]].data=[];		
-						seriesMeta[series[s]].sum=0; 
-						for(var i=0;i&lt;data.length;i++){			
-							seriesMeta[series[s]].data.push(data[i][series[s]]);
-							seriesMeta[series[s]].sum+=Math.abs(parseInt(data[i][series[s]],0));
-							if(!colors[data[i][axis.x]]){
-								colors[data[i][axis.x]]=pk.color.percentage(i/data.length); 
-							}
-						}			
-						seriesMeta[series[s]].min=Math.min.apply(Math, seriesMeta[series[s]].data);
-						seriesMeta[series[s]].max=Math.max.apply(Math, seriesMeta[series[s]].data);
-						seriesMeta[series[s]].range=Math.abs(seriesMeta[series[s]].max-seriesMeta[series[s]].min);			
-				}
-				var sIndex=0;
-				var metaObj={};			
+			for(var s in series){
+					seriesMeta[series[s]]={};
+					seriesMeta[series[s]].data=[];		
+					seriesMeta[series[s]].sum=0; 
+					for(var i=0;i&lt;data.length;i++){			
+						seriesMeta[series[s]].data.push(data[i][series[s]]);
+						seriesMeta[series[s]].sum+=Math.abs(parseInt(data[i][series[s]],0));
+						if(!colors[data[i][axis.x]]){
+							colors[data[i][axis.x]]=pk.color.percentage(i/data.length); 
+						}
+					}			
+					seriesMeta[series[s]].min=Math.min.apply(Math, seriesMeta[series[s]].data);
+					seriesMeta[series[s]].max=Math.max.apply(Math, seriesMeta[series[s]].data);
+					seriesMeta[series[s]].range=Math.abs(seriesMeta[series[s]].max-seriesMeta[series[s]].min);			
+			}
+			var sIndex=0;
+			var metaObj={};			
+		
+			for(s in seriesMeta){
+				var ttlArc=0;
+				for(var i=0;i&lt;seriesMeta[s].data.length;i++){	
+				
+					var pathCol=pk.color.darken(colors[data[i][axis.x]], sIndex*(50/series.length));
+					var pathEl=pk.createEl(&quot;&lt;path x=&#x27;&quot;+d/2+&quot;&#x27; y=&#x27;&quot;+d/2+&quot;&#x27; fill=&#x27;none&#x27; stroke=&#x27;&quot;+pathCol+&quot;&#x27; d=&#x27;&#x27; stroke-width=&#x27;&quot;+(stroke/series.length+1)+&quot;&#x27;/&gt;&quot;);
+					
+					svgEl.appendChild(pathEl);
+					var arc = Math.round((Math.abs(seriesMeta[s].data[i])/seriesMeta[s].sum)*360);
+					var r=((d-stroke/2)/2) - (stroke/2*sIndex);
+					r = series.length&gt;1 ? r : (d/2)-stroke/2;
+					pk.attribute(pathEl, {&#x27;d&#x27;:pk.svg.arcPath(d/2, d/2,  r, ttlArc, ttlArc+arc), &#x27;data-rel&#x27;:(&#x27;rel&#x27;+s+data[i][axis.x]).replace(&#x27; &#x27; ,&#x27;&#x27;)});  
+					if(typeof legend === &#x27;function&#x27;){
+						if(!metaObj[data[i][axis.x]]){
+							metaObj[data[i][axis.x]]={};
+						}
+						if(!metaObj[data[i][axis.x]][s]){
+							metaObj[data[i][axis.x]][s]={
+								value:data[i][s],
+								percentage:Math.round(arc*100/360),
+								color:pathCol,
+								relEl:pathEl
+							};
+						}
+					}					
+					
+					ttlArc+=arc;
+				}	
+				sIndex++;			
+			}
+			legend(metaObj); 
+		
+		/*
+		START LINE, SCATTER, AREA, BUBBLE, BAR, COLUMN CHART
+		*/
 			
-				for(s in seriesMeta){
-					var ttlArc=0;
-					for(var i=0;i&lt;seriesMeta[s].data.length;i++){	
-					
-						var pathCol=pk.color.darken(colors[data[i][axis.x]], sIndex*(50/series.length));
-						var pathEl=pk.createEl(&quot;&lt;path x=&#x27;&quot;+d/2+&quot;&#x27; y=&#x27;&quot;+d/2+&quot;&#x27; fill=&#x27;none&#x27; stroke=&#x27;&quot;+pathCol+&quot;&#x27; d=&#x27;&#x27; stroke-width=&#x27;&quot;+(stroke/series.length+1)+&quot;&#x27;/&gt;&quot;);
-						
-						svgEl.appendChild(pathEl);
-						var arc = Math.round((Math.abs(seriesMeta[s].data[i])/seriesMeta[s].sum)*360);
-						var r=((d-stroke/2)/2) - (stroke/2*sIndex);
-						r = series.length&gt;1 ? r : (d/2)-stroke/2;
-						pk.attribute(pathEl, {&#x27;d&#x27;:pk.svg.arcPath(d/2, d/2,  r, ttlArc, ttlArc+arc), &#x27;data-rel&#x27;:(&#x27;rel&#x27;+s+data[i][axis.x]).replace(&#x27; &#x27; ,&#x27;&#x27;)});  
-						if(typeof legend === &#x27;function&#x27;){
-							if(!metaObj[data[i][axis.x]]){
-								metaObj[data[i][axis.x]]={};
-							}
-							if(!metaObj[data[i][axis.x]][s]){
-								metaObj[data[i][axis.x]][s]={
-									value:data[i][s],
-									percentage:Math.round(arc*100/360),
-									color:pathCol,
-									relEl:pathEl
-								};
-							}
-						}					
-						
-						ttlArc+=arc;
-					}	
-					sIndex++;			
-				}
-				legend(metaObj); 
-			break;
-
-			case &quot;scatter&quot;:
-			case &quot;line&quot;:
-			case &quot;area&quot;:
-				for(var i=0;i&lt;data.length;i++){		
-					seriesMeta[data[i][series]] = seriesMeta[data[i][series]] || {
-						x:{
-							data:[],
-							sum:0
-						},
-						y:{
-							data:[],
-							sum:0
-						},
-						r:{
-							data:[]
-						}		
-					};
-					seriesMeta[data[i][series]].x.data.push(data[i][axis.x]);				
-					seriesMeta[data[i][series]].x.sum+=data[i][axis.x];				
-					seriesMeta[data[i][series]].y.data.push(data[i][axis.y]);
-					seriesMeta[data[i][series]].y.sum+=data[i][axis.y];
-					seriesMeta[data[i][series]].y.min = !seriesMeta[data[i][series]].y.min || data[i][axis.x] &lt; seriesMeta[data[i][series]].y.min ? data[i][axis.x] : seriesMeta[data[i][series]].y.min;
-					seriesMeta[data[i][series]].y.max = !seriesMeta[data[i][series]].y.max || data[i][axis.x] &gt; seriesMeta[data[i][series]].y.max ? data[i][axis.x] : seriesMeta[data[i][series]].y.max;
-					seriesMeta[data[i][series]].y.range = Math.abs(seriesMeta[data[i][series]].y.max-seriesMeta[data[i][series]].y.min);
-					seriesMeta[data[i][series]].x.min = !seriesMeta[data[i][series]].x.min || data[i][axis.x] &lt; seriesMeta[data[i][series]].x.min ? data[i][axis.x] : seriesMeta[data[i][series]].x.min;
-					seriesMeta[data[i][series]].x.max = !seriesMeta[data[i][series]].x.max || data[i][axis.x] &gt; seriesMeta[data[i][series]].x.max ? data[i][axis.x] : seriesMeta[data[i][series]].x.max;
-					seriesMeta[data[i][series]].x.range = Math.abs(seriesMeta[data[i][series]].x.max-seriesMeta[data[i][series]].x.min);
-					
-
-					if(opt.points){seriesMeta[data[i][series]].r.data.push(data[i][opt.points]);}
-
-
-					axesMeta.x.data.push(data[i][axis.x]);
-					axesMeta.x.sum+=data[i][axis.x];
-					axesMeta.y.data.push(data[i][axis.y]);
-					axesMeta.y.sum+=data[i][axis.y];
-					
-					
-					if(opt.points){axesMeta.r.data.push(data[i][opt.points]);}
-					
-				}
-				axesMeta.x.min=Math.min.apply(Math, axesMeta.x.data);
-				axesMeta.x.min = axesMeta.x.min &lt;= 0 ? axesMeta.x.min : 0;
-				axesMeta.x.max=Math.max.apply(Math, axesMeta.x.data);
-				axesMeta.x.range = Math.abs(axesMeta.x.max-axesMeta.x.min);
-				axesMeta.y.min=Math.min.apply(Math, axesMeta.y.data);
-				axesMeta.y.min = axesMeta.y.min &lt;= 0 ? axesMeta.y.min : 0; 
-				axesMeta.y.max=Math.max.apply(Math, axesMeta.y.data);
-				axesMeta.y.range = Math.abs(axesMeta.y.max-axesMeta.y.min);
-				
-				if(opt.points){axesMeta.r.range = Math.abs(Math.max.apply(Math, axesMeta.r.data)-Math.min.apply(Math, axesMeta.r.data));}
-
-				// Get range pixel amounts
-				yUnit= ((l.height-margin.y)/axesMeta.y.range);
-				xUnit= ((l.width-margin.x)/(axesMeta.x.range));
-				
-				
+		}else{	
+	
+			svgEl.appendChild(axesEl);	
+			
+			function drawAxis(xy, type){
 				// Draw AXES
 				// Series of .5 pt adjustments to create crisp edges in IE
-				var svgTpl=&quot;&lt;g class=&#x27;pk-axes&#x27;&gt;\
-					&lt;g class=&#x27;pk-yAxis&#x27; transform=&#x27;translate(&quot;+(margin.left-.5)+&quot;,&quot;+margin.top+&quot;)&#x27;&gt;\
-						&lt;line y2=&#x27;&quot;+(l.height-margin.y)+&quot;&#x27;&gt;&lt;/line&gt;&quot;;
-					for(var t=0;t&lt;=axesMeta.y.range;t++){
-						svgTpl+=&quot;&lt;g class=&#x27;tick&#x27; transform=&#x27;translate(-5,&quot;+(Math.floor(t*yUnit)+0.5)+&quot;)&#x27;&gt;\
-							&lt;line x2=&#x27;5&#x27;&gt;&lt;/line&gt;&quot;;  
-							if(t&lt;axesMeta.y.range){svgTpl+=&quot;&lt;line class=&#x27;pk-tick-line&#x27; x1=&#x27;6&#x27; x2=&#x27;&quot;+(5+l.width-margin.x)+&quot;&#x27;&gt;&lt;/line&gt;&quot;;}
-							svgTpl+=&quot;&lt;text x=&#x27;-10&#x27; y=&#x27;4&#x27; text-anchor=&#x27;start&#x27;&gt;&quot;+((axesMeta.y.range+axesMeta.y.min)-t)+&quot;&lt;/text&gt;\
-						&lt;/g&gt;&quot;;				 	
-					}
-					svgTpl+=&quot;&lt;/g&gt;\
-					&lt;g class=&#x27;pk-xAxis&#x27; transform=&#x27;translate(&quot;+margin.left+&quot;,&quot;+(l.height-margin.bottom+.5)+&quot;)&#x27;&gt;\
-						&lt;line x2=&#x27;&quot;+(l.width-margin.x)+&quot;&#x27;&gt;&lt;/line&gt;&quot;;
-						
-		 
-					for(t=0;t&lt;=axesMeta.x.range;t++){
-						svgTpl+=&quot;&lt;g class=&#x27;tick&#x27; transform=&#x27;translate(&quot;+(Math.floor(t*xUnit)+0.5)+&quot;, 0)&#x27;&gt;\
-							&lt;line y2=&#x27;5&#x27;&gt;&lt;/line&gt;&quot;;
-							if(t&gt;0){svgTpl+=&quot;&lt;line class=&#x27;pk-tick-line&#x27; y2=&#x27;&quot;+(-1*(l.height-margin.y-1))+&quot;&#x27;&gt;&lt;/line&gt;&quot;;}							
-							svgTpl+=&quot;&lt;text y=&#x27;17&#x27; y=&#x27;4&#x27; text-anchor=&#x27;middle&#x27;&gt;&quot;+(t+axesMeta.x.min)+&quot;&lt;/text&gt;\
-						&lt;/g&gt;&quot;;					
-					}	
-					svgTpl+=&quot;&lt;/g&gt;\
-				&lt;/g&gt;&quot;;
-				svgEl.appendChild(pk.createEl(svgTpl));
+				var svgTpl=&quot;&quot;;
+				if(xy===&#x27;x&#x27;){
+					svgTpl=&quot;&lt;g class=&#x27;pk-xAxis&#x27; transform=&#x27;translate(&quot;+margin.left+&quot;,&quot;+(l.height-margin.bottom+.5)+&quot;)&#x27;&gt;\
+							&lt;line x2=&#x27;&quot;+(l.width-margin.x)+&quot;&#x27;&gt;&lt;/line&gt;&quot;;												 
+						for(t=0;t&lt;=axesMeta.x.range;t++){
+							svgTpl+=&quot;&lt;g class=&#x27;tick&#x27; transform=&#x27;translate(&quot;+(Math.floor((t*axesMeta.x.unit)+(type===&#x27;categorical&#x27; ? axesMeta.x.unit: 0))+0.5)+&quot;, 0)&#x27;&gt;\
+								&lt;line y2=&#x27;5&#x27;&gt;&lt;/line&gt;&quot;;
+								if(t&gt;0 || type===&#x27;categorical&#x27;){svgTpl+=&quot;&lt;line class=&#x27;pk-tick-line&#x27; y2=&#x27;&quot;+(-1*(l.height-margin.y-1))+&quot;&#x27;&gt;&lt;/line&gt;&quot;;}							
+								svgTpl+=&quot;&lt;text &quot;+ (type===&#x27;categorical&#x27; ? &quot;x=&#x27;-&quot;+(axesMeta.x.unit/2) : &quot;&quot;)+&quot;&#x27; y=&#x27;17&#x27; y=&#x27;4&#x27; text-anchor=&#x27;middle&#x27;&gt;&quot;+(type===&#x27;ordinal&#x27; ? (t+axesMeta.x.min) : axesMeta.x.data[t])+&quot;&lt;/text&gt;\
+							&lt;/g&gt;&quot;;					
+						} 
+						svgTpl+=&quot;&lt;/g&gt;&quot;;
+				}else if(xy===&#x27;y&#x27;){
+					svgTpl=&quot;&lt;g class=&#x27;pk-yAxis&#x27; transform=&#x27;translate(&quot;+(margin.left-.5)+&quot;,&quot;+margin.top+&quot;)&#x27;&gt;\
+							&lt;line y2=&#x27;&quot;+(l.height-margin.y)+&quot;&#x27;&gt;&lt;/line&gt;&quot;;
+						for(var t=0;t&lt;=axesMeta.y.range;t++){
+							svgTpl+=&quot;&lt;g class=&#x27;tick&#x27; transform=&#x27;translate(-5,&quot;+(Math.floor((t*axesMeta.y.unit))+0.5)+&quot;)&#x27;&gt;\
+								&lt;line x2=&#x27;5&#x27;&gt;&lt;/line&gt;&quot;;  
+								if(t&lt;axesMeta.y.range|| type===&#x27;categorical&#x27;){svgTpl+=&quot;&lt;line class=&#x27;pk-tick-line&#x27; x1=&#x27;6&#x27; x2=&#x27;&quot;+(5+l.width-margin.x)+&quot;&#x27;&gt;&lt;/line&gt;&quot;;}
+								svgTpl+=&quot;&lt;text x=&#x27;&quot;+(-5)+&quot;&#x27; y=&#x27;&quot;+ (type===&#x27;categorical&#x27; ? (axesMeta.x.unit/2)+4 : &quot;4&quot;)+&quot;&#x27; text-anchor=&#x27;end&#x27;&gt;&quot;+(type===&#x27;ordinal&#x27; ? (axesMeta.y.range+axesMeta.y.min)-t : axesMeta.y.data[t])+&quot;&lt;/text&gt;\
+							&lt;/g&gt;&quot;;				 	 
+						} 
+						svgTpl+=&quot;&lt;/g&gt;&quot;;
+				}				
+				axesEl.appendChild(pk.createEl(svgTpl));			
+			}	
+	
+			function resolveAxis(xyr, type){
 				
-				var groupEl=pk.createEl(&quot;&lt;g class=&#x27;pk-series&#x27;&gt;&lt;/g&gt;&quot;);
-				svgEl.appendChild(groupEl);
-				/*
-				Draw Series
-				*/
-				var sIndex=0;
-				for(var s in seriesMeta){	
-					sIndex++;
+				for(var i=0;i&lt;data.length;i++){				
+					seriesMeta[data[i][series]] = seriesMeta[data[i][series]] || {};
+					seriesMeta[data[i][series]][xyr] = seriesMeta[data[i][series]][xyr] || {
+						data:[],
+						sum:0
+					};					
+					seriesMeta[data[i][series]][xyr].data.push(data[i][axis[xyr]]);	
 					
-					if(!colors[s]){
-						colors[s]=pk.color.random();  
+					if(type===&#x27;ordinal&#x27;){						
+						seriesMeta[data[i][series]][xyr].sum+=data[i][axis[xyr]];	
+						seriesMeta[data[i][series]][xyr].min = !seriesMeta[data[i][series]][xyr].min || data[i][axis[xyr]] &lt; seriesMeta[data[i][series]][xyr].min ? data[i][axis[xyr]] : seriesMeta[data[i][series]][xyr].min;
+						seriesMeta[data[i][series]][xyr].max = !seriesMeta[data[i][series]][xyr].max || data[i][axis[xyr]] &gt; seriesMeta[data[i][series]][xyr].max ? data[i][axis[xyr]] : seriesMeta[data[i][series]][xyr].max;
+						seriesMeta[data[i][series]][xyr].range = Math.abs(seriesMeta[data[i][series]][xyr].max-seriesMeta[data[i][series]][xyr].min);
+						axesMeta[xyr].data.push(data[i][axis[xyr]]);	
+						axesMeta[xyr].sum+=data[i][axis[xyr]];
+					}else{					
+						if(axesMeta[xyr].data.indexOf(data[i][axis[xyr]])===-1){axesMeta[xyr].data.push(data[i][axis[xyr]]);}
 					}
-					
-					var seriesEl=pk.createEl(&quot;&lt;g class=&#x27;pk-series-&quot;+sIndex+&quot;&#x27; /&gt;&quot;);
-					var sPath=&#x27;&#x27;, aPath=&#x27;&#x27;;
-					for(i=0;i&lt;seriesMeta[s].x.data.length;i++){			
+				}
+				if(type===&#x27;ordinal&#x27;){		
+					axesMeta[xyr].min=Math.min.apply(Math, axesMeta[xyr].data);
+					axesMeta[xyr].min = axesMeta[xyr].min &lt;= 0 ? axesMeta[xyr].min : 0;
+					axesMeta[xyr].max=Math.max.apply(Math, axesMeta[xyr].data);
+					axesMeta[xyr].range = Math.abs(axesMeta[xyr].max-axesMeta[xyr].min);
+				}
+				if(xyr===&#x27;x&#x27; || xyr ===&#x27;y&#x27;){
+					if(type === &#x27;ordinal&#x27;){
+						axesMeta[xyr].unit = ((xyr === &#x27;x&#x27; ? l.width : l.height)-margin[xyr])/axesMeta[xyr].range;
+					}else{
+						axesMeta[xyr].unit = ((xyr === &#x27;x&#x27; ? l.width : l.height)-margin[xyr]) / axesMeta[xyr].data.length;					
+						axesMeta[xyr].range = axesMeta[xyr].data.length-1;
+					}					
+					drawAxis(xyr, type);
+				} 
+				
+			}
+			
+			resolveAxis(&#x27;x&#x27;,type===&#x27;column&#x27; ? &#x27;categorical&#x27; : &#x27;ordinal&#x27;);
+			resolveAxis(&#x27;y&#x27;,type===&#x27;bar&#x27; ? &#x27;categorical&#x27; : &#x27;ordinal&#x27;);
+			if([&#x27;column&#x27;, &#x27;bar&#x27;].indexOf(type)===-1 &amp;&amp; typeof axis.r === &#x27;string&#x27; &amp;&amp; data[0][axis.r]!==&#x27;undefined&#x27;){	
+				resolveAxis(&#x27;r&#x27;, &#x27;ordinal&#x27;); 
+			}
+			var groupEl=pk.createEl(&quot;&lt;g class=&#x27;pk-series&#x27;&gt;&lt;/g&gt;&quot;);
+			svgEl.appendChild(groupEl);
+		
+			/*
+			Draw Series
+			*/
+
+			var sIndex=0;
+			for(var s in seriesMeta){				
+				if(!colors[s]){
+					colors[s]=pk.color.random();  
+				}					
+				var seriesEl=pk.createEl(&quot;&lt;g class=&#x27;pk-series-&quot;+sIndex+&quot;&#x27; /&gt;&quot;);
+				var sPath=&#x27;&#x27;, aPath=&#x27;&#x27;, sRect=&#x27;&#x27;;
+				
+				for(i=0;i&lt;seriesMeta[s].x.data.length;i++){	
+				
+					var pxX=0,
+						pxY=0,
+						svgItemEl=null;
+						 
+					if([&#x27;column&#x27;, &#x27;bar&#x27;].indexOf(type)===-1){							
+						pxX=Math.round(margin.left + (axesMeta.x.unit * (seriesMeta[s].x.data[i]-axesMeta.x.min)));
+						pxY=Math.round(l.height-(margin.bottom + (axesMeta.y.unit * (seriesMeta[s].y.data[i]-axesMeta.y.min))));
 						if(i==0){
 							sPath+=&quot;M&quot;;
 						}else{
 							sPath+=&quot; L &quot;; 
 						}
-						var pxX=Math.round(margin.left + (xUnit * (seriesMeta[s].x.data[i]-axesMeta.x.min))),
-							pxY=Math.round(l.height-(margin.bottom + (yUnit * (seriesMeta[s].y.data[i]-axesMeta.y.min))));
 						sPath+=pxX + &quot; &quot; +pxY;
-						
-						if(type===&#x27;area&#x27;){
-							if(i==0){
-								aPath+=&quot;M&quot;+pxX + &quot; &quot; +(l.height-margin.bottom);
-							}
-							aPath+=&quot; L &quot;+pxX + &quot; &quot; +pxY;
-							if(i==seriesMeta[s].x.data.length-1){					
-								aPath+=&quot; L &quot;+pxX + &quot; &quot; +(l.height-margin.bottom);
-							}
+					}else if([&#x27;column&#x27;].indexOf(type)!==-1){ 
+						pxX= Math.floor(margin.left+(sIndex*(axesMeta.x.unit/Object.keys(seriesMeta).length)+(axesMeta.x.unit * axesMeta.x.data.indexOf(seriesMeta[s].x.data[i]))));
+						pxY=axesMeta.y.unit * (seriesMeta[s].y.data[i]-axesMeta.y.min);
+						svgItemEl=pk.createEl(&quot;&lt;rect x=&#x27;&quot;+(pxX-0)+&quot;&#x27; y=&#x27;&quot;+(l.height-margin.bottom-pxY)+&quot;&#x27; height=&#x27;&quot;+pxY+&quot;&#x27; width=&#x27;&quot;+(0+(axesMeta.x.unit/Object.keys(seriesMeta).length))+&quot;&#x27; stroke=&#x27;&quot;+colors[s]+&quot;&#x27; fill=&#x27;&quot;+colors[s]+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27;/&gt;&quot;);						
+						seriesEl.appendChild(svgItemEl);
+					}else if([&#x27;bar&#x27;].indexOf(type)!==-1){		
+						pxX= Math.round(margin.left + (axesMeta.x.unit * (seriesMeta[s].x.data[i]-axesMeta.x.min)));
+						pxY= Math.floor(margin.top+(sIndex*(axesMeta.y.unit/Object.keys(seriesMeta).length)+(axesMeta.y.unit * axesMeta.y.data.indexOf(seriesMeta[s].y.data[i]))));
+						svgItemEl=pk.createEl(&quot;&lt;rect x=&#x27;&quot;+margin.left+&quot;&#x27; y=&#x27;&quot;+pxY+&quot;&#x27; height=&#x27;&quot;+(0+(axesMeta.y.unit/Object.keys(seriesMeta).length))+&quot;&#x27; width=&#x27;&quot;+(pxX-margin.left)+&quot;&#x27; stroke=&#x27;&quot;+colors[s]+&quot;&#x27; fill=&#x27;&quot;+colors[s]+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27;/&gt;&quot;);						
+						seriesEl.appendChild(svgItemEl);					
+					}
+					if([&#x27;area&#x27;].indexOf(type)!==-1){
+						if(i==0){
+							aPath+=&quot;M&quot;+pxX + &quot; &quot; +(l.height-margin.bottom);
 						}
-						var r=seriesMeta[s].r.data[i] ? (seriesMeta[s].r.data[i]*20 / axesMeta.r.range)  : typeof opt.points === &#x27;number&#x27; ? opt.points : 5;
-						
-						seriesEl.appendChild(pk.createEl(&quot;&lt;circle cx=&#x27;&quot;+pxX+&quot;&#x27; cy=&#x27;&quot;+pxY+&quot;&#x27; r=&#x27;&quot;+r+&quot;&#x27; fill=&#x27;&quot;+colors[s]+&quot;&#x27; stroke=&#x27;&quot;+colors[s]+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27; /&gt;&quot;)); 
-					} 
-					if(type!=&#x27;scatter&#x27;){ 
-						seriesEl.insertBefore(pk.createEl(&quot;&lt;path class=&#x27;pk-line&#x27; fill=&#x27;none&#x27; stroke=&#x27;&quot;+colors[s]+&quot;&#x27; d=&#x27;&quot;+sPath.trim()+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27; /&gt;&quot;),seriesEl.firstChild );
+						aPath+=&quot; L &quot;+pxX + &quot; &quot; +pxY;
+						if(i==seriesMeta[s].x.data.length-1){					
+							aPath+=&quot; L &quot;+pxX + &quot; &quot; +(l.height-margin.bottom);
+						}
 					}
-					if(type===&#x27;area&#x27;){
-						seriesEl.insertBefore(pk.createEl(&quot;&lt;path class=&#x27;pk-area&#x27; fill=&#x27;&quot;+colors[s]+&quot;&#x27; d=&#x27;&quot;+aPath.trim()+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27; /&gt;&quot;),seriesEl.firstChild );
+					if([&#x27;column&#x27;, &#x27;bar&#x27;].indexOf(type)===-1){
+						// draw points				
+						var r=seriesMeta[s].r &amp;&amp; seriesMeta[s].r.data[i] ? (seriesMeta[s].r.data[i]*20 / axesMeta.r.range)  : typeof axis.r === &#x27;number&#x27; ? axis.r : 5;						
+						svgItemEl=pk.createEl(&quot;&lt;circle cx=&#x27;&quot;+pxX+&quot;&#x27; cy=&#x27;&quot;+pxY+&quot;&#x27; r=&#x27;&quot;+r+&quot;&#x27; fill=&#x27;&quot;+colors[s]+&quot;&#x27; stroke=&#x27;&quot;+colors[s]+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27; /&gt;&quot;);
+						seriesEl.appendChild(svgItemEl);  		
 					}
-					// console.log();
-					groupEl.appendChild(seriesEl);
-				};
-				legend(seriesMeta); 			
-			
-			
-			break;
-		}
-		/*
-		END PIE CHART
-		*/
-
+					if(tooltip){
+						tooltip(svgItemEl, {series:s, values:{x:seriesMeta[s].x.data[i], y:seriesMeta[s].y.data[i], r:seriesMeta[s].r ? seriesMeta[s].r.data[i] : 0}}, {x:0, y:0}); 	
+					}
+				}  
+				if([&#x27;scatter&#x27;, &#x27;column&#x27;, &#x27;bar&#x27;].indexOf(type)===-1){ 
+					// draw connecting lines
+					seriesEl.insertBefore(pk.createEl(&quot;&lt;path class=&#x27;pk-line&#x27; fill=&#x27;none&#x27; stroke=&#x27;&quot;+colors[s]+&quot;&#x27; d=&#x27;&quot;+sPath.trim()+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27; /&gt;&quot;),seriesEl.firstChild );
+				}
+				if([&#x27;area&#x27;].indexOf(type)!==-1){
+					// draw fill area
+					seriesEl.insertBefore(pk.createEl(&quot;&lt;path class=&#x27;pk-area&#x27; fill=&#x27;&quot;+colors[s]+&quot;&#x27; d=&#x27;&quot;+aPath.trim()+&quot;&#x27; data-rel=&#x27;rel&quot;+s.replace(&#x27; &#x27;,&#x27;&#x27;)+&quot;&#x27; /&gt;&quot;),seriesEl.firstChild );
+				}
+				groupEl.appendChild(seriesEl);  
+				sIndex++;
+			};
+			legend(seriesMeta); 
+		}	
 		
-
-		
-		if(typeof legend === &#x27;function&#x27;){			
+		if(legend){			
 			el.appendChild(legendEl);
 		}
 		el.appendChild(svgEl);

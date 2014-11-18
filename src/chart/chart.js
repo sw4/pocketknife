@@ -332,11 +332,13 @@ Javascript:
 							aPath+=" L "+pxX + " " +(l.height-margin.bottom);
 						}
 					}
-					
-					
 					if(axis.r && ['column', 'bar'].indexOf(type)===-1){
 						// draw points
-						
+						if(typeof axis.r === 'string' && data[0][axis.r]!=='undefined'){						
+							resolveAxis('r', 'ordinal'); 
+						}else if(typeof axis.r === 'string'){
+							axis.r=5;
+						}
 						var r=seriesMeta[s].r.data[i] ? (seriesMeta[s].r.data[i]*20 / axesMeta.r.range)  : typeof axis.r === 'number' ? axis.r : 5;						
 						svgItemEl=pk.createEl("<circle cx='"+pxX+"' cy='"+pxY+"' r='"+r+"' fill='"+colors[s]+"' stroke='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"' />");
 						seriesEl.appendChild(svgItemEl);  		

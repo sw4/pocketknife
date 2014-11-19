@@ -6,12 +6,12 @@
 	input{
 		display:none;
 		&:checked+.pk-label:before{
-			-webkit-transform: rotateX(180deg);
+			transform: rotateX(180deg);
 			background:@color-highlight;
 			border-color:@color-highlight;
 		}
 		&:checked+.pk-label:after{
-			-webkit-transform: rotateX(0deg);	
+			transform: rotateX(0deg);	
 			opacity:1;
 		}
 	}
@@ -25,7 +25,7 @@
 			width:@item-height*.65;
 			margin:-3px 5px 0 0;
 			vertical-align:middle;
-			-webkit-transform: rotateX(0deg);		
+			transform: rotateX(0deg);		
 			transition:all 150ms ease-in;			
 			border: 1px solid darken(@color-background, 20%);
 			background:darken(@color-background, 5%);
@@ -37,7 +37,7 @@
 			opacity:0;
 			top:0;
 			color:@color-background;	
-			-webkit-transform: rotateX(180deg);
+			transform: rotateX(180deg);
 			transition:all 150ms ease-in;			
 		}		
 	}

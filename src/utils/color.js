@@ -356,7 +356,7 @@ For color conversion methods, where the expected parameter is an array e.g `[0,0
         */
         random: function(count, hex1, hex2) {
             var palette = [],
-                i, h, s, v
+                i, h, s, v;
             count = typeof count !== 'number' ? 1 : count; 
 			
 			if(hex1 && hex2){

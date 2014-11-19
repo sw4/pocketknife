@@ -363,7 +363,7 @@ Replace the passed DOM element with a new element created from the passed string
 @return {Object} Returns newly created DOM element
 @chainable
 */  
-    pk.replaceEl = function(el, str) {
+    pk.replaceEl = function(el, str, clean) {
         var newEl = pk.createEl(str);
         for (var i = 0; i < el.attributes.length; i++) {
             newEl.setAttribute(el.attributes[i].nodeName, el.attributes[i].value);
@@ -371,6 +371,7 @@ Replace the passed DOM element with a new element created from the passed string
         while (el.firstChild) {
             newEl.appendChild(el.firstChild);
         }
+		if(clean){el.innerHTML='';}
         el.parentNode.replaceChild(newEl, el);
         return newEl;
     };

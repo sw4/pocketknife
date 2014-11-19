@@ -143,7 +143,7 @@ Javascript:
 		});		
 		
 		
-		pk.attribute(svgEl, {height:type==='pie' ? d : l.height, width:type==='pie' ? d : l.width});
+		pk.attribute(svgEl, {height:'100%', width:'100%', 'viewBox':'0 0 '+(type==='pie' ? d : l.width)+' '+(type==='pie' ? d : l.height)});
 
 		
 		function drawAxis(xy, type){

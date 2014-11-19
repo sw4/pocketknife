@@ -49,7 +49,7 @@ Javascript:
 */
 (function(pk) {
     pk.chart = function(opt) {
-        var el=pk.replaceEl(opt.element, "<div class='pk-chart'></div>"),
+        var el=pk.replaceEl(opt.element, "<div class='pk-chart'></div>", true),
 			l=pk.layout(el),
 			svgEl=pk.createEl("<svg />"),
 			axesEl=pk.createEl("<g class='pk-axes' />"),

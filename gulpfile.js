@@ -38,41 +38,28 @@ var gulp = require('gulp'),
 	  ' * THE SOFTWARE.',
 */
 
-gulp.task('build:scroll', function() {
-
-  gulp.src(['src/core/core.less', 'src/drag/drag.less', 'src/scroll/scroll.less'], {base:'./'})
-    .pipe(plugins.concat('scroll.less'))
-	.pipe(plugins.replace('pk', 'ui'))
-	.pipe(plugins.less())
-	.pipe(plugins.autoprefixer({
-		browsers:['last 2 version', 'ie 8', 'ie 9'],
-		cascade:true
-	}))
-	.pipe(plugins.csslint())
-	.pipe(plugins.minifyCss())
-	.pipe(plugins.rename('scroll.min.css'))
-    .pipe(gulp.dest('../ui/scroll/'));
-	
-	gulp.src(['src/core/core.js', 'src/drag/drag.js', 'src/scroll/scroll.js'], {base: './'})
-    .pipe(plugins.concat('scroll.js'))
-	.pipe(plugins.replace('pk', 'ui'))
-	.pipe(plugins.jshint())
-	.pipe(plugins.uglify())
-	.pipe(plugins.rename('scroll.min.js'))
-    .pipe(gulp.dest('../ui/scroll/'));
-
-});
-
 gulp.task('build:styles', function() {
-  return gulp.src('src/**/*.less', {base:'./'})
+  return gulp.src(['src/**/*.less', '!src/**/*variables*.less'], {base:'./'}) // exclude LESS variables, as these cant compile to CSS, so produce a blocker
 	.pipe(plugins.plumber())
-    .pipe(plugins.concat(pkg.name+'.less'))
 	.pipe(plugins.less())
 	.pipe(plugins.autoprefixer({
 		browsers:['last 2 version', 'ie 8', 'ie 9'],
 		cascade:true
 	}))
-	.pipe(plugins.csslint())
+	.pipe(plugins.csslint({
+		'box-sizing':false, // intentional
+		'box-model':false, // intentional
+		'adjoining-classes':false, // LESS artefact
+		'compatible-vendor-prefixes':false, // handled by autoprefixer
+		'outline-none':false, // ...!
+		'import':false, // allows LESS importing
+		'overqualified-elements':false, // allows class combinators
+		'fallback-colors':false, // intentional browser support
+		'bulletproof-font-face':false, // Subject to Google webfonts code..
+		'known-properties':false // SVG related, e.g. 'stroke' otherwise not recognised
+	}))
+	.pipe(plugins.csslint.reporter())
+    .pipe(plugins.concat(pkg.name+'.less'))
 	.pipe(plugins.minifyCss())
 	.pipe(plugins.rename(pkg.name+'.min.css'))
 	.pipe(plugins.header(banner, { pkg : pkg } ))
@@ -89,8 +76,11 @@ gulp.task('bump', function(){
 gulp.task('build:js',function() {
   return gulp.src('src/**/*.js', {base: './'})
 	.pipe(plugins.plumber())
+	.pipe(plugins.jshint({
+		'multistr':true // inline templates
+	}))
+	.pipe(plugins.jshint.reporter('jshint-stylish'))
     .pipe(plugins.concat(pkg.name+'.js'))
-	.pipe(plugins.jshint())
 	.pipe(plugins.uglify())
 	.pipe(plugins.rename(pkg.name+'.min.js'))
 	.pipe(plugins.header(banner, { pkg : pkg } ))
@@ -121,19 +111,11 @@ gulp.task('git:discard', function () {
 	plugins.run('git checkout master').exec();
 	plugins.run('git pull').exec();
 });
-gulp.task('git:discard', function () {
-	plugins.run('git stash').exec();
-	plugins.run('git checkout master').exec();
-	plugins.run('git pull').exec();
-});
+
 gulp.task('git:commit', function () {
 	plugins.run('git add -A && git commit -m "CI auto-commit"').exec();
 	plugins.run('git push').exec();
 });
-
-
-
-
 
 gulp.task('document', function () {
 	plugins.run('yuidoc').exec();

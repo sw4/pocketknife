@@ -53,17 +53,25 @@
 		animation-duration:200ms;
 		animation-timing-function:ease-in;
 		animation-fill-mode:forwards;
-		&.pk-top{				
+		&.pk-top{	
 			animation-name: pk-anim-tooltip-top;
+			opacity:1;	
+			margin:-1 * (@item-height/2) 0 0 0;
 		}		
 		&.pk-right{		
-			animation-name: pk-anim-tooltip-right;			
+			animation-name: pk-anim-tooltip-right;	
+			opacity:1;		
+			margin:-3.5px 0 0 @item-height/2;	
 		}		
-		&.pk-bottom{		
-			animation-name: pk-anim-tooltip-bottom;
+		&.pk-bottom{
+			animation-name: pk-anim-tooltip-bottom;		
+			margin:@item-height/2 0 0 0;	
+			opacity:1;	
 		}		
 		&.pk-left{		
 			animation-name: pk-anim-tooltip-left;
+			opacity:1;	
+			margin:-3.5px 0 0 -1*(@item-height); 
 		}
 	}
 }

@@ -62,16 +62,16 @@ Javascript
 				prevend:new Date(y, m-1, 0).getDate(),
 				nextend:new Date(y, (m===11 ? 0 : m+1), 0).getDate(),
 				date:new Date(y, m-1, d)
-			}
+			};
 			return obj; 
 		}
 		
 		function createDays(){
-			sD=parseDate().startday,
-			eD=parseDate().endday, 
+			sD=parseDate().startday;
+			eD=parseDate().endday;
 			pD=parseDate().prevend; 	
 				
-			sD = sD == 0 ? sD = 7 : sD;
+			sD = sD === 0 ? sD = 7 : sD;
 			tpl="<thead><tr>";
 			for(var w=0;w<7;w++){		
 				tpl+="<th>"+weekday.m[w]+"</th>";
@@ -187,7 +187,7 @@ Javascript
 		pk.bindEvent("mousewheel", yearEl, function(e) { 
 			pk.preventBubble(e);
 			if (e.wheelDelta > 0 || e.detail < 0) {
-				y++
+				y++;
             }else{ 
 				y--; 
 			}
@@ -253,7 +253,7 @@ Javascript
         });
 		return {
 			0:el		
-		}
+		};
 		
     };
     return pk;

@@ -125,22 +125,24 @@
 			background:darken(@color-highlight, 10%);
 		}	
 	}
-	h1, h2, h3, h4, h5, h6{
-		font-weight:400;
-		color:@color-foreground;
-	}
-	h1{
-		font-size:2em;
-		margin:@item-height/2 0;
-	}
-	h2{
-		font-size:1.5em;
-		margin:@item-height/4 0;
-	}
-	h3{
-		font-size:1.2em;
-		margin:@item-height/6 0;
-	}
 	
 }
 
+h1{
+	.pk-headers;
+	font-size:2em;
+	margin:@item-height/2 0;
+}
+h2{
+	.pk-headers;
+	font-size:1.5em;
+	margin:@item-height/4 0;
+}
+h3{
+	.pk-headers;
+	font-size:1.2em;
+	margin:@item-height/6 0;
+}
+h4, h5, h6{
+	.pk-headers;
+}

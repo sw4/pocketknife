@@ -1,5 +1,46 @@
-@import "../core/core.variables.less";
+@import "../core/core.less";
 @import url(http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900);
+
+
+.pk-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: block;
+	z-index: 998;
+	height:0;
+	width:0;
+	opacity:0;
+	transition:all 0ms ease-in 200ms;
+	transition:opacity 150ms ease-in;
+}
+.pk-overlay.pk-show{
+	width:100%;
+	height:100%;
+}
+.pk-hide {
+    display: none;
+}
+.pk-noselect {
+    cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.pk-table{
+	display:table;
+}
+
+.pk-row{
+	display:table-row;
+}
+
+.pk-cell{
+	display:table-cell;
+}
 
 .pk-overlay {
     background:@color-background;
@@ -110,3 +151,4 @@
 	}
 	
 }
+

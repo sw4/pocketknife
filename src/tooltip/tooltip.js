@@ -41,6 +41,7 @@ Javascript:
 				t=0,l=0, o={x:(opt.offset ? (opt.offset.x ? opt.offset.x : 0) : 0),y:(opt.offset ? (opt.offset.y ? opt.offset.y : 0) : 0)};
 				opt.position=opt.position || 'right';		
 			ttEl.style.display='';
+			
 			switch(opt.position){
 				case "top":
 					t=pl.top-tl.height;
@@ -59,16 +60,15 @@ Javascript:
 					t=pl.top;
 					l=pl.left - tl.width;
 				break;
-			}
+			} 
 			ttEl.style.top=t+o.y+'px';
 			ttEl.style.left=l+o.x+'px';
-			pk.addClass(ttEl, 'pk-'+opt.position);		
-			
+			pk.addClass(ttEl, 'pk-'+opt.position);	
 			if(!timer){
 				timer = setTimeout(function(){				
 					pk.addClass(ttEl, 'pk-show');	
 					clearTimeout(timer);
-					timer=null;
+					timer=null;	
 				},delay);
 			}
 			
@@ -79,6 +79,7 @@ Javascript:
 				clearTimeout(timer);
 				timer=null;
 			}	
+			pk.removeClass(ttEl, 'pk-show');	
 			pk.removeClass(ttEl, 'pk-'+opt.position);		
 		});
 		return {

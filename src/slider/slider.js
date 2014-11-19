@@ -154,7 +154,7 @@ Javascript:
 						var origin={
 							x:p.left+(p.width/2),
 							y:p.top+(p.height/2)
-						}
+						};
 						if(e.pageX >= origin.x){
 							perc = 90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI;					 
 						}else{					 
@@ -204,7 +204,7 @@ Javascript:
 				var origin={
 					x:p.left+(p.width/2),
 					y:p.top+(p.height/2)
-				}
+				};
 				if(e.pageX >= origin.x){
 					perc = 90-Math.atan((origin.y-e.pageY)/(e.pageX-origin.x))*180/Math.PI;					 
 				}else{					 

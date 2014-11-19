@@ -94,7 +94,7 @@ Javascript:
 				</v:rect>\
 			</DIV>";
 
-            if (!document.namespaces['v']) {
+            if (!document.namespaces.v) {
                 document.namespaces.add('v', 'urn:schemas-microsoft-com:vml', '#default#VML');
             }
         }

@@ -277,9 +277,8 @@ Finds matching DOM elements within passed DOM element
 	 var nodes=[],
 		 nType=opt.type || null,
 		 nAttr=opt.attribute || null,
-		 nClass=opt.class || null;
-		var nodes=[],
-			treeWalker = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, null, false);
+		 nClass=opt.class || null,
+		 treeWalker = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, null, false);
 		do {			
 			if(treeWalker.currentNode.tagName!==undefined){
 				var match=true; 				
@@ -290,9 +289,7 @@ Finds matching DOM elements within passed DOM element
 					match=false;
 				}
 				if(
-					(nAttr && !treeWalker.currentNode.hasAttribute(nAttr.name)) 
-					||
-					(nAttr && treeWalker.currentNode.hasAttribute(nAttr.name) && treeWalker.currentNode.getAttribute(nAttr.name) !== nAttr.value)){
+					(nAttr && !treeWalker.currentNode.hasAttribute(nAttr.name)) || (nAttr && treeWalker.currentNode.hasAttribute(nAttr.name) && treeWalker.currentNode.getAttribute(nAttr.name) !== nAttr.value)){
 					match=false;
 				}
 				if(match){
@@ -465,7 +462,7 @@ Gets of sets attribute values, either explicitly or implicitly declared
 			// set value	
 			if(typeof attr !== "object"){
 				var tmp=attr;
-				attr={}
+				attr={};
 				attr[tmp]=val;
 			}
 			for(var a in attr){
@@ -489,16 +486,14 @@ Augments event object with additional X and Y helper coordinates
     pk.procEvent=function(e){
         e.posX = 0;
         e.posY = 0;
-        if (!e) var e = window.event;
+        if (!e) {e = window.event;}
         if (e.pageX || e.pageY)     {
             e.posX = e.pageX;
             e.posY = e.pageY;
         }
         else if (e.clientX || e.clientY)    {
-            e.posX = e.clientX + document.body.scrollLeft
-                + document.documentElement.scrollLeft;
-            e.posY = e.clientY + document.body.scrollTop
-                + document.documentElement.scrollTop;
+            e.posX = e.clientX + document.body.scrollLeft  + document.documentElement.scrollLeft;
+            e.posY = e.clientY + document.body.scrollTop  + document.documentElement.scrollTop;
         }
         if(e.offsetX===undefined){
             e.offsetX=e.layerX;
@@ -509,7 +504,7 @@ Augments event object with additional X and Y helper coordinates
         e.viewportY=e.posY-document.body.scrollTop;
         e.viewportX=e.posX-document.body.scrollLeft;
         return e;
-    }
+    };
 /**
 Gets browser agnostic offset coordinates for applicable mouse events
 @method getEventOffset
@@ -523,5 +518,5 @@ Gets browser agnostic offset coordinates for applicable mouse events
 		};
 	};
 	
-    window.onload=function(){pk.addClass(document.body, 'pk-ui');}
+    window.onload=function(){pk.addClass(document.body, 'pk-ui');};
 })(pk);

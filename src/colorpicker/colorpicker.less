@@ -26,14 +26,14 @@
 	.pk-colorpicker-hPicker{
 		width:100%;
 		position:absolute;
-		height:0px;
+		height:0;
 		border-top:1px solid fade(@color-highlight, 50%);
 		border-bottom:1px solid fade(@color-background, 50%);
 		&:after{
 			position:absolute;
 			content:'';
-			width: 0px;
-			height: 0px;
+			width: 0;
+			height: 0;
 			border-style: solid;
 			border-width: 5px 8.7px 5px 0;
 			border-color: transparent @color-highlight transparent transparent;
@@ -42,7 +42,6 @@
 		}
 	}
 	.pk-colorpicker-slPicker{
-		width:100%;
 		position:absolute;
 		height:8px;
 		z-index:3;

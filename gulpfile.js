@@ -59,7 +59,7 @@ gulp.task('build:styles', function() {
 		'known-properties':false // SVG related, e.g. 'stroke' otherwise not recognised
 	}))
 	.pipe(plugins.csslint.reporter())
-    .pipe(plugins.concat(pkg.name+'.less'))
+    .pipe(plugins.concatCss(pkg.name+'.css')) // use concat css instead of concat to rebase @import statements to start
 	.pipe(plugins.minifyCss())
 	.pipe(plugins.rename(pkg.name+'.min.css'))
 	.pipe(plugins.header(banner, { pkg : pkg } ))
@@ -105,6 +105,14 @@ gulp.task('watch', ['browser-sync'], function () {
    gulp.watch('src/**/*.js', ['build:js', 'bump', 'document']);
    return true;
 });
+
+gulp.task('git:clone', function () {
+	plugins.git.clone('https://github.com/sw4/pocketknife.git', function (err) {
+		if (err) throw err;
+	});
+});
+
+
 
 gulp.task('git:discard', function () {
 	plugins.run('git stash').exec();

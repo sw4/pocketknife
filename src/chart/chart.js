@@ -38,9 +38,9 @@ Javascript:
 @param axis.x {String} Object keys in data to use for `x` axis
 @param [axis.y] {String} Object keys in data to use for `y` axis, marked optional as not required for `pie` charts
 @param [axis.r=false] {String} String denoting object key in data to use for point radius, can be set to number
-@param series {Array} Object keys in data used for series designation - only an Array for `pie` charts
-@param series {String} Object key in data used for series designation - only a String for `line` charts
+@param series {Array} Object keys in data used for series designation - only an Array for `pie` charts, string for all other types
 @param [margin] {Object} Object of `top`, `right`, `left` and `bottom` margin amounts in pixels. Defaults to `20,20,50,20`
+@param [gridlines=true] {Boolean} Show gridlines for chart types other than `pie`
 @param [colors] {Object} Object key value pairs where the key is a series name, the value is the value to use
 @param [legend] {Function} Custom function responsible for building chart legend, defaults to default constructor if not passed
 @param [tooltip=false] {Function} Custom function responsible for building chart legend, defaults to default constructor if not passed
@@ -58,6 +58,7 @@ Javascript:
 			seriesMeta={},
 			axesMeta={x:{data:[], sum:0},y:{data:[], sum:0}, r:{data:[], sum:0}},
 			axis=opt.axis,
+			gridlines=opt.gridlines !== true ? false : true,
 			d = l.height > l.width ? l.width : l.height,
 			stroke= opt.center ? (d/2)-(d*((opt.center/2) /100)) : d/2,
 			colors=opt.colors || {},
@@ -116,7 +117,6 @@ Javascript:
 		 
 		if(data.length===0){return;}	
 
-		
 		// calculate composite margins for ease of use
 		margin.x=margin.left+margin.right;
 		margin.y=margin.top+margin.bottom;
@@ -156,7 +156,7 @@ Javascript:
 					for(t=0;t<=axesMeta.x.range;t++){
 						svgTpl+="<g class='tick' transform='translate("+(Math.floor((t*axesMeta.x.unit)+(type==='categorical' ? axesMeta.x.unit: 0))+0.5)+", 0)'>\
 							<line y2='5'></line>";
-							if(t>0 || type==='categorical'){svgTpl+="<line class='pk-tick-line' y2='"+(-1*(l.height-margin.y-1))+"'></line>";}							
+							if(gridlines && (t>0 || type==='categorical')){svgTpl+="<line class='pk-tick-line' y2='"+(-1*(l.height-margin.y-1))+"'></line>";}							
 							svgTpl+="<text "+ (type==='categorical' ? "x='-"+(axesMeta.x.unit/2) : "")+"' y='17' y='4' text-anchor='middle'>"+(type==='ordinal' ? (t+axesMeta.x.min) : axesMeta.x.data[t])+"</text>\
 						</g>";					
 					} 
@@ -167,7 +167,7 @@ Javascript:
 					for(var t=0;t<=axesMeta.y.range;t++){
 						svgTpl+="<g class='tick' transform='translate(-5,"+(Math.floor((t*axesMeta.y.unit))+0.5)+")'>\
 							<line x2='5'></line>";  
-							if(t<axesMeta.y.range|| type==='categorical'){svgTpl+="<line class='pk-tick-line' x1='6' x2='"+(5+l.width-margin.x)+"'></line>";}
+							if(gridlines && (t<axesMeta.y.range|| type==='categorical')){svgTpl+="<line class='pk-tick-line' x1='6' x2='"+(5+l.width-margin.x)+"'></line>";}
 							svgTpl+="<text x='"+(-5)+"' y='"+ (type==='categorical' ? (axesMeta.y.unit/2)+2 : "2")+"' text-anchor='end'>"+(type==='ordinal' ? (axesMeta.y.range+axesMeta.y.min)-t : axesMeta.y.data[t])+"</text>\
 						</g>";				 	 
 					} 
@@ -265,7 +265,7 @@ Javascript:
 				}	
 				sIndex++;			
 			}
-			legend(metaObj); 
+			if(typeof legend === 'function'){legend(metaObj); }
 		
 		/*
 		START LINE, SCATTER, AREA, BUBBLE, BAR, COLUMN CHART
@@ -355,7 +355,7 @@ Javascript:
 				groupEl.appendChild(seriesEl);  
 				sIndex++;
 			}
-			legend(seriesMeta); 
+			if(typeof legend === 'function'){legend(seriesMeta); }
 		}	
 		
 		if(legend){			

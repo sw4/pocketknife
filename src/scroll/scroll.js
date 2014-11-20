@@ -19,6 +19,7 @@ Javascript:
 @constructor
 @param options {Object}
 @param options.element {Object} DOM element to attach drag handlers to
+@param [options.sensitivity=60] {Number} Number in px to scroll incrementally on `mousewheel` and `key` events. Can also be expressed as percentage, e.g. `10%` of content
 @param [options.axis=y] {Object} Object consisting of `x` and `y` {Boolean} values denoting scrollable axis, DOM element to attach drag handlers to. Defaults to element attribute `pk-scroll` or `y`
 @return Object {Object} Consisting of original DOM element (item `0`)
 @chainable
@@ -57,7 +58,8 @@ Javascript:
     }
     pk.scroll = function(opt) {
 
-        var el = opt.element;
+        var el = opt.element,
+			sensitivity=60;
         // INIT SCROLL STRUCTURE
 
         var tpl = "<div class='pk-scroll-container'>\
@@ -202,15 +204,17 @@ Javascript:
 
         // MOUSE WHEEL HANDLERS
         function mouseScroll(e) {
-            var offset = 0.1;
             if (e.wheelDelta > 0 || e.detail < 0) {
-                offset = offset * -1;
-            }
-            if (allowY) {
-                container.scrollTop = Math.round(container.scrollTop + (contentH - containerH) * offset);
-            } else {
-                container.scrollLeft = Math.round(container.scrollLeft + (contentW - containerW) * offset);
-            }
+				if (allowY) {
+					container.scrollTop -= typeof sensitivity === 'string' && sensitivity.indexOf('%') ?  containerH * parseInt(sensitivity.replace('%',''),0)/100 : sensitivity;			
+				} else {
+					container.scrollLeft -= typeof sensitivity === 'string' && sensitivity.indexOf('%') ?  containerW * parseInt(sensitivity.replace('%',''),0)/100 : sensitivity;			
+				}
+            }else if (allowY) {
+					container.scrollTop += typeof sensitivity === 'string' && sensitivity.indexOf('%') ?  containerH * parseInt(sensitivity.replace('%',''),0)/100 : sensitivity;			
+			} else {
+				container.scrollLeft += typeof sensitivity === 'string' && sensitivity.indexOf('%') ?  containerW * parseInt(sensitivity.replace('%',''),0)/100 : sensitivity;			
+			}
             /* Stop wheel propogation (prevent parent scrolling) */
             pk.preventBubble(e);
         }
@@ -286,13 +290,13 @@ Javascript:
             }
             if (allowY) {
                 switch (e.keyCode) {
-                    case 38: //up cursor					
-                        container.scrollTop -= containerH * 0.1;
+                    case 38: //up cursor						
+                        container.scrollTop -= typeof sensitivity === 'string' && sensitivity.indexOf('%') ?  containerH * parseInt(sensitivity.replace('%',''),0)/100 : sensitivity;
                         pk.preventBubble(e);
                         break;
                     case 40: //down cursor
                     case 32: //spacebar
-                        container.scrollTop += containerH * 0.1;
+                        container.scrollTop += typeof sensitivity === 'string' && sensitivity.indexOf('%') ?  containerH * parseInt(sensitivity.replace('%',''),0)/100 : sensitivity;
                         pk.preventBubble(e);
                         break;
                     case 33: //page up
@@ -316,11 +320,11 @@ Javascript:
             if (allowX) {
                 switch (e.keyCode) {
                     case 37: //left cursor
-                        container.scrollLeft -= containerW * 0.1;
+                        container.scrollLeft -= typeof sensitivity === 'string' && sensitivity.indexOf('%') ?  containerW * parseInt(sensitivity.replace('%',''),0)/100 : sensitivity;
                         pk.preventBubble(e);
                         break;
                     case 39: //right cursor
-                        container.scrollLeft += containerW * 0.1;
+                        container.scrollLeft += typeof sensitivity === 'string' && sensitivity.indexOf('%') ?  containerW * parseInt(sensitivity.replace('%',''),0)/100 : sensitivity;
                         pk.preventBubble(e);
                         break;
                 }

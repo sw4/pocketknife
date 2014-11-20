@@ -2,7 +2,7 @@
   "name": "pocketknife",
   "title": "pocketknife",
   "description": "pocketknife",
-  "version": "0.0.1206",
+  "version": "0.0.1231",
   "homepage": "https://github.com/sw4/pocketknife",
   "author": {
     "name": "Pocketknife Ltd."
@@ -34,7 +34,9 @@
     "gulp-bump": "^0.1.11",
     "gulp-cache": "^0.2.4",
     "gulp-concat": "^2.4.1",
+    "gulp-concat-css": "^1.1.0",
     "gulp-csslint": "^0.1.5",
+    "gulp-git": "^0.5.4",
     "gulp-header": "^1.2.2",
     "gulp-imagemin": "^2.0.0",
     "gulp-jsbeautifier": "0.0.3",

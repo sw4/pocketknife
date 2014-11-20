@@ -106,6 +106,13 @@ Javascript:
             floatY.style.top = (containerH - floatYh) * percY + 'px';
             floatX.style.left = (containerW - floatXw) * percX + 'px';
         });
+		
+		pk.bindEvent("scroll", el, function(e){
+			container.scrollTop=el.scrollTop;
+			container.scrollLeft=el.scrollLeft;
+			pk.preventBubble(e);
+		});
+		
 
         function resolveDimensions() {
             contentH = container.scrollHeight;

@@ -64,10 +64,10 @@ Javascript:
 			type=opt.type,
 			s=null, i=null, r=0, sIndex=0,
 			margin={
-				top:opt.margin && opt.margin.top || 20,
-				right:opt.margin && opt.margin.right || 20,
-				bottom:opt.margin && opt.margin.bottom || 50,
-				left:opt.margin && opt.margin.left || 20,
+				top:opt.margin && typeof opt.margin.top === 'number' ? opt.margin.top : 20,
+				right:opt.margin && typeof opt.margin.right === 'number' ? opt.margin.right : 20,
+				bottom:opt.margin && typeof opt.margin.bottom === 'number' ? opt.margin.bottom : 50,
+				left:opt.margin && typeof opt.margin.left === 'number' ? opt.margin.left : 20,
 				series:0,
 				category:10
 			},

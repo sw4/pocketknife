@@ -340,7 +340,7 @@ Javascript:
 						seriesEl.appendChild(svgItemEl);  
 						ttX+=r;		 
 					}
-					if(tooltip){
+					if(tooltip && pk.tooltip){
 						tooltip(svgItemEl, {series:s, values:{x:seriesMeta[s].x.data[i], y:seriesMeta[s].y.data[i], r:seriesMeta[s].r ? seriesMeta[s].r.data[i] : 0}}, {x:ttX, y:0}); 	
 					}
 				}  

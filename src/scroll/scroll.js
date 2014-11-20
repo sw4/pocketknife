@@ -59,30 +59,8 @@ Javascript:
     pk.scroll = function(opt) {
 
         var el = opt.element,
-			sensitivity=60;
-        // INIT SCROLL STRUCTURE
-
-        var tpl = "<div class='pk-scroll-container'>\
-            <" + el.nodeName + " class='pk-scroll-content'>\
-                " + el.innerHTML + "\
-            </" + el.nodeName + ">\
-            <div class='pk-scroll-trackY'>\
-                <div class='pk-scroll-floatY'></div>\
-            </div>\
-            <div class='pk-scroll-trackX'>\
-                <div class='pk-scroll-floatX'></div>\
-            </div>\
-        </div>";
-        el.innerHTML = '';
-        el = pk.replaceEl(el, tpl);
-        var container = el.children[0],
-            trackY = el.children[1],
-            floatY = trackY.children[0],
-            trackX = el.children[2],
-            floatX = trackX.children[0];
-        // INIT VARIABLES
-        var
-            floatYh = 0,
+			sensitivity=60,
+			floatYh = 0,
             floatXw = 0,
             allowY = false,
             allowX = false,
@@ -96,7 +74,26 @@ Javascript:
             contentHeight = 0,
             containerWidth = 0,
             containerHeight = 0,
-            scrollDir = opt.axis ? opt.axis.toLowerCase() : (pk.attribute(el, 'pk-scroll') ? pk.attribute(el, 'pk-scroll') : "y");
+            scrollDir = opt.axis ? opt.axis.toLowerCase() : (pk.attribute(el, 'pk-scroll') ? pk.attribute(el, 'pk-scroll') : "y"),
+			tpl = "<div class='pk-scroll-container'>\
+            <" + el.nodeName + " class='pk-scroll-content'>\
+                " + el.innerHTML + "\
+            </" + el.nodeName + ">\
+            <div class='pk-scroll-trackY'>\
+                <div class='pk-scroll-floatY'></div>\
+            </div>\
+            <div class='pk-scroll-trackX'>\
+                <div class='pk-scroll-floatX'></div>\
+            </div>\
+        </div>";
+		el.innerHTML='';
+        el = pk.replaceEl(el, tpl);
+        var container = el.children[0],
+            trackY = el.children[1],
+            floatY = trackY.children[0],
+            trackX = el.children[2],
+            floatX = trackX.children[0];
+			
         if (pk.getStyle(el, 'position') === "static") {
             el.style.position = "relative";
         }
@@ -150,7 +147,7 @@ Javascript:
                 containerHeight = heightContainer;
                 resolveDimensions();
             }
-        }, 500);
+        }, 100);
 
         // DRAG HANDLERS
 

@@ -138,7 +138,7 @@ Javascript:
 				var hIt=pk.findEl(el, {attribute:{name:'data-rel', value:pk.attribute(e.target, 'data-rel')}});	
 				for(h=0;h<hIt.length;h++){							
 					pk.removeClass(hIt[h], 'selected'); 
-				}	
+				}	 
 			}
 		});		
 		
@@ -299,7 +299,8 @@ Javascript:
 				
 					var pxX=0,
 						pxY=0,
-						svgItemEl=null;
+						svgItemEl=null,
+						ttX=-14; // Tooltip 'x' offset
 						 
 					if(['column', 'bar'].indexOf(type)===-1){							
 						pxX=Math.round(margin.left + (axesMeta.x.unit * (seriesMeta[s].x.data[i]-axesMeta.x.min)));
@@ -315,11 +316,13 @@ Javascript:
 						pxY=axesMeta.y.unit * (seriesMeta[s].y.data[i]-axesMeta.y.min);
 						svgItemEl=pk.createEl("<rect x='"+(pxX-0)+"' y='"+(l.height-margin.bottom-pxY)+"' height='"+pxY+"' width='"+(0+(axesMeta.x.unit/Object.keys(seriesMeta).length))+"' stroke='"+colors[s]+"' fill='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"'/>");						
 						seriesEl.appendChild(svgItemEl);
+						ttX+=(0+(axesMeta.x.unit/Object.keys(seriesMeta).length))/2;				
 					}else if(['bar'].indexOf(type)!==-1){		
 						pxX= Math.round(margin.left + (axesMeta.x.unit * (seriesMeta[s].x.data[i]-axesMeta.x.min)));
 						pxY= Math.floor(margin.top+(sIndex*(axesMeta.y.unit/Object.keys(seriesMeta).length)+(axesMeta.y.unit * axesMeta.y.data.indexOf(seriesMeta[s].y.data[i]))));
 						svgItemEl=pk.createEl("<rect x='"+margin.left+"' y='"+pxY+"' height='"+(0+(axesMeta.y.unit/Object.keys(seriesMeta).length))+"' width='"+(pxX-margin.left)+"' stroke='"+colors[s]+"' fill='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"'/>");						
-						seriesEl.appendChild(svgItemEl);					
+						seriesEl.appendChild(svgItemEl);	
+						ttX+=ttX+(pxX-margin.left);
 					}
 					if(['area'].indexOf(type)!==-1){
 						if(i===0){
@@ -334,10 +337,11 @@ Javascript:
 						// draw points				
 						r=seriesMeta[s].r && seriesMeta[s].r.data[i] ? (seriesMeta[s].r.data[i]*20 / axesMeta.r.range)  : typeof axis.r === 'number' ? axis.r : 5;						
 						svgItemEl=pk.createEl("<circle cx='"+pxX+"' cy='"+pxY+"' r='"+r+"' fill='"+colors[s]+"' stroke='"+colors[s]+"' data-rel='rel"+s.replace(' ','')+"' />");
-						seriesEl.appendChild(svgItemEl);  		
+						seriesEl.appendChild(svgItemEl);  
+						ttX+=r;		 
 					}
 					if(tooltip){
-						tooltip(svgItemEl, {series:s, values:{x:seriesMeta[s].x.data[i], y:seriesMeta[s].y.data[i], r:seriesMeta[s].r ? seriesMeta[s].r.data[i] : 0}}, {x:0, y:0}); 	
+						tooltip(svgItemEl, {series:s, values:{x:seriesMeta[s].x.data[i], y:seriesMeta[s].y.data[i], r:seriesMeta[s].r ? seriesMeta[s].r.data[i] : 0}}, {x:ttX, y:0}); 	
 					}
 				}  
 				if(['scatter', 'column', 'bar'].indexOf(type)===-1){ 

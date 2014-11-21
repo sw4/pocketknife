@@ -17,7 +17,7 @@ Javascript:
 @constructor
 @param options {Object}
 @param options.element {Object} DOM element to convert to control
-@param options.count {Number} Number of items
+@param [options.count=5] {Number} Number of items
 @param [options.value=0] {String} Value of initially selected option, defaults to the attribute value set on the passed element, or `0`
 @param [options.name=pk-toggle-RandInt] {String} Name of underlying input control, defaults to the attribute value set on the passed element, or `pk-toggle-RandInt`
 @param [options.tabindex=0] {Number} Tabindex of control, defaults to the attribute value set on the passed element, or `0`

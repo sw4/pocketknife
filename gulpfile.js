@@ -66,13 +66,6 @@ gulp.task('build:styles', function() {
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('bump', function(){
-  return gulp.src('./package.json')
-	.pipe(plugins.plumber())
-	.pipe(plugins.bump({type:'patch'}))
-	.pipe(gulp.dest('./'));
-});
-
 gulp.task('build:js',function() {
   return gulp.src('src/**/*.js', {base: './'})
 	.pipe(plugins.plumber())
@@ -106,27 +99,15 @@ gulp.task('watch', ['browser-sync'], function () {
    return true;
 });
 
-gulp.task('git:clone', function () {
-	plugins.git.clone('https://github.com/sw4/pocketknife.git', function (err) {
-		if (err) throw err;
-	});
-});
-
-
-
-gulp.task('git:discard', function () {
-	plugins.run('git stash').exec();
-	plugins.run('git checkout master').exec();
-	plugins.run('git pull').exec();
-});
-
-gulp.task('git:commit', function () {
-	plugins.run('git add -A && git commit -m "CI auto-commit"').exec();
-	plugins.run('git push').exec();
-});
-
 gulp.task('document', function () {
 	plugins.run('yuidoc').exec();
+});
+
+gulp.task('bump', function(){
+  return gulp.src('./package.json')
+	.pipe(plugins.plumber())
+	.pipe(plugins.bump({type:'patch'}))
+	.pipe(gulp.dest('./'));
 });
 
 gulp.task('default', ['watch']);

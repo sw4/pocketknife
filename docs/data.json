@@ -373,19 +373,21 @@
                 },
                 {
                     "name": "series",
-                    "description": "Object keys in data used for series designation - only an Array for `pie` charts",
+                    "description": "Object keys in data used for series designation - only an Array for `pie` charts, string for all other types",
                     "type": "Array"
-                },
-                {
-                    "name": "series",
-                    "description": "Object key in data used for series designation - only a String for `line` charts",
-                    "type": "String"
                 },
                 {
                     "name": "margin",
                     "description": "Object of `top`, `right`, `left` and `bottom` margin amounts in pixels. Defaults to `20,20,50,20`",
                     "type": "Object",
                     "optional": true
+                },
+                {
+                    "name": "gridlines",
+                    "description": "Show gridlines for chart types other than `pie`",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
                 },
                 {
                     "name": "colors",
@@ -769,7 +771,9 @@
                         {
                             "name": "count",
                             "description": "Number of items",
-                            "type": "Number"
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "5"
                         },
                         {
                             "name": "value",
@@ -838,6 +842,13 @@
                             "name": "element",
                             "description": "DOM element to attach drag handlers to",
                             "type": "Object"
+                        },
+                        {
+                            "name": "sensitivity",
+                            "description": "Number in px to scroll incrementally on `mousewheel` and `key` events. Can also be expressed as percentage, e.g. `10%` of content",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "60"
                         },
                         {
                             "name": "axis",
@@ -1250,7 +1261,7 @@
             "namespace": "",
             "file": "src/tooltip/tooltip.js",
             "line": 2,
-            "description": "Class used for creating tooltips\n\nHTML\n\n    <span id='tooltip'>Show Tooltip</span>\n\nJavascript:\n\n\tpk.tooltip({\n\t\telement:document.getElementById('tooltip'),\n\t\tcontent:'Tooltip content',\n\t\tposition:'left'\n\t});",
+            "description": "Class used for creating tooltips\n\n<div class='info-well'>\nThe value passed to the `position` attribute is added to the tooltip as a CSS class of the format `pk-*position*`. Custom positions containing the keywords `top`, `left`, `bottom` and/or `right` can be applied to assume the relevant attributes, i.e. `bottomright`\n</div>\n\nHTML\n\n    <span id='tooltip'>Show Tooltip</span>\n\t\nJavascript:\n\n\tpk.tooltip({\n\t\telement:document.getElementById('tooltip'),\n\t\tcontent:'Tooltip content',\n\t\tposition:'left'\n\t});",
             "is_constructor": 1,
             "params": [
                 {
@@ -1815,7 +1826,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 307,
+            "line": 304,
             "description": "Wrap the passed DOM element in a new DOM node created from the `wrapper` string",
             "itemtype": "method",
             "name": "wrapEl",
@@ -1841,7 +1852,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 321,
+            "line": 318,
             "description": "Create a new DOM element from the passed `HTML` string (SVG agnostic)",
             "itemtype": "method",
             "name": "createEl",
@@ -1862,7 +1873,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 341,
+            "line": 338,
             "description": "Get the index of the passed DOM node within the immediate parent",
             "itemtype": "method",
             "name": "getIndex",
@@ -1882,7 +1893,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 358,
+            "line": 355,
             "description": "Replace the passed DOM element with a new element created from the passed string, inclusive of all original attributes",
             "itemtype": "method",
             "name": "replaceEl",
@@ -1908,7 +1919,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 377,
+            "line": 375,
             "description": "Forces the passed variable into an array, xploding comma seperated strings, keeping existing arrys, collapsing objects and or converting strings as necessary",
             "itemtype": "method",
             "name": "toArr",
@@ -1928,7 +1939,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 396,
+            "line": 394,
             "description": "Collides two arrays, either replacing one with the other, removing one from another, adding one to another or toggling the values of one in another",
             "itemtype": "method",
             "name": "collide",
@@ -1960,7 +1971,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 428,
+            "line": 426,
             "description": "Returns normalized percentage value",
             "itemtype": "method",
             "name": "perc",
@@ -1985,7 +1996,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 441,
+            "line": 439,
             "description": "Gets of sets attribute values, either explicitly or implicitly declared",
             "itemtype": "method",
             "name": "attribute",
@@ -2017,7 +2028,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 482,
+            "line": 480,
             "description": "Augments event object with additional X and Y helper coordinates",
             "itemtype": "method",
             "name": "procEvent",
@@ -2037,7 +2048,7 @@
         },
         {
             "file": "src/core/core.js",
-            "line": 512,
+            "line": 508,
             "description": "Gets browser agnostic offset coordinates for applicable mouse events",
             "itemtype": "method",
             "name": "getEventOffset",

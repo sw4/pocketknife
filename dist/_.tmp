@@ -1,0 +1,3354 @@
+/**
+ * @generous
+ * @type module
+ * @name ibd
+ */
+
+var ibd = (function() {
+    /**
+     * @generous
+     * @type method
+     * @name ready
+     * @parent ibd
+     * @description Function to call when ibd is initialised and the DOM
+     * is ready, all ibd related code should be placed within it
+     * @param {function} function To run when DOM is ready
+     */
+
+    var readyList = [],
+        readyFired = false,
+        readyEventHandlersInstalled = false;
+
+    // call this when the document is ready
+    // this function protects itself against being called more than once
+    function ready() {
+        if (!readyFired) {
+            // this must be set to true before we start calling callbacks
+            readyFired = true;
+            for (var i = 0; i < readyList.length; i++) {
+                // if a callback here happens to add new ready handlers,
+                // the docReady() function will see that it already fired
+                // and will schedule the callback to run right after
+                // this event loop finishes so all handlers will still execute
+                // in order and no new ones will be added to the readyList
+                // while we are processing the list
+                readyList[i].fn.call(window, readyList[i].ctx);
+            }
+            // allow any closures held by these functions to free
+            readyList = [];
+        }
+    }
+
+    function readyStateChange() {
+        if (document.readyState === "complete") {
+            ready();
+        }
+    }
+
+    return {
+        ready: function(callback, context) {
+            // if ready has already fired, then just schedule the callback
+            // to fire asynchronously, but right away
+            if (readyFired) {
+                setTimeout(function() {
+                    callback(context);
+                }, 1);
+                return;
+            } else {
+                // add the function and context to the list
+                readyList.push({
+                    fn: callback,
+                    ctx: context
+                });
+            }
+            // if document already ready to go, schedule the ready function to run
+            if (document.readyState === "complete") {
+                setTimeout(ready, 1);
+            } else if (!readyEventHandlersInstalled) {
+                // otherwise if we don't have event handlers installed, install them
+                if (document.addEventListener) {
+                    // first choice is DOMContentLoaded event
+                    document.addEventListener("DOMContentLoaded", ready, false);
+                    // backup is window load event
+                    window.addEventListener("load", ready, false);
+                } else {
+                    // must be IE
+                    document.attachEvent("onreadystatechange", readyStateChange);
+                    window.attachEvent("onload", ready);
+                }
+                readyEventHandlersInstalled = true;
+            }
+        },
+        prototype: {}
+    };
+})();
+
+/**
+ * @generous
+ * @type method
+ * @name element
+ * @parent ibd
+ * @description The element method is the base building block of ibd and provides
+ * access to a number of methods aimed at easy manipulation and extension of the DOM.
+ * Returns an instance of the ibd.element class consisting of theDOM node and prototype methods
+ * @param {object} source Can be either a DOM node or markup representing a node in the format `<div/>`
+ * @example
+ * <head>
+ *     <script src="../dist/ibd.js"></script>
+ *     <link href="../dist/ibd.min.css" rel="stylesheet" type="text/css">
+ * </head>
+ * <javascript>
+ *     ibd.ready(function(){
+ *          ibd.element('<span />')
+ *             .text('sample text content')
+ *             .style('color','red')
+ *             .appendTo(document.body);
+ *     });
+ * </javascript>
+ */
+
+(function(ibd) {
+    function element(el) {
+        if (!(this instanceof element))
+            return new element(el);
+        if (!el) {
+            return false; // attempting to instantiate an ibd element so do nothing
+        } else if (el[0] && el[0].nodeType > 0 && this instanceof element) {
+            return el; // already instantiated
+        } else if (typeof el === 'string' && el.substr(0, 1) === '#') {
+            el = document.getElementById(el.substr(1, el.length));
+        } else if (typeof el === 'string') {
+            var attrs = [];
+            if (el.substr(0, 1) === '<') {
+                el = el.substr(1, el.length).substring(0, el.length - 3);
+                attrs = el.split(' ');
+                el = attrs.shift();
+            }
+            // svg's require special treatment
+            if (['g', 'path', 'line', 'circle', 'rect'].some(function(v) {
+                    return ~el.indexOf(v);
+                })) {
+                var tmp = document.createElement('div'),
+                    svgEl = document.createElement(el);
+                tmp.innerHTML = '<svg>' + svgEl.outerHTML + '</svg>';
+                el = tmp.firstChild.firstChild;
+            } else {
+                el = document.createElement(el);
+            }
+            attrs.forEach(function(attr) {
+                var keyval = attr.split("=");
+                if (keyval.length !== 2) {
+                    return;
+                }
+                el.setAttribute(keyval[0], keyval[1].substr(1, keyval[1].length).substr(0, keyval[1].length - 2));
+            });
+        }
+        this[0] = el;
+        el = null;
+        return this;
+    }
+
+    /**
+     * @generous
+     * @type method
+     * @name width
+     * @parent element
+     * @description Returns the the width in pixels as an integer
+     * @param {bool} total Whether to include margins
+     */
+
+    element.prototype.width = function(margin) {
+        var el = this[0],
+            val = el.offsetWidth;
+        val += ibd.util.parseInt(this.style("padding-left")) + ibd.util.parseInt(this.style("padding-right"));
+        val += ibd.util.parseInt(this.style("borderLeftWidth")) + ibd.util.parseInt(this.style("borderRightWidth"));
+        if (margin) {
+            val += ibd.util.parseInt(this.style("margin-left")) + ibd.util.parseInt(this.style("margin-right"));
+        }
+        el = null;
+        return val;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name height
+     * @parent element
+     * @description Returns the the height in pixels as an integer
+     * @param {bool} total Whether to include margins
+     */
+    element.prototype.height = function(margin) {
+        var el = this[0],
+            val = el.offsetHeight;
+        val += ibd.util.parseInt(this.style("padding-top")) + ibd.util.parseInt(this.style("padding-bottom"));
+        val += ibd.util.parseInt(this.style("borderTopWidth")) + ibd.util.parseInt(this.style("borderBottomWidth"));
+        if (margin) {
+            val += ibd.util.parseInt(this.style("margin-top")) + ibd.util.parseInt(this.style("margin-bottom"));
+        }
+        el = null;
+        return val;
+    };
+
+
+    /**
+     * @generous
+     * @type method
+     * @name style
+     * @parent element
+     * @description If a value is passed, sets the given style property and returns the element instance
+     * to allow chaining, otherwise gets the current value
+     * @param {string} property Style property
+     * @param {string=} value Value to set, pass an empty string or `false` to unset style
+     */
+    element.prototype.style = function(prop, val) {
+        var el = this[0];
+        prop = ibd.util.camelCase(prop);
+
+        function getComputedStyle(node) {
+            var style,
+                returns = {},
+                _prop;
+            // FireFox and Chrome way
+            if (window.getComputedStyle) {
+                style = window.getComputedStyle(node, null);
+                for (var i = 0, l = style.length; i < l; i++) {
+                    _prop = style[i];
+                    returns[_prop] = style.getPropertyValue(_prop);
+                }
+                return returns;
+            }
+            // IE and Opera way
+            if (node.currentStyle) {
+                style = node.currentStyle;
+                for (_prop in style) {
+                    returns[_prop] = style[_prop];
+                }
+                return returns;
+            }
+            // Style from style attribute
+            if (style === node.style) {
+                for (_prop in style) {
+                    if (typeof style[_prop] !== 'function') {
+                        returns[_prop] = style[_prop];
+                    }
+                }
+                return returns;
+            }
+            return returns;
+        }
+        if (~[false, ""].indexOf(val)) { // attempt to unset value
+            el.style[prop] = "";
+            return this; // chainable
+        } else if (val || val === 0) {
+            //set - but only if not already set (to prevent class override)
+            if (getComputedStyle(el)[prop] !== val) {
+                el.style[prop] = val;
+            }
+            return this; // chainable
+        } else {
+            //get
+            // if a property is being searched for - return the value, otherwise the whole property object
+            return prop ? getComputedStyle(el)[prop] : getComputedStyle(el);
+        }
+    };
+
+    /**
+     * @generous
+     * @type method
+     * @name hasClass
+     * @parent element
+     * @description Returns `boolean` denoting whether element has passed class
+     * @param {string} class CSS class to check for
+     */
+    element.prototype.hasClass = function(cls) {
+        var clsList = this[0].classList;
+        cls = cls.split(/(?:,| )+/);
+        return cls.some(function(v) {
+            return ~clsList.indexOf(v);
+        });
+    };
+    /**
+     * @generous
+     * @type method
+     * @name addClass
+     * @parent element
+     * @description Adds passed class and returns element to allow chaining
+     * @param {string} class CSS class to add
+     */
+    element.prototype.addClass = function(cls) {
+        DOMTokenList.prototype.add.apply(this[0].classList, cls.split(/(?:,| )+/));
+        return this;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name removeClass
+     * @parent element
+     * @description Removes passed class and returns element to allow chaining
+     * @param {string} class CSS class to remove
+     */
+    element.prototype.removeClass = function(cls) {
+        DOMTokenList.prototype.remove.apply(this[0].classList, cls.split(/(?:,| )+/));
+        return this;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name toggleClass
+     * @parent element
+     * @description Toggles passed class and returns element to allow chaining
+     * @param {string} class CSS class to toggle
+     */
+    element.prototype.toggleClass = function(cls, toggle) {
+        return toggle === true ? this.addClass(cls) : this.removeClass(cls);
+    };
+    /**
+     * @generous
+     * @type method
+     * @name scrolling
+     * @parent element
+     * @description Returns either a `boolean` denoting whether scrolling is occurring
+     * on the element, or an object consisting of `x` and `y` values if `xy` is `true`
+     * @param {boolean} xy If `true` returns object of `boolean` `x and `y` values
+     */
+    element.prototype.scrolling = function(xy) {
+        var el = this[0],
+            overflow = ['visible', 'hidden'],
+            result = {
+                y: el.scrollHeight > el.offsetHeight && (!~overflow.indexOf(window.getComputedStyle(el, null).getPropertyValue('overflow')) || !~overflow.indexOf(window.getComputedStyle(el, null).getPropertyValue('overflow-y'))),
+                x: el.scrollWidth > el.offsetWidth && (!~overflow.indexOf(window.getComputedStyle(el, null).getPropertyValue('overflow')) || !~overflow.indexOf(window.getComputedStyle(el, null).getPropertyValue('overflow-x')))
+            };
+        if (xy) {
+            return result;
+        } else {
+            return result.x || result.y;
+        }
+    };
+    /**
+     * @generous
+     * @type method
+     * @name ensurePosition
+     * @parent element
+     * @description Checks to see whether the element has a position set, if not,
+     * sets to `relative` and returns instance to allow chaining
+     */
+    element.prototype.ensurePosition = function() {
+        if (~['static', null, undefined, ''].indexOf(this.style('position'))) {
+            this.style('position', 'relative');
+        }
+        return this;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name setId
+     * @parent element
+     * @description Sets element id to passed value or `ibd-el-{{rand}}`
+     * and returns instance to allow chaining
+     * @param {string=} id Value to set `id` attribute to
+     */
+    element.prototype.setId = function(str) {
+        var el = this[0];
+        el.id = (str || 'ibd-el-') + Math.floor(Math.random() * (999999 - 0)) + 0;
+        return this;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name overflowing
+     * @parent element
+     * @description Returns either a `boolean` denoting whether overflow is occurring
+     * on the element, or an object consisting of `x` and `y` values if `xy` is `true`
+     * @param {boolean} xy If `true` returns object of `boolean` `x and `y` values
+     * @example
+     * <head>
+     *     <script src="../dist/ibd.js"></script>
+     *     <link href="../dist/ibd.min.css" rel="stylesheet" type="text/css">
+     * </head>
+     * <html>
+     *     <div style="height:100px;width:200px;border:1px solid;"><span id='content'>content</span></div>
+     *     <br />
+     *     <button id='add'>Add content</button>
+     *     <button id='remove'>Remove content</button>
+     *     </html>
+     * <javascript>
+     *     ibd.ready(function(){
+     *     var content=ibd.element(document.getElementById('content'));
+     *          ibd.element(document.getElementById('add'))
+     *               .on('click', function(e){
+     *                  content.text((content.text()+' content').trim());
+     *               });
+     *               ibd.element(document.getElementById('remove'))
+     *               .on('click', function(e){
+     *                  content.text((content.text().replace('content','')).trim());
+     *               });
+     *               setInterval(function(){
+     *                     if(content.overflowing()){
+     *                      content.style('color','red');
+     *                     }else{
+     *                      content.style('color','black');
+     *                     }
+     *               },100);
+     *     });
+     * </javascript>
+     */
+    element.prototype.overflowing = function(xy) {
+        // pass opt as a blank object {} to get x and y breakdown
+        var el = this[0],
+            result = {
+                x: el.offsetWidth > el.parentNode.offsetWidth,
+                y: el.offsetHeight > el.parentNode.offsetHeight
+            };
+        if (xy) {
+            return result;
+        } else {
+            return result.x || result.y;
+        }
+    };
+    /**
+     * @generous
+     * @type method
+     * @name inView
+     * @parent element
+     * @description Returns a `boolean` denoting whether the top left boundary of the element
+     * is currently visible, and not obscured by a parent's overflow
+     */
+    element.prototype.inView = function() {
+        var el = this[0],
+            elPos = el.getBoundingClientRect(),
+            inView = false;
+
+        function parent(tmpEl) {
+            var parentNode = tmpEl.parentNode;
+            if (window.getComputedStyle(parentNode, null).getPropertyValue("position") === "fixed") {
+                parentNode = document.body;
+            }
+            if (parentNode && parentNode !== document.body) {
+                var pElPos = parentNode.getBoundingClientRect(),
+                    pElH = parentNode.offsetHeight,
+                    pElW = parentNode.offsetWidth;
+                if (parentNode.scrollHeight > parentNode.offsetHeight || parentNode.scrollWidth > parentNode.offsetWidth) {
+                    // is element within visible area of any parent with overflow
+                    if (elPos.top < pElPos.top || elPos.top > pElPos.top + pElH || elPos.left < pElPos.left || elPos.left > pElPos.left + pElW) {
+                        inView = false; // element hidden...so exit
+                        return inView;
+                    }
+                }
+                //}
+                parent(parentNode); // element visible so escalate to next parent
+            } else if (parentNode === document.body) {
+                // is element in viewport area..checked last as may be within viewport, but scrolled outside visible area of a parent
+                inView = (
+                    elPos.top >= 0 &&
+                    elPos.left >= 0 &&
+                    elPos.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    elPos.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+                return inView;
+            } else {
+                inView = true;
+                return inView;
+            }
+            return inView;
+        }
+        return parent(el);
+    };
+    /**
+     * @generous
+     * @type method
+     * @name parent
+     * @parent element
+     * @description Returns `ibd.element` instance or `false` representing found parent
+     * @param {string=} selector Either an id, class, attribute or node to find parent on, returns immediate parent if blank
+     */
+    element.prototype.parent = function(selector) {
+        var el = this[0],
+            isType = null;
+        if (!selector) {
+            // not looking for any valid type, so return parent node
+            return ibd.element(el.parentNode);
+        } else if (typeof selector === 'object') {
+            isType = 'element';
+            selector = selector[0] ? selector[0] : selector;
+        } else if (selector.substr(0, 1) === "#") {
+            isType = 'id';
+            selector = selector.replace('#', "");
+        } else if (selector.substr(0, 1) === ".") {
+            isType = 'class';
+            selector = selector.replace('.', "");
+        } else if (selector.substr(0, 1) === "[") {
+            isType = 'attribute';
+            selector = selector.replace('[', "").replace(']', "");
+        }
+
+        function parent(node) {
+            var rEl = null;
+            if (node.parentNode && ((isType === 'attribute' && node.parentNode.hasAttribute(selector)) || (isType === 'id' && node.parentNode.id === selector) || (isType === 'class' && ibd.element(node.parentNode).hasClass(selector)) || (isType === 'element' && node.parentNode === selector))) {
+                rEl = node.parentNode;
+            } else if (node.parentNode) {
+                rEl = parent(node.parentNode);
+            } else {
+                rEl = false;
+            }
+            return rEl;
+        }
+        return parent(el) === false ? false : ibd.element(parent(el));
+    };
+    /**
+     * @generous
+     * @type method
+     * @name wrap
+     * @parent element
+     * @description Wraps the element in the passed node (or string in the format `<div/>`)
+     * and returns element for chaining
+     * @param {object} source Can be either a DOM node or markup representing a node in the format `<div/>`
+     */
+    element.prototype.wrap = function(wrap) {
+        var el = this[0];
+        wrap = ibd.element(wrap);
+        if (this.parent()) {
+            this.parent()[0].insertBefore(wrap[0], el);
+        }
+        wrap[0].appendChild(el);
+        return this;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name show
+     * @parent element
+     * @description Applies `ibd-show` class to element and returns element for chaining
+     */
+    element.prototype.show = function() {
+        return this
+            .addClass('ibd-show')
+            .removeClass('ibd-hide');
+    };
+    /**
+     * @generous
+     * @type method
+     * @name hide
+     * @parent element
+     * @description Applies `ibd-hide` class to element and returns element for chaining
+     */
+    element.prototype.hide = function() {
+        return this
+            .addClass('ibd-hide')
+            .removeClass('ibd-show');
+    };
+    /**
+     * @generous
+     * @type method
+     * @name trigger
+     * @parent element
+     * @description Triggers the passed event type and returns element for chaining
+     * @param {string} event Event name
+     */
+    element.prototype.trigger = function(e) {
+        if (document.createEvent) {
+            this[0].dispatchEvent(e);
+        } else {
+            this[0].fireEvent("on" + event.eventType, e);
+        }
+        return this;
+    };
+
+    /**
+     * @generous
+     * @type method
+     * @name on
+     * @parent element
+     * @description Calls given function when given event type is fired
+     * and returns element for chaining
+     * @param {string} event Event name
+     * @param {function} function Function to trigger
+     */
+    element.prototype.on = function(event, fn) {
+        var el = this[0];
+        event = ~['mousewheel', 'DOMMouseScroll'].indexOf(event) ? 'wheel' : event;
+        el.addEventListener(event, fn);
+        return this;
+    };
+
+    /**
+     * @generous
+     * @type method
+     * @name once
+     * @parent element
+     * @description Binds given function to given event type, then unbinds when even it fired
+     * and returns element for chaining
+     * @param {string} event Event name
+     * @param {function} function Function to trigger
+     */
+    element.prototype.once = function(event, fn) {
+        var el = this[0],
+            bound = function() {
+                fn();
+                el.removeEventListener(event, bound);
+            };
+        el.addEventListener(event, bound);
+        return this;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name off
+     * @parent element
+     * @description Unbinds given function from given event type
+     * and returns element for chaining
+     * @param {string} event Event name
+     * @param {function} function Function to unbind
+     */
+    element.prototype.off = function(event, fn) {
+        var el = this[0];
+        event = ~['mousewheel', 'DOMMouseScroll'].indexOf(event) ? 'wheel' : event;
+        el.removeEventListener(event, fn);
+        return this;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name html
+     * @parent element
+     * @description Sets the inner HTML content of the element to the passed node or HTML, maintaining
+     * all DOM references
+     * and returns element for chaining
+     * @param {object} html Either a DOM node, ibd.element instance or HTML string
+     */
+    element.prototype.html = function(html) {
+        var el = this[0];
+        if (html) {
+            if (ibd.util.isElement(html)) {
+                el.innerHTML = "";
+                el.appendChild(html);
+            } else if (html instanceof element) {
+                el.innerHTML = "";
+                el.appendChild(html[0]);
+            } else {
+                el.innerHTML = html;
+            }
+            return this;
+        } else {
+            return el.innerHTML;
+        }
+    };
+    /**
+     * @generous
+     * @type method
+     * @name text
+     * @parent element
+     * @description Sets the inner text content of the element to the passed string
+     * and returns element for chaining
+     * @param {string} text String to use
+     */
+    element.prototype.text = function(text) {
+        var el = this[0];
+        if (text) {
+            el.innerText = text.toString();
+            return this;
+        } else {
+            return el.innerText;
+        }
+    };
+
+    /**
+     * @generous
+     * @type method
+     * @name attr
+     * @parent element
+     * @description Sets or unsets the given attribute
+     * and returns element for chaining
+     * @param {string} attribute Attribute
+     * @param {string=} value Pass a value to set the attribute, pass nothing to get, or pass null to remove
+     */
+    element.prototype.attr = function(attr, val) {
+        var el = this[0];
+        if (val === null) {
+            el.removeAttribute(attr);
+            return this;
+        } else if (val !== undefined) {
+            el.setAttribute(attr, val);
+            return this;
+        } else {
+            return el.getAttribute(attr);
+        }
+    };
+    /**
+     * @generous
+     * @type method
+     * @name remove
+     * @parent element
+     * @description SRemoves the element from the DOM
+     */
+    element.prototype.remove = function() {
+        this[0].remove();
+        return null;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name appendTo
+     * @parent element
+     * @description Appends the element to the passed node or ibd.element
+     * and returns element for chaining
+     * @param {object} target DOM node or ibd.element to append to
+     */
+    element.prototype.appendTo = function(tgt) {
+        var el = this[0];
+        tgt = tgt[0] || tgt;
+        tgt.appendChild(el);
+        return this;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name prependTo
+     * @parent element
+     * @description Prepends the element to the passed node or ibd.element
+     * and returns element for chaining
+     * @param {object} target DOM node or ibd.element to prepend to
+     */
+    element.prototype.prependTo = function(tgt) {
+        var el = this[0];
+        tgt = tgt[0] || tgt;
+        tgt.insertBefore(el, tgt.children[0]);
+        return this;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name position
+     * @parent element
+     * @description Returns object consisting of top, right, bottom and left values
+     */
+    element.prototype.position = function() {
+        var el = this[0],
+            pos = {
+                top: el.getBoundingClientRect().top + (window.pageYOffset || document.body.scrollTop),
+                left: el.getBoundingClientRect().left + (window.pageXOffset || document.body.scrollLeft)
+            };
+        return {
+            top: pos.top,
+            left: pos.left,
+            right: pos.left + this.width(),
+            bottom: pos.top + this.height()
+        };
+    };
+
+    function layer(z, el) {
+        var collection = el.parentNode.children,
+            count = collection.length - 1;
+        z = z || 9999;
+        [].slice.call(collection).forEach(function(sibling, index) {
+            sibling.style.zIndex = z - (count - index);
+        });
+    }
+    /**
+     * @generous
+     * @type method
+     * @name toFront
+     * @parent element
+     * @description Layers all siblings in order and brings element to front with the passed z index
+     * and returns element for chaining
+     * @param {integer} z-index Upper z-index to use
+     */
+    element.prototype.toFront = function(z) {
+        var el = this[0];
+        el.parentNode.appendChild(el);
+        layer(z, el);
+        return this;
+    };
+    /**
+     * @generous
+     * @type method
+     * @name toBack
+     * @parent element
+     * @description Layers all siblings in order and moves element to back with the passed z index used for the top
+     * element and returns element for chaining
+     * @param {integer} z-index Upper z-index to use
+     */
+    element.prototype.toBack = function(z) {
+        var el = this[0];
+        el.parentNode.insertBefore(el, el.parentNode.firstChild);
+        layer(z, el);
+        return this;
+    };
+    element.prototype.bind = function(e, as) {
+        if (ibd.event[e]) {
+            ibd.event[e](this, as);
+        }
+        return this;
+    };
+    ibd.element = function(el) {
+        return new element(el);
+    };
+    ibd.prototype.element = element.prototype; // add the prototype for the element class to the ibd prototype collection so it can be extended later
+}(ibd));
+
+/**
+ * @generous
+ * @type class
+ * @name event
+ * @parent ibd
+ * @description The event class provides various event helper methods
+ */
+
+(function(ibd) {
+    function keymap(key) {
+        switch (key) {
+            case 13: //return key
+                key = "return";
+                break;
+            case 9: //tab key
+                key = "tab";
+                break;
+            case 27: //escape key
+                key = "esc";
+                break;
+            case 8: //backspace key
+                key = "backspace";
+                break;
+            case 46: //delete key
+                key = "del";
+                break;
+            case 38: //up cursor
+                key = "up";
+                break;
+            case 40: //down cursor
+                key = "down";
+                break;
+            case 32: //spacebar
+                key = "spacebar";
+                break;
+            case 33: //page up
+                key = "pageUp";
+                break;
+            case 34: //page down
+                key = "pageDown";
+                break;
+            case 36: //home
+                key = "home";
+                break;
+            case 35: //end
+                key = "end";
+                break;
+            case 37: //left cursor
+                key = "left";
+                break;
+            case 39: //right cursor
+                key = "right";
+                break;
+        }
+        return key;
+    }
+
+    function wheelmap(e) {
+        e = e.originalEvent ? e.originalEvent : e;
+        if (e.wheelDeltaY > 0 || e.wheelDelta > 0 || e.detail < 0) {
+            return "up";
+        } else {
+            return "down";
+        }
+    }
+    ibd.event = {
+        /**
+         * @generous
+         * @type method
+         * @name register
+         * @parent event
+         * @description Registers a new event type, and returns
+         * @param {string} event Name of event to create
+         * @param {object=} options Default event configuration
+         */
+        register: function(e, opt) {
+            opt = opt || {};
+            // var evt= new CustomEvent(e, opt);
+            var evt = document.createEvent("CustomEvent");
+            evt.initCustomEvent(e, false, false, opt);
+            return evt;
+
+        },
+        /**
+         * @generous
+         * @type method
+         * @name parse
+         * @parent event
+         * @description Parses the passed even an returns a human readable interpretation,
+         * e.g. if passed a wheel even- will return 'up' or 'down', for key events, will
+         * return e.g. 'enter', 'space' etc
+         * @param {object} event Event object to parse
+         * @example
+         * <head>
+         *     <script src="../dist/ibd.js"></script>
+         *     <link href="../dist/ibd.min.css" rel="stylesheet" type="text/css">
+         * </head>
+         * <javascript>
+         *     ibd.ready(function(){
+         *          var el=ibd.element('<div style="height:100px;width:100px;" />')
+         *          .text('Click to select this element, then use the mouse wheel, or type')
+         *          .attr('tabindex',0)
+         *               .style('border','1px solid')
+         *               .on('wheel', function(e){
+         *               ibd.event.pop(e);
+         *                  el.text(ibd.event.parse(e));
+         *               })
+         *               .on('keydown', function(e){
+         *               ibd.event.pop(e);
+         *                  el.text(ibd.event.parse(e));
+         *               })
+         *               .appendTo(document.body);
+         *     });
+         * </javascript>
+         */
+
+        parse: function(e) {
+            if (e.type.indexOf('key') > -1) {
+                return keymap(e.keyCode);
+            } else if (e.type.indexOf('wheel') > -1) {
+                return wheelmap(e);
+            }
+        },
+        /**
+         * @generous
+         * @type method
+         * @name pop
+         * @parent event
+         * @description Pops event bubble
+         * @param {object} event Event object to pop
+         */
+        pop: function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+        }
+    };
+}(ibd));
+
+/**
+ * @generous
+ * @type class
+ * @name util
+ * @parent ibd
+ * @description The util class provides various utility helper methods
+ */
+
+(function(ibd) {
+    ibd.util = {
+        /**
+         * @generous
+         * @type method
+         * @name parseInt
+         * @parent util
+         * @description Returns a parsed integer- controlling for undefined, null and other NaN values
+         * @param {string} value Value to parse
+         */
+        parseInt: function(v) {
+            return parseInt(v, 10) || 0;
+        },
+        /**
+         * @generous
+         * @type method
+         * @name camelCase
+         * @parent util
+         * @description Returns a camel-cased version of the passed string
+         * @param {string} string String to camelize
+         * @example
+         * <head>
+         *     <script src="../dist/ibd.js"></script>
+         *     <link href="../dist/ibd.min.css" rel="stylesheet" type="text/css">
+         * </head>
+         * <html>
+         *     <textarea rows='10' id='input'>sample text content</textarea>
+         *     <br />
+         *     <button id='button'>Camelize!</button>
+         *     </html>
+         * <javascript>
+         *     ibd.ready(function(){
+         *          ibd.element('#button')
+         *               .on('click', function(e){
+         *                  document.getElementById('input').value=ibd.util.camelCase(document.getElementById('input').value);
+         *               });
+         *     });
+         * </javascript>
+         */
+        camelCase: function(str) {
+            return str.toString().replace(/-/g, ' ').replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+                if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+                return index === 0 ? match.toLowerCase() : match.toUpperCase();
+            });
+        },
+        /**
+         * @generous
+         * @type method
+         * @name isElement
+         * @parent util
+         * @description Returns `boolean` denoting whether passed node is instantiated in the DOM
+         * @param {object} node to check
+         */
+        isElement: function(o) {
+            return (
+                typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
+                o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName === "string"
+            );
+        },
+        /**
+         * @generous
+         * @type method
+         * @name debounce
+         * @parent util
+         * @description Debounces the passed function by the given time in ms.
+         * @param {function} function Function to debounce
+         * @param {number=} wait Debounce delay in ms, defaults to 250
+         * @param {number=} immediate Execute immediately on first call
+         * @param {object=} scope Scope (context) to apply
+         */
+        debounce: function(func, wait, immediate, scope) {
+            var timeout;
+            return function() {
+                var context = scope || this,
+                    args = arguments,
+                    callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    timeout = null;
+                    if (!immediate) {
+                        func.apply(context, args);
+                    }
+                }, wait || 250);
+                if (callNow) func.apply(context, args);
+            };
+        },
+        /**
+         * @generous
+         * @type method
+         * @name throttle
+         * @parent util
+         * @description Throttles the passed function by the given time in ms.
+         * @param {function} function Function to throttle
+         * @param {number=} threshhold Throttle threshhold in ms, defaults to 250
+         * @param {object=} scope Scope (context) to apply
+         */
+        throttle: function(fn, threshhold, scope) {
+            threshhold = threshhold || 250;
+            var last,
+                deferTimer;
+            return function() {
+                var context = scope || this;
+
+                var now = +new Date(),
+                    args = arguments;
+                if (last && now < last + threshhold) {
+                    // hold on to it
+                    clearTimeout(deferTimer);
+                    deferTimer = setTimeout(function() {
+                        last = now;
+                        fn.apply(context, args);
+                    }, threshhold);
+                } else {
+                    last = now;
+                    fn.apply(context, args);
+                }
+            };
+        },
+        /**
+         * @generous
+         * @type method
+         * @name elasticate
+         * @parent util
+         * @description Elasticates passed lead in and out functions across simultaneous calls, leading to a normalized instantiation
+         * @param {function} leadIn Function to run at the beginning
+         * @param {number=} leadInMs Delay before running leadIn, defaults to 250
+         * @param {function=} leadOut Function to run at the end, defaults to leadIn
+         * @param {number=} leadOutMs Delay before running leadOut, defaults to leadInMs
+         * @param {boolean=} cancel If true, forces cancels and launches the leadOut route. Defaults to false
+         * @param {object=} scope Scope (context) to apply
+         */
+        elasticate: function(leadInFn, leadInMs, leadOutFn, leadOutMs, cancel, scope) {
+            leadInMs = leadInMs || 250;
+            leadOutFn = leadOutFn || leadInFn;
+            leadOutMs = leadOutMs || leadInMs;
+            cancel = cancel === true;
+            var leadInTimer,
+                leadOutTimer;
+            return function() {
+                var context = scope || this,
+                    args = arguments;
+                if (!cancel) {
+                    if (leadInTimer) {
+                        return false; // action already due to occur - so ignore
+                    }
+                    if (leadOutTimer) { // due to lead out from previous call...so cancel
+                        clearTimeout(leadOutTimer);
+                        leadOutTimer = null;
+                    }
+                    leadInTimer = setTimeout(function() {
+                        // run the lead in function, then queue up the leadout
+                        leadInFn.apply(context, args);
+                        clearTimeout(leadInTimer);
+                        leadInTimer = null;
+                        leadOutTimer = setTimeout(function() {
+                            clearTimeout(leadOutTimer);
+                            leadOutTimer = null;
+                            leadOutFn.apply(context, args);
+                        }, leadOutMs);
+                    }, leadInMs);
+                } else {
+                    clearTimeout(leadOutTimer);
+                    leadOutTimer = null;
+                    if (leadInTimer) {
+                        clearTimeout(leadInTimer);
+                        leadInTimer = null;
+                    }
+                    leadOutTimer = setTimeout(function() {
+                        clearTimeout(leadOutTimer);
+                        leadOutTimer = null;
+                        leadOutFn.apply(context, args);
+                    }, leadOutMs);
+                }
+            };
+        },
+        /**
+         * @generous
+         * @type method
+         * @name isArray
+         * @parent util
+         * @description Check whether the passed object/variable type is an array
+         * @param {object} variable Variable to check
+         */
+        isArray: function(v) {
+            return Object.prototype.toString.call(v) === '[object Array]';
+        },
+        /**
+         * @generous
+         * @type method
+         * @name rand
+         * @parent util
+         * @description generate a random number
+         * @param {number} min Minimum value
+         * @param {number} max Maximum value
+         */
+        rand: function(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+        merge: function() {
+            var obj = {},
+                i = 0,
+                il = arguments.length,
+                key;
+            for (; i < il; i++) {
+                for (key in arguments[i]) {
+                    if (arguments[i].hasOwnProperty(key)) {
+                        obj[key] = arguments[i][key];
+                    }
+                }
+            }
+            return obj;
+        },
+        polar2cartesian: function(centerX, centerY, radius, angleInDegrees) {
+            var angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
+            return {
+                x: centerX + (radius * Math.cos(angleInRadians)),
+                y: centerY + (radius * Math.sin(angleInRadians))
+            };
+        },
+        arcPath: function(x, y, radius, startAngle, endAngle) {
+            endAngle = endAngle == 360 || endAngle > 360 ? 359.9 : endAngle;
+            var start = this.polar2cartesian(x, y, radius, endAngle);
+            var end = this.polar2cartesian(x, y, radius, startAngle);
+
+            var arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
+
+            var d = [
+                "M", start.x, start.y,
+                "A", radius, radius, 0, arcSweep, 0, end.x, end.y
+            ].join(" ");
+
+            return d;
+        },
+        arcPoint: function(degrees, r) {
+            var a = degrees * Math.PI / 180,
+                y = Math.cos(a) * r,
+                x = Math.sin(a) * r;
+            return {
+                x: x,
+                y: y
+            };
+        }
+    };
+}(ibd));
+
+(function(ibd) {
+    /**
+     * @generous
+     * @type class
+     * @name color
+     * @parent ibd
+     * @description Utility class for various color helpers
+     */
+    ibd.color = {
+        toArr: function(v) {
+            var a = [];
+            if (v && typeof v !== "object") {
+                if (v.indexOf(',') !== -1) {
+                    a = v.split(',');
+                } else {
+                    a.push(v);
+                }
+            } else {
+                a = v;
+            }
+            return a;
+        },
+        /**
+         * @generous
+         * @type method
+         * @name hex2rgb
+         * @parent color
+         * @description Convert a HEX color string to an RGB. Returns array of red, blue and green components
+         * @param {string} hex HEX color string
+         */
+        hex2rgb: function(hex) {
+            var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
+                result, r, g, b;
+            hex = hex.replace(shorthandRegex, function(r, g, b) {
+                return r + r + g + g + b + b;
+            });
+            result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            r = parseInt(result[1], 16);
+            g = parseInt(result[2], 16);
+            b = parseInt(result[3], 16);
+            return [r, g, b];
+        },
+        /**
+         * @generous
+         * @type method
+         * @name rgb2hex
+         * @parent color
+         * @description Convert an RGB array to a HEX color string. Returns HEX color string
+         * @param {array} rgb Array of red, blue and green components
+         */
+        rgb2hex: function(rgb) {
+            rgb = ibd.color.toArr(rgb);
+            var hex = '',
+                h, i, c;
+            for (i = 0; i < rgb.length; i += 1) {
+                c = rgb[i];
+                h = c.toString(16);
+                h = (h.length === 1) ? "0" + h : h;
+                hex += h;
+            }
+            return '#' + hex;
+        },
+        /**
+         * @generous
+         * @type method
+         * @name rgb2hsv
+         * @parent color
+         * @description Convert an RGB array to a HSV array. Returns array of hue, saturation and value components
+         * @param {array} rgb Array of red, blue and green components
+         */
+        rgb2hsv: function(rgb) {
+            rgb = ibd.color.toArr(rgb);
+            var
+                r = rgb[0],
+                g = rgb[1],
+                b = rgb[2],
+                min = Math.min(r, g, b),
+                max = Math.max(r, g, b),
+                delta = max - min,
+                h, s, v = max;
+            v = Math.floor(max / 255 * 100);
+
+            if (max !== 0) {
+                s = Math.floor(delta / max * 100);
+            } else {
+                return [0, 0, 0];
+            }
+            if (delta === 0) {
+                h = 0;
+            } else {
+                if (r === max) {
+                    h = (g - b) / delta;
+                } else if (g === max) {
+                    h = 2 + (b - r) / delta;
+                } else {
+                    h = 4 + (r - g) / delta;
+                }
+            }
+            h = Math.floor(h * 60);
+            if (h < 0) {
+                h += 360;
+            }
+            return [h, s, v];
+        },
+        /**
+         * @generous
+         * @type method
+         * @name hsv2rgb
+         * @parent color
+         * @description Convert an HSV array to a RGB array. Returns array of red, blue and green components
+         * @param {array} hsv Array of hue, saturation and value components
+         */
+        hsv2rgb: function(hsv) {
+            hsv = ibd.color.toArr(hsv);
+            var
+                r, g, b, i, f, p, q, t, h = hsv[0],
+                s = hsv[1],
+                v = hsv[2];
+            h = Math.max(0, Math.min(360, h));
+            s = Math.max(0, Math.min(100, s));
+            v = Math.max(0, Math.min(100, v));
+            s /= 100;
+            v /= 100;
+            h = h === 360 ? 0 : h;
+            if (s === 0) {
+                r = g = b = v;
+                return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+            }
+            h /= 60;
+            i = Math.floor(h);
+            f = h - i;
+            p = v * (1 - s);
+            q = v * (1 - s * f);
+            t = v * (1 - s * (1 - f));
+            switch (i) {
+                case 0:
+                    r = v;
+                    g = t;
+                    b = p;
+                    break;
+                case 1:
+                    r = q;
+                    g = v;
+                    b = p;
+                    break;
+                case 2:
+                    r = p;
+                    g = v;
+                    b = t;
+                    break;
+                case 3:
+                    r = p;
+                    g = q;
+                    b = v;
+                    break;
+                case 4:
+                    r = t;
+                    g = p;
+                    b = v;
+                    break;
+                case 5:
+                    r = v;
+                    g = p;
+                    b = q;
+                    break;
+            }
+            r = Math.round(r * 255);
+            g = Math.round(g * 255);
+            b = Math.round(b * 255);
+            return [r, g, b];
+        },
+        /**
+         * @generous
+         * @type method
+         * @name rgb2hsl
+         * @parent color
+         * @description Convert an RGB array to a HSL array. Returns array of hue, saturation and lightness components
+         * @param {array} rgb Array of red, green and blue components
+         */
+        rgb2hsl: function(rgb) {
+            rgb = ibd.color.toArr(rgb);
+            var r = rgb[0],
+                g = rgb[1],
+                b = rgb[2];
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            var max = Math.max(r, g, b),
+                min = Math.min(r, g, b);
+            var h, s, l = (max + min) / 2;
+            if (max === min) {
+                h = s = 0; // achromatic
+            } else {
+                var d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r:
+                        h = (g - b) / d + (g < b ? 6 : 0);
+                        break;
+                    case g:
+                        h = (b - r) / d + 2;
+                        break;
+                    case b:
+                        h = (r - g) / d + 4;
+                        break;
+                }
+                h /= 6;
+            }
+            return [h, s, l];
+        },
+        /**
+         * @generous
+         * @type method
+         * @name hsl2rgb
+         * @parent color
+         * @description Convert an HSL array to a RGB array. Returns array of red, green and blue components
+         * @param {array} hsl Array of hue, saturation and lightness components
+         */
+        hsl2rgb: function(hsl) {
+            hsl = ibd.color.toArr(hsl);
+            var h = hsl[0],
+                s = hsl[1],
+                l = hsl[2],
+                r, g, b;
+
+            function hue2rgb(p, q, t) {
+                if (t < 0) {
+                    t += 1;
+                }
+                if (t > 1) {
+                    t -= 1;
+                }
+                if (t < 1 / 6) {
+                    return p + (q - p) * 6 * t;
+                }
+                if (t < 1 / 2) {
+                    return q;
+                }
+                if (t < 2 / 3) {
+                    return p + (q - p) * (2 / 3 - t) * 6;
+                }
+                return p;
+            }
+            if (s === 0) {
+                r = g = b = l; // achromatic
+            } else {
+
+                var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                var p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1 / 3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1 / 3);
+            }
+
+            return [r * 255, g * 255, b * 255];
+        },
+        /**
+         * @generous
+         * @type method
+         * @name hex2hsl
+         * @parent color
+         * @description Convert a HEX color string to a HSL array. Returns array of hue, saturation and lightness components
+         * @param {String} hex HEX color string
+         */
+        hex2hsl: function(hex) {
+            return this.rgb2hsl(this.hex2rgb(hex));
+        },
+        /**
+         * @generous
+         * @type method
+         * @name hsl2hex
+         * @parent color
+         * @description Convert an HSL array to a HEX color string. Returns HEX color string
+         * @param {Array} hsl Array of hue, saturation and lightness components
+         */
+        hsl2hex: function(hsl) {
+            return this.rgb2hex(this.hsl2rgb(ibd.color.toArr(hsl)));
+        },
+        /**
+         * @generous
+         * @type method
+         * @name hsv2hsl
+         * @parent color
+         * @description Convert an HSV array to HSL array. Returns array of hue, saturation and lightness components
+         * @param {Array} hsv Array of hue, saturation and value components
+         */
+        hsv2hsl: function(hsv) {
+            return this.rgb2hsl(this.hsv2rgb(ibd.color.toArr(hsv)));
+        },
+        /**
+         * @generous
+         * @type method
+         * @name hsl2hsv
+         * @parent color
+         * @description Convert an HSL array to HSV array. Returns array of hue, saturation and value components
+         * @param {Array} hsl Array of hue, saturation and lightness components
+         */
+        hsl2hsv: function(hsl) {
+            return this.rgb2hsv(this.hsl2rgb(ibd.color.toArr(hsl)));
+        },
+        /**
+         * @generous
+         * @type method
+         * @name hex2hsv
+         * @parent color
+         * @description Convert a HEX color string to a HSV array. Returns array of hue, saturation and value components
+         * @param {String} hex HEX color string
+         */
+        hex2hsv: function(hex) {
+            return this.rgb2hsv(this.hex2rgb(hex));
+        },
+        /**
+         * @generous
+         * @type method
+         * @name hsv2hex
+         * @parent color
+         * @description Convert an HSV array to a HEX color string. Returns HEX color string
+         * @param {Array} hsv Array of hue, saturation and value components
+         */
+        hsv2hex: function(hsv) {
+            return this.rgb2hex(this.hsv2rgb(ibd.color.toArr(hsv)));
+        },
+        /**
+         * @generous
+         * @type method
+         * @name random
+         * @parent color
+         * @description  Generate a series of color biased (high saturation/lightness) randomized HEX color strings. Returns Array of HEX color strings
+         * @param {Number} count Number of random colors to generate
+         * @param {String} hex HEX color string to set band to generate random color(s)
+         * @param {String} hex HEX color string to set band to generate random color(s)
+         */
+        random: function(count, hex1, hex2) {
+            var palette = [],
+                i, h, s, v;
+            count = typeof count !== 'number' ? 1 : count;
+
+            if (hex1 && hex2) {
+                var hsv1 = this.hex2hsv(hex1),
+                    hsv2 = this.hex2hsv(hex2);
+                h = ibd.color.getRand(Math.min.apply(Math, [hsv1[0], hsv2[0]]), Math.max.apply(Math, [hsv1[0], hsv2[0]]));
+                s = ibd.color.getRand(Math.min.apply(Math, [hsv1[1], hsv2[1]]), Math.max.apply(Math, [hsv1[1], hsv2[1]]));
+                v = ibd.color.getRand(Math.min.apply(Math, [hsv1[2], hsv2[2]]), Math.max.apply(Math, [hsv1[2], hsv2[2]]));
+            } else {
+                h = ibd.color.getRand(0, 360);
+                s = 100;
+                v = ibd.color.getRand(75, 100);
+            }
+
+            for (i = 0; i < count; i += 1) {
+                //    palette.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+                palette.push(this.hsv2hex([h, s, v]));
+            }
+            return palette;
+        },
+        /**
+         * @generous
+         * @type method
+         * @name complement
+         * @parent color
+         * @description  Generate (palette of) complementary color(s) from passed HEX color string. Returns Array of HEX color strings
+         * @param {String} hex HEX color string
+         * @param {String} type Type of complementary palette to create, defaults to single complementary color, can be `split` or `double`
+         */
+        complement: function(hex, type) {
+            var count = 1,
+                rotation = 180,
+                scope = 0;
+            switch (type) {
+                case "split":
+                    count = 3;
+                    rotation = 180;
+                    scope = 180;
+                    break;
+                case "double":
+                    count = 5;
+                    rotation = 180;
+                    scope = 180;
+                    break;
+            }
+            return this.algorithmic({
+                hex: hex,
+                count: count,
+                scope: scope,
+                rotation: 180
+            });
+        },
+        /**
+         * @generous
+         * @type method
+         * @name triadic
+         * @parent color
+         * @description  Generate triadic color palette. Returns Array of HEX color strings
+         * @param {String} hex HEX color string
+         */
+        triadic: function(hex) {
+            return this.algorithmic({
+                hex: hex
+            });
+        },
+        /**
+         * @generous
+         * @type method
+         * @name tetradic
+         * @parent color
+         * @description  Generate tetradic color palette. Returns Array of HEX color strings
+         * @param {String} hex HEX color string
+         */
+        tetradic: function(hex) {
+            return this.algorithmic({
+                hex: hex,
+                count: 4
+            });
+        },
+        /**
+         * @generous
+         * @type method
+         * @name pentadic
+         * @parent color
+         * @description  Generate pentadic color palette. Returns Array of HEX color strings
+         * @param {String} hex HEX color string
+         */
+        pentadic: function(hex) {
+            return this.algorithmic({
+                hex: hex,
+                count: 5
+            });
+        },
+        degrees: function(degrees, offset) {
+            degrees += offset;
+            if (degrees > 360) {
+                degrees -= 360;
+            } else if (degrees < 0) {
+                degrees += 360;
+            }
+            return degrees;
+        },
+        /**
+         * @generous
+         * @type method
+         * @name percentage
+         * @parent color
+         * @description  Generate a color from a percentage point between two colors. Returns resulting HEX color
+         * @param {Number} perc Percentage between first and second colors to generate color point from expressed as value between zero and one
+         * @param {String} hex Starting color HEX value defaults to `#ff0000` red so 0% is red
+         * @param {String} hex Ending color HEX value defaults to `#1ae500` green so 100% is green
+         */
+        percentage: function(perc, hex1, hex2) {
+            hex1 = hex1 || '#ff0000';
+            hex2 = hex2 || '#27ae62';
+            var hsv1 = ibd.color.hex2hsv(hex1),
+                hsv2 = ibd.color.hex2hsv(hex2);
+            return ibd.color.hsv2hex([Math.round(hsv1[0] + perc * (hsv2[0] - hsv1[0])), Math.round(hsv1[1] + perc * (hsv2[1] - hsv1[1])), Math.round(hsv1[2] + perc * (hsv2[2] - hsv1[2]))]);
+        },
+        /**
+         * @generous
+         * @type method
+         * @name scale
+         * @parent color
+         * @description  Scale either hue, saturation or value of a color by a percentage amount. Returns resulting HEX color
+         * @param {String} hex HEX color string
+         * @param {Number} perc Percentage to adjust color by
+         * @param {String} type String, scale to adjust, either `hue`, `saturation` or `value`
+         * @param {Boolean} abs Define percentage as absolute value from base to max, defaults to relative value between current and max
+         */
+        scale: function(hex, perc, type, abs) {
+            type = type || 'hue';
+
+            var hsv = this.hex2hsv(hex),
+                adj = type === 'hue' ? hsv[0] : type === 'saturation' ? hsv[1] : hsv[2];
+            perc = Math.abs(perc) > 1 ? perc / 100 : perc;
+            perc = abs === true ? perc * 100 : adj + ((type === 'hue' ? 360 : 100) - adj) * perc;
+            return this.hsv2hex([type === "hue" ? adj : hsv[0], type === "saturation" ? perc : hsv[1], type === "value" ? perc : hsv[2]]);
+        },
+        /**
+         * @generous
+         * @type method
+         * @name lighten
+         * @parent color
+         * @description  Lighten a color by a percentage amount. Returns resulting HEX color
+         * @param {String} hex HEX color string
+         * @param {Number} perc Percentage to lighten color by
+         * @param {Boolean} abs Define percentage lightness as absolute value, defaults to relative
+         */
+        lighten: function(hex, perc, abs) {
+            perc = perc > 0 ? perc : -1 * perc;
+            return this.scale(hex, perc, 'value', abs);
+        },
+        /**
+         * @generous
+         * @type method
+         * @name darken
+         * @parent color
+         * @description  Darken a color by a percentage amount. Returns resulting HEX color
+         * @param {String} hex HEX color string
+         * @param {Number} perc Percentage to darken color by
+         * @param {Boolean} abs Define percentage lightness as absolute value, defaults to relative
+         */
+        darken: function(hex, perc, abs) {
+            perc = perc < 0 ? perc : -1 * perc;
+            return this.scale(hex, perc, 'value', abs);
+        },
+        /**
+         * @generous
+         * @type method
+         * @name saturate
+         * @parent color
+         * @description  Saturate a color by a percentage amount. Returns resulting HEX color
+         * @param {String} hex HEX color string
+         * @param {Number} perc Percentage to saturate color by
+         * @param {Boolean} abs Define percentage saturate as absolute value, defaults to relative
+         */
+        saturate: function(hex, perc, abs) {
+            perc = perc > 0 ? perc : -1 * perc;
+            return this.scale(hex, perc, 'saturation', abs);
+        },
+        /**
+         * @generous
+         * @type method
+         * @name desaturate
+         * @parent color
+         * @description  Desaturate a color by a percentage amount. Returns resulting HEX color
+         * @param {String} hex HEX color string
+         * @param {Number} perc Percentage to desaturate color by
+         * @param {Boolean} abs Define percentage desaturate as absolute value, defaults to relative
+         */
+        desaturate: function(hex, perc, abs) {
+            perc = perc > 0 ? perc : -1 * perc;
+            return this.scale(hex, perc, 'saturation', abs);
+        },
+        /**
+         * @generous
+         * @type method
+         * @name algorithmic
+         * @parent color
+         * @description  Generate algorithmic color palette. Returns array of HEX color strings
+         * @param {Object} options Algorithmic color transformation options
+         * @param {String} options.hex HEX color string
+         * @param {Number} options.count Number of colors to produce
+         * @param {String} options.type Component to calculate on, either `hue`, `saturation` or `value`
+         * @param {Number} options.scope Number of degrees of rotation to consider
+         * @param {Number} options.rotation Number of degrees of rotation to calculate from
+         */
+        // pick a point on the wheel, the number of degrees either side to cover and the split
+        algorithmic: function(opt) {
+            if (!opt.hex) {
+                return;
+            }
+            var hex = opt.hex,
+                count = typeof opt.count === 'undefined' ? 3 : opt.count,
+                type = typeof opt.type === 'undefined' ? 'hue' : opt.type,
+                scope = typeof opt.scope === 'undefined' ? 360 : opt.scope,
+                rotation = typeof opt.rotation === 'undefined' ? 0 : opt.rotation,
+                hsv = this.hex2hsv(hex),
+                h = hsv[0],
+                s = hsv[1],
+                v = hsv[2],
+                origin, steps, palette = [],
+                offset, i;
+            // if scope is 360, the start and end point are the same color, so should be avoided, otherwise enlargen the steps
+            steps = (type === "hue" && (scope === 360 || scope === 0)) ? scope / count : scope / (count - 1);
+            // if scope is 360, start on the current color
+            origin = (scope === 360) ? h : this.degrees(this.degrees(h, rotation), -1 * scope / 2);
+            for (i = 0; i < count; i += 1) {
+                offset = steps * i;
+                switch (type) {
+                    case "hue":
+                        palette.push(this.hsv2hex([this.degrees(origin, offset, 360) === 360 ? 0 : this.degrees(origin, offset, 360), s, v]));
+                        break;
+                    case "saturation":
+                        palette.push(this.hsv2hex([h, offset, v]));
+                        break;
+                    case "value":
+                    case "lightness":
+                    case "brightness":
+                        palette.push(this.hsv2hex([h, s, offset]));
+                        break;
+                }
+            }
+            return palette;
+        }
+    };
+}(ibd));
+
+(function(element) {
+    element.toggle = function(ms) {
+        var el = this,
+            h = el.height(),
+            collapsed = h === 0,
+            to = collapsed ? 0 : h,
+            incr = 0,
+            int;
+        if (!el.attr('ibd-toggle-height')) {
+            el.attr('ibd-toggle-height', h);
+        }
+        el.style('overflow', 'hidden');
+        if (collapsed) {
+            el.style('height', 'auto');
+            h = el.height() || el.attr('ibd-toggle-height');
+            el.style('height', 0);
+        }
+        incr = (ms || 250) / h;
+        if (int) {
+            clearInterval(int);
+        }
+        int = setInterval(function() {
+            if ((collapsed && to === h) || (!collapsed && to === 0)) {
+                clearInterval(int);
+                if (collapsed) {
+                    el.attr('ibd-toggle-height', null);
+                }
+                return;
+            }
+            to = (collapsed ? (to + incr > h ? h : to + incr) : (to - incr < 0 ? 0 : to - incr));
+            el.style('height', to + 'px');
+        }, 1);
+
+        return this;
+    };
+}(ibd.prototype.element));
+
+//TODO: bind events to top and switch on target
+(function(ibd) {
+    var weekday = {
+            s: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+            m: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            l: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        },
+        month = {
+            m: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        };
+
+    function parseDate(y, m, d) {
+        function normalizeDay(v) {
+            if (v === 0) {
+                return 6;
+            } else {
+                return v - 1;
+            }
+        }
+        return {
+            weekday: normalizeDay(new Date(y, m - 1, d).getDay()),
+            startday: normalizeDay(new Date(y, m - 1, 1).getDay()),
+            endday: new Date(y, m, 0).getDate(),
+            prevend: new Date(y, m - 1, 0).getDate(),
+            nextend: new Date(y, (m === 11 ? 0 : m + 1), 0).getDate(),
+            date: new Date(y, m - 1, d)
+        };
+    }
+
+    function createDays(y, m, d) {
+        var parsed = parseDate(y, m, d),
+            sD = parsed.startday,
+            eD = parsed.endday,
+            pD = parsed.prevend,
+            tpl;
+        sD = sD === 0 ? sD = 7 : sD;
+        tpl = "<thead><tr>";
+        for (var w = 0; w < 7; w++) {
+            tpl += "<th>" + weekday.m[w] + "</th>";
+        }
+        tpl += "</tr></thead><tbody>";
+        for (var c = 0; c < 42; c++) {
+            if (c % 7 === 0) {
+                tpl += "<tr>";
+            }
+            if (c >= sD && c <= eD + sD - 1) {
+                tpl += "<td data-day='" + (c - sD + 1) + "'>" + (c - sD + 1) + "</td>";
+            } else if (c < sD) {
+                tpl += "<td class='ibd-prev' data-day='" + (pD - (sD - c - 1)) + "' data-month='" + (m - 2 < 0 ? 11 : m - 2) + "' " + (m - 2 < 0 ? "data-year='" + (y - 1) + "'" : '') + ">" + (pD - (sD - c - 1)) + "</td>";
+            } else {
+                tpl += "<td class='ibd-next' data-day='" + (c - sD - eD + 1) + "' data-month='" + (m === 12 ? 0 : m) + "' " + (m === 12 ? "data-year='" + (y + 1) + "'" : '') + ">" + (c - sD - eD + 1) + "</td>";
+            }
+            if (c % 7 === 6) {
+                tpl += "</tr>";
+            }
+        }
+        tpl += "</tbody>";
+        return tpl;
+    }
+
+    function createYears(y) {
+        var tpl = "";
+        for (var i = 0; i < 55; i++) {
+            if (i % 5 === 0) {
+                tpl += "<tr>";
+            }
+            tpl += "<td data-year='" + (y + i) + "'>" + (y + i) + "</td>";
+            if (i % 5 === 4) {
+                tpl += "</tr>";
+            }
+        }
+        return tpl;
+    }
+
+    function createMonths() {
+        var tpl = "";
+        for (var n = 0; n < 12; n++) {
+            tpl += "<li data-month='" + n + "'>" + month.m[n] + "</li>";
+        }
+        return tpl;
+    }
+
+    function datepicker() {
+        var proto = this,
+            y, m, d;
+
+        function setMeta() {
+            function getSuffix(n) {
+                return n + (n < 11 || n > 13 ? ['st', 'nd', 'rd', 'th'][Math.min((n - 1) % 10, 3)] : 'th');
+            }
+            var mDate = parseDate(y, m, d);
+            metaEl.html(weekday.l[mDate.weekday] + " " + getSuffix(mDate.date.getDate()) + " " + month.m[mDate.date.getMonth()] + " " + mDate.date.getFullYear());
+        }
+
+        function setYear() {
+            yearEl.html(y);
+            setMonth();
+        }
+
+        function setMonth() {
+            for (var n = 0; n < 12; n++) {
+                ibd.element(monthEl[0].children[n]).removeClass('selected');
+            }
+            ibd.element(monthEl[0].children[m - 1]).addClass('selected');
+            daysEl.html(createDays(y, m, d));
+            setDay();
+        }
+
+        function setDay() {
+            var i = 0,
+                sD = parseDate(y, m, d).startday;
+            for (var w = 0; w < 6; w++) {
+                for (var c = 0; c < 7; c++) {
+                    i++;
+                    ibd.element(daysEl[0].children[1].children[w].children[c]).removeClass('selected');
+                    if (i === sD + d) {
+                        ibd.element(daysEl[0].children[1].children[w].children[c]).addClass('selected');
+                    }
+                }
+            }
+        }
+        var datepickerEl = ibd.element.call(this, '<div class="ibd-datepicker"/>')
+            .on('click', function(e) {
+                var tgt = ibd.element(e.target);
+                if (tgt.attr('data-year')) {
+                    y = parseInt(tgt.attr('data-year'), 0);
+                    setYear();
+                }
+                if (tgt.attr('data-month')) {
+                    m = parseInt(tgt.attr('data-month'), 0) + 1;
+                    setMonth();
+                }
+                if (tgt.attr('data-day')) {
+                    d = parseInt(tgt.attr('data-day'), 0);
+                    setDay();
+                }
+                setMeta();
+            }),
+            metaEl = ibd.element("<table class='ibd-datepicker-meta'/>").appendTo(datepickerEl),
+            daysEl = ibd.element("<table class='ibd-datepicker-day'/>").appendTo(datepickerEl)
+            .on('wheel', function(e) {
+                var parsed = parseDate(y, m, d);
+                if (ibd.event.parse(e) === 'up') {
+                    if (d === parsed.endday) {
+                        d = 1;
+                        if (m === 12) {
+                            m = 1;
+                            y++;
+                            setYear();
+                        } else {
+                            m++;
+                            setMonth();
+                        }
+                    } else {
+                        d++;
+                        setDay();
+                    }
+                } else {
+                    if (d === 1) {
+                        d = parsed.prevend;
+                        if (m === 1) {
+                            m = 12;
+                            y--;
+                            setYear();
+                        } else {
+                            m--;
+                            setMonth();
+                        }
+                    } else {
+                        d--;
+                        setDay();
+                    }
+                }
+                setMeta();
+                ibd.event.pop(e);
+            }),
+            monthEl = ibd.element("<ul class='ibd-datepicker-month'/>").appendTo(datepickerEl)
+            .on('wheel', function(e) {
+                var parsed = parseDate(y, m, d);
+                if (ibd.event.parse(e) === 'up') {
+                    d = d > parsed.nextend ? parsed.nextend : d;
+                    if (m === 12) {
+                        m = 1;
+                        y++;
+                    } else {
+                        m++;
+                    }
+                } else {
+                    d = d > parsed.prevend ? parsed.prevend : d;
+                    if (m === 1) {
+                        m = 12;
+                        y--;
+                    } else {
+                        m--;
+                    }
+                }
+                setYear();
+
+                setMeta();
+
+                ibd.event.pop(e);
+            }),
+            yearsEl = ibd.element("<table class='ibd-datepicker-years'/>").appendTo(datepickerEl)
+            .on('click', function(e) {
+                var tgt = ibd.element(e.target);
+                if (tgt.attr('data-year')) {
+                    y = parseInt(tgt.attr('data-year'), 0);
+                    setYear();
+                }
+                setMeta();
+            })
+            .on('wheel', function(e) {
+                var cY = parseInt(yearsEl[0].getElementsByTagName('td')[0].innerText, 0);
+                if (ibd.event.parse(e) === 'up') {
+                    yearsEl.html(createYears(cY + 55));
+                } else {
+                    yearsEl.html(createYears(cY - 55));
+                }
+
+                ibd.event.pop(e);
+            }),
+            yearEl = ibd.element("<div class='ibd-datepicker-year'/>").appendTo(datepickerEl)
+            .flyover({
+                on: 'click',
+                group: 'datepicker-years',
+                position: ['right', 'left', 'top', 'bottom'],
+                template: yearsEl
+            })
+            .on('wheel', function(e) {
+                if (ibd.event.parse(e) === 'up') {
+                    y++;
+                } else {
+                    y--;
+                }
+                setYear();
+                setMeta();
+
+                ibd.event.pop(e);
+            });
+
+
+        proto.date = function(a, b, c) {
+            if (!a) {
+                return [y, m, d];
+            } else {
+                y = a;
+                m = b;
+                d = c;
+                monthEl.html(createMonths());
+                yearsEl.html(createYears(y));
+                setYear();
+                setDay();
+                setMeta();
+                return this;
+            }
+        };
+        proto.year = function(a) {
+            if (!a) {
+                return y;
+            } else {
+                y = a;
+                setYear();
+                return this;
+            }
+        };
+        proto.month = function(b) {
+            if (!b) {
+                return m;
+            } else {
+                m = b;
+                setMonth();
+                return this;
+            }
+        };
+        proto.day = function(c) {
+            if (!c) {
+                return d;
+            } else {
+                d = c;
+                setDay();
+                return this;
+            }
+        };
+        this[0] = datepickerEl[0];
+    }
+    datepicker.prototype = Object.create(ibd.prototype.element);
+    datepicker.prototype.constructor = datepicker;
+    ibd.datepicker = function(opt) {
+        opt = opt || {
+            year: 2015,
+            month: 11,
+            day: 19
+        };
+        return new datepicker().date(opt.year, opt.month, opt.day);
+    };
+    ibd.prototype.datepicker = datepicker.prototype;
+}(ibd));
+
+(function(event) {
+    var evnt = {};
+
+    function initDrag(as) {
+        evnt[as + 'Start'] = ibd.event.register(as + 'Start', {});
+        evnt[as + 'Stop'] = ibd.event.register(as + 'Stop', {});
+        evnt[as] = ibd.event.register(as, {});
+    }
+    event.drag = function(el, as) {
+        as = as || 'drag';
+        var debounce = {};
+        debounce[as] = null;
+        initDrag(as);
+
+        function dragCancel(e) {
+            el.off('mouseup', dragCancel);
+            if (debounce[as]) {
+                clearTimeout(debounce[as]);
+                debounce[as] = null;
+            }
+        }
+
+        function dragStart(e) {
+            el.on('mouseup', dragCancel);
+            debounce[as] = setTimeout(function() {
+                el.off('mousedown', dragStart);
+                el.off('mouseup', dragCancel);
+                ibd.element(window)
+                    .on('mouseup', dragStop)
+                    .on('mousemove', drag);
+                document.onselectstart = function() {
+                    return false;
+                };
+                evnt[as + 'Start'].draggable = {
+                    pageX: e.pageX,
+                    pageY: e.pageY,
+                    startX: e.pageX,
+                    startY: e.pageY,
+                    offsetX: e.pageX - el[0].offsetLeft,
+                    offsetY: e.pageY - el[0].offsetTop
+                };
+                el.trigger(evnt[as + 'Start']);
+            }, 100);
+        }
+
+        function dragStop(e) {
+            document.onselectstart = function() {
+                return true;
+            };
+            el.on('mousedown', dragStart);
+            ibd.element(window)
+                .off('mouseup', dragStop)
+                .off('mousemove', drag);
+            el.trigger(evnt[as + 'Stop']);
+        }
+
+        function drag(e) {
+            document.onselectstart = function() {
+                return false;
+            };
+            evnt[as].draggable = {
+                pageX: e.pageX,
+                pageY: e.pageY,
+                movementX: e.pageX - evnt[as + 'Start'].draggable.startX,
+                movementY: e.pageY - evnt[as + 'Start'].draggable.startY
+            };
+            el.trigger(evnt[as]);
+        }
+        el
+            .on('mousedown', dragStart);
+    };
+}(ibd.event));
+
+
+/**
+ * @generous
+ * @type method
+ * @name draggable
+ * @parent element
+ * @description Makes the element draggable, and returns the element for chaining
+ * @param {object=} options Options object
+ * @param {object=} options.handle DOM node or ibd.element to use as the drag handle, defaults to the element
+ * @param {object=} options.container DOM node or ibd.element to contain the element within, defaults to `document.body`
+ * @param {string=} options.contain Method of containing drag, can be `snap` (default) or `restrict`
+ * @param {boolean=} options.x Allow dragging on x axis, defaults to `true`
+ * @param {boolean=} options.y Allow dragging on y axis, defaults to `true`
+ * @example
+ * <head>
+ *     <script src="../dist/ibd.js"></script>
+ *     <link href="../dist/ibd.min.css" rel="stylesheet" type="text/css">
+ * </head>
+ * <javascript>
+ *     ibd.ready(function(){
+ *          ibd.element('<div style="height:100px;width:100px;" />')
+ *               .style('border','1px solid')
+ *               .draggable()
+ *               .appendTo(document.body);
+ *     });
+ * </javascript>
+ */
+
+(function(element) {
+
+    element.draggable = function(opt) {
+
+        var el,
+            handle,
+            container,
+            html = ibd.element(document.documentElement),
+            t,
+            l,
+            ghost,
+            prevent = false;
+
+        function contain() {
+            var h = container.height(),
+                w = container.width(),
+                oX = container[0].style.x || 0,
+                oY = container[0].style.y || 0,
+                eW = ghost.width(true),
+                eH = ghost.height(true);
+
+            if (opt.x !== false) {
+                if (ghost[0].offsetLeft < (0 + oX)) {
+                    ghost[0].style.left = (0 + oX) + 'px';
+                } else if (ghost[0].offsetLeft > w - eW - oX) {
+                    ghost[0].style.left = ((w - eW - oX) < 0 ? 0 : (w - eW - oX)) + 'px';
+                }
+            }
+            if (opt.y !== false) {
+                if (ghost[0].offsetTop < (0 + oY)) {
+                    ghost[0].style.top = (0 + oY) + 'px';
+                } else if (ghost[0].offsetTop > h - eH - oY) {
+                    ghost[0].style.top = ((h - eH - oY) < 0 ? 0 : (h - eH - oY)) + 'px';
+                }
+            }
+        }
+        opt = opt || {};
+        el = this; // get the ibd element from the chain
+        handle = ibd.element(opt.handle || el);
+        container = ibd.element(opt.container || document.body);
+        el
+            .addClass('ibd-draggable');
+        if (opt.ghost !== false) {
+            el
+                .addClass('ibd-ghosted');
+        }
+        handle.bind('drag')
+            .on('dragStart', function() {
+                prevent = el.attr('ibd-resize'); // the drag operation will be associated with a resize
+                if (prevent) {
+                    return;
+                }
+                if (opt.ghost !== false) {
+                    ghost = ibd.element('<div class="ibd-ghost"/>')
+                        .style('width', el.width() + 'px')
+                        .style('height', el.height() + 'px')
+                        .style('top', el[0].offsetTop + 'px')
+                        .style('left', el[0].offsetLeft + 'px');
+
+                    el[0].parentNode.insertBefore(ghost[0], el[0]);
+                } else {
+                    ghost = el;
+                }
+                t = ibd.util.parseInt(ghost[0].style.top);
+                l = ibd.util.parseInt(ghost[0].style.left);
+                el.addClass('ibd-dragging');
+                html.addClass('ibd-dragging');
+            })
+            .on('drag', function(e) {
+                if (prevent) {
+                    return;
+                }
+                if (opt.x !== false) {
+                    ghost[0].style.left = l + e.draggable.movementX + 'px';
+                }
+                if (opt.y !== false) {
+                    ghost[0].style.top = t + e.draggable.movementY + 'px';
+                }
+                if (opt.contain === 'restrict') {
+                    contain();
+                }
+            })
+            .on('dragStop', function() {
+                if (prevent) {
+                    return;
+                }
+                html.removeClass("ibd-dragging");
+                el.removeClass('ibd-dragging');
+                if (opt.contain === 'snap') {
+                    contain();
+                }
+                if (opt.ghost !== false) {
+                    el
+                        .style('top', ghost[0].offsetTop + 'px')
+                        .style('left', ghost[0].offsetLeft + 'px');
+                    ghost.remove();
+                }
+            });
+        return this;
+    };
+}(ibd.prototype.element));
+
+/**
+ * @generous
+ * @type method
+ * @name flyover
+ * @parent element
+ * @description Either instantiates an existing flyover, or creates a new instance with the
+ * passed options, returns the element for chaining.
+ * @param {object=} options Flyover options
+ * @param {string=} options.on The event type to trigger a flyover, defaults to `hover`, can be `hover`, `mouseover`, `click`, `contextmenu` or `focus`
+ * @param {string=} options.group The flyover group (instance), defaults to `default`, a number of elements can repurpose the same flyover for better performance gains
+ * @param {object=} DOM node, ibd.element or string to use as the flyover content- this is unique to each call, as such the same group (above) can have different content depending on the callee
+ * @param {array=} options.position String or array of positions for the flyover relative to the element, can be top, topright, right, bottomright, bottom, bottomleft, left or topleft, defaults to right. An array is used to reposition if the previous position is not possible.
+ */
+(function(element) {
+    var flyovers = {};
+    element.flyover = function(opt) {
+
+        // this actually needs to return a further extended element proto which has show and hide functions etc
+
+        opt = opt || {};
+        opt.on = opt.on === 'hover' || !opt.on ? 'mouseover' : opt.on;
+        opt.position = opt.position || ['right', 'bottomright', 'bottom', 'bottomleft', 'left', 'topleft', 'top', 'topright'];
+        if (typeof opt.position !== 'object') {
+            opt.position = [opt.position];
+        }
+        if (opt.on === 'mouseover' || opt.on === 'hover') {
+            opt.off = 'mouseout';
+        } else if (opt.on === 'click') {
+            opt.off = 'mousedown';
+        } else if (opt.on === 'contextmenu') {
+            opt.off = 'click contextmenu';
+        } else {
+            opt.off = 'blur';
+        }
+        opt.group = opt.group || 'default';
+        var posTimeout = null,
+            flyover = document.getElementById('ibd-flyover-' + opt.group) ? flyovers[opt.group] : ibd.flyover(opt),
+            onTrigger = this.setId(),
+            offTrigger = opt.on === 'click' || opt.on === 'contextmenu' ? ibd.element(window) : this;
+        flyovers[opt.group] = flyover;
+        // do some sexy binding/unbinding
+        function hide(e) {
+            if (['click', 'contextmenu', 'focus'].indexOf(opt.on) < 0 || (e.target !== onTrigger[0] && !ibd.element(e.target).parent('#ibd-flyover-' + opt.group))) {
+                flyover.hide()
+                    .attr('for', null);
+                if (posTimeout) {
+                    clearTimeout(posTimeout);
+                    posTimeout = null;
+                }
+                offTrigger.off(opt.off, hide);
+                onTrigger.on(opt.on, show);
+            }
+        }
+        var posSlot = 0;
+
+        function position(p) {
+            var x = 0,
+                y = 0,
+                pos = onTrigger.position();
+            if (posTimeout) {
+                clearTimeout(posTimeout);
+            }
+            flyover.show();
+            switch (p) {
+                case "left":
+                    y = pos.top;
+                    x = pos.left - flyover.width();
+                    break;
+                case "topleft":
+                    y = pos.top - flyover.height();
+                    x = pos.left - flyover.width();
+                    break;
+                case "top":
+                    y = pos.top - flyover.height();
+                    x = pos.left;
+                    break;
+                case "topright":
+                    y = pos.top - flyover.height();
+                    x = pos.right;
+                    break;
+                case "right":
+                    y = pos.top;
+                    x = pos.right;
+                    break;
+                case "bottomright":
+                    y = pos.bottom;
+                    x = pos.right;
+                    break;
+                case "bottom":
+                    y = pos.bottom;
+                    x = pos.left;
+                    break;
+                case "bottomleft":
+                    y = pos.bottom;
+                    x = pos.left - flyover.width();
+                    break;
+            }
+            flyover.position(x, y);
+            if (opt.position.length > 1) {
+                // user has specified a position list, so we have options to move the flyover if it doesnt fit
+                if (!flyover.inView()) {
+                    flyover.hide();
+                    if (p !== opt.position[opt.position.length - 1]) {
+                        posSlot++;
+                    } else {
+                        posSlot = 0;
+                    }
+                    p = opt.position[posSlot];
+                } else {
+                    flyover.attr('position', p);
+                }
+            }
+            posTimeout = setTimeout(function() {
+                position(p);
+            }, 100);
+        }
+
+        function show(e) {
+            if (opt.on === 'contextmenu') {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            flyover
+                .html(opt.template)
+                .show()
+                .attr('for', onTrigger[0].id);
+            position(opt.position[posSlot]);
+            // record the last instigating element of the flyover- and unset as necessary
+            if (flyover.last && flyover.last.on.el[0] !== onTrigger[0]) {
+                var off = flyover.last.off,
+                    on = flyover.last.on;
+                off.el.off(off.e, off.fn);
+                on.el.on(on.e, on.fn);
+            }
+            flyover.last = {
+                off: {
+                    el: offTrigger,
+                    e: opt.off,
+                    fn: hide
+                },
+                on: {
+                    el: onTrigger,
+                    e: opt.on,
+                    fn: show
+                }
+            };
+            onTrigger.off(opt.on, show);
+            offTrigger.on(opt.off, hide);
+        }
+        this.on(opt.on, show);
+        return this;
+    };
+}(ibd.prototype.element));
+
+
+
+/*
+ This is the flyover component
+ this takes the element prototype as a basis, extends
+ it, then boots up leveraging base element methods
+ */
+(function(ibd) {
+    function flyover(opt) {
+        opt = opt || {};
+        opt.group = opt.group || 'default';
+        var element = ibd.element.call(this, '<div id="ibd-flyover-' + opt.group + '" class="ibd-flyover"/>')
+            .hide()
+            .appendTo(document.body);
+
+        this[0] = element[0];
+    }
+    flyover.prototype = Object.create(ibd.prototype.element);
+    flyover.prototype.constructor = flyover;
+    flyover.prototype.position = function(x, y) {
+        this.style('left', x + 'px').style('top', y + 'px');
+        return this;
+    };
+    ibd.flyover = function(opt) {
+        return new flyover(opt);
+    };
+    ibd.prototype.flyover = flyover.prototype;
+}(ibd));
+
+/**
+ * @generous
+ * @type method
+ * @name layout
+ * @parent ibd
+ * @description The layout method creates a layout instance, which is an extension of the base
+ * ibd.element, as such all methods available to an ibd.element are available
+ * @param {array} children Array consisting of content to propogate to layout panes, can be a string representing a DOM node, a DOM node or an ibd.element
+ * @param {array=} children.options Optional array extrapolation of `children` consisting of content to propogate to layout panes, followed by a value denoting size (e.g. `20px`, `40%` etc)
+ * @param {boolean=} vertical Boolean denoting whether to create a vertical layout, defaults to `false`
+ */
+(function(ibd) {
+    function layout(children, vertical) {
+        var lEl = ibd.element.call(this, '<div class="ibd-layout"/>')
+            .addClass(vertical ? 'ibd-vertical' : 'ibd-horizontal'),
+            dimensionless = [],
+            dimensions = [];
+        children.forEach(function(el) {
+            var block = ibd.element('<div class="ibd-layout-block"/>');
+            if (ibd.util.isArray(el)) {
+                dimensions.push(el[1]);
+                block.style(vertical ? 'height' : 'width', el[1]);
+                el = ibd.element(el[0]);
+            } else {
+                el = ibd.element(el);
+                dimensionless.push(block);
+            }
+            el
+                .appendTo(block)
+                .parent()
+                .appendTo(lEl);
+        });
+        dimensionless.forEach(function(el) {
+            el.style(vertical ? 'height' : 'width', 'calc((100%' + (dimensions.length > 0 ? ' - ' + dimensions.join(' - ') : '') + ') / ' + dimensionless.length + ')');
+        });
+        this[0] = lEl[0];
+    }
+    layout.prototype = Object.create(ibd.prototype.element);
+    layout.prototype.constructor = layout;
+    ibd.layout = function(c, v) {
+        return new layout(c, v);
+    };
+    ibd.prototype.layout = layout.prototype;
+}(ibd));
+
+(function(element) {
+    var html = ibd.element(document.documentElement);
+    element.resizable = function(opt) {
+        opt = opt || {};
+        var threshhold = opt.threshhold || 10,
+            resizing = false,
+            resize = false,
+            ghost,
+            h, w, t, l, pos,
+            prevent = false,
+            el = this;
+        if (opt.ghost !== false) {
+            el
+                .addClass('ibd-ghosted');
+        }
+
+        function cleanCSS() {
+            html.removeClass('ibd-resize-top ibd-resize-topright ibd-resize-right ibd-resize-bottomright ibd-resize-bottom ibd-resize-bottomleft ibd-resize-left ibd-resize-topleft');
+        }
+        this
+            .bind('drag', 'resize')
+            .addClass('ibd-resizable')
+            .on('mousemove', function(e) {
+                if (resizing) {
+                    return;
+                }
+                pos = el.position();
+                h = pos.bottom - pos.top;
+                w = pos.right - pos.left;
+                t = ibd.util.parseInt(el.style('top'));
+                l = ibd.util.parseInt(el.style('left'));
+                prevent = false;
+                cleanCSS();
+                resize = false;
+                var offsetX = e.pageX - pos.left,
+                    offsetY = e.pageY - pos.top;
+                if (offsetX < threshhold * 2 && offsetY < threshhold * 2) {
+                    resize = 'topleft';
+                    html.addClass('ibd-resize-topleft');
+                } else if (offsetX > w - (threshhold * 2) && offsetY < threshhold * 2) {
+                    resize = 'topright';
+                    html.addClass('ibd-resize-topright');
+                } else if (offsetX > w - (threshhold * 2) && offsetY > h - (threshhold * 2)) {
+                    resize = 'bottomright';
+                    html.addClass('ibd-resize-bottomright');
+                } else if (offsetX < threshhold * 2 && offsetY > h - (threshhold * 2)) {
+                    resize = 'bottomleft';
+                    html.addClass('ibd-resize-bottomleft');
+                } else if (offsetX < threshhold) {
+                    resize = 'left';
+                    html.addClass('ibd-resize-left');
+                } else if (offsetX > w - threshhold) {
+                    resize = 'right';
+                    html.addClass('ibd-resize-right');
+                } else if (offsetY < threshhold) {
+                    resize = 'top';
+                    html.addClass('ibd-resize-top');
+                } else if (offsetY > h - threshhold) {
+                    resize = 'bottom';
+                    html.addClass('ibd-resize-bottom');
+                } else {
+                    prevent = true; // not a qualified start point, so prevent other events
+                }
+                el.attr('ibd-resize', resize === false ? null : resize);
+            }).on('mouseout', function() {
+                if (resizing || prevent) { // not mid drag
+                    return;
+                }
+                el.attr('ibd-resize', null);
+                cleanCSS();
+            }).on('resizeStart', function() {
+                if (!prevent) {
+                    resizing = true;
+                    el.addClass('ibd-resizing');
+                    if (opt.ghost !== false) {
+                        ghost = ibd.element('<div class="ibd-ghost"/>')
+                            .style('width', w + 'px')
+                            .style('height', h + 'px')
+                            .style('top', t + 'px')
+                            .style('left', l + 'px');
+
+                        el[0].parentNode.insertBefore(ghost[0], el[0]);
+                    } else {
+                        ghost = el;
+                    }
+                }
+            }).on('resize', function(e) {
+                var nH, nW;
+                if (!prevent) { // hit a valid drag handle
+                    if (['right', 'topright', 'bottomright'].indexOf(resize.toString()) > -1) {
+                        nW = w + e.draggable.movementX;
+                        if (nW > threshhold) {
+                            ghost.style('width', nW + 'px');
+                        }
+                    }
+                    if (['bottom', 'bottomright', 'bottomleft'].indexOf(resize.toString()) > -1) {
+                        nH = h + e.draggable.movementY;
+                        if (nH > threshhold) {
+                            ghost.style('height', nH + 'px');
+                        }
+                    }
+                    if (['top', 'topleft', 'topright'].indexOf(resize.toString()) > -1) {
+                        nH = (h + (-1 * e.draggable.movementY));
+                        if (nH > threshhold) {
+                            ghost.style('height', nH + 'px');
+                            ghost.style('top', (t + e.draggable.movementY) + 'px');
+                        }
+                    }
+                    if (['left', 'topleft', 'bottomleft'].indexOf(resize.toString()) > -1) {
+                        nW = (w + (-1 * e.draggable.movementX));
+                        if (nW > threshhold) {
+                            ghost.style('width', nW + 'px');
+                            ghost.style('left', (l + e.draggable.movementX) + 'px');
+                        }
+                    }
+                }
+            }).on('resizeStop', function() {
+                // reset
+                if (prevent) {
+                    return;
+                }
+                if (opt.ghost !== false) {
+                    el
+                        .style('top', ghost[0].offsetTop + 'px')
+                        .style('left', ghost[0].offsetLeft + 'px')
+                        .style('height', ghost.height() + 'px')
+                        .style('width', ghost.width() + 'px');
+                    ghost.remove();
+                }
+                el.removeClass('ibd-resizing');
+                el.attr('ibd-resize', null);
+                resize = false;
+                resizing = false;
+                cleanCSS();
+            });
+        return this;
+    };
+}(ibd.prototype.element));
+
+/**
+ * @generous
+ * @type method
+ * @name scrollbars
+ * @parent element
+ * @description Applies custom scrollbars to the given element instance, and returns to
+ * allow for chaining
+ * @param {number=} beta Amount in px each scroll event should scroll by, defaults to 60
+ * @param {boolean=} live Whether to monitor dimension change of element, defaults to true
+ * @example
+ * <head>
+ *     <script src="../dist/ibd.js"></script>
+ *     <link href="../dist/ibd.min.css" rel="stylesheet" type="text/css">
+ * </head>
+ * <javascript>
+ *     ibd.ready(function(){
+ *          ibd.element('<div style="height:100px;width:100px;" />')
+ *               .style('border','1px solid')
+ *               .html('<div style="height:400px;" />')
+ *               .scrollbars()
+ *               .appendTo(document.body);
+ *     });
+ * </javascript>
+ */
+
+(function(element) {
+
+    element.scrollbars = function(opt) {
+        opt = opt || {
+            beta: 60,
+            live: true
+        };
+
+        var pres = false,
+            container = ibd.element("<div class='ibd-scroll-container'/>")
+            .attr('tabindex', 0)
+            .on('keydown', function(e) {
+                ibd.event.pop(e);
+
+                function scroll(axis, dir, val) {
+                    content[0][axis === 'y' ? 'scrollTop' : 'scrollLeft'] += (dir ? -1 : 1) * (val ? val : opt.beta);
+                }
+                switch (ibd.event.parse(e)) {
+                    case "up":
+                        scroll('y', true);
+                        break;
+                    case "down":
+                    case "spacebar":
+                        scroll('y');
+                        break;
+                    case "pageUp":
+                        scroll('y', true, container.height());
+                        break;
+                    case "pageDown":
+                        scroll('y', false, container.height());
+                        break;
+                    case "home":
+                        scroll('y', true, content[0].scrollHeight);
+                        break;
+                    case "end":
+                        scroll('y', false, content[0].scrollHeight);
+                        break;
+                    case "left":
+                        scroll('x', true);
+                        break;
+                    case "right":
+                        scroll('x', true);
+                        break;
+                }
+            }),
+            content = ibd.element("<div class='ibd-scroll-content'/>")
+            .appendTo(container)
+            .on('scroll', function() {
+                if (!pres) {
+                    floatY.style('top', (trackY.height() - floatY.height()) * content[0].scrollTop / (content[0].scrollHeight - container.height()) + 'px');
+                    floatX.style('left', (trackX.width() - floatX.width()) * content[0].scrollLeft / (content[0].scrollWidth - container.width()) + 'px');
+                }
+                pres = false;
+            })
+            .on('wheel', function(e) {
+                ibd.event.pop(e);
+                content[0].scrollTop += (ibd.event.parse(e) === 'up' ? -1 : 1) * opt.beta;
+            }),
+            trackY = ibd.element("<div class='ibd-scroll-trackY'/>")
+            .appendTo(container)
+            .on('click', function(e) {
+                content[0].scrollTop = content[0].scrollHeight * ((e.offsetY === undefined ? e.layerY : e.offsetY) / (trackY.height() + floatY.height()));
+            }),
+            floatY = ibd.element("<div class='ibd-scroll-floatY'/>")
+            .appendTo(trackY)
+            .draggable({
+                container: trackY,
+                contain: 'restrict',
+                x: false,
+                ghost: false
+            }).on('drag', function() {
+                pres = true;
+                content[0].scrollTop = content.height() * parseInt(floatY.style('top'), 0) / (trackY.height() - floatY.height());
+            }),
+            trackX = ibd.element("<div class='ibd-scroll-trackX'/>")
+            .appendTo(container)
+            .on('click', function(e) {
+                content[0].scrollLeft = content[0].scrollWidth * ((e.offsetX === undefined ? e.layerX : e.offsetX) / (trackX.width() + floatY.width()));
+            }),
+            floatX = ibd.element("<div class='ibd-scroll-floatX'/>")
+            .appendTo(trackX)
+            .draggable({
+                container: trackX,
+                contain: 'restrict',
+                y: false,
+                ghost: false
+            }).on('drag', function() {
+                pres = true;
+                content[0].scrollLeft = parseInt(floatX.style('left'), 0) / (trackX.width() - floatX.width());
+            });
+
+        this.ensurePosition();
+        if (this[0].childNodes.length === 0) {
+            this.html('<span>' + this.text() + '</span>');
+        }
+        [].slice.call(this[0].childNodes).forEach(function(child) {
+            content[0].appendChild(child);
+        });
+        container.appendTo(this);
+        setInterval(function() {
+            if (content[0].scrollHeight > content.height()) {
+                trackY.show();
+            } else {
+                trackY.hide();
+            }
+            if (content[0].scrollWidth > content.width()) {
+                trackX.show();
+            } else {
+                trackX.hide();
+            }
+        }, 25);
+        // all node refs are maintained by doing the above..perfect!
+        return this;
+    };
+}(ibd.prototype.element));
+
+(function(ibd) {
+    var changeEvnt = ibd.event.register('change', {});
+
+    function slider(opt) {
+        var mD, d, value, track, pos,
+            range = Math.abs(opt.max - opt.min),
+            proto = this;
+        proto.value = function(v) {
+            if (!v && v !== 0) {
+                return ibd.util.parseInt(value.text());
+            } else {
+                v = v < opt.min ? opt.min : v > opt.max ? opt.max : v;
+                changeEvnt.value = v;
+                value.text(v.toString());
+                if (opt.type === 'circle') {
+                    v = (v - opt.min) * 360 / range;
+                    track.attr('d', ibd.util.arcPath(d / 2, d / 2, (d - Math.max(opt.stroke.inner, opt.stroke.outer)) / 2, 0, v));
+                } else {
+                    v = (v - opt.min) * 100 / range;
+                    track.style(opt.type === 'x' ? 'width' : 'height', v + '%');
+                }
+                this.trigger(changeEvnt);
+                return this;
+            }
+        };
+
+        function calcValue(p, e) {
+            var v, perc;
+            if (opt.type === 'circle') {
+                var origin = {
+                    x: p.left + ((p.right - p.left) / 2),
+                    y: p.top + ((p.bottom - p.top) / 2)
+                };
+                if (e.draggable.pageX >= origin.x) {
+                    perc = 90 - Math.atan((origin.y - e.draggable.pageY) / (e.draggable.pageX - origin.x)) * 180 / Math.PI;
+                } else {
+                    perc = 180 + (90 - Math.atan((origin.y - e.draggable.pageY) / (e.draggable.pageX - origin.x)) * 180 / Math.PI);
+                }
+                perc = perc / 360;
+            } else {
+                mD = opt.type === 'x' ? p.right - p.left : p.bottom - p.top;
+                perc = (opt.type === 'x' ? e.draggable.pageX - p.left : e.draggable.pageY - p.top) / mD;
+                perc = opt.type === 'x' ? perc : 1 - perc;
+            }
+            perc = perc > 1 ? 1 : perc < 0 ? 0 : perc;
+            v = opt.min + Math.round(perc * range);
+            proto.value(v);
+
+        }
+        var sliderEl = ibd.element.call(this, '<div class="ibd-slider-' + opt.type + '"/>')
+            .style('height', opt.height + 'px')
+            .style('width', opt.width + 'px')
+            .bind('drag', 'slide')
+            .on('slideStart', function(e) {
+                sliderEl.addClass('ibd-sliding');
+                pos = sliderEl.position();
+                calcValue(pos, e);
+            })
+            .on('slide', function(e) {
+                calcValue(pos, e);
+            })
+            .on('slideStop', function(e) {
+                sliderEl.removeClass('ibd-sliding');
+            })
+            .on('wheel', function(e) {
+                var incr = range / 10;
+                incr = ibd.event.parse(e) === 'up' ? incr : -1 * incr;
+                proto.value(proto.value() + incr);
+            }),
+            indicator = ibd.element("<span class='ibd-slider-indicator' />").appendTo(sliderEl),
+            unit = ibd.element("<span class='ibd-slider-unit' />").appendTo(indicator).text(opt.unit);
+        if (opt.type === 'circle') {
+            opt.circle = ibd.util.merge({
+                stroke: 20,
+                start: 0,
+                length: 0
+            }, opt.circle || {});
+            opt.stroke = ibd.util.merge({
+                inner: opt.circle.stroke,
+                outer: opt.circle.stroke
+            }, opt.stroke || {});
+            d = opt.width;
+            var r = ((d - Math.max(opt.stroke.inner, opt.stroke.outer)) / 2),
+                svg = ibd.element("<svg height='" + d + "' width='" + d + "' xmlns='http://www.w3.org/2000/svg' version='1.1'/>").appendTo(sliderEl);
+            ibd.element("<circle class='ui-slider-circle' cx='" + (d / 2) + "' cy='" + (d / 2) + "' r='" + r + "' stroke='black' stroke-width='" + opt.stroke.outer + "' fill='none' />").appendTo(svg);
+            track = ibd.element("<path x='" + (d / 2) + "' y='" + (d / 2) + "' fill='none' stroke-width='" + opt.stroke.inner + "'/>").appendTo(svg);
+            track.attr('d', ibd.util.arcPath(d / 2, d / 2, r, 0, 360));
+        } else {
+            track = ibd.element("<span class='ibd-slider-track' />").appendTo(sliderEl);
+        }
+        value = ibd.element("<span class='ibd-slider-value' />").appendTo(indicator);
+        this[0] = sliderEl[0];
+    }
+    slider.prototype = Object.create(ibd.prototype.element);
+    slider.prototype.constructor = slider;
+    ibd.slider = function(opt) {
+        opt = opt || {};
+        opt.min = opt.min || 0;
+        opt.max = opt.max || 100;
+        opt.type = opt.type || 'x';
+        opt.width = opt.width || ['circle', 'x'].indexOf(opt.type) > -1 ? '200' : '20';
+        opt.height = opt.height || ['circle', 'y'].indexOf(opt.type) > -1 ? '200' : '20';
+        return new slider(opt).value(opt.value || opt.min);
+    };
+    ibd.prototype.slider = slider.prototype;
+}(ibd));
+
+/**
+ * @generous
+ * @type method
+ * @name tooltip
+ * @parent element
+ * @description Adds a tooltip to the element, and returns the element for chaining
+ * @param {object} html DOM node, ibd.element or string to use as tooltip content
+ * @param {string=} position Can be top, topright, right, bottomright, bottom, bottomleft, left or topleft, defaults to right
+ * @example
+ * <head>
+ *     <script src="../dist/ibd.js"></script>
+ *     <link href="../dist/ibd.min.css" rel="stylesheet" type="text/css">
+ * </head>
+ * <javascript>
+ *     ibd.ready(function(){
+ *          ibd.element('<span />')
+*               .text('Example tooltip')
+                .tooltip('some tooltip, can be a DOM node, html etc')
+*               .appendTo(document.body);
+ *     });
+ * </javascript>
+ */
+(function(element) {
+    element.tooltip = function(html, pos) {
+        this.flyover({
+            group: 'tooltip',
+            template: html,
+            position: pos || 'right'
+        });
+        return this;
+    };
+}(ibd.prototype.element));
+
+/**
+ * @generous
+ * @type method
+ * @name window
+ * @parent ibd
+ * @description The window method creates a window instance, which is an extension of the base
+ * ibd.element, as such all methods available to an ibd.element are available
+ * @param {object} options Options object
+ * @param {string=} options.template Either a DOM node, ibd.element or string to use as the window template
+ */
+(function(ibd) {
+    var container;
+
+    function window(opt) {
+        opt = opt || {};
+        container = container || ibd.element('<div id="ibd-window-container"/>')
+            .appendTo(document.body);
+        var win = ibd.element.call(this, '<div class="ibd-window"/>')
+            .html(opt.template)
+            .on('mousedown', function() {
+                win.toFront();
+            })
+            .appendTo(container);
+        if (opt.draggable !== false) {
+            win.draggable({
+                contain: 'snap'
+            });
+        }
+        this[0] = win[0];
+    }
+    window.prototype = Object.create(ibd.prototype.element);
+    window.prototype.constructor = window;
+    /**
+     * @generous
+     * @type method
+     * @name close
+     * @parent window
+     * @description Closes (removes) the window instance
+     */
+    window.prototype.close = ibd.prototype.element.remove;
+    /**
+     * @generous
+     * @type method
+     * @name center
+     * @parent window
+     * @description Centers the window instance within the viewport
+     */
+    window.prototype.center = function() {
+        this[0].style.left = (container.width() / 2) - (this.width() / 2) + 'px';
+        this[0].style.top = (container.height() / 2) - (this.height() / 2) + 'px';
+    };
+    ibd.window = function(opt) {
+        return new window(opt).center();
+    };
+    ibd.prototype.window = window.prototype;
+}(ibd));
+
+
+
+
+
+
+
+
+
+
+
+
+
+.ibd-datepicker {
+  border: 1px solid lightblue;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  background: lightblue;
+  width: 200px; }
+
+.ibd-datepicker .ibd-datepicker-meta {
+  float: left;
+  position: relative;
+  top: 23px;
+  left: 10px;
+  color: #ffffff; }
+
+.ibd-datepicker .ibd-datepicker-year {
+  text-align: right;
+  font-size: 2em;
+  margin: 20px 5px 10px 5px;
+  color: black;
+  font-weight: 100; }
+
+.ibd-datepicker .ibd-datepicker-years {
+  display: none;
+  width: 100%;
+  color: #ffffff;
+  background: lightblue;
+  position: absolute;
+  top: 50px;
+  overflow: hidden;
+  left: 0;
+  bottom: 0; }
+
+.ibd-datepicker .ibd-datepicker-years td {
+  text-align: center; }
+
+.ibd-datepicker .ibd-datepicker-month {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: lightgrey;
+  background: grey; }
+
+.ibd-datepicker .ibd-datepicker-month li {
+  width: 8.33%;
+  display: inline-block;
+  font-size: .7em;
+  box-sizing: border-box;
+  padding: 0;
+  text-align: center;
+  cursor: default;
+  position: relative;
+  transition: background 80ms ease-in; }
+
+.ibd-datepicker .ibd-datepicker-month li:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  top: calc(100% - 7px);
+  font-size: 2em; }
+
+.ibd-datepicker .ibd-datepicker-month li:hover {
+  color: black;
+  background: #ffffff; }
+
+.ibd-datepicker .ibd-datepicker-month li.selected {
+  color: black;
+  background: lightgrey; }
+
+.ibd-datepicker .ibd-datepicker-day {
+  background: lightgrey;
+  border-collapse: collapse;
+  box-sizing: border-box;
+  width: 100%; }
+
+.ibd-datepicker .ibd-datepicker-day tr:first-of-type th {
+  padding-top: 10px; }
+
+.ibd-datepicker .ibd-datepicker-day tr:first-of-type th:first-of-type {
+  padding-left: 5px; }
+
+.ibd-datepicker .ibd-datepicker-day tr:first-of-type th:last-of-type {
+  padding-right: 5px; }
+
+.ibd-datepicker .ibd-datepicker-day th {
+  font-weight: 500;
+  font-size: .8em;
+  text-transform: uppercase;
+  color: black;
+  width: 24px;
+  text-align: center; }
+
+.ibd-datepicker .ibd-datepicker-day td {
+  line-height: 24px;
+  font-size: .9em;
+  text-align: center;
+  cursor: default;
+  position: relative;
+  font-weight: 400;
+  transition: all 50ms ease-in; }
+
+.ibd-datepicker .ibd-datepicker-day td:hover {
+  background: #ffffff;
+  color: lightblue; }
+
+.ibd-datepicker .ibd-datepicker-day td.selected {
+  background: blue;
+  color: lightgrey; }
+
+.ibd-datepicker .ibd-datepicker-day td.ibd-prev,
+.ibd-datepicker .ibd-datepicker-day td.ibd-next {
+  color: #a0a0a0; }
+
+.ibd-datepicker .ibd-datepicker-day td.ibd-prev:hover,
+.ibd-datepicker .ibd-datepicker-day td.ibd-next:hover {
+  background: #ffffff;
+  color: lightblue; }
+
+html.ibd-dragging:not([ibd-resize]) {
+  cursor: move;
+  cursor: -webkit-grabbing;
+  cursor: grabbing; }
+  html.ibd-dragging:not([ibd-resize]) body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+
+.ibd-dragging {
+  z-index: 9999; }
+
+.ibd-draggable:not(.ibd-dragging):not(.ibd-resize):hover {
+  cursor: pointer;
+  cursor: -webkit-grab;
+  cursor: grab; }
+
+.ibd-dragging.ibd-ghosted {
+  opacity: .4; }
+
+.ibd-draggable {
+  position: absolute !important;
+  top: 0;
+  left: 0; }
+
+.ibd-ghost {
+  position: absolute;
+  margin: -1px;
+  border: 1px dotted;
+  background: rgba(0, 0, 0, 0.01);
+  z-index: 99999999; }
+
+.ibd-layout {
+  height: 100%;
+  width: 100%; }
+
+.ibd-layout-block {
+  box-sizing: border-box; }
+
+.ibd-layout.ibd-horizontal .ibd-layout-block {
+  float: left;
+  height: 100%; }
+
+html.ibd-resize-top, html.ibd-resize-bottom {
+  cursor: ns-resize !important; }
+
+html.ibd-resize-topright, html.ibd-resize-bottomleft {
+  cursor: nesw-resize !important; }
+
+html.ibd-resize-left, html.ibd-resize-right {
+  cursor: ew-resize !important; }
+
+html.ibd-resize-bottomright, html.ibd-resize-topleft {
+  cursor: nwse-resize !important; }
+
+.ibd-resizable {
+  position: absolute !important;
+  top: 0;
+  left: 0; }
+
+.ibd-resizing.ibd-ghosted {
+  opacity: .4; }
+
+[ibd-resize=right] {
+  border-right: 1px dotted;
+  margin-right: -1px; }
+
+[ibd-resize=left] {
+  border-left: 1px dotted;
+  margin-left: -1px; }
+
+[ibd-resize=top] {
+  margin-top: -1px;
+  border-top: 1px dotted; }
+
+[ibd-resize=bottom] {
+  border-bottom: 1px dotted;
+  margin-bottom: -1px; }
+
+[ibd-resize=topright] {
+  border-right: 1px dotted;
+  border-top: 1px dotted;
+  margin-top: -1px;
+  margin-right: -1px; }
+
+[ibd-resize=topleft] {
+  border-left: 1px dotted;
+  border-top: 1px dotted;
+  margin-top: -1px;
+  margin-left: -1px; }
+
+[ibd-resize=bottomright] {
+  border-right: 1px dotted;
+  border-bottom: 1px dotted;
+  margin-right: -1px;
+  margin-bottom: -1px; }
+
+[ibd-resize=bottomleft] {
+  border-left: 1px dotted;
+  border-bottom: 1px dotted;
+  margin-left: -1px;
+  margin-bottom: -1px; }
+
+.ibd-scroll-container {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+  .ibd-scroll-container:focus {
+    outline: none; }
+
+.ibd-scroll-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  z-index: 0; }
+
+.ibd-scroll-trackX,
+.ibd-scroll-trackY {
+  background: grey;
+  position: absolute !important;
+  border-radius: 6px;
+  z-index: 1; }
+
+.ibd-scroll-floatX,
+.ibd-scroll-floatY {
+  background: black;
+  border-radius: 6px;
+  transition: background 150ms ease-in;
+  position: relative; }
+
+.ibd-scroll-trackX {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6px; }
+
+.ibd-scroll-floatX {
+  width: 20%;
+  height: 100%; }
+
+.ibd-scroll-trackY {
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 6px; }
+
+.ibd-scroll-floatY {
+  height: 20%;
+  width: 100%; }
+
+.ibd-show {
+  display: block; }
+
+.ibd-hide {
+  display: none; }
+
+.ibd-flyover {
+  position: absolute;
+  z-index: 99999; }
+
+.ibd-slider-x, .ibd-slider-y {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box; }
+
+.ibd-slider-x {
+  height: 20px;
+  width: 200px;
+  border: 1px solid; }
+
+.ibd-slider-y {
+  height: 200px;
+  width: 20px;
+  border: 1px solid; }
+
+.ibd-slider-indicator {
+  position: relative;
+  z-index: 1; }
+
+.ibd-slider-x .ibd-slider-track, .ibd-slider-y .ibd-slider-track {
+  position: absolute;
+  z-index: 0;
+  background: lightgrey;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%; }
+
+.ibd-slider-y .ibd-slider-track {
+  top: auto;
+  bottom: 0; }
+
+.ibd-slider-circle circle {
+  stroke: lightgrey;
+  opacity: .2; }
+
+.ibd-slider-circle path {
+  stroke: lightgreen; }
+
+#ibd-window-container {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  position: fixed; }
+
+.ibd-window {
+  position: absolute;
+  pointer-events: all;
+  display: inline-block; }
